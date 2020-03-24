@@ -282,6 +282,8 @@ export default class MapYidCity extends Component {
                 data: dataShowNumberSply(this.state.cityClusterAllTable),
                 position: 'right',
                 offset: 100,
+                nameRotate:0.2,
+                // nameLoaction: "center",
                 axisLabel: {
                     show: true,
                     // inside: true,
@@ -300,9 +302,13 @@ export default class MapYidCity extends Component {
                     },
                     formatter: function (value) {
                         var value = value.replace(/%/g, '')
-                        if (Number(value) >= 0) {
+                        if (Number(value) > -10 && Number(value) <= 0) {
+                            value = "  " + value + "%"
+                        } else if(Number(value) >= 0 && Number(value) < 10){
+                            value = "+" + "  " + value + "%"
+                        } else if(Number(value) >= 10){
                             value = "+" + value + "%"
-                        } else {
+                        } else{
                             value = value + "%"
                         }
                         return value;

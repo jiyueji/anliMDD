@@ -121,7 +121,7 @@ class AboDynamicsContainer extends React.PureComponent {
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div style={{ width: '50%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
               {/* 第一个有中位线的柱状图 */}
-              <AboBarTwoEcharts data={chartStoreAbo.aboPinBarData}/>
+              <AboBarTwoEcharts data={chartStoreAbo.aboPinBarData} datas={chartStoreAbo.aboNonPinBarData}/>
             </div>
             <div style={{ width: '49%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
               {/* 第二个柱状图加折线 */}
@@ -341,7 +341,7 @@ class AboDynamicsContainer extends React.PureComponent {
         </div> */}
 
 
-        <div className="page-block">
+        {/* <div className="page-block">
           <label className="tab-cont-title">
             Income
             </label>
@@ -357,7 +357,7 @@ class AboDynamicsContainer extends React.PureComponent {
               </div>
             </Col>
           </Row>
-        </div>
+        </div> */}
 
       </div>
     );

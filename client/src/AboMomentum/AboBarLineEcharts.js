@@ -12,7 +12,7 @@ export default class AboBarLineEcharts extends Component {
     render() {
         return (
             <Fragment>
-                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Monthly Q Months</div>
+                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>CSI</div>
                 <div id="aboBarLineEcharts" style={{ width: "100%", height: "400px" }}></div>
             </Fragment>
         )

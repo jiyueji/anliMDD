@@ -143,6 +143,9 @@ class Home extends Component {
             this.props.chartStoreSocial.isPerfYear = !this.props.chartStoreSocial.isPerfYear
         }
     }
+    handleClickToUp = () =>{
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+    }
 
     // onClickEditDashboard() {
     //     this.dashboardRef.onClickEditDashboard()
@@ -265,7 +268,7 @@ class Home extends Component {
                             }
                         </div>
                         <div className="main-navigation">
-                            <Tabs activeKey={this.selectedTab} onSelect={k => this.selectedTab = k}>
+                            <Tabs activeKey={this.selectedTab} onSelect={k => this.selectedTab = k} onClick={this.handleClickToUp.bind(this)}>
                                 {/* <Tab eventKey="Home" title={<div><i className="fas fa-home"></i>Home</div>}>
                             <HomeContainer />
                         </Tab> */}

@@ -63,7 +63,7 @@ export default class AboFinalPie extends Component {
     }
     componentDidMount() {
         var data = this.props.data;
-        console.log(data)
+        // console.log(data)
         var chartData = data.length && data[0]
         var title = this.props.titleData && this.props.titleData['gar_title']
 

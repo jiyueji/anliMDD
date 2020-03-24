@@ -98,7 +98,7 @@ export default class Sustainability extends Component {
         var targetLine = chartData.last_target_eom_pct || 0
         var targetFont = ((((1 - ((targetLine * 100) / 20)) * 100))).toFixed(1) - 4 + "%"
         targetLine = (targetLine * 100).toFixed(1)
-        console.log(targetLine)
+        // console.log(targetLine)
 
         var sustainDataNumber = sustainData.length || 0
         if (sustainDataNumber >= 9) {

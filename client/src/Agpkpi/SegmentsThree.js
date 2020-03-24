@@ -311,7 +311,7 @@ export default class SegmentsThree extends Component {
                             // }
                         }
                         var customerShow = "<div style='color:#4d96f1'>" + "Registered Customers:" + customer + "</div>";
-                        var aboPurchasingShow = "<div style='color:#28ccae'>" + "ABO(Purchasing Only):" + aboPurchasing + "</div>";
+                        var aboPurchasingShow = "<div style='color:#28ccae'>" + "Customer Equivalents:" + aboPurchasing + "</div>";
                         var developingAboShow = "<div style='color:#ffa441'>" + "Developing ABO:" + developingAbo + "</div>";
                         var buildingAboShow = "<div style='color:#eb5653'>" + "Building ABO:" + buildingAbo + "</div>";
                         var aboLeaderShow = "<div style='color:#f3e126'>" + "ABO Leader:" + aboLeader + "</div>";
@@ -399,23 +399,25 @@ export default class SegmentsThree extends Component {
                 color: ['#4d96f1', '#28ccae', '#ffa441', '#eb5653', '#f3e126'],
                 legend: {
                     type:"plain",
-                    left: 46,
-                    bottom: 6,
+                    left:"center",
+                    bottom: 11,
                     icon: 'rect',
                     itemWidth: 10,
                     itemHeight: 10,
-                    itemGap: 30,//图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
-                    // formatter: '{default|{name}}',
-                    // textStyle: {
-                    //     rich: {
-                    //         default: {
-                    //             width: 80,
-                    //             color: '#333',
-                    //             fontSize: 12,
-                    //             padding: [-2, 40, 0, 0]
-                    //         }
-                    //     }
-                    // },
+                    width:'80%',
+                    itemGap: 15,//图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
+                    formatter: '{default|{name}}',
+                    textStyle: {
+                        rich: {
+                            default: {
+                                // width: 80,
+                                color: '#333',
+                                fontSize: 12,
+                                // padding: [-2, 40, 0, 0]
+                                lineHeight:10,
+                            }
+                        }
+                    },
                     data: [
                         'Registered Customers',
                         {

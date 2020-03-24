@@ -906,7 +906,7 @@ label.bot-chart-com-sm {
 .changeButt{
     position: absolute;
     top: 40px;
-    width: 75%;
+    width: 71%;
     text-align: right;
     right: 5px;
     font-size: 14px;
@@ -1005,7 +1005,7 @@ label.bot-chart-com-sm {
     background-size: 100% 100%;
     position: absolute;
     top: 48px;
-    left: 44%;
+    left: 46%;
     z-index: 1;
     width: 17px;
     height: 18px;

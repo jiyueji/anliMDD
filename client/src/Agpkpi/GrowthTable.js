@@ -28,8 +28,8 @@ export default class GrowthTable extends Component {
                         </div>
                         <div style={{ color: "#5b9ae9", fontWeight: '700' }}>
                             <p style={{ margin: 0, marginBottom: "4px" }}>Registered Customers & Customer Equivalents Sales Share</p>
-                            <p style={{ margin: 0, marginBottom: "4px" }}>{maxTargCalYear} Target Range:{Math.round(allData.minTargetSalPct * 100)}% - {Math.round(allData.maxTargetSalPct * 100)}%</p>
-                            <p style={{ margin: 0, marginBottom: "4px" }}>{maxYear} YTD Actual:{Math.round(allData.monthAvg2Rows * 100)}%</p>
+                            <p style={{ margin: 0, marginBottom: "4px" }}>{maxTargCalYear} Target Range:  {Math.round(allData.minTargetSalPct * 100)}% - {Math.round(allData.maxTargetSalPct * 100)}%</p>
+                            <p style={{ margin: 0, marginBottom: "4px" }}>{maxYear} YTD Actual:  {Math.round(allData.monthAvg2Rows * 100)}%</p>
                         </div>
                     </div>
                     {/* 弹框内容 */}

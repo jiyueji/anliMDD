@@ -27,8 +27,8 @@ export default class EchartsFCWaterfall extends Component {
         var { maxMonthStr } = this.state
         return (
             <Fragment>
-                <div className="fcWaterFallTitle">YTD Yariance Contribution by FC <span>(by pertormance tear)</span></div>
-                <div style={{ position: "absolute", top: 15, right: 60, zIndex: 1, color: "#333", fontSize: 14 }}>As of {maxMonthStr}</div>
+                <div className="fcWaterFallTitle">YTD Variance Contribution by FC <span>(by performance year)</span></div>
+                <div style={{ position: "absolute", top: 15, right: 60, zIndex: 1, color: "#666", fontSize: 12 }}>As of {maxMonthStr}</div>
                 {/* <div style={{ background: "yellow", position: "absolute", top: 5, right: 100, zIndex: 1 }} onClick={this.handleChange2.bind(this)}>还原</div> */}
                 <div id="main"
                     style={{ width: "100%", height: "100%", background: "#ffffff", marginBottom: "36px", position: "relative" }}

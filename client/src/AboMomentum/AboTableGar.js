@@ -57,8 +57,7 @@ export default class AboTableGar extends Component {
     }
     componentDidMount() {
         var data = this.props.data.data;
-        console.log(data)
-
+        // console.log(data)
         this.setState({
             data,
         })
