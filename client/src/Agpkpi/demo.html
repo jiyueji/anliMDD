@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table td,table th{
+            border:1px solid #e5e6e9;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div style="padding-left:1%;padding-right:1%">
+            <div style="height:58px;display:flex;justify-content: space-between">
+                <h3 style="font-size:14px;line-height:58px;margin:0;font-weight:700">Growth (By Calendar Year)</h3>
+                <div style="font-size:12px;line-height:58px">As of {maxMonthStr}</div>
+            </div>
+            <div style="color:#5b9ae9;font-weight: 700;">
+                <p style="margin:0;margin-bottom: 12px;">{maxYear} YTD Customer & ABO (Purchasing Only) Sales:{Math.round(allData.monthAvg2Rows * 100 )}%</p>
+                <p style="margin:0;margin-bottom: 24px;">{maxTargCalYear} Customer & ABO (Purchasing Only) Sales Target:{Math.round(allData.minTargetSalPct *
+                    100 )}% - {Math.round(allData.maxTargetSalPct * 100 )}%</p>
+            </div>
+        </div>
+        <div style="margin-left:1%;margin-right:1%;border:10px solid #5198ee">
+            <table width="100%" border="0" border-collapse="collapse" cellspacing="0" cellpadding="0" style="text-align: center;">
+                <thead>
+                    <tr>
+                        <th rowSpan="2" style="height:60px">Segment</th>
+                        <th colSpan="3" style="height:60px">Number Purchasing</th>
+                        <th rowSpan="2" style="height:60px">Productivity</th>
+                        <th colSpan="2" style="height:60px">Total</th>
+                    </tr>
+                    <tr>
+                        <th style="height:60px">First Time Buyer</th>
+                        <th style="height:60px">Existing Buyer</th>
+                        <th style="height:60px">Total Buyer</th>
+                        <th style="height:60px">YTD Monthly Average</th>
+                        <th style="height:60px">YTD vs LY</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Customer</td>
+                        <td>251,191 (26%)</td>
+                        <td>111</td>
+                        <td>111</td>
+                        <td>111</td>
+                        <td>111</td>
+                        <td>111</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</body>
+
+</html>

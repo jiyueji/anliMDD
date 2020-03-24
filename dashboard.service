@@ -1,0 +1,11 @@
+[Unit]
+Description=Amway Dashboard.
+           
+[Service]
+User=ubuntu
+WorkingDirectory=/app
+Type=simple
+ExecStart=/usr/bin/python3 /app/server.py
+           
+[Install]
+WantedBy=multi-user.target

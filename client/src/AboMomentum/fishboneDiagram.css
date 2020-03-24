@@ -1,0 +1,346 @@
+/** 鱼骨图 **/
+.fishbone-diagram {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  margin-top: 50px;
+  /* font-family: 'ArialMT' */
+}
+.fishbone-diagram ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/** 鱼骨图-标注 **/
+.fishbone-diagram [class^='tagging-'] {
+  font-size: 14px;
+}
+/* .fishbone-diagram [class^='tagging-']::before {
+  content: '';
+  position: relative;
+  width: 0;
+  height: 0;
+  border-width: 10px 5px;
+  border-style: solid;
+  margin-right: 6px;
+} */
+.fishbone-diagram .tagging-rise {
+  color: #ff0000;
+}
+/* .fishbone-diagram .tagging-rise::before {
+  border-color: transparent transparent #00b8ac transparent;
+  top: -15px;
+} */
+.fishbone-diagram .tagging-rise .normal::before {
+  background-color: #16fcf433;
+}
+.fishbone-diagram .tagging-fall {
+  color: #ff0000;
+}
+.fishbone-diagram .tagging-fall::before {
+  border-color: #ff0000 transparent transparent transparent;
+  bottom: -15px;
+}
+.fishbone-diagram .tagging-fall .normal::before {
+  background-color: #fc818133;
+}
+.fishbone-diagram [class^='tagging-'] .normal {
+  position: relative;
+  font-weight: bold;
+}
+.fishbone-diagram [class^='tagging-'].bg .normal::before {
+  background-color: transparent;
+}
+/* .fishbone-diagram [class^='tagging-'] .normal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -4px;
+  width: calc(100% + 7px);
+  height: 100%;
+  border-radius: 4px;
+} */
+.fishbone-diagram [class^='tagging-'] .small {
+  display: inline-block;
+  /* transform: scale(0.75); */
+  font-size: 12px;
+  color: #333;
+}
+/** 鱼骨图-动画 **/
+.fishbone-diagram .animation-container {
+  position: relative;
+  /* margin-left: -32px; */
+  padding: 30px 0 38px;
+  /* transition: width 0.5s;
+  overflow: hidden; */
+}
+.fishbone-diagram .animation-container.w0 {
+  width: 0 !important;
+}
+.fishbone-diagram .animation-container:not(:last-child) {
+  margin-top: -30px;
+}
+/** 鱼骨图-标题 **/
+.fishbone-diagram .title {
+  color: #fff;
+  font-family: Arial;
+  font-weight: 700;
+  line-height: 21px;
+}
+/** 鱼骨图-副标题 **/
+.fishbone-diagram .sub-title {
+  float: left;
+  border: 2px solid #e6e6e8;
+  width: 36%;
+  /* margin-top: 10px; */
+  padding: 0 0 12px 0;
+  border-radius: 5px;
+  /* background-color: #091b3f;
+  box-shadow: 0px 0px 3px 2px rgba(12,69,151,1) inset; */
+}
+.fishbone-diagram .sub-title .pinTuli{
+  width: 90%;
+  display: flex;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  height: 10px;
+  padding-left: 10px;
+  margin-top: 10px;
+  line-height: 10px;
+}
+.fishbone-diagram .sub-title .pinTuli .tuliShow{
+  width:50%;
+  display:flex;
+  /* justify-content: space-between; */
+  height:10px;
+  color:#333;
+  font-size:12px
+}
+.fishbone-diagram .sub-title .pinTuli .tuliShow .yellowtuliShow{
+  width:10px;
+  height:10px;
+  background:#fe9b33;
+  margin-right: 5%;
+}
+.fishbone-diagram .sub-title .pinTuli .tuliShow .bluetuliShow{
+  width:10px;
+  height:10px;
+  background:#0368ee;
+  margin-right: 5%;
+}
+.sub-title [class^='tagging-'] {
+  margin-bottom: -20px;
+  padding-left: 10px;
+  line-height: 40px;
+}
+.sub-title .text-list {
+  float: left;
+  padding-left: 32%;
+  /* min-width: 160px; */
+  text-align: center;
+  line-height: 16px;
+  color: #333;
+  font-size: 12px;
+}
+.sub-title .text-list .text-item {
+  position: relative;
+  margin: 0 10px 0 0;
+  padding: 3px 10px 16px;
+}
+.sub-title .text-list .text-item::before {
+    content: '';
+    position: absolute;
+    left: -30px;
+    top: 32px;
+    /* -webkit-transform: skewY(44deg);
+    -ms-transform: skewY(44deg); */
+    transform: skewY(57deg);
+    width: 0;
+    height: 0;
+    border-width: 6px 15px;
+    border-color: #72b0f9 #72b0f9 transparent transparent;
+    border-style: solid;
+}
+.sub-title .text-list .text-item.line-num1-big:nth-child(1)::before {
+  border-width: 6px 17px;
+  left: -34px;
+  top: 17px;
+  -webkit-transform: skewY(60deg);
+  -ms-transform: skewY(60deg);
+  transform: skewY(21deg);
+}
+.sub-title .text-list .text-item:nth-child(2)::before {
+  border-width: 6px 15px;
+  left: -30px;
+  top: -1px;
+  transform: skewY(58deg);
+}
+.sub-title .text-list .text-item.line-num2:nth-child(2)::before {
+  border-width: 6px 30px;
+  left: -59px;
+  top: -12px;
+  transform: skewY(60deg);
+}
+.sub-title .text-list .text-item.line-num2-big:nth-child(2)::before {
+  border-width: 6px 30px;
+  left: -58px;
+  top: -2px;
+  transform: skewY(40deg);
+}
+.sub-title .text-list .text-item::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 12px;
+  background-color: #029bf8;
+}
+/** 鱼骨图-图例 **/
+.fishbone-diagram .legend {
+  position: absolute;
+  color: #333;
+  font-size: 14px;
+  text-align: left;
+  line-height: 23px;
+  right: 5%;
+  /* top: 199px; */
+  bottom: 48px;
+  font-weight: 600;
+}
+.legend .legend-item {
+  position: relative;
+  margin-top: 1px;
+  padding-bottom: 14px;
+}
+.fishbone-diagram .platUp {
+  position: absolute;
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 23px;
+  right: 1%;
+  /* top: 199px; */
+  bottom: 0;
+  font-weight: 600;
+  width: 15%;
+}
+.platUp .platUp-item {
+  position: relative;
+  margin-top: 1px;
+  padding-bottom: 14px;
+  display:flex;
+  justify-content: space-between;
+  text-align: right;
+}
+.platUp .platUp-item .platUp-item-blue{
+  width:40%;
+  background:#006aec;
+  padding-right: 2%;
+  border-radius: 3px;
+}
+.platUp .platUp-item .platUp-item-yellow{
+  width:40%;
+  background:#f3a135;
+  padding-right: 2%;
+  border-radius: 3px;
+}
+/* .legend .legend-item::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 32px;
+  height: 12px;
+  background-color: #0059ee;
+} */
+/** 鱼骨图-图表 **/
+.fishbone-diagram .diagram {
+  display: flex;
+  flex-direction: column-reverse;
+  position: absolute;
+  right: 15%;
+  bottom: 40px;
+  z-index: 111;
+  width: 70%;
+  /* margin: auto; */
+}
+.fishbone-diagram-big .diagram{
+  width: 60%;
+  right: 27%;
+  bottom: 31px;
+}
+.fishbone-diagram-big .legend {
+  right: 17%;
+  bottom: 0;
+}
+
+.diagram .diagram-item {
+  width: 100%;
+  display: flex;
+  position: absolute;
+  left: 32px;  
+  height: 12px;
+}
+/** 鱼骨图-图表-鱼骨标注 **/
+.diagram-item .diagram-item_tagging {
+  position: absolute;
+  left: -108px;
+  bottom: -26px;
+  width: 246px;
+}
+.diagram-item_tagging [class^='tagging-'] {
+  position: absolute;
+}
+.diagram-item_tagging .tagging-rise {
+  top: -62px;
+  left: 76px;
+}
+.diagram-item_tagging .tagging-fall {
+  top: -22px;
+  right: 0;
+}
+.diagram-item_tagging .tagging-fall::after {
+  content: '';
+  position: absolute;
+  bottom: 18px;
+  right: 84px;
+  transform: rotate(40deg);
+  width: 14px;
+  height: 3px;
+  background-color: #0076c0;
+}
+/** 鱼骨图-图表-鱼骨鱼刺 **/
+.diagram-item .diagram-item_fishbone {
+  display: flex;
+  width:100%;
+}
+.diagram-item_fishbone .fishbone-front{
+  position: relative;
+  transform: skewY(-33deg) translate(0, 13px);
+  width: 0;
+  height: 0;
+  border-width: 6px 20px;
+  border-color: transparent #50b1f4 #50b1f4 transparent;
+  border-style: solid;
+}
+.diagram-item_fishbone .fishbone-central {
+  width: 75%;
+  height: 100%;
+  background-color: #029bf8;
+  z-index: 1;
+}
+.diagram-item_fishbone .fishbone-central-big {
+  width: 90%;
+}
+.diagram-item_fishbone .fishbone-tail {
+  width: 0;
+  height: 0;
+  border-width: 12px 16px;
+  border-style: solid;
+  border-color: transparent transparent transparent #029bf8;
+  margin-top: -6px;
+  margin-left: -1px;
+}
+/* .diagram li:nth-of-type(1) .diagram-item .diagram-item_tagging{
+  color:rgb(0, 184, 172);
+} */

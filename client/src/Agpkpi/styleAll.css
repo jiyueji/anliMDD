@@ -1,0 +1,120 @@
+.segmentsNav {
+    list-style: none;
+    height: 30px;
+    position: relative;
+    top: 12px;
+    left: -40px;
+    padding: 0px;
+    line-height: 30px;
+    /* color: rgb(255, 255, 255); */
+    font-size: 12px;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    box-shadow: rgba(0, 0, 0, 0.6) 0px 1px 2px 1px;
+    background: #f7f8fa;
+    /* width: 40%; */
+    justify-content: space-around;
+  }
+  .segmentsNav .segmentsNav-item {
+    float: left;
+    padding: 0 6px;
+    border-right: 1px solid #ededef;
+    /* background-color: #1d4083; */
+    cursor: pointer;
+  }
+  .segmentsNav .segmentsNavActive {
+    background-color: #4d96f1;
+  }
+  .segmentsNav .segmentsNav-item:last-child {
+    border-right: none;
+  }
+  .sustainabilityTitleAll{
+    display:flex;
+    height: 58px;
+    width: 100%;
+    align-items:center;
+  }
+  .sustainabilityTitle{
+    font-size:14px;
+    color:#333;
+    font-weight:700;
+    /* line-height:58px; */
+    /* padding-left: 1%; */
+    margin-left: 1%;
+  }
+  .ballDiv{
+    position: absolute;
+    width: 145px;
+    height: 7px;
+    line-height: 7px;
+    display: flex;
+  }
+  .redball{
+    display:none;
+    display: block;
+    width: 92%;
+    height: 328px;
+    position: absolute;
+    top: 70px;
+    left: 38px;
+}
+.redBallShow{
+    content: '';
+    animation: warn 1.5s ease-out 0s infinite;
+    /* position: absolute; */
+    /* bottom: 200px; */
+    /* left: 250px; */
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #3a7796;
+    display: block;
+}
+@keyframes warn {
+    0% {
+        transform: scale(0.5);
+        opacity: 1;
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+}
+.redball1 {
+  display:none;
+  display: block;
+  width: 92%;
+  height: 328px;
+  position: absolute;
+  top: 70px;
+  left: 38px;
+}
+.ballDiv1{
+  position: absolute;
+  width: 145px;
+  height: 7px;
+  line-height: 7px;
+  display: flex;
+}
+/* .redball-flicker1:before {
+  background-color: red;
+}
+.redball-flicker1:before,
+.redball-flicker1:after {
+  content: '';
+  animation: warn 1.5s ease-out 0s infinite;
+  position: absolute;
+  bottom: 200px;
+  left: 250px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: red;
+  display: block;
+} */

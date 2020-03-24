@@ -1,0 +1,8 @@
+flask
+flask_sqlalchemy
+flask_restful
+flask_jwt_extended
+flask_cors
+passlib
+psycopg2-binary
+cherrypy
