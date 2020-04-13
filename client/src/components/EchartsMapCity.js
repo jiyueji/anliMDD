@@ -618,6 +618,7 @@ export default class EchartsMapCity extends Component {
             visualMap: {
                 show: false, //是否展示地图颜色渐变控件
                 type: "piecewise", //
+                borderWidth:0,                               //边框线宽
                 seriesIndex: 0, //指定取哪个系列的数据，即哪个系列的 series.data,默认取所有系列
                 pieces: this.state.list, //把颜色写在this.list数组中，所以可以在这里进行渲染
             },
@@ -728,6 +729,15 @@ export default class EchartsMapCity extends Component {
                             },
                         },
                     // },
+                    itemStyle: {
+                        normal: {
+                            areaColor: "#fceaea", //地图默认的地区颜色
+                            borderColor: "#ffe3ad", //地图直接的那个黑线边的颜色
+                            // shadowColor: 'red',
+                            // shadowBlur: 1,
+                            borderWidth: 0,//设置外层边框
+                        },
+                    },
                     data: this.state.list
                 },
                 {
@@ -739,7 +749,7 @@ export default class EchartsMapCity extends Component {
                     rippleEffect: {
                         brushType: "stroke"
                     },
-                    hoverAnimation: true,
+                    // hoverAnimation: true,
                     label: {
                         show:false,
                         normal: {
