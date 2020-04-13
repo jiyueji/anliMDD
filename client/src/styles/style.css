@@ -955,18 +955,22 @@ label.bot-chart-com-sm {
 .greenPic{
     background:url(./assets/fiveGreen.png) no-repeat;
     background-size: 100% 100%;
+    cursor:pointer;
 }
 .yellowPic{
     background:url(./assets/fiveYellow.png) no-repeat;
     background-size: 100% 100%;
+    cursor:pointer;
 }
 .redPic{
     background:url(./assets/fiveRed.png) no-repeat;
     background-size: 100% 100%;
+    cursor:pointer;
 }
 .bluePic{
     background:url(./assets/fiveBlue.png) no-repeat;
     background-size: 100% 100%;
+    cursor:pointer;
 }
 .picFourChangeNav {
     list-style: none;
@@ -979,7 +983,7 @@ label.bot-chart-com-sm {
     /* color: rgb(255, 255, 255); */
     font-size: 12px;
     border-radius: 8px;
-    overflow: hidden;
+    /* overflow: hidden; */
     display: flex;
     box-shadow: rgba(0, 0, 0, 0.6) 0px 1px 2px 1px;
     background: #f7f8fa;
@@ -989,6 +993,7 @@ label.bot-chart-com-sm {
   .picFourChangeNav .picFourChangeNav-item {
     float: left;
     padding: 0 6px;
+    border-radius: 8px;
     border-right: 1px solid #ededef;
     /* background-color: #1d4083; */
     cursor: pointer;
@@ -1015,7 +1020,7 @@ label.bot-chart-com-sm {
     background-size: 100% 100%;
     position: absolute;
     top: 48px;
-    left: 94%;
+    left: 95%;
     z-index: 1;
     width: 17px;
     height: 18px;
@@ -1201,4 +1206,44 @@ label.bot-chart-com-sm {
     }
     .statistic-graph-row-5 .growth-cell{
         color:red
+    }
+    .AboDownUlEch{
+        list-style: none;
+        position: absolute;
+        font-size: 12px;
+        bottom: 8px;
+        right: 44%;
+    }
+    .AboDownUlEch li{
+        display:flex;
+        justify-content: space-between;
+    }
+    .AboDownUlEch li div{
+        margin-top: 5px;
+        width: 50%;
+        color: #ffffff;
+        background: #0159ee;
+        text-align: center;
+        line-height: 17px;
+        position: relative;
+        /* font-size: 10px; */
+        transform: scale(0.8,0.8);
+    }
+    .AboDownUlEch li div:nth-of-type(1){
+        background:#3bedcd;
+    }
+    .AboDownUlEch li div p{
+        position: absolute;
+        margin: 0;
+        top: -9px;
+        /* top: -55%; */
+        left: 36%;
+        width:0;
+        height:0;
+        border-width:5px;
+        border-style:dotted dotted solid dotted;
+        border-color: transparent transparent #0159ee transparent;
+    }
+    .AboDownUlEch li div:nth-of-type(1) p{
+        border-color: transparent transparent #3bedcd transparent;
     }

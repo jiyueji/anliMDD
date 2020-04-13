@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 // import { observer, inject } from 'mobx-react'
 // import { observable } from 'mobx'
 import tuliLine from "../styles/assets/tuliLine.jpg"
-import tulibackground from "../styles/assets/tulibackground.jpg"
+import tulibackground from "../styles/assets/tulibackground.png"
 import tuliforecast from "../styles/assets/tuliforecast.png"
 import echarts from 'echarts';
 

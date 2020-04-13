@@ -1,13 +1,16 @@
 import React, { Component, Fragment } from 'react'
 import handPic from "../styles/assets/fiveHand.png"
+import handPics from "../styles/assets/fiveHands.png"
 import tuliLine from "../styles/assets/tuliLine.jpg"
-import tulibackground from "../styles/assets/tulibackground.jpg"
+import tulibackground from "../styles/assets/tulibackground.png"
 import echarts from 'echarts';
 
 export default class PicFourChange extends Component {
     constructor() {
         super();
         this.state = {
+            allEvents:"Net Sales(MTD)",//下面的可以变化的标题
+
             data: {},
             data2: {},
             netData: {},
@@ -24,52 +27,52 @@ export default class PicFourChange extends Component {
             data3MaxYear: "",
             data3MaxMonth: "",
             pieThreeDataArr: [],//玫瑰图原数据
-            pieThreeShowData:[],//玫瑰图加了数据
+            pieThreeShowData: [],//玫瑰图加了数据
         }
     }
     render() {
-        var { netData, bvData, recruitmentDate, buyerCountsDate, changeName } = this.state
+        var { allEvents,netData, bvData, recruitmentDate, buyerCountsDate,changeName,} = this.state
         return (
             <Fragment>
                 <div style={{ height: '160px', width: '100%', display: 'flex', justifyContent: 'space-between' }}>
-                    <div className="greenPic" style={{ width: '24%', height: "140px", position: 'relative' }}>
-                        <img src={handPic} style={{ height: "100%", width: "100%", position: "absolute", cursor: "pointer" }} onClick={this.picChangeDateHandle.bind(this, 0)} />
-                        <div style={{ marginTop: "16px",fontWeight:"600", fontSize: "14px", color: "#ffffff", marginLeft: '9%' }}>Net Sales(MTD)</div>
+                    <div className="greenPic" style={{ width: '24%', height: "140px", position: 'relative' }} onClick={this.picChangeDateHandle.bind(this, 0)}>
+                        <img src={handPics} style={{ height: "30px", width: "30px", position: "absolute", right: "10%", top: "6%" }} />
+                        <div style={{ marginTop: "16px", fontWeight: "600", fontSize: "14px", color: "#ffffff", marginLeft: '9%' }}>Net Sales(MTD)</div>
                         {/* <div style={{ marginTop: "22px", fontSize: "12px", color: "#ffffff", marginLeft: '9%' }}>Month to date</div> */}
                         <h3 style={{ marginTop: "55px", fontSize: "28px", color: "#ffffff", marginLeft: '9%' }}>${netData.monthData || 0}m</h3>
-                        <div style={{ position: 'absolute', left:"49%", top: "46px",fontWeight:"600", fontSize: "12px", color: "#ffffff" }}>Target Completion:{(netData.lmData >= 0 ? "+" + netData.lmData : netData.lmData) || 0}%</div>
-                        <div style={{ position: 'absolute', left:"66%", top: "72px",fontWeight:"600", fontSize: "12px", color: "#ffffff" }}>vs SPLM:{(netData.lmData >= 0 ? "+" + netData.lmData : netData.lmData) || 0}%</div>
-                        <div style={{ position: 'absolute', left:"66%", top: "100px",fontWeight:"600", fontSize: "12px", color: "#ffffff" }}>vs SPLY:{(netData.splyData >= 0 ? "+" + netData.splyData : netData.splyData) || 0}%</div>
+                        <div style={{ position: 'absolute', left: "49%", top: "46px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>Target Completion:{netData.lmData || 0}%</div>
+                        <div style={{ position: 'absolute', left: "66%", top: "72px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>vs SPLM:{(netData.lmData > 0 ? "+" + netData.lmData : netData.lmData) || 0}%</div>
+                        <div style={{ position: 'absolute', left: "66%", top: "100px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>vs SPLY:{(netData.splyData > 0 ? "+" + netData.splyData : netData.splyData) || 0}%</div>
                     </div>
-                    <div className="yellowPic" style={{ width: '24%', height: "140px", position: 'relative' }}>
-                        <img src={handPic} style={{ height: "100%", width: "100%", position: "absolute", cursor: "pointer" }} onClick={this.picChangeDateHandle.bind(this, 1)} />
-                        <div style={{ marginTop: "16px",fontWeight:"600", fontSize: "14px", color: "#ffffff", marginLeft: '9%' }}>Order BV Sales(MTD)</div>
+                    <div className="yellowPic" style={{ width: '24%', height: "140px", position: 'relative' }} onClick={this.picChangeDateHandle.bind(this, 1)}>
+                        <img src={handPics} style={{ height: "30px", width: "30px", position: "absolute", right: "10%", top: "6%" }} />
+                        <div style={{ marginTop: "16px", fontWeight: "600", fontSize: "14px", color: "#ffffff", marginLeft: '9%' }}>Order BV Sales(MTD)</div>
                         {/* <div style={{ marginTop: "22px", fontSize: "12px", color: "#ffffff", marginLeft: '9%' }}>Month to date</div> */}
                         <h3 style={{ marginTop: "55px", fontSize: "28px", color: "#ffffff", marginLeft: '9%' }}>${bvData.monthData || 0}m</h3>
-                        <div style={{ position: 'absolute', left:"66%", top: "72px", fontWeight:"600",fontSize: "12px", color: "#ffffff" }}>vs SPLM:{(bvData.lmData >= 0 ? "+" + bvData.lmData : bvData.lmData) || 0}%</div>
-                        <div style={{ position: 'absolute', left:"66%", top: "102px", fontWeight:"600",fontSize: "12px", color: "#ffffff" }}>vs SPLY:{(bvData.splyData >= 0 ? "+" + bvData.splyData : bvData.splyData) || 0}%</div>
+                        <div style={{ position: 'absolute', left: "66%", top: "72px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>vs SPLM:{(bvData.lmData > 0 ? "+" + bvData.lmData : bvData.lmData) || 0}%</div>
+                        <div style={{ position: 'absolute', left: "66%", top: "102px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>vs SPLY:{(bvData.splyData > 0 ? "+" + bvData.splyData : bvData.splyData) || 0}%</div>
                     </div>
-                    <div className="redPic" style={{ width: '24%', height: "140px", position: 'relative' }}>
-                        <img src={handPic} style={{ height: "100%", width: "100%", position: "absolute", cursor: "pointer" }} onClick={this.picChangeDateHandle.bind(this, 2)} />
-                        <div style={{ marginTop: "16px",fontWeight:"600", fontSize: "14px", color: "#ffffff", marginLeft: '9%' }}>Recruitment(MTD)</div>
+                    <div className="redPic" style={{ width: '24%', height: "140px", position: 'relative' }} onClick={this.picChangeDateHandle.bind(this, 2)} >
+                        <img src={handPics} style={{ height: "30px", width: "30px", position: "absolute", right: "10%", top: "6%" }} />
+                        <div style={{ marginTop: "16px", fontWeight: "600", fontSize: "14px", color: "#ffffff", marginLeft: '9%' }}>Recruitment(MTD)</div>
                         {/* <div style={{ marginTop: "22px", fontSize: "12px", color: "#ffffff", marginLeft: '9%' }}>Month to date</div> */}
                         <h3 style={{ marginTop: "55px", fontSize: "28px", color: "#ffffff", marginLeft: '9%' }}>{recruitmentDate.monthData || 0}k</h3>
-                        <div style={{ position: 'absolute', left:"66%", top: "72px",fontWeight:"600", fontSize: "12px", color: "#ffffff" }}>vs SPLM:{(recruitmentDate.lmData >= 0 ? "+" + recruitmentDate.lmData : recruitmentDate.lmData) || 0}%</div>
-                        <div style={{ position: 'absolute', left:"66%", top: "102px",fontWeight:"600", fontSize: "12px", color: "#ffffff" }}>vs SPLY:{(recruitmentDate.splyData >= 0 ? "+" + recruitmentDate.splyData : recruitmentDate.splyData) || 0}%</div>
+                        <div style={{ position: 'absolute', left: "66%", top: "72px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>vs SPLM:{(recruitmentDate.lmData > 0 ? "+" + recruitmentDate.lmData : recruitmentDate.lmData) || 0}%</div>
+                        <div style={{ position: 'absolute', left: "66%", top: "102px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>vs SPLY:{(recruitmentDate.splyData > 0 ? "+" + recruitmentDate.splyData : recruitmentDate.splyData) || 0}%</div>
                     </div>
-                    <div className="bluePic" style={{ width: '24%', height: "140px", position: 'relative' }}>
-                        <img src={handPic} style={{ height: "100%", width: "100%", position: "absolute", cursor: "pointer" }} onClick={this.picChangeDateHandle.bind(this, 3)} />
-                        <div style={{ marginTop: "16px",fontWeight:"600", fontSize: "14px", color: "#ffffff", marginLeft: '9%' }}>Buyer Counts(MTD)</div>
+                    <div className="bluePic" style={{ width: '24%', height: "140px", position: 'relative' }} onClick={this.picChangeDateHandle.bind(this, 3)} >
+                        <img src={handPics} style={{ height: "30px", width: "30px", position: "absolute", right: "10%", top: "6%" }} />
+                        <div style={{ marginTop: "16px", fontWeight: "600", fontSize: "14px", color: "#ffffff", marginLeft: '9%' }}>Buyer Counts(MTD)</div>
                         {/* <div style={{ marginTop: "22px", fontSize: "12px", color: "#ffffff", marginLeft: '9%' }}>Month to date</div> */}
                         <h3 style={{ marginTop: "55px", fontSize: "28px", color: "#ffffff", marginLeft: '9%' }}>{buyerCountsDate.monthData || 0}k</h3>
-                        <div style={{ position: 'absolute', left:"66%", top: "72px", fontWeight:"600",fontSize: "12px", color: "#ffffff" }}>vs SPLM:{(buyerCountsDate.lmData >= 0 ? "+" + buyerCountsDate.lmData : buyerCountsDate.lmData) || 0}%</div>
-                        <div style={{ position: 'absolute', left:"66%", top: "102px",fontWeight:"600", fontSize: "12px", color: "#ffffff" }}>vs SPLY:{(buyerCountsDate.splyData >= 0 ? "+" + buyerCountsDate.splyData : buyerCountsDate.splyData) || 0}%</div>
+                        <div style={{ position: 'absolute', left: "66%", top: "72px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>vs SPLM:{(buyerCountsDate.lmData > 0 ? "+" + buyerCountsDate.lmData : buyerCountsDate.lmData) || 0}%</div>
+                        <div style={{ position: 'absolute', left: "66%", top: "102px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>vs SPLY:{(buyerCountsDate.splyData > 0 ? "+" + buyerCountsDate.splyData : buyerCountsDate.splyData) || 0}%</div>
                     </div>
                 </div>
-                <div style={{ width: '100%', height: "410px", background: "#ffffff", borderRadius: "10px", display: "flex" }}>
-                    <div style={{ width: '75%', height: "100%" }}>
+                <div style={{ width: '100%', height: "340px", background: "#ffffff", borderRadius: "10px", display: "flex" }}>
+                    <div style={{ width: '75%', height: "100%", display: "flex", flexWrap: "wrap" }}>
                         <div style={{ paddingLeft: '1%', paddingRight: '1%', height: '58px', display: 'flex' }}>
-                            <h3 style={{ fontSize: "12px", lineHeight: '58px', margin: '0', marginRight: "20px", fontWeight: '700' }}>Events</h3>
+                            <h3 style={{ fontSize: "12px", lineHeight: '58px', margin: '0', marginRight: "20px", fontWeight: '700' }}>{allEvents}</h3>
                             <ul className="picFourChangeNav">
                                 <li className="picFourChangeNav-item picFourChangeNavActive" id="upDateBlueShow" onClick={this.changeDateHandle.bind(this, 0)}>Total</li>
                                 {
@@ -83,10 +86,10 @@ export default class PicFourChange extends Component {
                                 <li className="picFourChangeNav-item" onClick={this.changeDateHandle.bind(this, 2)}>Productivity($)</li> */}
                             </ul>
                         </div>
-                        <div id="fourChangeLine" style={{ width: "100%", height: '350px' }}></div>
+                        <div id="fourChangeLine" style={{ width: "100%", height: '280px' }}></div>
                     </div>
-                    <div style={{ width: '25%', height: "100%" }}>
-                        <div id="pieAngleEcharts" style={{ width: "100%", height: '350px' }}></div>
+                    <div style={{ width: '25%', height: "100%", display: "flex" }}>
+                        <div id="pieAngleEcharts" style={{ width: "100%", height: '280px' }}></div>
                     </div>
                 </div>
 
@@ -157,8 +160,8 @@ export default class PicFourChange extends Component {
             return {
                 value: number + item.value,
                 name: item.name,
-                lmData:item.lmData,
-                splyData:item.splyData
+                lmData: item.lmData,
+                splyData: item.splyData
             }
         })
         // console.log(pieThreeShowData,111)
@@ -231,8 +234,11 @@ export default class PicFourChange extends Component {
     }
     //点击图片下面切换数据
     picChangeDateHandle(idx, e) {
-        var { data, data2, changeName } = this.state
+        var { data, data2, changeName,allEvents } = this.state
         changeName = []
+        if(e.target.childNodes[1].innerHTML){
+            allEvents = e.target.childNodes[1].innerHTML
+        }
         if (idx == 0) {
             data.tableData ? data.tableData.map((item, index) => {
                 if (item.agg_type !== "Net Sales" && item.agg_type !== "Order BV Sales") {
@@ -257,7 +263,7 @@ export default class PicFourChange extends Component {
             changeName = changeName.slice(3)
         }
         this.setState({
-            changeName,
+            changeName,allEvents
         }, () => {
             var { elmUpDateBlue } = this.state
             if (elmUpDateBlue) {
@@ -281,7 +287,7 @@ export default class PicFourChange extends Component {
     }
     // 可以切换的折线图Echarts
     echartsShowLine(idx) {
-        var myChartFour,
+        var myChartThree,
             defaultFourOpt = {
                 grid: {
                     left: 20,
@@ -370,7 +376,7 @@ export default class PicFourChange extends Component {
                     // formatter: '{default|{name}}',
                     data: [
                         { name: this.state.data3MaxMonth + "/" + this.state.data3MaxYear, icon: "image://" + tuliLine },
-                        { name: this.state.data3MaxMonth + "/" + this.state.data3PrevYear, icon: "image://" + tulibackground  }
+                        { name: this.state.data3MaxMonth + "/" + this.state.data3PrevYear, icon: "image://" + tulibackground }
                     ],
                     // textStyle: {
                     //     rich: {
@@ -495,9 +501,6 @@ export default class PicFourChange extends Component {
                     ]
                 }
             ];
-        window.addEventListener('resize', function () {
-            myChartFour && myChartFour.resize && myChartFour.resize();
-        });
         idx ? this.segmentsHandleEcharts(chartArray, defaultFourOpt, idx) : this.segmentsHandleEcharts(chartArray, defaultFourOpt)
     }
     segmentsHandleEcharts(chartArray, defaultOpt, idIndex) {
@@ -506,6 +509,9 @@ export default class PicFourChange extends Component {
         fourChangeLineWidth.style.width = (window.innerWidth * 0.72) + "px"
 
         var myChartThree = echarts.init(document.getElementById('fourChangeLine'));
+        window.addEventListener('resize', function () {
+            myChartThree && myChartThree.resize && myChartThree.resize();
+        });
         var idx = 0,
             option = chartArray[idx];
         document.querySelector(`.nav-item:nth-child(${idx + 1})`).classList.add('segmentsNavActive');
@@ -529,18 +535,18 @@ export default class PicFourChange extends Component {
                     // pieThreeData.name = item.agg_type;
                     // pieThreeData.lmData = Math.round((item.pct_mtd_splm || 0) * 100);
                     // pieThreeData.splyData = Math.round((item.pct_mtd_sply || 0) * 100);
-                    var {pieThreeDataArr} = this.state;
+                    var { pieThreeDataArr } = this.state;
                     var pieIndex = pieThreeDataArr[data.dataIndex];
                     var namePie = pieIndex.name;
                     var valuePie = "Month to date($):" + pieIndex.value + "m";
-                    if(pieIndex.lmData >= 0){
+                    if (pieIndex.lmData >= 0) {
                         var lmData = "<span style='color:red'>" + "-" + pieIndex.lmData + "%" + "</span>"
-                    }else{
+                    } else {
                         var lmData = "<span style='color:green'>" + "+" + pieIndex.lmData + "%" + "</span>"
                     }
-                    if(pieIndex.splyData >= 0){
+                    if (pieIndex.splyData >= 0) {
                         var splyData = "<span style='color:red'>" + "-" + pieIndex.splyData + "%" + "</span>"
-                    }else{
+                    } else {
                         var splyData = "<span style='color:green'>" + "+" + pieIndex.splyData + "%" + "</span>"
                     }
                     var lmDataPie = "MTD % changevs last month:" + lmData;

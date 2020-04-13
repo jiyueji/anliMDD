@@ -89,8 +89,8 @@ export default class GrowthTable extends Component {
                                             <td style={{ height: "50px", border: "1px solid #e5e6e9" }}>{hlp.numberWithCommas(item.existing_buyer_population)} ({Math.round(item.pct_existing_buyer_population * 100)}%)</td> */}
                                             <td style={{ height: "40px", border: "1px solid #e5e6e9" }}>{hlp.numberWithCommas(item.total_buyer_population)} ({Math.round(item.pct_total_buyer_population * 100)}%)</td>
                                             <td style={{ height: "40px", border: "1px solid #e5e6e9", textAlign: "right", paddingRight: "28px" }}>${Math.round(item.productivity)}</td>
-                                            <td style={{ height: "40px", border: "1px solid #e5e6e9", fontWeight: "700" }}>${`${hlp.toShortMil(item.actual_sales)}m`} <span style={{ color: index <= 1 ? "#5198ee" : "" }}>({Math.round(item.pct_actual_sales * 100)}%)</span></td>
-                                            <td style={{  paddingRight: '34px', position: 'relative', height: "40px", border: "1px solid #e5e6e9", color: item.yoy_sales[0] == "+" ? "#16b6aa" : "#ff0000" }}>{item.yoy_sales}<span style={{ position: 'absolute'}}>{item.isTotal ? '' : `(${item.yoy_pct_sales})`}</span></td>
+                                            <td style={{ height: "40px", border: "1px solid #e5e6e9", fontWeight: "700" }}>${`${hlp.toShortMil(item.actual_sales)}m`} <span style={{ color: index <= 1 ? "#5198ee" : "" }}>({Math.round(item.pct_actual_sales * 100)}{Math.round(item.pct_actual_sales * 100) >= 10 ? "" : "  "}%)</span></td>
+                                            <td style={{ paddingRight:item.yoy_pct_sales ? "" : "5%", height: "40px", border: "1px solid #e5e6e9", color: item.yoy_sales[0] == "+" ? "#16b6aa" : "#ff0000" }}>{item.yoy_sales} <span style={{color:"#16b6aa"}}>{item.isTotal ? '' : `(${item.yoy_pct_sales})`}</span></td>
                                         </tr> : <tr key={index}></tr>
                                     })
                                 }

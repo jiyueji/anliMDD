@@ -80,6 +80,9 @@
 .fishbone-diagram .animation-container:not(:last-child) {
   margin-top: -30px;
 }
+.fishbone-diagram .animation-container-height:not(:last-child){
+  margin-top: -5px;
+}
 /** 鱼骨图-标题 **/
 .fishbone-diagram .title {
   color: #fff;
@@ -91,9 +94,10 @@
 .fishbone-diagram .sub-title {
   float: left;
   border: 2px solid #e6e6e8;
-  width: 36%;
-  /* margin-top: 10px; */
-  padding: 0 0 12px 0;
+  width: 32%;
+  /* margin-top: 25px; */
+  margin-left: 10px;
+  padding: 0 0 0 0;
   border-radius: 5px;
   /* background-color: #091b3f;
   box-shadow: 0px 0px 3px 2px rgba(12,69,151,1) inset; */
@@ -109,7 +113,7 @@
   line-height: 10px;
 }
 .fishbone-diagram .sub-title .pinTuli .tuliShow{
-  width:50%;
+  width:56%;
   display:flex;
   /* justify-content: space-between; */
   height:10px;
@@ -120,13 +124,13 @@
   width:10px;
   height:10px;
   background:#fe9b33;
-  margin-right: 5%;
+  /* margin-right: 5%; */
 }
 .fishbone-diagram .sub-title .pinTuli .tuliShow .bluetuliShow{
   width:10px;
   height:10px;
   background:#0368ee;
-  margin-right: 5%;
+  /* margin-right: 5%; */
 }
 .sub-title [class^='tagging-'] {
   margin-bottom: -20px;
@@ -144,8 +148,11 @@
 }
 .sub-title .text-list .text-item {
   position: relative;
-  margin: 0 10px 0 0;
-  padding: 3px 10px 16px;
+  /* margin: 0 10px 0 0; */
+  padding: 0 0 4px;
+  margin: 0;
+  margin-bottom: 10px;
+  margin-top: -8px;
 }
 .sub-title .text-list .text-item::before {
     content: '';
@@ -162,12 +169,12 @@
     border-style: solid;
 }
 .sub-title .text-list .text-item.line-num1-big:nth-child(1)::before {
-  border-width: 6px 17px;
-  left: -34px;
-  top: 17px;
+  border-width: 4px 8px;
+  left: -16px;
+  top: 14px;
   -webkit-transform: skewY(60deg);
   -ms-transform: skewY(60deg);
-  transform: skewY(21deg);
+  transform: skewY(18deg);
 }
 .sub-title .text-list .text-item:nth-child(2)::before {
   border-width: 6px 15px;
@@ -182,18 +189,20 @@
   transform: skewY(60deg);
 }
 .sub-title .text-list .text-item.line-num2-big:nth-child(2)::before {
-  border-width: 6px 30px;
-  left: -58px;
-  top: -2px;
+  border-width: 4px 23px;
+  left: -46px;
+  top: 13px;
+  -webkit-transform: skewY(40deg);
+  -ms-transform: skewY(40deg);
   transform: skewY(40deg);
 }
 .sub-title .text-list .text-item::after {
   content: '';
   position: absolute;
   left: 0;
-  bottom: 0;
+  bottom: -4px;
   width: 100%;
-  height: 12px;
+  height: 8px;
   background-color: #029bf8;
 }
 /** 鱼骨图-图例 **/
@@ -203,7 +212,7 @@
   font-size: 14px;
   text-align: left;
   line-height: 23px;
-  right: 5%;
+  right: 15%;
   /* top: 199px; */
   bottom: 48px;
   font-weight: 600;
@@ -212,6 +221,9 @@
   position: relative;
   margin-top: 1px;
   padding-bottom: 14px;
+}
+.legend_smallfish .legend-item{
+  margin-top: 25px;
 }
 .fishbone-diagram .platUp {
   position: absolute;
@@ -322,6 +334,9 @@
   border-width: 6px 20px;
   border-color: transparent #50b1f4 #50b1f4 transparent;
   border-style: solid;
+}
+.diagram-item_fishbone_smallfish .fishbone-front{
+  transform: skewY(-51deg) translate(0px, 25px);
 }
 .diagram-item_fishbone .fishbone-central {
   width: 75%;

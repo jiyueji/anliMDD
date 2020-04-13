@@ -106,7 +106,7 @@ const DonutChart = observer((props) => {
     drawChart( ctx, canvas, percentVal1, 'on target',false)
     drawChart( ctx2, canvas2, percentVal2, 'on SPLY' ,true)
   })
-  const x=100, y=125
+  const x=100, y=135
   return (
     <React.Fragment>
       <div className="row align-items-center" style={{paddingLeft:"50px"}}>

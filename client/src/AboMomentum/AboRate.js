@@ -17,7 +17,9 @@ export default class AboRate extends Component {
         return (
             <Fragment>
                 <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Consequtive qualification rate</div>
+                <div style={{ width: "100%", height: "420px", display: 'flex' }}>
                 <div id="aboRateEcharts" style={{ width: "100%", height: "400px" }}></div>
+                </div>
             </Fragment>
         )
     }
@@ -31,6 +33,7 @@ export default class AboRate extends Component {
         // months_data_cons: (12)[{ … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }]
         // maxYear: "PF 20"
         // prevYear: "PF 19"
+        console.log(data)
         var {num_q_month_data,num_q_month_ly_data,months_data,maxYear,prevYear,ytd_consecutive_data,ytd_consecutive_ly_data} = data
         var num_q_month_data_show = []
         var num_q_month_ly_data_show = []
@@ -183,8 +186,8 @@ export default class AboRate extends Component {
                 type: "scroll",
                 icon: "rect",
                 data: [
+                    { name: this.state.prevYear },
                     { name: this.state.maxYear },
-                    { name: this.state.prevYear }
                 ],
                 itemWidth: 10,
                 itemHeight: 10,

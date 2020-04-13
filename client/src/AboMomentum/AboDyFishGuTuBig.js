@@ -29,15 +29,15 @@ export default class AboDyFishGuTuBig extends Component {
                 {
                     !data['EDC+'] ? <div></div> :
                         <div className="fishbone-diagram fishbone-diagram-big">
-                            <ul className="sub-title">
+                            <ul className="sub-title sub-title">
                                 <div className="pinTuli">
                                     <div className="tuliShow">
-                                        <div className="yellowtuliShow"></div>
-                                        <div>2019 Actual</div>
+                                        <div className="bluetuliShow"></div>
+                                        <div>{hlp.yearToPfPref2(recPerfYear)} Actual</div>
                                     </div>
                                     <div className="tuliShow">
-                                        <div className="bluetuliShow"></div>
-                                        <div>2020 Prediction</div>
+                                        <div className="yellowtuliShow"></div>
+                                        <div style={{whiteSpace:'nowrap'}}>{hlp.yearToPfPref2(futurePerfYear)} Prediction</div>
                                     </div>
                                 </div>
                                 <li className="tagging-rise">
@@ -46,7 +46,7 @@ export default class AboDyFishGuTuBig extends Component {
                                 </li>
                                 <li className="text-list">
                                     <p className="text-item line-num1 line-num1-big">Historical {hlp.yearToPfPref2(recPerfYear)} vs {hlp.yearToPfPref2(prevRecPerfYear)}</p>
-                                    <p className="text-item line-num2 line-num2-big">Prediction {hlp.yearToPfPref2(futurePerfYear)}</p>
+                                    <p className="text-item line-num2 line-num2-big">Prediction {hlp.yearToPfPref2(futurePerfYear)} vs {hlp.yearToPfPref2(recPerfYear)}<br></br>(<span style={{color:'#00b8ac'}}>better</span>/<span style={{color:'red'}}>worse</span>)</p>
                                 </li>
                             </ul>
                             <ul className="legend">
@@ -59,7 +59,7 @@ export default class AboDyFishGuTuBig extends Component {
                                 <li className="legend-item">Plat & up:</li>
                             </ul>
                             <ul className="platUp">
-                                <li className="platUp-item" style={{ textAlign: "left", fontSize: '14px', color: "#333", }}>Population by<br></br>PIN level</li>
+                                <li className="platUp-item" style={{ textAlign: "left", fontSize: '14px', color: "#333",textAlign:"center" }}>Population by<br></br>PIN level</li>
                                 {
                                     actualArr && actualArr.length >= 0 && predArr && predArr.length >= 0 ? actualArr.map((item, index) => {
                                         return <li className="platUp-item" key={index}>

@@ -17,7 +17,9 @@ export default class AboDyBarStack extends Component {
         return (
             <Fragment>
                 <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>First year ABO renewal rate</div>
-                <div id="aboLineEcharts" style={{ width: "100%", height: "420px" }}></div>
+                <div style={{ width: "100%", height: "420px", display: 'flex' }}>
+                    <div id="aboLineEcharts" style={{ width: "100%", height: "420px" }}></div>
+                </div>
             </Fragment>
         )
     }
@@ -25,7 +27,7 @@ export default class AboDyBarStack extends Component {
         this.upDateShowData()
     }
     componentWillReceiveProps(nextProps) {
-        var { data,isPerfYear } = nextProps
+        var { data, isPerfYear } = nextProps
         var { monthShowAboLine } = this.state
         if (isPerfYear) {
             monthShowAboLine = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']
@@ -46,12 +48,12 @@ export default class AboDyBarStack extends Component {
         // scatter_data: (12) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
         // isPerfYear: false
         var renewalRateData = []
-        data.renewal_rate_data.map((item,index)=>{
-            renewalRateData.push((item.y * 100).toFixed(2))
+        data.renewal_rate_data.map((item, index) => {
+            renewalRateData.push((item.y * 100).toFixed(1))
         })
         var renewalRatePredictionData = []
-        data.renewal_rate_prediction_data.map((item,index)=>{
-            renewalRatePredictionData.push((item.y * 100).toFixed(2))
+        data.renewal_rate_prediction_data.map((item, index) => {
+            renewalRatePredictionData.push((item.y * 100).toFixed(1))
         })
         for (var i = 0; renewalRatePredictionData.length < 12; i++) {
             renewalRatePredictionData.unshift("")
@@ -116,6 +118,7 @@ export default class AboDyBarStack extends Component {
                             return params / 1 + "%"
                         }
                     },
+                    max:80,
                     axisLine: {//隐藏X轴
                         show: false
                     },
@@ -140,7 +143,7 @@ export default class AboDyBarStack extends Component {
                 itemGap: 30,//图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
                 // data: ['Actual Renewal Rate', 'Prediction Renewal Rate'],
                 data: [
-                    { name: 'Actual Renewal Rate',icon: "image://" + tuliGreen },
+                    { name: 'Actual Renewal Rate', icon: "image://" + tuliGreen },
                     { name: 'Prediction Renewal Rate', icon: "image://" + tuliforecast }
                 ],
             },
@@ -164,9 +167,14 @@ export default class AboDyBarStack extends Component {
                     },
                     label: {
                         show: true,
-                        // position: 'top',
-                        position: ['-10', '-20'],
-                        formatter: function (params) {
+                        position: 'top',
+                        // position: ['-10', '-20'],
+                        formatter:(params)=> {
+                            console.log(this.state.renewalRateData.length - 1)
+                            // console.log(params.dataIndex)
+                            if(params.dataIndex == this.state.renewalRateData.length - 1){
+                                return ""
+                            }
                             return params.data + "%"
                         },
                         backgroundColor: '#ff9c46',
@@ -186,8 +194,8 @@ export default class AboDyBarStack extends Component {
                     symbolSize: 5, //折线点的大小
                     label: {
                         show: true,
-                        // position: 'top',
-                        position: ['-10', '-20'],
+                        position: 'top',
+                        // position: ['-10', '-20'],
                         formatter: function (params) {
                             return params.data + "%"
                         },

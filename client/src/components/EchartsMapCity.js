@@ -524,7 +524,7 @@ export default class EchartsMapCity extends Component {
                 array.push({
                     name,
                     value: [...geoCoord],
-                    label: { fontSize: 10, show: showLabel }
+                    label: { fontSize: 10, shows: showLabel,show:false }//这个show代表地图的名字是否显示
                 });
             });
             //改变回来排序，按大小来排
@@ -543,7 +543,7 @@ export default class EchartsMapCity extends Component {
                         pointX: 122,
                         pointY: 26.5,
                         getPoint() {
-                            return [this.pointX -= 0.5, this.pointY -= 1]
+                            return [this.pointX -= 1.2, this.pointY -= 1]
                         }
                     },
                     {
@@ -566,7 +566,7 @@ export default class EchartsMapCity extends Component {
                         }
                     },
                     {
-                        flag: 139,
+                        flag: 39,
                         pointX: 114,
                         pointY: 37.4,
                         extend(object) {
@@ -584,22 +584,27 @@ export default class EchartsMapCity extends Component {
                             return [this.pointX += 1.2, this.pointY -= 1.2];
                         }
                     }
-                ],
-                array = [];
+                ]
+            var array = [];
             data.forEach(({ label, name, value }) => {
-                if (label.show) return false;
-                let [pointX, pointY] = value,
-                    object = { name, coords: [[...value]] };
-                if (pointX <= flag) {
-                    object.label = { align: 'right' };
-                    object.coords.push([pointX -= 1.4, pointY += 0.6]);
+                let [pointX, pointY] = value;
+                var object = { name, coords: [[...value]] };
+                if (label.shows) {
+                    object.label = { align: 'left' };
+                    object.coords.push([pointX += 0.1, pointY += 0]);
                 } else {
-                    let point = latitude.find(item => item.flag >= pointY);
-                    point.extend && point.extend(object);
-                    object.coords.push(point.getPoint());
+                    if (pointX <= flag) {
+                        object.label = { align: 'right' };
+                        object.coords.push([pointX -= 1.4, pointY += 0.6]);
+                    } else {
+                        let point = latitude.find(item => item.flag >= pointY);
+                        point.extend && point.extend(object);
+                        object.coords.push(point.getPoint());
+                    }
                 }
                 array.push(object);
             });
+            // console.log(array)
             return array;
         }
         /*获取地图数据*/
@@ -736,6 +741,7 @@ export default class EchartsMapCity extends Component {
                     },
                     hoverAnimation: true,
                     label: {
+                        show:false,
                         normal: {
                             color: "#333333",
                             // formatter: "{b}",
@@ -748,7 +754,7 @@ export default class EchartsMapCity extends Component {
                             show: false //是否显示地名
                         },
                         emphasis: {
-                            show: true
+                            show: false
                         }
                     },
                     itemStyle: {

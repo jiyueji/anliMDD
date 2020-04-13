@@ -8,7 +8,7 @@ export default class AboDyFishGuTuSmall extends Component {
         super();
         this.state = {
             data: {},
-            actualMonth:'',
+            actualMonth: '',
             futureMonthStr: [],
             futureMonth: [],
             NAMES_IDS: []
@@ -20,84 +20,86 @@ export default class AboDyFishGuTuSmall extends Component {
         return (
             <Fragment>
                 <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Prediction of Bonus Migration for Next 3 months</div>
-                <div style={{ position: "absolute", right: ' 5%', top: '4%', fontSize: '12px', color:"#666" }}>As of {actualMonth}</div>
+                <div style={{ position: "absolute", right: ' 5%', top: '4%', fontSize: '12px', color: "#666" }}>As of {actualMonth}</div>
                 {
                     !data['Bonus0-9'] ? <div></div> :
-                    <div className="fishbone-diagram">
-                    <ul className="sub-title">
-                        <li className="tagging-rise">
-                            <span className="normal" style={{color:"#00b8ac"}}>2%</span>
-                            <span className="small">(1%)</span>
-                        </li>
-                        <li className="text-list">
-                            <p className="text-item line-num1">Predict 3 months from {futureMonthStr} (Historical 3 months prior {hlp.yearMonthToStr(hlp.subtractMonth(futureMonth))})</p>
-                            <p className="text-item line-num2">Historical 3 months prior {actualMonth}</p>
-                        </li>
-                    </ul>
-                    <ul className="legend">
-                        <li className="legend-item">Bronze (Bonus 15%)</li>
-                        <li className="legend-item">Bonus 9-12%</li>
-                        <li className="legend-item">Bonus 3-6%</li>
-                    </ul>
-                    <ul className="diagram">
-                        <li className="animation-container">
-                            <div className="diagram-item">
-                                <ul className="diagram-item_tagging">
-                                    <li className="tagging-rise">
-                                        <span className="normal" style={{color:"#00b8ac"}}>{this.toPerc(data[NAMES_IDS[2]].pred_pct_up)}</span>
-                                        <span className="small">({this.toPerc(data[NAMES_IDS[2]].actual_pct_up)})</span>
-                                    </li>
-                                    <li className="tagging-fall">
-                                        <span className="normal" style={{color:"#00b8ac"}}>{this.toPerc(data[NAMES_IDS[2]].pred_pct_down)}</span>
-                                        <span className="small">({this.toPerc(data[NAMES_IDS[2]].actual_pct_down)})</span>
-                                    </li>
-                                </ul>
-                                <ul className="diagram-item_fishbone">
-                                    <li className="fishbone-central"></li>
-                                    <li className="fishbone-tail"></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li className="animation-container" style={{left:'10%',width:"75%"}}>
-                            <div className="diagram-item">
-                                <ul className="diagram-item_tagging">
-                                    <li className="tagging-rise">
-                                        <span className="normal">{this.toPerc(data[NAMES_IDS[1]].pred_pct_up)}</span>
-                                        <span className="small">({this.toPerc(data[NAMES_IDS[1]].actual_pct_up)})</span>
-                                    </li>
-                                    <li className="tagging-fall">
-                                        <span className="normal">{this.toPerc(data[NAMES_IDS[1]].pred_pct_down)}</span>
-                                        <span className="small">({this.toPerc(data[NAMES_IDS[1]].actual_pct_down)})</span>
-                                    </li>
-                                </ul>
-                                <ul className="diagram-item_fishbone">
-                                    <li className="fishbone-front"></li>
-                                    <li className="fishbone-central"></li>
-                                    <li className="fishbone-tail"></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li className="animation-container" style={{left:'20%',width:"62%"}}>
-                            <div className="diagram-item">
-                                <ul className="diagram-item_tagging">
-                                    <li className="tagging-rise">
-                                        <span className="normal">{this.toPerc(data[NAMES_IDS[0]].pred_pct_up)}</span>
-                                        <span className="small">({this.toPerc(data[NAMES_IDS[0]].actual_pct_up)})</span>
-                                    </li>
-                                    <li className="tagging-fall">
-                                        <span className="normal">{this.toPerc(data[NAMES_IDS[0]].pred_pct_down)}</span>
-                                        <span className="small">({this.toPerc(data[NAMES_IDS[0]].actual_pct_down)})</span>
-                                    </li>
-                                </ul>
-                                <ul className="diagram-item_fishbone">
-                                    <li className="fishbone-front"></li>
-                                    <li className="fishbone-central"></li>
-                                    <li className="fishbone-tail"></li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                        <div className="fishbone-diagram">
+                            <ul className="sub-title">
+                                <li className="tagging-rise">
+                                    <span className="normal" style={{ color: "#00b8ac" }}>2%</span>
+                                    <span className="small">(1%)</span>
+                                </li>
+                                <li className="text-list">
+                                    {/* <p className="text-item line-num1">Predict 3 months from {futureMonthStr} (Historical 3 months prior {hlp.yearMonthToStr(hlp.subtractMonth(futureMonth))})</p>
+                            <p className="text-item line-num2">Historical 3 months prior {actualMonth}</p> */}
+                                    <p className="text-item line-num1 line-num1-big">Migration Sep.19-Nov.19</p>
+                                    <p className="text-item line-num2 line-num2-big">Migration Dec.19-Feb.20<br></br>(<span style={{ color: '#00b8ac' }}>better</span>/<span style={{ color: 'red' }}>worse</span>)</p>
+                                </li>
+                            </ul>
+                            <ul className="legend legend_smallfish">
+                                <li className="legend-item">≥15%</li>
+                                <li className="legend-item">9-12%</li>
+                                <li className="legend-item">3-6%</li>
+                            </ul>
+                            <ul className="diagram">
+                                <li className="animation-container  animation-container-height">
+                                    <div className="diagram-item">
+                                        <ul className="diagram-item_tagging">
+                                            <li className="tagging-rise">
+                                                <span className="normal" style={{ color: "#00b8ac" }}>{this.toPerc(data[NAMES_IDS[2]].pred_pct_up)}</span>
+                                                <span className="small">({this.toPerc(data[NAMES_IDS[2]].actual_pct_up)})</span>
+                                            </li>
+                                            <li className="tagging-fall">
+                                                <span className="normal" style={{ color: "#00b8ac" }}>{this.toPerc(data[NAMES_IDS[2]].pred_pct_down)}</span>
+                                                <span className="small">({this.toPerc(data[NAMES_IDS[2]].actual_pct_down)})</span>
+                                            </li>
+                                        </ul>
+                                        <ul className="diagram-item_fishbone diagram-item_fishbone_smallfish">
+                                            <li className="fishbone-central"></li>
+                                            <li className="fishbone-tail"></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li className="animation-container animation-container-height" style={{ left: '10%', width: "75%" }}>
+                                    <div className="diagram-item">
+                                        <ul className="diagram-item_tagging">
+                                            <li className="tagging-rise">
+                                                <span className="normal">{this.toPerc(data[NAMES_IDS[1]].pred_pct_up)}</span>
+                                                <span className="small">({this.toPerc(data[NAMES_IDS[1]].actual_pct_up)})</span>
+                                            </li>
+                                            <li className="tagging-fall">
+                                                <span className="normal">{this.toPerc(data[NAMES_IDS[1]].pred_pct_down)}</span>
+                                                <span className="small">({this.toPerc(data[NAMES_IDS[1]].actual_pct_down)})</span>
+                                            </li>
+                                        </ul>
+                                        <ul className="diagram-item_fishbone diagram-item_fishbone_smallfish">
+                                            <li className="fishbone-front"></li>
+                                            <li className="fishbone-central"></li>
+                                            <li className="fishbone-tail"></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li className="animation-container animation-container-height" style={{ left: '20%', width: "62%" }}>
+                                    <div className="diagram-item">
+                                        <ul className="diagram-item_tagging">
+                                            <li className="tagging-rise">
+                                                <span className="normal">{this.toPerc(data[NAMES_IDS[0]].pred_pct_up)}</span>
+                                                <span className="small">({this.toPerc(data[NAMES_IDS[0]].actual_pct_up)})</span>
+                                            </li>
+                                            <li className="tagging-fall">
+                                                <span className="normal">{this.toPerc(data[NAMES_IDS[0]].pred_pct_down)}</span>
+                                                <span className="small">({this.toPerc(data[NAMES_IDS[0]].actual_pct_down)})</span>
+                                            </li>
+                                        </ul>
+                                        <ul className="diagram-item_fishbone diagram-item_fishbone_smallfish">
+                                            <li className="fishbone-front"></li>
+                                            <li className="fishbone-central"></li>
+                                            <li className="fishbone-tail"></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                 }
             </Fragment>
         )

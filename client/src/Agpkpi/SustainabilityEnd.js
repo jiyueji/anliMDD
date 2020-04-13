@@ -40,7 +40,9 @@ export default class Sustainability extends Component {
                             <p>% of sales in the last three days of the month out of the total month sales. Values are calculated monthly and expressed as a percent of monthly sales. Period is calendar year. Annual rate is reflected as a total EOM sales rate for the year.</p>
                         </div> : ""
                     }
+                    <div style={{ width: "100%", height: "383px", display: 'flex' }}>
                     <div id="salesHomeEchartsPpvEnd" style={{ width: ' 100%', height: '383px', zIndex: "1", position: "relative" }}></div>
+                    </div>
                     <div className="redball1 redball-flicker1">
                         <div className="ballDiv1" style={{ top: ballYtd, left: sustainDataNumber }}>
                             <div className="redBallShow"></div>

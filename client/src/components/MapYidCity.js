@@ -255,7 +255,7 @@ export default class MapYidCity extends Component {
                 type: 'category',
                 data: dataShowNumberTotal(this.state.cityClusterAllTable),
                 position: 'right',
-                offset: 15,
+                offset: 22,
                 axisLabel: {
                     show: true,
                     // inside: true,
@@ -302,10 +302,14 @@ export default class MapYidCity extends Component {
                     },
                     formatter: function (value) {
                         var value = value.replace(/%/g, '')
-                        if (Number(value) > -10 && Number(value) <= 0) {
+                        if (Number(value) > -10 && Number(value) < 0) {
                             value = "  " + value + "%"
-                        } else if(Number(value) >= 0 && Number(value) < 10){
-                            value = "+" + "  " + value + "%"
+                        } else if(Number(value) == 0 && 1 / Number(value) < 0){
+                            value = " " + "-" + value + "%"
+                        } else if(Number(value) == 0 && 1 / Number(value) > 0){
+                            value = " " + "+" + value + "%"
+                        } else if(Number(value) > 0 && Number(value) < 10){
+                            value = " " + "+" + value + "%"
                         } else if(Number(value) >= 10){
                             value = "+" + value + "%"
                         } else{

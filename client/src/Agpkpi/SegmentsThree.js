@@ -46,7 +46,9 @@ export default class SegmentsThree extends Component {
                         </ul>
                         {/* <div style={{ fontSize: "12px", lineHeight: '58px' }}>As of {maxMonthStr}</div> */}
                     </div>
+                    <div style={{ width: "100%", height: "377px", display: 'flex' }}>
                     <div id="segmentsEcharts" style={{ width: "100%", height: "377px" }}></div>
+                    </div>
                 </div>
             </Fragment>
         )
@@ -397,10 +399,10 @@ export default class SegmentsThree extends Component {
                     }
                 ],
                 color: ['#4d96f1', '#28ccae', '#ffa441', '#eb5653', '#f3e126'],
-                legend: {
+                legend: [{
                     type:"plain",
                     left:"center",
-                    bottom: 11,
+                    bottom: 31,
                     icon: 'rect',
                     itemWidth: 10,
                     itemHeight: 10,
@@ -427,10 +429,21 @@ export default class SegmentsThree extends Component {
                             // }
                         },
                         'Developing ABO',
+                    ]
+                },{
+                    type:"plain",
+                    left:"center",
+                    bottom: 11,
+                    icon: 'rect',
+                    itemWidth: 10,
+                    itemHeight: 10,
+                    width:'80%',
+                    itemGap: 15,//图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
+                    data: [
                         'Building ABO',
                         'ABO Leader'
                     ]
-                }
+                }]
             },
             chartArray = [
                 {

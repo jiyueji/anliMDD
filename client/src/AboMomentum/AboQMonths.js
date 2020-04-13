@@ -6,18 +6,20 @@ export default class AboQMonths extends Component {
     constructor() {
         super();
         this.state = {
-            num_q_month_data_show:[],
-            num_q_month_ly_data_show:[],
-            months_data_show:[],
-            maxYear:"",
-            prevYear:"",
+            num_q_month_data_show: [],
+            num_q_month_ly_data_show: [],
+            months_data_show: [],
+            maxYear: "",
+            prevYear: "",
         }
     }
     render() {
         return (
             <Fragment>
                 <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Monthly Q Months</div>
-                <div id="aboQMonthsEcharts" style={{ width: "100%", height: "400px" }}></div>
+                <div style={{ width: "100%", height: "420px", display: 'flex' }}>
+                    <div id="aboQMonthsEcharts" style={{ width: "100%", height: "400px" }}></div>
+                </div>
             </Fragment>
         )
     }
@@ -31,22 +33,22 @@ export default class AboQMonths extends Component {
         // months_data_cons: (12)[{ … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }]
         // maxYear: "PF 20"
         // prevYear: "PF 19"
-        var {num_q_month_data,num_q_month_ly_data,months_data,maxYear,prevYear} = data
+        var { num_q_month_data, num_q_month_ly_data, months_data, maxYear, prevYear } = data
         var num_q_month_data_show = []
         var num_q_month_ly_data_show = []
         var months_data_show = []
-        num_q_month_data ? num_q_month_data.map((item,index)=>{
+        num_q_month_data ? num_q_month_data.map((item, index) => {
             num_q_month_data_show.push(item.y)
         }) : ""
-        num_q_month_ly_data ? num_q_month_ly_data.map((item,index)=>{
+        num_q_month_ly_data ? num_q_month_ly_data.map((item, index) => {
             num_q_month_ly_data_show.push(item.y)
         }) : ""
-        months_data ? months_data.map((item,index)=>{
+        months_data ? months_data.map((item, index) => {
             months_data_show.push(item.x)
         }) : ""
         this.setState({
-            num_q_month_data_show,num_q_month_ly_data_show,months_data_show,maxYear,prevYear
-        },()=>{
+            num_q_month_data_show, num_q_month_ly_data_show, months_data_show, maxYear, prevYear
+        }, () => {
             this.aboQMonthsHandle()
         })
         // console.log(data)
@@ -65,8 +67,8 @@ export default class AboQMonths extends Component {
                 trigger: 'axis',
                 confine: true,
                 formatter: (data) => {
-                    var thisYearDataShow = 0
-                    var lastYearDataShow = 0
+                    var thisYearDataShow = ""
+                    var lastYearDataShow = ""
                     var thisNameShow = ""
                     data.map((item, index) => {
                         // console.log(item.componentIndex)
@@ -77,11 +79,12 @@ export default class AboQMonths extends Component {
                         }
                         thisNameShow = item.axisValue
                     })
-                    if(thisYearDataShow){
-                        thisYearDataShow = this.state.maxYear + ":" + Math.round(thisYearDataShow / 1000) + "k"
+                    if (thisYearDataShow) {
+                        thisYearDataShow = this.state.maxYear + ":" + thisYearDataShow.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
                     }
-                    if(lastYearDataShow){
-                        lastYearDataShow = this.state.prevYear + ":" + Math.round(lastYearDataShow / 1000) + "k"
+                    if (lastYearDataShow) {
+                        // lastYearDataShow = this.state.prevYear + ":" + Math.round(lastYearDataShow / 1000) + "k"
+                        lastYearDataShow = this.state.prevYear + ":" + lastYearDataShow.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
                     }
                     return "<div style='border-bottom:1px solid #ffffff'>" + thisNameShow + "</div>" + thisYearDataShow + "</br>" + lastYearDataShow
                 }
@@ -190,13 +193,13 @@ export default class AboQMonths extends Component {
             color: ['#fe9c3b', '#4f90f4'],
             legend: {
                 type: "scroll",
-                icon: "line",
+                // icon: "line",
                 data: [
+                    { name: this.state.prevYear },
                     { name: this.state.maxYear },
-                    { name: this.state.prevYear }
                 ],
-                itemWidth: 10,
-                itemHeight: 10,
+                // itemWidth: 10,
+                // itemHeight: 10,
                 bottom: 16,
                 itemGap: 50,
                 textStyle: {

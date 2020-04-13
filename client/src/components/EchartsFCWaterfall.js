@@ -270,7 +270,7 @@ export default class EchartsFCWaterfall extends Component {
                         color: (value) => {
                             var val = ((value.data || 0) / 1000000).toFixed(1)
                             if (val >= 0) {
-                                return "#17b6a9"
+                                return "#23e1d1"
                             } else {
                                 return "#fd0022"
                             }

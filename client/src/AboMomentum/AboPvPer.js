@@ -19,7 +19,9 @@ export default class AboPvPer extends Component {
             <Fragment>
                 <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>YTD PF 20 Q Month & PV per QMonth</div>
                 <div style={{ position: "absolute", right: ' 5%', top: '4%', fontSize: '12px', color: "#666" }}>As of {maxMonthStr}</div>
+                <div style={{ width: "100%", height: "420px", display: 'flex' }}>
                 <div id="aboPvPerEcharts" style={{ width: "100%", height: "400px" }}></div>
+                </div>
             </Fragment>
         )
     }
@@ -118,8 +120,8 @@ export default class AboPvPer extends Component {
                 type: "scroll",
                 icon: "rect",
                 data: [
+                    { name: this.state.prevYear },
                     { name: this.state.maxYear },
-                    { name: this.state.prevYear }
                 ],
                 itemWidth: 10,
                 itemHeight: 10,
@@ -131,43 +133,6 @@ export default class AboPvPer extends Component {
                 },
             },
             series: [
-                {
-                    name: this.state.maxYear,
-                    type: 'bar',
-                    barWidth: '40',
-                    barGap: 0.3,
-                    itemStyle: {
-                        normal: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                                offset: 0,
-                                color: '#ff9d3a'
-                            }, {
-                                offset: 1,
-                                color: '#fe9c39'
-                            }]),
-                        },
-                    },
-                    label: {
-                        show: true,
-                        position: 'top',
-                        // position: ['1', '-20'],
-                        formatter: function (params) {
-                            var b = parseInt(params.data).toString();
-                            var len = b.length;
-                            if (len <= 3) { return b; }
-                            var r = len % 3;
-                            return r > 0 ? b.slice(0, r) + "," + b.slice(r, len).match(/\d{3}/g).join(",") : b.slice(r, len).match(/\d{3}/g).join(",");
-                        },
-                        // backgroundColor: 'rgba(38,38,39,0.36)',
-                        // borderRadius: 5,
-                        // padding: 4,
-                        textStyle: {
-                            fontSize: 12,
-                            color: '#333',
-                        }
-                    },
-                    data: this.state.accOfQ,
-                },
                 {
                     name: this.state.prevYear,
                     legendHoverLink: false,
@@ -206,6 +171,43 @@ export default class AboPvPer extends Component {
                         }
                     },
                     data: this.state.pvPerQ,
+                },
+                {
+                    name: this.state.maxYear,
+                    type: 'bar',
+                    barWidth: '40',
+                    barGap: 0.3,
+                    itemStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: '#ff9d3a'
+                            }, {
+                                offset: 1,
+                                color: '#fe9c39'
+                            }]),
+                        },
+                    },
+                    label: {
+                        show: true,
+                        position: 'top',
+                        // position: ['1', '-20'],
+                        formatter: function (params) {
+                            var b = parseInt(params.data).toString();
+                            var len = b.length;
+                            if (len <= 3) { return b; }
+                            var r = len % 3;
+                            return r > 0 ? b.slice(0, r) + "," + b.slice(r, len).match(/\d{3}/g).join(",") : b.slice(r, len).match(/\d{3}/g).join(",");
+                        },
+                        // backgroundColor: 'rgba(38,38,39,0.36)',
+                        // borderRadius: 5,
+                        // padding: 4,
+                        textStyle: {
+                            fontSize: 12,
+                            color: '#333',
+                        }
+                    },
+                    data: this.state.accOfQ,
                 },
             ]
         })

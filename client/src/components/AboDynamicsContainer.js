@@ -29,6 +29,7 @@ import AboRate from '../AboMomentum/AboRate'
 import AboPvPer from '../AboMomentum/AboPvPer'
 import AboFinalPie from '../AboMomentum/AboFinalPie'
 import AboTableGar from '../AboMomentum/AboTableGar'
+import AboTableGar1 from '../AboMomentum/AboTableGar1'
 import AboBarTwoEcharts from '../AboMomentum/AboBarTwoEcharts'
 import AboBarLineEcharts from '../AboMomentum/AboBarLineEcharts'
 
@@ -112,7 +113,7 @@ class AboDynamicsContainer extends React.PureComponent {
             </div>
             <div style={{ width: '49%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
               {/* 右边的表格 */}
-              <AboTableGar data={chartStoreAbo.aboGar1}/>
+              <AboTableGar1 data={chartStoreAbo.aboGar1}/>
             </div>
           </div>
           <label className="tab-cont-title">

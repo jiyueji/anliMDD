@@ -17,7 +17,9 @@ export default class AboDyBarStack extends Component {
         return (
             <Fragment>
                 <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>ABO force movement</div>
-                <div id="aboBarEcharts" style={{ width: "100%", height: "420px" }}></div>
+                <div style={{ width: "100%", height: "420px", display: 'flex' }}>
+                    <div id="aboBarEcharts" style={{ width: "100%", height: "420px" }}></div>
+                </div>
             </Fragment>
         )
     }
@@ -41,6 +43,7 @@ export default class AboDyBarStack extends Component {
     }
     upDateShowData() {
         var data = this.props.data || {}
+        console.log(data)
         //         new_abo_data: (2) [{…}, {…}]
         // renew_abo_data: (2) [{…}, {…}]
         // churn_abo_data: (2) [{…}, {…}]
@@ -51,7 +54,7 @@ export default class AboDyBarStack extends Component {
         })
         var enewAboData = []
         data.renew_abo_data.map((item, index) => {
-            enewAboData.push(item.y)
+            enewAboData.push((item.y) * 3)
         })
         var churnAboData = []
         data.churn_abo_data.map((item, index) => {
@@ -127,6 +130,7 @@ export default class AboDyBarStack extends Component {
                 formatter: (data) => {
                     var existingABOData = 0;
                     var newRecruitedABOData = 0;
+                    var aboDataAddNumber = 0
                     var churnedABOData = 0;
                     var monthUp = "";
                     data.map((item, index) => {
@@ -135,25 +139,29 @@ export default class AboDyBarStack extends Component {
                             newRecruitedABOData = Math.round((item.data || 0) / 1000) || 0
                         } else if (item.componentIndex && item.componentIndex == 2) {
                             churnedABOData = Math.round((item.data || 0) / 1000) || 0
-                        }else {
+                        } else {
                             existingABOData = Math.round((item.data || 0) / 1000) || 0
                         }
                         monthUp = item.axisValue
                     })
                     // console.log(newRecruitedABOData,existingABOData,churnedABOData)
+                    if(newRecruitedABOData && existingABOData){
+                        aboDataAddNumber = (Number(existingABOData) + Number(newRecruitedABOData)).toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
+                        var thisAboDataAddNumber = 'ABO force size:' + aboDataAddNumber + "k";
+                    }
                     if (newRecruitedABOData) {
-                        var newRecruitedABOData = newRecruitedABOData.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
+                        newRecruitedABOData = newRecruitedABOData.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
                         var thisNewRecruitedABOData = 'New recruited ABO:' + newRecruitedABOData + "k";
                     }
                     if (existingABOData) {
-                        var existingABOData = existingABOData.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
+                        existingABOData = existingABOData.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
                         var thisExistingABOData = 'Existing ABO:' + existingABOData + "k";
                     }
                     if (churnedABOData) {
-                        var churnedABOData = churnedABOData.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
+                        churnedABOData = churnedABOData.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
                         var thisChurnedABOData = 'Churned ABO:' + churnedABOData + "k";
                     }
-                    return "<div style='border-bottom:1px solid #ffffff'>" + monthUp + "</div>" + "<div style='border-bottom:1px solid #ffffff'>" + thisNewRecruitedABOData + "<br/>" + thisExistingABOData + "<br/>" + thisChurnedABOData + "</div>"
+                    return "<div style='border-bottom:1px solid #ffffff;color:#333;'>" + monthUp + "</div>" + "<div style='color:#4d96f2;'>" + thisNewRecruitedABOData + "</div>" + "<div style='border-bottom:1px solid #ffffff;color:#29ccaf;'>" + thisExistingABOData + "</div>" + "<div style='border-bottom:1px solid #ffffff;color:#ffffff;'>" + thisAboDataAddNumber + "</div>" + "<div style='color:#eb5652;'>" + thisChurnedABOData + "</div>"
                 }
             },
             color: ['#4d96f2', '#29ccaf', '#eb5652'],

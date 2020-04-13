@@ -37,7 +37,9 @@ export default class Sustainability extends Component {
                             <p>Sum of High PPV buyers total month sales / total month sales. Values are calculated monthly and expressed as a percent of monthly sales. Period is calendar year. Annual rate is reflected as a total High PPV Sales rate for the year.</p>
                         </div> : ""
                     }
+                    <div style={{ width: "100%", height: "383px", display: 'flex' }}>
                     <div id="salesHomeEchartsPpv" className="salesHomePpv"></div>
+                    </div>
                     <div className="redball redball-flicker">
                         <div className="ballDiv" style={{ top: ballYtd, left: sustainDataNumber }}>
                             <div className="redBallShow"></div>

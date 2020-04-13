@@ -7,27 +7,45 @@ export default class AboBarTwoEcharts extends Component {
     constructor() {
         super();
         this.state = {
-            maxMonthStr:"",
-            curLegendYear:"",
-            prevLegendYear:"",
+            upShowX: [],
+            downShowX: [],
+            maxMonthStr: "",
+            curLegendYear: "",
+            prevLegendYear: "",
             prevYearShowLastYear: [],
             curYearShowNowYear: [],
             middle19: [],
             middle20: [],
-            avgNoPinPbShowNowYear:[],
-            avgNoPinPbLyShowNowYear:[],
+            avgNoPinPbShowNowYear: [],
+            avgNoPinPbLyShowNowYear: [],
             abo19: [],
             abo20: [],
+            totalEarn:{},
         }
     }
     render() {
-        var {maxMonthStr} = this.state
+        var { maxMonthStr,totalEarn } = this.state
         return (
             <Fragment>
                 <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Monthly Income by PIN level</div>
                 <div style={{ position: "absolute", right: ' 5%', top: '4%', fontSize: '12px', color: "#666" }}>As of {maxMonthStr}</div>
-                <div id="aboBarTwoEcharts" style={{ width: "100%", height: "200px", borderBottom: "1px solid #e9e9eb" }}></div>
-                <div id="aboBarTwoEcharts2" style={{ width: "100%", height: "200px" }}></div>
+                <div style={{ width: "100%", height: "400px", display: "flex", flexWrap: "wrap" }}>
+                    <div id="aboBarTwoEcharts" style={{ width: "100%", height: "200px", borderBottom: "1px solid #e9e9eb" }}></div>
+                    <div id="aboBarTwoEcharts2" style={{ width: "100%", height: "200px" }}></div>
+                </div>
+                <ul className="AboDownUlEch">
+                    <li>% Earner of Total</li>
+                    <li>
+                        <div>
+                            {totalEarn.thisEarn}%
+                            <p></p>
+                        </div>
+                        <div>
+                            {totalEarn.lastEarn}%
+                            <p></p>
+                        </div>
+                    </li>
+                </ul>
             </Fragment>
         )
     }
@@ -40,17 +58,20 @@ export default class AboBarTwoEcharts extends Component {
         // curYearMed: (3)[{ … }, { … }, { … }]
         // maxMonth: "202002"
         // maxYear: 2020
+        // console.log(data, datas)
         var curYearNow = data.maxYear || 2020
-        var maxMonthStr = String( hlp.yearMonthToStr( data.maxMonth ) )
+        var maxMonthStr = String(hlp.yearMonthToStr(data.maxMonth))
         var curLegendYear = hlp.yearToPfPref(curYearNow.toString()) + "income"
         var prevLegendYear = hlp.yearToPfPref((curYearNow - 1).toString()) + "income"
 
         var prevYearShowLastYear = []
+        var upShowX = []
         var middle19 = []
         var curYearShowNowYear = []
         var middle20 = []
         data.prevYear ? data.prevYear.map((item, index) => {
             prevYearShowLastYear.push(Math.round(item.y))
+            // upShowX.push(item.x)
         }) : ""
         data.curYear ? data.curYear.map((item, index) => {
             curYearShowNowYear.push(Math.round(item.y))
@@ -70,11 +91,19 @@ export default class AboBarTwoEcharts extends Component {
         // maxMonth: "202002"
         // maxYear: 2020
         var avgNoPinPbShowNowYear = []
+        var downShowX = []
         var abo20 = []
         var avgNoPinPbLyShowNowYear = []
         var abo19 = []
+        var totalEarn = {}
         datas.avgNoPinPb ? datas.avgNoPinPb.map((item, index) => {
             avgNoPinPbShowNowYear.push(Math.round(item.y))
+            // ["Bronze", 'New ABO']
+            // if (item.x == 'new_abo') {
+            //     downShowX.push('New ABO')
+            // } else {
+            //     downShowX.push("Bronze")
+            // }
         }) : ""
         datas.avgNoPinPbLy ? datas.avgNoPinPbLy.map((item, index) => {
             avgNoPinPbLyShowNowYear.push(Math.round(item.y))
@@ -85,9 +114,37 @@ export default class AboBarTwoEcharts extends Component {
         datas.noPinMedianLy ? datas.noPinMedianLy.map((item, index) => {
             abo19.push(Math.round(item.y))
         }) : ""
+        datas.pctEarn ? datas.pctEarn.map((item, index) => {
+            if (item.x == 'new_abo') {
+                totalEarn.thisEarn = Math.round(item.y * 100)
+            }
+        }) : ""
+        datas.pctEarnLy ? datas.pctEarnLy.map((item, index) => {
+            if (item.x == 'new_abo') {
+                totalEarn.lastEarn = Math.round(item.y * 100)
+            }
+        }) : ""
 
+        //所有的数组按从大到小进行排序
+        var compare = function (x, y) {
+            if (x < y) {
+                return 1;
+            } else if (x > y) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }
+        prevYearShowLastYear.sort(compare)
+        middle19.sort(compare)
+        curYearShowNowYear.sort(compare)
+        middle20.sort(compare)
+        avgNoPinPbShowNowYear.sort(compare)
+        abo20.sort(compare)
+        avgNoPinPbLyShowNowYear.sort(compare)
+        abo19.sort(compare)
         this.setState({
-            maxMonthStr,curLegendYear, prevLegendYear,prevYearShowLastYear, curYearShowNowYear, middle19, middle20,avgNoPinPbShowNowYear,avgNoPinPbLyShowNowYear,abo19, abo20,
+            maxMonthStr, curLegendYear, prevLegendYear, prevYearShowLastYear, curYearShowNowYear, middle19, middle20, avgNoPinPbShowNowYear, avgNoPinPbLyShowNowYear, abo19, abo20, upShowX, downShowX,totalEarn
         }, () => {
             this.aboBarTwoEchartsHandle()
             this.aboBarTwoEchartsHandle2()
@@ -138,7 +195,8 @@ export default class AboBarTwoEcharts extends Component {
             },
             xAxis: [{
                 type: 'category',
-                data: ['DD', 'GP', 'SP'],
+                // data: this.state.upShowX,
+                data:["DD","GP","SP"],
                 axisLine: {
                     show: false,
                     lineStyle: {
@@ -205,43 +263,6 @@ export default class AboBarTwoEcharts extends Component {
             },
             series: [
                 {
-                    name: this.state.curLegendYear,
-                    type: 'bar',
-                    barWidth: '40',
-                    barGap: 0.3,
-                    itemStyle: {
-                        normal: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                                offset: 0,
-                                color: '#75b2ff'
-                            }, {
-                                offset: 1,
-                                color: '#0159ee'
-                            }]),
-                        },
-                    },
-                    label: {
-                        show: true,
-                        position: 'top',
-                        // position: ['1', '-20'],
-                        formatter: function (params) {
-                            var b = parseInt(params.data).toString();
-                            var len = b.length;
-                            if (len <= 3) { return b; }
-                            var r = len % 3;
-                            return r > 0 ? b.slice(0, r) + "," + b.slice(r, len).match(/\d{3}/g).join(",") : b.slice(r, len).match(/\d{3}/g).join(",");
-                        },
-                        // backgroundColor: 'rgba(38,38,39,0.36)',
-                        // borderRadius: 5,
-                        // padding: 4,
-                        textStyle: {
-                            fontSize: 10,
-                            color: '#333',
-                        }
-                    },
-                    data: this.state.curYearShowNowYear,
-                },
-                {
                     name: this.state.prevLegendYear,
                     legendHoverLink: false,
                     type: 'bar',
@@ -286,41 +307,44 @@ export default class AboBarTwoEcharts extends Component {
                     },
                     data: this.state.prevYearShowLastYear,
                 },
-                // 上边第二个图
                 {
-                    name: 'Median income',
-                    zlevel: 9,
+                    name: this.state.curLegendYear,
                     type: 'bar',
-                    stack: 'aaa',
                     barWidth: '40',
-                    xAxisIndex: 1,
+                    barGap: 0.3,
                     itemStyle: {
                         normal: {
-                            color: 'rgba(0,0,0,0)',
-                        }
-
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: '#75b2ff'
+                            }, {
+                                offset: 1,
+                                color: '#0159ee'
+                            }]),
+                        },
                     },
-                    data: this.state.middle20,
+                    label: {
+                        show: true,
+                        position: 'top',
+                        // position: ['1', '-20'],
+                        formatter: function (params) {
+                            var b = parseInt(params.data).toString();
+                            var len = b.length;
+                            if (len <= 3) { return b; }
+                            var r = len % 3;
+                            return r > 0 ? b.slice(0, r) + "," + b.slice(r, len).match(/\d{3}/g).join(",") : b.slice(r, len).match(/\d{3}/g).join(",");
+                        },
+                        // backgroundColor: 'rgba(38,38,39,0.36)',
+                        // borderRadius: 5,
+                        // padding: 4,
+                        textStyle: {
+                            fontSize: 10,
+                            color: '#333',
+                        }
+                    },
+                    data: this.state.curYearShowNowYear,
                 },
-                {
-                    /*这个bar是横线的显示*/
-                    name: "Median income",
-                    zlevel: 9,
-                    stack: 'aaa',/*盈亏点数据组，需要设置才能将两个bar堆积在一起*/
-                    type: 'bar',
-                    xAxisIndex: 1,
-                    barGap: "0.3",
-                    itemStyle: {
-                        normal: {
-                            color: '#ffa441',
-                            barBorderColor: '#ffa441',
-                            barBorderWidth: 2,
-                            barBorderRadius: 10,
-                            borderType: "dotted"
-                        }
-                    },
-                    data: [20, 20, 20],
-                },               // 上边第er个柱子/去年
+                // 上边第er个柱子/去年
                 {
                     name: 'Median income',
                     type: 'bar',
@@ -357,7 +381,43 @@ export default class AboBarTwoEcharts extends Component {
                         }
                     },
                     data: [20, 20, 20],
-                }]
+                },
+                // 上边第二个图
+                {
+                    name: 'Median income',
+                    zlevel: 9,
+                    type: 'bar',
+                    stack: 'aaa',
+                    barWidth: '40',
+                    xAxisIndex: 1,
+                    itemStyle: {
+                        normal: {
+                            color: 'rgba(0,0,0,0)',
+                        }
+
+                    },
+                    data: this.state.middle20,
+                },
+                {
+                    /*这个bar是横线的显示*/
+                    name: "Median income",
+                    zlevel: 9,
+                    stack: 'aaa',/*盈亏点数据组，需要设置才能将两个bar堆积在一起*/
+                    type: 'bar',
+                    xAxisIndex: 1,
+                    barGap: "0.3",
+                    itemStyle: {
+                        normal: {
+                            color: '#ffa441',
+                            barBorderColor: '#ffa441',
+                            barBorderWidth: 2,
+                            barBorderRadius: 10,
+                            borderType: "dotted"
+                        }
+                    },
+                    data: [20, 20, 20],
+                },
+            ]
         })
     }
     aboBarTwoEchartsHandle2() {
@@ -387,28 +447,29 @@ export default class AboBarTwoEcharts extends Component {
             grid: {
                 left: '6.5%',
                 right: '35%',
-                bottom: '14%',
-                top: '20%',
+                bottom: '20%',
+                top: '15%',
                 containLabel: true
             },
             legend: {
                 orient: 'vertical',
                 data: [
-                    { name: this.state.curLegendYear, icon: "rect" },
                     { name: this.state.prevLegendYear, icon: "rect" },
+                    { name: this.state.curLegendYear, icon: "rect" },
                     { name: 'Median income', icon: "image://" + tuliYellowXuXian }],
                 right: 65,
                 top: 50,
                 textStyle: {
                     color: "#333"
                 },
-                itemWidth: 16,
-                itemHeight: 14,
+                itemWidth: 10,
+                itemHeight: 10,
                 itemGap: 14,
             },
             xAxis: [{
                 type: 'category',
-                data: ["Bronze", 'New ABO'],
+                // data: this.state.downShowX,
+                data:["Bronze", 'New ABO'],
                 axisLine: {
                     show: false,
                     lineStyle: {
@@ -477,39 +538,6 @@ export default class AboBarTwoEcharts extends Component {
             },
             series: [
                 {
-                    name: this.state.curLegendYear,
-                    type: 'bar',
-                    barWidth: '40',
-                    barGap: 0.3,
-                    itemStyle: {
-                        normal: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                                offset: 0,
-                                color: '#75b2ff'
-                            }, {
-                                offset: 1,
-                                color: '#0159ee'
-                            }]),
-                        },
-                    },
-                    label: {
-                        show: true,
-                        position: 'top',
-                        // position: ['7', '-20'],
-                        formatter: function (params) {
-                            return params.data
-                        },
-                        // backgroundColor: 'rgba(38,38,39,0.36)',
-                        // borderRadius: 5,
-                        // padding: 4,
-                        textStyle: {
-                            fontSize: 10,
-                            color: '#333',
-                        }
-                    },
-                    data: this.state.avgNoPinPbShowNowYear,
-                },
-                {
                     name: this.state.prevLegendYear,
                     type: 'bar',
                     barWidth: '40',
@@ -542,40 +570,38 @@ export default class AboBarTwoEcharts extends Component {
                     },
                     data: this.state.avgNoPinPbLyShowNowYear,
                 },
-                // 下边第二个柱子
                 {
-                    name: 'Median income',
+                    name: this.state.curLegendYear,
                     type: 'bar',
-                    zlevel: 9,
-                    stack: 'aaa',
                     barWidth: '40',
-                    xAxisIndex: 1,
+                    barGap: 0.3,
                     itemStyle: {
                         normal: {
-                            color: 'rgba(0,0,0,0)',
-                        }
-
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: '#75b2ff'
+                            }, {
+                                offset: 1,
+                                color: '#0159ee'
+                            }]),
+                        },
                     },
-                    data: this.state.abo20
-                },
-                {
-                    /*这个bar是横线的显示*/
-                    name: "Median income",
-                    stack: 'aaa',/*盈亏点数据组，需要设置才能将两个bar堆积在一起*/
-                    type: 'bar',
-                    zlevel: 9,
-                    xAxisIndex: 1,
-                    // barGap: "0",
-                    itemStyle: {
-                        normal: {
-                            color: '#ffa441',
-                            barBorderColor: '#ffa441',
-                            barBorderWidth: 2,
-                            barBorderRadius: 10,
-                            borderType: "dotted"
+                    label: {
+                        show: true,
+                        position: 'top',
+                        // position: ['7', '-20'],
+                        formatter: function (params) {
+                            return params.data
+                        },
+                        // backgroundColor: 'rgba(38,38,39,0.36)',
+                        // borderRadius: 5,
+                        // padding: 4,
+                        textStyle: {
+                            fontSize: 10,
+                            color: '#333',
                         }
                     },
-                    data: [1, 1],
+                    data: this.state.avgNoPinPbShowNowYear,
                 },
                 // 上边第一个柱子
                 {
@@ -612,7 +638,43 @@ export default class AboBarTwoEcharts extends Component {
                         }
                     },
                     data: [1, 1],
-                },]
+                },
+                // 下边第二个柱子
+                {
+                    name: 'Median income',
+                    type: 'bar',
+                    zlevel: 9,
+                    stack: 'aaa',
+                    barWidth: '40',
+                    xAxisIndex: 1,
+                    itemStyle: {
+                        normal: {
+                            color: 'rgba(0,0,0,0)',
+                        }
+
+                    },
+                    data: this.state.abo20
+                },
+                {
+                    /*这个bar是横线的显示*/
+                    name: "Median income",
+                    stack: 'aaa',/*盈亏点数据组，需要设置才能将两个bar堆积在一起*/
+                    type: 'bar',
+                    zlevel: 9,
+                    xAxisIndex: 1,
+                    // barGap: "0",
+                    itemStyle: {
+                        normal: {
+                            color: '#ffa441',
+                            barBorderColor: '#ffa441',
+                            barBorderWidth: 2,
+                            barBorderRadius: 10,
+                            borderType: "dotted"
+                        }
+                    },
+                    data: [1, 1],
+                },
+            ]
         })
     }
 }
