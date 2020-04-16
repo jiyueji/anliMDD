@@ -80,7 +80,7 @@ class ChartStore {
           })
       }
     }
-
+    // 
     @action async fetchPerformanceData2Com(params) {
       try {
           const data = await ApiService.get_performance_data2_com(params)          
