@@ -14,7 +14,7 @@ import 'echarts/lib/chart/pie';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
 
-// @inject('authStore', 'chartStore')
+// @inject('authStore', 'chartStore') 
 // @observer
 export default class LineChartMonthlyEchaets extends Component {
     // @observable isPerfYear = true
@@ -79,7 +79,8 @@ export default class LineChartMonthlyEchaets extends Component {
     }
     componentWillReceiveProps(nextProps){
         // console.log(nextProps)
-        var {data} = nextProps
+        var {data,datas} = nextProps
+        console.log(datas)
         var isPerfYear = data.isPerfYear
         var { monthShow } = this.state
         if (isPerfYear) {

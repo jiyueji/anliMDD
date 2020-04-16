@@ -105,5 +105,8 @@ api.add_resource(resources.ManualInputs, '/manual_inputs')
 
 api.add_resource(resources.SecretResource, '/secret')
 
+# 二期开发内容
+api.add_resource(resources.AboCsiKpi, '/abo_cis_kpi')
+
 if __name__ == '__main__':
       app.run(host='0.0.0.0', port=80)

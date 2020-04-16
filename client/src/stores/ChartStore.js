@@ -364,6 +364,7 @@ class ChartStore {
       if (!jsArr.length) {
         return false
       }
+      
 
       const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'
 
@@ -403,17 +404,17 @@ class ChartStore {
 
       dataState = _.map( dataState, (o) => {
         o.actual_sales_sum = jslinq( o.elements ).sum(function(el){
-            return el.actual_sales;
+            return el.actual_sales || 0;
         })
         o.target_sales_sum = jslinq( o.elements ).sum(function(el){
-            return el.target_sales;
+            return el.target_sales || 0;
         })
         o.actual_sales_ly_sum = jslinq( o.elements ).sum(function(el){
             return el.actual_sales_ly || 0
         })
         return o
       } )
-
+      
       let actual_sales_data = _.map( dataState, (o) => {
         return {
           x: MONTHS_MAP[o.key],
@@ -469,7 +470,8 @@ class ChartStore {
           info: monthToInfoMap[monthId] && addNewlines( monthToInfoMap[monthId])
         }
       } )
-
+      console.log("totalSalesLineYear")
+      console.log(dataState)
       if ( actual_sales_data.length !== target_sales_data.length 
           || actual_sales_data.length !== actual_sales_ly_data.length ) {
             throw 'Sales data is incorrect. Wrong array length.';
@@ -523,7 +525,6 @@ class ChartStore {
             return el[YEAR_TYPE];
         })
         .toList()
-
       const maxYear = dataState.length && dataState[0].elements.length && dataState[0].elements[0][ `max_${YEAR_TYPE}` ]
       // const maxCalendarYear = dataState.length && dataState[0].elements.length && dataState[0].elements[0][ 'max_calendar_yr' ]
       // dataState
@@ -584,7 +585,7 @@ class ChartStore {
 
 
       let tooltip_data_map = {}
-
+      
       let actual_sales_data = _.map( dataState, (o) => {
         // fill tooltip data months and actual sales
         const monthId = `${maxYear}${padNumber(o.month)}`
@@ -596,7 +597,8 @@ class ChartStore {
           sales_forecast:  o.revenue_forecast_usd && `$${hlp.toShortMil(o.revenue_forecast_usd)}m`,
           events: monthToInfoMap[monthId]// && addNewlines( monthToInfoMap[monthId])
         }
-
+        console.log("totalSalesLineMonth")
+        console.log(dataState)
         return {
           x: MONTHS_MAP[o.month],
           y: o.actual_sales || null,
