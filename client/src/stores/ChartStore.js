@@ -372,6 +372,7 @@ class ChartStore {
       if (!jsArr.length) {
         return false
       }
+      
 
       const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'
 
@@ -551,7 +552,6 @@ class ChartStore {
             return el[YEAR_TYPE];
         })
         .toList()
-
       const maxYear = dataState.length && dataState[0].elements.length && dataState[0].elements[0][ `max_${YEAR_TYPE}` ]
 
       // const maxCalendarYear = dataState.length && dataState[0].elements.length && dataState[0].elements[0][ 'max_calendar_yr' ]
@@ -627,7 +627,8 @@ class ChartStore {
           // events: monthToInfoMap[monthId]// && addNewlines( monthToInfoMap[monthId]),
           events:monthToInfoMap[o.n_month]
         }
-
+        console.log("totalSalesLineMonth")
+        console.log(dataState)
         return {
           x: MONTHS_MAP[o.month],
           y: o.actual_sales || null,

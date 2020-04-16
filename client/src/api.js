@@ -60,7 +60,9 @@ const api = {
     social_rnd_part_data: '/social_rnd_part_data',
     social_part_dist_data: '/social_part_dist_data',
     social_sop_sal_data: '/social_sop_sal_data',
-    manual_inputs: '/manual_inputs'
+    manual_inputs: '/manual_inputs',
+//二期开发内容
+    abo_cis_kpi_data:'/abo_cis_kpi_data'
 }
 
 export default api

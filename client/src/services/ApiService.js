@@ -8,7 +8,8 @@ class ApiSerice {
 
 
     constructor() {
-        this.api_url = 'http://52.82.35.187:5000'; //'http://52.82.35.187:5000'
+       // this.api_url = 'http://52.82.35.187:5000'; //'http://52.82.35.187:5000'
+        this.api_url = 'http://localhost:80';
     }
 
     /**
@@ -428,6 +429,18 @@ class ApiSerice {
 
     async get_manual_inputs(params, token) {
         const res = await this.apiCall(api.manual_inputs, 'GET', token, params);
+        this.handleCommonError(res);
+        return res.body;
+    }
+    
+    async get_manual_inputs(params, token) {
+        const res = await this.apiCall(api.manual_inputs, 'GET', token, params);
+        this.handleCommonError(res);
+        return res.body;
+    }
+//二期开发内容
+    async get_abo_cis_kpi_data(params, token) {
+        const res = await this.apiCall(api.abo_cis_kpi_data, 'GET', token, params);
         this.handleCommonError(res);
         return res.body;
     }

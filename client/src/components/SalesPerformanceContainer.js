@@ -117,7 +117,7 @@ class SalesPerformanceContainer extends React.PureComponent {
                   <div className="sb-wrap">
                     <LineChart data={chartStore.totalSalesLineYear}/>
                   </div>
-                </Col>
+                </Col> 
               </Row> */}
           <Row>
             <Col>

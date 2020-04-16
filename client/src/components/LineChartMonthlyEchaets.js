@@ -14,7 +14,7 @@ import 'echarts/lib/chart/pie';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
 
-// @inject('authStore', 'chartStore')
+// @inject('authStore', 'chartStore') 
 // @observer
 export default class LineChartMonthlyEchaets extends Component {
     // @observable isPerfYear = true

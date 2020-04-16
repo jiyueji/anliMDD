@@ -507,3 +507,10 @@ class SecretResource(Resource):
         return {
             'answer': 42
         }
+
+# 二期开发内容
+class AboCsiKpi(Resource):
+    def get(self):
+
+        queryStr = "select *  from public.MD_ABO_21_CSI_KPI_M_F"
+        return performQuery(queryStr)
