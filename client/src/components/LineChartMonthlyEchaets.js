@@ -21,6 +21,9 @@ export default class LineChartMonthlyEchaets extends Component {
     constructor() {
         super();
         this.state = {
+            thisYearLength:0,
+            allData:[],
+            dataShowForClick:true,
             monthShow: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             thisYear: [],
             lastYear: [],
@@ -79,29 +82,42 @@ export default class LineChartMonthlyEchaets extends Component {
     }
     componentWillReceiveProps(nextProps){
         // console.log(nextProps)
-        var {data} = nextProps
+        var {data,datas} = nextProps
         var isPerfYear = data.isPerfYear
-        var { monthShow } = this.state
+        var { monthShow,allData,dataShowForClick,thisYearLength } = this.state
+        if(dataShowForClick){
+            allData = data
+        }else{
+            allData = datas
+        }
         if (isPerfYear) {
             monthShow = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']
         } else {
             monthShow = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         }
+        thisYearLength = data.actual_sales_data.length || 12
         this.setState({
-            monthShow,
+            monthShow,allData,thisYearLength
         }, () => {
             this.dataUpdate()
         })
     }
     componentDidMount() {
+        var allData = this.props.data;
+        var thisYearLength = allData.actual_sales_data.length || 12
         // revenue_forecast_usd_data: Array(2)
         // 0: {x: "Nov", y: 194158289.726068, labelTooltip: "Monthly Sales"}
         // 1: {x: "Dec", y: 205400000, labelTooltip: "Sales Forecast"}
-        this.dataUpdate()
+        this.setState({
+            allData,thisYearLength
+        },()=>{
+            this.dataUpdate()
+        })
     }
     dataUpdate() {
-        var allData = this.props.data;
-        // console.log(allData)
+        var {allData,dataShowForClick,thisYearLength} = this.state
+        // var allData = this.props.data;
+        // console.log(thisYearLength)
         var thisYear = [];
         var lastYear = [];
         var forecastYear = [];
@@ -117,18 +133,21 @@ export default class LineChartMonthlyEchaets extends Component {
                 lastYear.push(item.y)
             })
         }
-        if (allData && allData.revenue_forecast_usd_data.length > 0) {
-            allData.revenue_forecast_usd_data.map((item, index) => {
-                forecastYear.push(item.y)
-            })
-        }
-        for (var i = 0; forecastYear.length < 12; i++) {
-            forecastYear.unshift("")
+        if(dataShowForClick){
+            if (allData && allData.revenue_forecast_usd_data.length > 0) {
+                allData.revenue_forecast_usd_data.map((item, index) => {
+                    forecastYear.push(item.y)
+                })
+            }
+            for (var i = 0; forecastYear.length < 12; i++) {
+                forecastYear.unshift("")
+            }
         }
         var yearShow = new Date().getFullYear() //今年
         var lastYearShow = (yearShow - 1).toString()   //去年
         yearShow = yearShow.toString()//转换成字符串可以显示在图例里，数字不可以
         var nameFroecast = 'Sales forecast'
+        thisYear.length = thisYearLength
         this.setState({
             thisYear, lastYear, forecastYear, tooltipData, yearShow, lastYearShow,nameFroecast
         }, () => {
@@ -136,7 +155,19 @@ export default class LineChartMonthlyEchaets extends Component {
         })
     }
     handleClickChangeColor(e) {
-        var { nowColor } = this.state
+        var { nowColor,allData,dataShowForClick } = this.state
+        if(nowColor !== e.target && nowColor){
+            if(dataShowForClick){
+                dataShowForClick = false
+                allData = this.props.datas
+            }else{
+                dataShowForClick = true
+                allData = this.props.data
+            }
+        }else if(!nowColor){
+            dataShowForClick = false
+            allData = this.props.datas
+        }
         if (nowColor) {
             nowColor.style.background = "#f7f8fa";
             nowColor.style.color = "#333"
@@ -150,7 +181,9 @@ export default class LineChartMonthlyEchaets extends Component {
         nowColor.style.background = "#5198ee";
         nowColor.style.color = "#ffffff"
         this.setState({
-            nowColor
+            nowColor,allData,dataShowForClick
+        },()=>{
+            this.dataUpdate()
         })
     }
     handleEcharts() {

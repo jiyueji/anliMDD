@@ -6,27 +6,38 @@ export default class AboBarLineEcharts extends Component {
     constructor() {
         super();
         this.state = {
-            nowColorAbo:false,
+            nowColorAbo: false,
+            clickShow: true,
         }
     }
     render() {
+        var { clickShow } = this.state
         return (
             <Fragment>
                 <div style={{ position: "absolute", left: ' 3%', top: '4%', fontSize: '14px', fontWeight: '600' }}>CSI</div>
-                <div style={{ position: "absolute", left: ' 3%', top: '10%', fontSize: '14px',color:"#333"}}>Mthly Trend</div>
                 <div className="salesButt" onClick={this.AboBarLineEchartshandleClick.bind(this)}>
                     <span className="salesButt-ytd">Monthly</span>
                     <span className="salesButt-Monthly">YTD</span>
                 </div>
-                <div style={{ width: "100%", height: "400px", display: 'flex' }}>
-                    <div id="aboBarLineEcharts" style={{ width: "80%", height: "400px" }}></div>
-                    <div id="aboBarLineEcharts2" style={{ width: "20%", height: "400px" }}></div>
-                </div>
+                {
+                    clickShow ? <div style={{ position: "absolute", width: "100%", }}>
+                    <div style={{ position: "absolute", left: ' 3%', top: '10%', fontSize: '14px', color: "#333" }}>Mthly Trend</div>
+                    <div style={{ width: "100%", height: "400px", display: 'flex' }}>
+                        <div id="aboBarLineEcharts" style={{ width: "80%", height: "400px" }}></div>
+                        <div id="aboBarLineEcharts2" style={{ width: "20%", height: "400px" }}></div>
+                    </div>
+                </div> : ""
+                }
             </Fragment>
         )
     }
-    AboBarLineEchartshandleClick(e){
-        var { nowColorAbo } = this.state
+    AboBarLineEchartshandleClick(e) {
+        var { nowColorAbo, clickShow } = this.state
+        if (nowColorAbo !== e.target && nowColorAbo) {
+            clickShow = !clickShow
+        } else if (!nowColorAbo) {
+            clickShow = false
+        }
         if (nowColorAbo) {
             nowColorAbo.style.background = "#f7f8fa";
             nowColorAbo.style.color = "#333"
@@ -40,7 +51,7 @@ export default class AboBarLineEcharts extends Component {
         nowColorAbo.style.background = "#5198ee";
         nowColorAbo.style.color = "#ffffff"
         this.setState({
-            nowColorAbo
+            nowColorAbo, clickShow
         })
     }
     componentDidMount() {

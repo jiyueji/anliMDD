@@ -650,11 +650,27 @@ class ChartStoreAbo {
 
       dataState = dataState[maxYear]
 
-
+      // console.log(dataState)
       let num_q_month_data = _.map( dataState, (o) => {
         return {
           x: MONTHS_MAP[o.month],
           y: o.num_q_month || null,
+          labelTooltip: maxYearStr
+        }
+      } )
+
+      let num_consecutive_q = _.map( dataState, (o) => {
+        return {
+          x: MONTHS_MAP[o.month],
+          y: o.num_consecutive_q || null,
+          labelTooltip: maxYearStr
+        }
+      } )
+
+      let num_consecutive_q_ly = _.map( dataState, (o) => {
+        return {
+          x: MONTHS_MAP[o.month],
+          y: o.num_consecutive_q_ly || null,
           labelTooltip: maxYearStr
         }
       } )
@@ -706,6 +722,8 @@ class ChartStoreAbo {
         ytd_consecutive_ly_data,
         months_data: months_data,
         months_data_cons: months_data_cons,
+        num_consecutive_q:num_consecutive_q,
+        num_consecutive_q_ly:num_consecutive_q_ly,
         maxYear: maxYearStr,
         prevYear: prevYearStr
       }

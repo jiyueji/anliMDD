@@ -170,7 +170,7 @@ export default class AboDyBarStack extends Component {
                         position: 'top',
                         // position: ['-10', '-20'],
                         formatter:(params)=> {
-                            console.log(this.state.renewalRateData.length - 1)
+                            // console.log(this.state.renewalRateData.length - 1)
                             // console.log(params.dataIndex)
                             if(params.dataIndex == this.state.renewalRateData.length - 1){
                                 return ""

@@ -11,6 +11,8 @@ export default class AboRate extends Component {
             months_data_show:[],
             maxYear:"",
             prevYear:"",
+            num_consecutive_q_show:[],
+            num_consecutive_q_ly_show:[],
         }
     }
     render() {
@@ -25,6 +27,7 @@ export default class AboRate extends Component {
     }
     componentDidMount() {
         var data = this.props.data;
+        // console.log(data)
         // num_q_month_data: (12)[{ … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }]
         // num_q_month_ly_data: (12)[{ … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }]
         // ytd_consecutive_data: (12)[{ … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }]
@@ -33,13 +36,15 @@ export default class AboRate extends Component {
         // months_data_cons: (12)[{ … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }]
         // maxYear: "PF 20"
         // prevYear: "PF 19"
-        console.log(data)
-        var {num_q_month_data,num_q_month_ly_data,months_data,maxYear,prevYear,ytd_consecutive_data,ytd_consecutive_ly_data} = data
+        // console.log(data)
+        var {num_q_month_data,num_q_month_ly_data,months_data,maxYear,prevYear,ytd_consecutive_data,ytd_consecutive_ly_data,num_consecutive_q,num_consecutive_q_ly} = data
         var num_q_month_data_show = []
         var num_q_month_ly_data_show = []
         var months_data_show = []
         var ytd_consecutive_data_show = []
         var ytd_consecutive_ly_data_show = []
+        var num_consecutive_q_show = []
+        var num_consecutive_q_ly_show = []
         num_q_month_data ? num_q_month_data.map((item,index)=>{
             num_q_month_data_show.push(item.y)
         }) : ""
@@ -55,13 +60,21 @@ export default class AboRate extends Component {
         ytd_consecutive_ly_data ? ytd_consecutive_ly_data.map((item,index)=>{
             ytd_consecutive_ly_data_show.push(Math.round(item.y * 100))
         }) : ""
+        num_consecutive_q ? num_consecutive_q.map((item,index)=>{
+            num_consecutive_q_show.push(item.y)
+        }) : ""
+        num_consecutive_q_ly ? num_consecutive_q_ly.map((item,index)=>{
+            num_consecutive_q_ly_show.push(-item.y)
+        }) : ""
         num_q_month_data_show = num_q_month_data_show.reverse()
         num_q_month_ly_data_show = num_q_month_ly_data_show.reverse()
         months_data_show = months_data_show.reverse()
         ytd_consecutive_data_show = ytd_consecutive_data_show.reverse()
         ytd_consecutive_ly_data_show = ytd_consecutive_ly_data_show.reverse()
+        num_consecutive_q_show = num_consecutive_q_show.reverse()
+        num_consecutive_q_ly_show = num_consecutive_q_ly_show.reverse()
         this.setState({
-            num_q_month_data_show,num_q_month_ly_data_show,months_data_show,maxYear,prevYear,ytd_consecutive_data_show,ytd_consecutive_ly_data_show
+            num_q_month_data_show,num_q_month_ly_data_show,months_data_show,maxYear,prevYear,ytd_consecutive_data_show,ytd_consecutive_ly_data_show,num_consecutive_q_show,num_consecutive_q_ly_show
         },()=>{
             this.aboRateEchartsHandle()
         })
@@ -120,12 +133,12 @@ export default class AboRate extends Component {
                             show: true,
                             position:'insideLeft',
                             formatter:(params)=>{
-                                var valueParamsShow = params.value.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
-                                return valueParamsShow
+                                var {ytd_consecutive_data_show} = this.state
+                                return ytd_consecutive_data_show[params.dataIndex] + "%"
                             },
                         }
                     },
-                    data:this.state.num_q_month_data_show,
+                    data:this.state.num_consecutive_q_show,
                 },
                 {
                     name:this.state.maxYear,
@@ -137,14 +150,14 @@ export default class AboRate extends Component {
                             show: true,
                             position:'insideRight',
                             formatter:(params)=>{
-                                var {ytd_consecutive_data_show} = this.state
-                                return ytd_consecutive_data_show[params.dataIndex] + "%"
+                                var {num_consecutive_q_show} = this.state
+                                var valueParamsShow = Number(num_consecutive_q_show[params.dataIndex]).toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,') || ""
+                                return valueParamsShow
                             },
                         }
                     },
                     data:[0,0,0,0,0,0,0,0,0,0,0,0],
                 },
-
                 {
                     name:this.state.prevYear,
                     type:'bar',
@@ -160,7 +173,7 @@ export default class AboRate extends Component {
                             },
                         }
                     },
-                    data:this.state.num_q_month_ly_data_show,
+                    data:this.state.num_consecutive_q_ly_show,
                 },
                 {
                     name:this.state.prevYear,
@@ -172,8 +185,8 @@ export default class AboRate extends Component {
                             show: true,
                             position:'insideLeft',
                             formatter:(params)=>{
-                                var {num_q_month_ly_data_show} = this.state
-                                var valueParamsShow2 = (-num_q_month_ly_data_show[params.dataIndex]).toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
+                                var {num_consecutive_q_ly_show} = this.state
+                                var valueParamsShow2 = Number(-num_consecutive_q_ly_show[params.dataIndex]).toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,') || ""
                                 return valueParamsShow2
                             },
                             // formatter: function(params){return -params.value}
@@ -185,6 +198,7 @@ export default class AboRate extends Component {
             legend: {
                 type: "scroll",
                 icon: "rect",
+                left:"38%",
                 data: [
                     { name: this.state.prevYear },
                     { name: this.state.maxYear },
@@ -192,7 +206,8 @@ export default class AboRate extends Component {
                 itemWidth: 10,
                 itemHeight: 10,
                 bottom: 16,
-                itemGap: 50,
+                itemGap: 38,
+                // itemGap: 50,
                 textStyle: {
                     color: "#333",
                     fontSize: 14

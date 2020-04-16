@@ -43,7 +43,7 @@ export default class AboDyBarStack extends Component {
     }
     upDateShowData() {
         var data = this.props.data || {}
-        console.log(data)
+        // console.log(data)
         //         new_abo_data: (2) [{…}, {…}]
         // renew_abo_data: (2) [{…}, {…}]
         // churn_abo_data: (2) [{…}, {…}]

@@ -123,7 +123,7 @@ class SalesPerformanceContainer extends React.PureComponent {
             <Col>
               <div className="sb-wrap sb-wrapFirst">
                 {/* <LineChartMonthly data={chartStore.totalSalesLineMonth} /> */}
-                <LineChartMonthlyEchaets data={chartStore.totalSalesLineMonth}/>
+                <LineChartMonthlyEchaets data={chartStore.totalSalesLineMonth} datas={chartStore.totalSalesLineYear}/>
               </div>
             </Col>
             <Col>
