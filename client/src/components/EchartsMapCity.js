@@ -3,6 +3,10 @@ import React, { Component, Fragment } from 'react'
 import echarts from 'echarts';
 import "echarts/lib/chart/line";
 import "echarts/map/js/china";
+import oneMapGreenCircular from "../styles/assets/oneMapGreenCircular.png"
+import oneMapRedCircular from "../styles/assets/oneMapRedCircular.png"
+import oneMapUp from "../styles/assets/oneMapUp.png"
+import oneMapDown from "../styles/assets/oneMapDown.png"
 
 
 export default class EchartsMapCity extends Component {
@@ -39,6 +43,28 @@ export default class EchartsMapCity extends Component {
             <Fragment>
                 <div className="mapTitle">YTD sales by city cluster</div>
                 <div id="map" className="centerItem"></div>
+                <ul className="oneMapTuLiUl">
+                    <li>
+                        <img src={oneMapGreenCircular} />
+                        <div>Better vs ACCL</div>
+                        <img src={oneMapUp} />
+                    </li>
+                    <li>
+                        <img src={oneMapRedCircular} />
+                        <div>Better vs ACCL</div>
+                        <img src={oneMapDown} />
+                    </li>
+                    <li style={{color:"#16b6aa"}}>
+                        <span>city cluster</span>
+                        <div>Better vs ACCL</div>
+                        <img src={oneMapUp} />
+                    </li>
+                    <li style={{color:"#ff0025"}}>
+                        <span>city cluster</span>
+                        <div>Better vs ACCL</div>
+                        <img src={oneMapUp} />
+                    </li>
+                </ul>
             </Fragment>
         )
     }
@@ -535,26 +561,29 @@ export default class EchartsMapCity extends Component {
                 array.push({
                     name,
                     value: [...geoCoord],
-                    label: { fontSize: 10,
+                    label: {
+                        fontSize: 10,
                         //控制地图上显示的字体的颜色的变化
-                        color: (params)=>{
-                        var splySales = 0;
-                        if (this.state.cityClusterAll && this.state.cityClusterAll.length > 0) {
-                            for (var i = 0; i < this.state.cityClusterAll.length; i++) {
-                                if (this.state.cityClusterAll[i].city_cluster === params.name) {
-                                    splySales = this.state.cityClusterAll[i].sales_vs_sply
-                                }
-                            }
-                        }
-                        if (splySales) {
-                            splySales = splySales.replace(/%/g, '')
-                            if (Number(splySales) >= 0) {
-                                return "#16b6aa"
-                            } else {
-                                return "#ff0025"
-                            }
-                        }
-                    }, shows: showLabel, show: false }//这个show代表地图的名字是否显示
+                        //     color: (params)=>{
+                        //     var splySales = 0;
+                        //     if (this.state.cityClusterAll && this.state.cityClusterAll.length > 0) {
+                        //         for (var i = 0; i < this.state.cityClusterAll.length; i++) {
+                        //             if (this.state.cityClusterAll[i].city_cluster === params.name) {
+                        //                 splySales = this.state.cityClusterAll[i].sales_vs_sply
+                        //             }
+                        //         }
+                        //     }
+                        //     if (splySales) {
+                        //         splySales = splySales.replace(/%/g, '')
+                        //         if (Number(splySales) >= 0) {
+                        //             return "#16b6aa"
+                        //         } else {
+                        //             return "#ff0025"
+                        //         }
+                        //     }
+                        // }, 
+                        shows: showLabel, show: false
+                    }//这个show代表地图的名字是否显示
                 });
             });
             //改变回来排序，按大小来排
@@ -623,10 +652,10 @@ export default class EchartsMapCity extends Component {
                     object.label = {
                         align: 'left'
                     };
-                    object.coords.push([pointX += 0.1, pointY += 0]);
+                    object.coords.push([pointX += 0.6, pointY += 0]);
                 } else {
                     if (pointX <= flag) {
-                        object.label = {align: 'right' };
+                        object.label = { align: 'right' };
                         object.coords.push([pointX -= 1.4, pointY += 0.6]);
                     } else {
                         let point = latitude.find(item => item.flag >= pointY);
@@ -889,7 +918,7 @@ export default class EchartsMapCity extends Component {
                     },
                     lineStyle: {
                         type: 'solid',
-                        color: (params)=>{
+                        color: (params) => {
                             var splySales = 0;
                             if (this.state.cityClusterAll && this.state.cityClusterAll.length > 0) {
                                 for (var i = 0; i < this.state.cityClusterAll.length; i++) {

@@ -98,13 +98,13 @@ class AboDynamicsContainer extends React.PureComponent {
               <AboQMonths data={chartStoreAbo.aboQualification}/>
             </div>
             <div style={{ width: '33%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
-              {/* 第二个竖起来柱状图 */}
-              <AboRate data={chartStoreAbo.aboQualification}/>
-            </div>
-            <div style={{ width: '33%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
               {/* 第二个两行柱状图 */}
               <AboPvPer data={chartStoreAbo.aboQMonthPv} dataLegend={chartStoreAbo.aboQualification}/>
             </div>
+            <div style={{ width: '33%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
+            {/* 第二个竖起来柱状图 */}
+            <AboRate data={chartStoreAbo.aboQualification}/>
+          </div>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between',marginTop:"15px" }}>
             <div style={{ width: '50%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
@@ -126,7 +126,7 @@ class AboDynamicsContainer extends React.PureComponent {
             </div>
             <div style={{ width: '49%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
               {/* 第二个柱状图加折线 */}
-              <AboBarLineEcharts data={chartStoreAbo.aboNonPinBarData}/>
+              <AboBarLineEcharts data={chartStoreAbo.aboCisKpiDataHandle}/>
             </div>
           </div>
           {/* <Row>

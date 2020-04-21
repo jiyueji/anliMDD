@@ -8,10 +8,20 @@ export default class AboBarLineEcharts extends Component {
         this.state = {
             nowColorAbo: false,
             clickShow: true,
+
+            csi_per_earner_blueData: [],
+            csi_earner_redData: [],
+            vcs_sales_bv_data: [],
+            foa_sales_bv_data: [],
+            total_sales_bv_data: [],
+            object_ytd_data: {},
+            vcs_sales_bv_ShowNow:[],
+            foa_sales_bv_ShowNow:[],
+            NOW_MAXDATE:"",
         }
     }
     render() {
-        var { clickShow } = this.state
+        var { clickShow,object_ytd_data } = this.state
         return (
             <Fragment>
                 <div style={{ position: "absolute", left: ' 3%', top: '4%', fontSize: '14px', fontWeight: '600' }}>CSI</div>
@@ -21,12 +31,25 @@ export default class AboBarLineEcharts extends Component {
                 </div>
                 {
                     clickShow ? <div style={{ position: "absolute", width: "100%", }}>
-                    <div style={{ position: "absolute", left: ' 3%', top: '10%', fontSize: '14px', color: "#333" }}>Mthly Trend</div>
-                    <div style={{ width: "100%", height: "400px", display: 'flex' }}>
-                        <div id="aboBarLineEcharts" style={{ width: "80%", height: "400px" }}></div>
-                        <div id="aboBarLineEcharts2" style={{ width: "20%", height: "400px" }}></div>
-                    </div>
-                </div> : ""
+                        <div style={{ position: "absolute", left: ' 3%', top: '12%', fontSize: '14px', color: "#333" }}>Mthly Trend</div>
+                        <div style={{ width: "100%", height: "400px", display: 'flex' }}>
+                            <div id="aboBarLineEcharts" style={{ width: "80%", height: "400px" }}></div>
+                            <div id="aboBarLineEcharts2" style={{ width: "20%", height: "400px" }}></div>
+                        </div>
+                    </div> : <div style={{ position: "absolute", width: "100%", }}>
+                            <div style={{ width: "100%", height: "180", display: 'flex' }}>
+                                <div style={{position:"absolute",top:"20%",left:"25%",fontSize:"16px",fontWeight:"600"}}>YTD Mthly Avg.<br></br>Sales BV Mix</div>
+                                <div id="aboBvMixEcharts" style={{ width: "100%", height: "180px" }}></div>
+                                <div style={{position:"absolute",top:"5%",right:"7%",fontSize:"12px",lineHeight:"20px",textAlign:"right"}}>
+                                    <div>Note: FOA / Total :{object_ytd_data.foa_sales_bv_ShowNowOne}%</div>
+                                    <div>VCS / Total :{object_ytd_data.vcs_sales_bv_ShowNowOne}%</div>
+                                </div>
+                            </div>
+                            <div style={{ position: "absolute", left: ' 3%', top: '45%', fontSize: '14px', color: "#333" }}>Monthly Sales BV Mix</div>
+                            <div style={{ width: "100%", height: "220px", display: 'flex' }}>
+                                <div id="aboBvMixEcharts2" style={{ width: "100%", height: "220px" }}></div>
+                            </div>
+                        </div>
                 }
             </Fragment>
         )
@@ -52,13 +75,71 @@ export default class AboBarLineEcharts extends Component {
         nowColorAbo.style.color = "#ffffff"
         this.setState({
             nowColorAbo, clickShow
+        }, () => {
+            var { clickShow } = this.state
+            if (clickShow) {
+                this.aboBarLineEchartsHandle()
+                this.aboBarLineEchartsHandle2()
+            } else {
+                this.aboBvMixEchartsHandle1()
+                this.aboBvMixEchartsHandle2()
+            }
         })
     }
     componentDidMount() {
         var data = this.props.data;
-
+        // console.log(data, "data")
+        // YTD_DATA: (6) [{…}, {…}, {…}, {…}, {…}, {…}]
+        // CSI_AMT: (3) [16116842.54, 14326362.73, 27683221.06]
+        // CSI_COUNT: (3) [157979, 178688, 206086]
+        // QUALIF_CSI_SR: (3) [2101071, 2169547, 2211229]
+        // TOTAL_ORDER_BV: (3) [1670798360.23, 1168314763, 1329153428.14]
+        // FOA_ORDER_BV_1B: (3) [254937750.24, 190198111.02, 370292304.66]
+        // VCS_AMT: (3) [211141862.9, 172951167.6, 337765763.21]
+        // NOW_MAXDATE: "202003"
+        var { YTD_DATA, CSI_AMT, CSI_COUNT, QUALIF_CSI_SR, TOTAL_ORDER_BV, FOA_ORDER_BV_1B, VCS_AMT, NOW_MAXDATE } = data
+        var csi_per_earner_blueData = []
+        var csi_earner_redData = []
+        var vcs_sales_bv_data = VCS_AMT || []
+        var foa_sales_bv_data = FOA_ORDER_BV_1B || []
+        var total_sales_bv_data = TOTAL_ORDER_BV || []
+        CSI_COUNT && CSI_COUNT.length >= 0 ? CSI_COUNT.map((item, index) => {
+            csi_per_earner_blueData.push(Math.round(CSI_AMT[index] / item))
+            csi_earner_redData.push(((item / QUALIF_CSI_SR[index]) * 100).toFixed(1))
+            // vcs_sales_bv_data.push(VCS_AMT[index])
+            // foa_sales_bv_data.push(FOA_ORDER_BV_1B[index])
+            // total_sales_bv_data.push(Math.round(TOTAL_ORDER_BV[index]))
+        }) : ""
+        var vcs_sales_bv_ShowNow = []
+        var foa_sales_bv_ShowNow = []
+        TOTAL_ORDER_BV && TOTAL_ORDER_BV.length >= 0 > TOTAL_ORDER_BV.map((item,index)=>{
+            vcs_sales_bv_ShowNow.push(VCS_AMT[index] / item)
+            foa_sales_bv_ShowNow.push(FOA_ORDER_BV_1B[index] / item)
+        })
+        var object_ytd_data = {}
+        YTD_DATA && YTD_DATA.length >= 0 ? YTD_DATA.map((item, index) => {
+            if (item.kpi_code == "CSI_AMT") {
+                object_ytd_data.CSI_AMT = item.kpi_cy_values
+            } else if (item.kpi_code == "CSI_COUNT") {
+                object_ytd_data.CSI_COUNT = item.kpi_cy_values
+            } else if (item.kpi_code == "QUALIF_CSI_SR") {
+                object_ytd_data.QUALIF_CSI_SR = item.kpi_cy_values
+            } else if (item.kpi_code == "TOTAL_ORDER_BV") {
+                object_ytd_data.TOTAL_ORDER_BV = item.kpi_cy_values
+            } else if (item.kpi_code == "FOA_ORDER_BV_1B") {
+                object_ytd_data.FOA_ORDER_BV_1B = item.kpi_cy_values
+            } else if (item.kpi_code == "VCS_AMT") {
+                object_ytd_data.VCS_AMT = item.kpi_cy_values
+            }
+        }) : ""
+        object_ytd_data.csi_per_earner_blueDataOne = Math.round(object_ytd_data.CSI_AMT / object_ytd_data.CSI_COUNT)
+        object_ytd_data.csi_earner_redDataOne = ((object_ytd_data.CSI_COUNT / object_ytd_data.QUALIF_CSI_SR) * 100).toFixed(1)
+        object_ytd_data.vcs_sales_bv_ShowNowOne = ((object_ytd_data.VCS_AMT / object_ytd_data.TOTAL_ORDER_BV) * 100).toFixed(1)
+        object_ytd_data.foa_sales_bv_ShowNowOne = ((object_ytd_data.FOA_ORDER_BV_1B / object_ytd_data.TOTAL_ORDER_BV) * 100).toFixed(1)
+        object_ytd_data.vcsAddFoa = Number(object_ytd_data.vcs_sales_bv_ShowNowOne) + Number(object_ytd_data.foa_sales_bv_ShowNowOne)
+        // console.log(object_ytd_data, "object_ytd_data")
         this.setState({
-
+            csi_per_earner_blueData, csi_earner_redData, vcs_sales_bv_data, foa_sales_bv_data, total_sales_bv_data, object_ytd_data,vcs_sales_bv_ShowNow,foa_sales_bv_ShowNow,NOW_MAXDATE
         }, () => {
             this.aboBarLineEchartsHandle()
             this.aboBarLineEchartsHandle2()
@@ -76,7 +157,7 @@ export default class AboBarLineEcharts extends Component {
         });
         aboBarLineEcharts.setOption({
             grid: {
-                top: '18%',
+                top: '25%',
                 left: '4%',
                 right: '5%',
                 bottom: '15%',
@@ -84,7 +165,7 @@ export default class AboBarLineEcharts extends Component {
             },
             xAxis: {
                 type: 'category',
-                data: ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+                data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',],
                 axisTick: {
                     show: false //隐藏X轴刻度
                 },
@@ -110,6 +191,7 @@ export default class AboBarLineEcharts extends Component {
             yAxis: [
                 {
                     type: 'value',
+                    yAxisIndex: 0,
                     axisLabel: {
                         show: true,
                         textStyle: {
@@ -122,11 +204,42 @@ export default class AboBarLineEcharts extends Component {
                     axisLine: {//隐藏X轴
                         show: false
                     },
+                    min: 0,
+                    max: 500,
                     nameGap: 10,
                     axisTick: {
                         show: false //隐藏X轴刻度
                     },
                     splitLine: {//Y轴的样式虚线
+                        lineStyle: {
+                            type: 'dashed',
+                            color: '#e5e9ee'
+                        }
+                    }
+                },
+                {
+                    type: 'value',
+                    yAxisIndex: 1,
+                    axisLabel: {
+                        show: false,
+                        textStyle: {
+                            color: "#333"
+                        },
+                        formatter: function (params) {
+                            return params / 1
+                        }
+                    },
+                    axisLine: {//隐藏X轴
+                        show: false
+                    },
+                    min: -100,
+                    max: 100,
+                    nameGap: 10,
+                    axisTick: {
+                        show: false //隐藏X轴刻度
+                    },
+                    splitLine: {//Y轴的样式虚线
+                        show: false,
                         lineStyle: {
                             type: 'dashed',
                             color: '#e5e9ee'
@@ -153,6 +266,7 @@ export default class AboBarLineEcharts extends Component {
                     name: 'CSI per Earner',
                     type: 'bar',
                     barWidth: 16,
+                    yAxisIndex: 0,
                     stack: 'stack',
                     itemStyle: {
                         normal: {
@@ -179,12 +293,13 @@ export default class AboBarLineEcharts extends Component {
                             color: '#ffffff',
                         }
                     },
-                    data: [14, 35, 53, 37, 27, 59, 52, 37, 24, 35, 57, 66]
+                    data: this.state.csi_per_earner_blueData,
                 },
                 {
                     name: 'CSI earner % of total eligible earner',
-                    data: [20, 22, 14, 23, 24, 23, 15, 26, 24, 14, 18, 30],
+                    data: this.state.csi_earner_redData,
                     type: 'line',
+                    yAxisIndex: 1,
                     smooth: true,
                     // symbol: "none", //去掉折线点
                     symbolSize: 5, //折线点的大小
@@ -261,8 +376,11 @@ export default class AboBarLineEcharts extends Component {
                     // }
                 }
             },
-            yAxis: {
+            yAxis: [{
                 show: false,
+                yAxisIndex: 0,
+                min: 0,
+                max: 500,
                 axisLine: {       //y轴
                     show: false
                 },
@@ -272,11 +390,26 @@ export default class AboBarLineEcharts extends Component {
                 splitLine: {     //网格线
                     show: false
                 }
-            },
+            }, {
+                show: false,
+                yAxisIndex: 1,
+                min: -100,
+                max: 100,
+                axisLine: {       //y轴
+                    show: false
+                },
+                axisTick: {       //y轴刻度线
+                    show: false
+                },
+                splitLine: {     //网格线
+                    show: false
+                }
+            }],
             series: [
                 {
                     name: 'CSI per Earner',
                     type: 'bar',
+                    yAxisIndex: 0,
                     barWidth: 16,
                     stack: 'stack',
                     itemStyle: {
@@ -304,11 +437,12 @@ export default class AboBarLineEcharts extends Component {
                             color: '#ffffff',
                         }
                     },
-                    data: [41]
+                    data: [this.state.object_ytd_data.csi_per_earner_blueDataOne],
                 },
                 {
                     name: 'CSI earner % of total eligible earner',
-                    data: [41],
+                    data: [this.state.object_ytd_data.csi_earner_redDataOne],
+                    yAxisIndex: 1,
                     type: 'line',
                     smooth: true,
                     // symbol: "none", //去掉折线点
@@ -342,6 +476,288 @@ export default class AboBarLineEcharts extends Component {
                     }, //线条样式
                 }
             ],
+        })
+    }
+    aboBvMixEchartsHandle2() {
+        var aboBvMixEchartsWidth2 = document.getElementById('aboBvMixEcharts2')
+        aboBvMixEchartsWidth2.style.width = (window.innerWidth * 0.48) + "px"
+
+        var aboBvMixEcharts2 = echarts.init(document.getElementById('aboBvMixEcharts2'));
+        window.addEventListener('resize', function () {
+            aboBvMixEcharts2.resize()
+        });
+        aboBvMixEcharts2.setOption({
+            grid: {
+                top: '16%',
+                left: '4%',
+                right: '5%',
+                bottom: '15%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',],
+                axisTick: {
+                    show: false //隐藏X轴刻度
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        type: "dashed",
+                    }
+                },
+                // boundaryGap: false,//X轴刻度位置
+                axisLabel: {
+                    // show:false,
+                    interval: 0,  //x轴文字全部显示
+                    textStyle: {
+                        fontSize: 12,
+                        color: '#333'
+                    },
+                    // formatter: function (params) {
+                    //     return params.split(' ')[0]
+                    // }
+                }
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    show: true,
+                    textStyle: {
+                        color: "#333"
+                    },
+                    formatter: (val) => {
+                        var val = val / 1000000;
+                        if (val > 999) {
+                            var b = parseInt(val).toString();
+                            var len = b.length;
+                            if (len <= 3) { val = b; }
+                            var r = len % 3;
+                            r > 0 ? val = b.slice(0, r) + "," + b.slice(r, len).match(/\d{3}/g).join(",") : val = b.slice(r, len).match(/\d{3}/g).join(",");
+                            return val + "m";
+                        }
+                        return val + "m";
+                    }
+                },
+                axisLine: {//隐藏X轴
+                    show: false
+                },
+                nameGap: 10,
+                axisTick: {
+                    show: false //隐藏X轴刻度
+                },
+                splitLine: {//Y轴的样式虚线
+                    lineStyle: {
+                        type: 'dashed',
+                        color: '#e5e9ee'
+                    }
+                }
+            },
+            color:['#5497f2','#28cdad','#fea443'],
+            series: [
+                {
+                    name: 'VCS Sales BV',
+                    type: 'line',
+                    // stack: 'stack',
+                    label: {
+                        show: true,
+                        position: 'bottom',
+                        formatter: (params)=> {
+                            var {vcs_sales_bv_ShowNow} = this.state
+                            var showVcs = (vcs_sales_bv_ShowNow[params.dataIndex] * 100).toFixed(1) + "%"
+                            return showVcs
+                        },
+                        textStyle: {
+                            // fontSize: 8,
+                            color: '#5497f2',
+                        }
+                    },
+                    areaStyle: {
+                        color: {
+                            type: 'linear',
+                            x: 0,
+                            y: 0,
+                            x2: 0,
+                            y2: 1,
+                            colorStops: [{
+                                offset: 0, color: '#aad3f1'
+                            }, {
+                                offset: 1, color: '#d1e9f5'
+                            }],
+                            global: false
+                        }
+                    },
+                    data: this.state.vcs_sales_bv_data
+                },
+                {
+                    name: 'FOA Sales BV',
+                    type: 'line',
+                    // stack: 'stack',
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: (params)=> {
+                            var {foa_sales_bv_ShowNow} = this.state
+                            var showFoa = (foa_sales_bv_ShowNow[params.dataIndex] * 100).toFixed(1) + "%"
+                            return showFoa
+                        },
+                        textStyle: {
+                            // fontSize: 8,
+                            color: '#28cdad',
+                        }
+                    },
+                    areaStyle: {
+                        color: {
+                            type: 'linear',
+                            x: 0,
+                            y: 0,
+                            x2: 0,
+                            y2: 1,
+                            colorStops: [{
+                                offset: 0, color: '#bbede1'
+                            }, {
+                                offset: 1, color: '#bbede1'
+                            }],
+                            global: false
+                        }
+                    },
+                    data: this.state.foa_sales_bv_data
+                },
+                {
+                    name: 'Total Sales BV',
+                    type: 'line',
+                    // stack: 'stack',
+                    areaStyle: {
+                        color: {
+                            type: 'linear',
+                            x: 0,
+                            y: 0,
+                            x2: 0,
+                            y2: 1,
+                            colorStops: [{
+                                offset: 0, color: '#ffe8d0'
+                            }, {
+                                offset: 1, color: '#ffecdb'
+                            }],
+                            global: false
+                        }
+                    },
+                    data: this.state.total_sales_bv_data
+                }
+            ],
+            legend: {
+                type: "plain",
+                icon: "line",
+                left: 'center',
+                bottom: 5,
+                itemWidth: 10,
+                itemHeight: 10,
+                itemGap: 30,//图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
+            },
+        })
+    }
+    aboBvMixEchartsHandle1(){
+        var aboBvMixEchartsWidth = document.getElementById('aboBvMixEcharts')
+        aboBvMixEchartsWidth.style.width = (window.innerWidth * 0.48) + "px"
+
+        var aboBvMixEcharts = echarts.init(document.getElementById('aboBvMixEcharts'));
+        window.addEventListener('resize', function () {
+            aboBvMixEcharts.resize()
+        });
+        aboBvMixEcharts.setOption({
+            title: {
+                "text": this.state.NOW_MAXDATE,
+                "x": "57%",
+                "y": "5%",
+                "textStyle": {
+                    "color": "#333",
+                    "fontSize": 12,
+                    "fontWeight": "600",
+                    "align": "center",
+                    "width": "200px"
+                },
+            },
+            color:['#4e9bed','#29ccaf','#ffa441'],
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    width:"20%",
+                    left:"50%",
+                    top:"20%",
+                    selectedMode: 'single',
+                    radius: [0, this.state.object_ytd_data.vcs_sales_bv_ShowNowOne + "%"],
+                    label: {
+                        show: true,
+                        position: 'center',
+                        formatter: (params)=> {
+                            return this.state.object_ytd_data.vcs_sales_bv_ShowNowOne + "%"
+                        },
+                        textStyle: {
+                            // fontSize: 8,
+                            color: '#ffffff',
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data: [
+                        {value: this.state.object_ytd_data.vcs_sales_bv_ShowNowOne, name: 'VCS Sales BV'}
+                    ]
+                },
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    width:"20%",
+                    left:"50%",
+                    top:"20%",
+                    radius: [this.state.object_ytd_data.vcs_sales_bv_ShowNowOne + "%", this.state.object_ytd_data.vcsAddFoa + "%"],
+                    data: [
+                        {value: this.state.object_ytd_data.vcsAddFoa, name: 'FOA Sales BV'},
+                    ],
+                    label: {
+                        show: true,
+                        position: 'inner',
+                        formatter: (params)=> {
+                            return this.state.object_ytd_data.foa_sales_bv_ShowNowOne + "%"
+                        },
+                        textStyle: {
+                            // fontSize: 8,
+                            color: '#ffffff',
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                },
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    width:"20%",
+                    left:"50%",
+                    top:"20%",
+                    labelLine: {
+                        show: false
+                    },
+                    radius: [this.state.object_ytd_data.vcsAddFoa + "%", '100%'],
+                    data: [
+                        {value: this.state.object_ytd_data.vcsAddFoa, name: 'Total Sales BV'},
+                    ]
+                }
+            ],
+            legend: {
+                orient: 'vertical',
+                "textStyle": {
+                    "color": "#333",
+                    // "fontSize": 16
+                },
+                "icon": "circle",
+                "right": "5%",
+                "bottom": "0",
+                // "padding": [30, 60],
+                "itemGap": 10,
+                "data": ["VCS Sales BV", "FOA Sales BV", "Total Sales BV"]
+            },
         })
     }
 }

@@ -258,12 +258,13 @@ export default class SegmentsThree extends Component {
                         //     var r = len % 3;
                         //     r > 0 ? yearLastData = b.slice(0, r) + "," + b.slice(r, len).match(/\d{3}/g).join(",") : yearLastData = b.slice(r, len).match(/\d{3}/g).join(",");
                         // }
+                        var segmentsThreeAllNumber = customer + aboPurchasing + developingAbo + buildingAbo + aboLeader
                         if(sheet == 0){
-                            customer = Math.round(customer / 1000000) + "m"
-                            aboPurchasing = Math.round(aboPurchasing / 1000000) + "m"
-                            developingAbo = Math.round(developingAbo / 1000000) + "m"
-                            buildingAbo = Math.round(buildingAbo / 1000000) + "m"
-                            aboLeader = Math.round(aboLeader / 1000000) + "m"
+                            customer = Math.round(customer / 1000000) + "m" + "(" + Math.round((customer / segmentsThreeAllNumber) * 100) + "%" + ")"
+                            aboPurchasing = Math.round(aboPurchasing / 1000000) + "m" + "(" + Math.round((aboPurchasing / segmentsThreeAllNumber) * 100) + "%" + ")"
+                            developingAbo = Math.round(developingAbo / 1000000) + "m" + "(" + Math.round((developingAbo / segmentsThreeAllNumber) * 100) + "%" + ")"
+                            buildingAbo = Math.round(buildingAbo / 1000000) + "m" + "(" + Math.round((buildingAbo / segmentsThreeAllNumber) * 100) + "%" + ")"
+                            aboLeader = Math.round(aboLeader / 1000000) + "m" + "(" + Math.round((aboLeader / segmentsThreeAllNumber) * 100) + "%" + ")"
                         }else if(sheet == 1){
                             customer = Math.round(customer / 1000) + "k"
                             aboPurchasing = Math.round(aboPurchasing / 1000) + "k"

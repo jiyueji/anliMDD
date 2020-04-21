@@ -77,6 +77,7 @@ class Home extends Component {
 
 
 
+        this.props.chartStoreAbo.fetchAboCisKpiData();
         this.props.chartStoreAbo.fetchAboRenewalData();
         this.props.chartStoreAbo.fetchAboPinData();
         this.props.chartStoreAbo.fetchAboNonPinData();

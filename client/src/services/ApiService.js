@@ -444,6 +444,7 @@ class ApiSerice {
         this.handleCommonError(res);
         return res.body;
     }
+
 }
 
 export default new ApiSerice()

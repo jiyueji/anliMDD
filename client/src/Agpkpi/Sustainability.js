@@ -33,7 +33,7 @@ export default class Sustainability extends Component {
                     {
                         kpiflagShow1 ? <div className="kpiAgpDisplayFlag">
                             <div className="rightClose" onClick={this.kpiflagShowhandle1.bind(this)}>X</div>
-                            <h5>Buyer Segment Definition</h5>
+                            <h5>High PPV % of Sales Definition</h5>
                             <p>Sum of High PPV buyers total month sales / total month sales. Values are calculated monthly and expressed as a percent of monthly sales. Period is calendar year. Annual rate is reflected as a total High PPV Sales rate for the year.</p>
                         </div> : ""
                     }

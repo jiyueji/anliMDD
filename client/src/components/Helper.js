@@ -59,12 +59,12 @@ export const toPerc1Dec = (val) => {
 
 export const yearToPfPref = (val) => {
   const mid = String(val).slice(2,4)
-  return `PF ${mid} avg`
+  return `PF${mid} avg`
 }
 
 export const yearToPfPref2 = (val) => {
   const mid = String(val).slice(2,4)
-  return `PF ${mid}`
+  return `PF${mid}`
 }
 
 // subtract month from YYYYMM

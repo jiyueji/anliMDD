@@ -21,9 +21,9 @@ export default class LineChartMonthlyEchaets extends Component {
     constructor() {
         super();
         this.state = {
-            thisYearLength:0,
-            allData:[],
-            dataShowForClick:true,
+            thisYearLength: 0,
+            allData: [],
+            dataShowForClick: true,
             monthShow: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             thisYear: [],
             lastYear: [],
@@ -31,7 +31,7 @@ export default class LineChartMonthlyEchaets extends Component {
             nowColor: false,
             yearShow: '2020',
             lastYearShow: '2019',
-            nameFroecast:"",
+            nameFroecast: "2020 Target",
         }
     }
     render() {
@@ -80,14 +80,14 @@ export default class LineChartMonthlyEchaets extends Component {
         }, 500);
 
     }
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps) {
         // console.log(nextProps)
-        var {data,datas} = nextProps
+        var { data, datas } = nextProps
         var isPerfYear = data.isPerfYear
-        var { monthShow,allData,dataShowForClick,thisYearLength } = this.state
-        if(dataShowForClick){
+        var { monthShow, allData, dataShowForClick, thisYearLength } = this.state
+        if (dataShowForClick) {
             allData = data
-        }else{
+        } else {
             allData = datas
         }
         if (isPerfYear) {
@@ -97,7 +97,7 @@ export default class LineChartMonthlyEchaets extends Component {
         }
         thisYearLength = data.actual_sales_data.length || 12
         this.setState({
-            monthShow,allData,thisYearLength
+            monthShow, allData, thisYearLength
         }, () => {
             this.dataUpdate()
         })
@@ -109,13 +109,14 @@ export default class LineChartMonthlyEchaets extends Component {
         // 0: {x: "Nov", y: 194158289.726068, labelTooltip: "Monthly Sales"}
         // 1: {x: "Dec", y: 205400000, labelTooltip: "Sales Forecast"}
         this.setState({
-            allData,thisYearLength
-        },()=>{
+            allData, thisYearLength
+        }, () => {
             this.dataUpdate()
         })
     }
     dataUpdate() {
-        var {allData,dataShowForClick,thisYearLength} = this.state
+        var { allData, dataShowForClick, thisYearLength } = this.state
+        console.log(allData)
         // var allData = this.props.data;
         // console.log(thisYearLength)
         var thisYear = [];
@@ -133,7 +134,7 @@ export default class LineChartMonthlyEchaets extends Component {
                 lastYear.push(item.y)
             })
         }
-        if(dataShowForClick){
+        // if (dataShowForClick) {
             if (allData && allData.revenue_forecast_usd_data.length > 0) {
                 allData.revenue_forecast_usd_data.map((item, index) => {
                     forecastYear.push(item.y)
@@ -142,29 +143,29 @@ export default class LineChartMonthlyEchaets extends Component {
             for (var i = 0; forecastYear.length < 12; i++) {
                 forecastYear.unshift("")
             }
-        }
+        // }
         var yearShow = new Date().getFullYear() //今年
         var lastYearShow = (yearShow - 1).toString()   //去年
         yearShow = yearShow.toString()//转换成字符串可以显示在图例里，数字不可以
-        var nameFroecast = 'Sales forecast'
+        var nameFroecast = yearShow + ' Target'
         thisYear.length = thisYearLength
         this.setState({
-            thisYear, lastYear, forecastYear, tooltipData, yearShow, lastYearShow,nameFroecast
+            thisYear, lastYear, forecastYear, tooltipData, yearShow, lastYearShow, nameFroecast
         }, () => {
             this.handleEcharts();
         })
     }
     handleClickChangeColor(e) {
-        var { nowColor,allData,dataShowForClick } = this.state
-        if(nowColor !== e.target && nowColor){
-            if(dataShowForClick){
+        var { nowColor, allData, dataShowForClick } = this.state
+        if (nowColor !== e.target && nowColor) {
+            if (dataShowForClick) {
                 dataShowForClick = false
                 allData = this.props.datas
-            }else{
+            } else {
                 dataShowForClick = true
                 allData = this.props.data
             }
-        }else if(!nowColor){
+        } else if (!nowColor) {
             dataShowForClick = false
             allData = this.props.datas
         }
@@ -181,8 +182,8 @@ export default class LineChartMonthlyEchaets extends Component {
         nowColor.style.background = "#5198ee";
         nowColor.style.color = "#ffffff"
         this.setState({
-            nowColor,allData,dataShowForClick
-        },()=>{
+            nowColor, allData, dataShowForClick
+        }, () => {
             this.dataUpdate()
         })
     }
@@ -222,6 +223,8 @@ export default class LineChartMonthlyEchaets extends Component {
                     var nameShow = "";
                     var toolShow = "";
                     var monthUp = "";
+                    var thisNow = "";
+                    var thisForecast = "";
                     var yearUp = new Date().getFullYear()
                     data.map((item, index) => {
                         if (item.componentIndex && item.componentIndex == 1) {
@@ -235,17 +238,18 @@ export default class LineChartMonthlyEchaets extends Component {
                         monthUp = item.axisValue
                     })
                     if (yearThisData) {
-                        var thisNow = this.state.yearShow + ":" + yearThisData;
+                        var thisNow = this.state.yearShow + " Actual:" + yearThisData + "m";
                         // var thisNow = "Monthly Sales This Year:" + yearThisData;
-                    } else {
-                        var thisNow = "Sales forecast:" + forecastData;
+                    }
+                    if (forecastData){
+                        var thisForecast = this.state.nameFroecast + ":" + forecastData + "m";
                     }
                     if (tooltipData && tooltipData[nameShow] && tooltipData[nameShow].events) {
                         tooltipData[nameShow].events.map((item, index) => {
                             toolShow += "<div style='display:flex;justify-content: space-between'><span style='color:#f2df3f'>" + "★" + "</span>" + item + "</div>"
                         })
                     }
-                    return "<div style='border-bottom:1px solid #ffffff'>" + monthUp + "</div>" + "<div style='border-bottom:1px solid #ffffff'>" + thisNow + "m" + "<br/>" + this.state.lastYearShow + ":" + yearLastData + "m" + "</div>" + toolShow
+                    return "<div style='border-bottom:1px solid #ffffff'>" + monthUp + "</div>" + "<div style='color:#ff9c46'>" + thisForecast + "</div>" + "<div style='color:#5198ee'>" + thisNow + "</div>" + "<div style='border-bottom:1px solid #ffffff;color:rgba(211,212,214)'>" + this.state.lastYearShow + " Actual:" + yearLastData + "m" + "</div>" + toolShow
                     // return "<div style='border-bottom:1px solid #ffffff'>" + yearUp + "  " + monthUp + "</div>" + "<div style='border-bottom:1px solid #ffffff'>" + thisNow + "m" + "<br/>" + "Monthly Sales Last Year:" + yearLastData + "m" + "</div>" + toolShow
                 }
             },
@@ -324,16 +328,35 @@ export default class LineChartMonthlyEchaets extends Component {
                         show: true,
                         // position: 'top',
                         position: ['0', '-20'],
-                        formatter: function (params) {
-                            return Math.round((params.data || 0) / 1000000) + "m"
+                        formatter: (params) => {
+                            if (params.dataIndex < this.state.thisYearLength) {
+                                return `\{bg1|${""}\}`
+                            }
+                            // return 
+                            return `\{bg0|${Math.round((params.data || 0) / 1000000) + 'm'}\}`
                         },
-                        backgroundColor: '#ff9c46',
-                        borderRadius: 5,
-                        padding: 4,
-                        textStyle: {
-                            fontSize: 8,
-                            color: '#ffffff',
-                        }
+                        // backgroundColor: '#ff9c46',
+                        // borderRadius: 5,
+                        // padding: 4,
+                        rich: {
+                            bg0: {
+                                fontSize: 8,
+                                color: '#ffffff',
+                                padding: 4,
+                                borderRadius: 5,
+                                backgroundColor: '#ff9c46'
+                            },
+                            bg1: {
+                                color: '#ffffff',
+                                padding: 0,
+                                borderRadius: 0,
+                                backgroundColor: '#ffffff'
+                            },
+                        },
+                        // textStyle: {
+                        //     fontSize: 8,
+                        //     color: '#ffffff',
+                        // }
                     },
                 }, {
                     name: this.state.yearShow,
@@ -406,13 +429,13 @@ export default class LineChartMonthlyEchaets extends Component {
                 // icon: "line",
                 left: 'center',
                 bottom: 'bottom',
-                symbolKeepAspect:false,//是否在缩放时保持该图形的长宽比
+                symbolKeepAspect: false,//是否在缩放时保持该图形的长宽比
                 // data:(val)=>{
                 //     console.log(val)
                 // },
                 data: [
-                    { name: this.state.yearShow,icon: "image://" + tuliLine },
-                    { name: this.state.lastYearShow,icon: "image://" + tulibackground },
+                    { name: this.state.lastYearShow, icon: "image://" + tulibackground },
+                    { name: this.state.yearShow, icon: "image://" + tuliLine },
                     { name: this.state.nameFroecast, icon: "image://" + tuliforecast }
                 ],
                 // data: [

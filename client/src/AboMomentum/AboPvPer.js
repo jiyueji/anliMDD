@@ -17,7 +17,7 @@ export default class AboPvPer extends Component {
         var { maxMonthStr } = this.state
         return (
             <Fragment>
-                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>YTD PF 20 Q Month & PV per QMonth</div>
+                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>YTD Q Month & PV per QMonth</div>
                 <div style={{ position: "absolute", right: ' 5%', top: '4%', fontSize: '12px', color: "#666" }}>As of {maxMonthStr}</div>
                 <div style={{ width: "100%", height: "420px", display: 'flex' }}>
                 <div id="aboPvPerEcharts" style={{ width: "100%", height: "400px" }}></div>

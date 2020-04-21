@@ -80,7 +80,7 @@ class ChartStore {
           })
       }
     }
-    // 
+
     @action async fetchPerformanceData2Com(params) {
       try {
           const data = await ApiService.get_performance_data2_com(params)          
@@ -401,7 +401,7 @@ class ChartStore {
       //   prevYearData = jslinq( dataState[maxYear-1].concat() )
       // }
       dataState = dataState[ maxYear ].concat()
-
+      // console.log(dataState)
       //原版
       // dataState = jslinq( dataState[maxYear].concat() )
       // dataState = dataState.groupBy(function(el){
@@ -441,16 +441,16 @@ class ChartStore {
           labelTooltip: 'YTD Sales'
         }
       } )
-
-      const target_sales_data = _.map( dataState, (o) => {
-        return {
-          // x: MONTHS_MAP[o.month],
-          // y: o.target_sales_sum,
-          x: MONTHS_MAP[o.month],
-          y: o.revenue_forecast_usd || null,
-          labelTooltip: 'Planned Target'
-        }
-      } )
+      // 原本的forecast数据
+      // const target_sales_data = _.map( dataState, (o) => {
+      //   return {
+      //     // x: MONTHS_MAP[o.month],
+      //     // y: o.target_sales_sum,
+      //     x: MONTHS_MAP[o.month],
+      //     y: o.revenue_forecast_usd || null,
+      //     labelTooltip: 'Planned Target'
+      //   }
+      // } )
 
       const actual_sales_ly_data = _.map( dataState, (o) => {
         return {
@@ -462,6 +462,16 @@ class ChartStore {
         }
       } )
 
+      const target_sales_data = _.map( dataState, (o) => {
+        return {
+          // x: MONTHS_MAP[o.month],
+          // y: o.actual_sales_ly_sum,
+          x: MONTHS_MAP[o.month],
+          y: o.target_sales || null,
+          labelTooltip: 'target_sales'
+        }
+      } )
+      
       const padNumber = (d) => {
         return (d < 10) ? '0' + d.toString() : d.toString()
       }
@@ -567,7 +577,7 @@ class ChartStore {
       }, {});
 
       dataState = dataState[ maxYear ].concat()
-
+      // console.log(dataState)
       // dataState = jslinq( dataState[ maxYear ].concat() )
 
       // dataState = dataState.groupBy(function(el){
@@ -618,7 +628,7 @@ class ChartStore {
         // fill tooltip data months and actual sales
         const monthId = `${maxYear}${padNumber(o.month)}`
         // console.log(monthId,o.n_month,String(o.n_month).slice(0, 4))
-
+        // console.log(o.n_month)
         tooltip_data_map[ MONTHS_MAP[o.month] ] = {
           monthName: hlp.yearMonthToStrFull(o.n_month),
           actual_sales: o.actual_sales && `$${hlp.toShortMil(o.actual_sales)}m`,
@@ -627,8 +637,8 @@ class ChartStore {
           // events: monthToInfoMap[monthId]// && addNewlines( monthToInfoMap[monthId]),
           events:monthToInfoMap[o.n_month]
         }
-        console.log("totalSalesLineMonth")
-        console.log(dataState)
+        // console.log("totalSalesLineMonth")
+        // console.log(dataState)
         return {
           x: MONTHS_MAP[o.month],
           y: o.actual_sales || null,
@@ -667,8 +677,9 @@ class ChartStore {
       let revenue_forecast_usd_data = _.map( dataState, (o) => {
         return {
           x: MONTHS_MAP[o.month],
-          y: o.revenue_forecast_usd || null,
-          labelTooltip: 'Sales Forecast'
+          // y: o.revenue_forecast_usd || null,      //forecast
+          y: o.target_sales || null,
+          labelTooltip: 'target_sales'
         }
       } )
 
