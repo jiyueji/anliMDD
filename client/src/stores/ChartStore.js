@@ -273,7 +273,8 @@ class ChartStore {
       } )    
       return {
         data: dataState,
-        maxMonth: maxMonthStr
+        maxMonth: maxMonthStr,
+        isPerfYear: this.isPerfYear
       }
     }
 

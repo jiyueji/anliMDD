@@ -116,7 +116,7 @@ export default class LineChartMonthlyEchaets extends Component {
     }
     dataUpdate() {
         var { allData, dataShowForClick, thisYearLength } = this.state
-        console.log(allData)
+        // console.log(allData)
         // var allData = this.props.data;
         // console.log(thisYearLength)
         var thisYear = [];
@@ -238,11 +238,16 @@ export default class LineChartMonthlyEchaets extends Component {
                         monthUp = item.axisValue
                     })
                     if (yearThisData) {
+                        yearThisData = yearThisData.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
                         var thisNow = this.state.yearShow + " Actual:" + yearThisData + "m";
                         // var thisNow = "Monthly Sales This Year:" + yearThisData;
                     }
                     if (forecastData){
+                        forecastData = forecastData.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
                         var thisForecast = this.state.nameFroecast + ":" + forecastData + "m";
+                    }
+                    if(yearLastData){
+                        yearLastData = yearLastData.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
                     }
                     if (tooltipData && tooltipData[nameShow] && tooltipData[nameShow].events) {
                         tooltipData[nameShow].events.map((item, index) => {
@@ -333,7 +338,7 @@ export default class LineChartMonthlyEchaets extends Component {
                                 return `\{bg1|${""}\}`
                             }
                             // return 
-                            return `\{bg0|${Math.round((params.data || 0) / 1000000) + 'm'}\}`
+                            return `\{bg0|${(Math.round((params.data || 0) / 1000000)).toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,') + 'm'}\}`
                         },
                         // backgroundColor: '#ff9c46',
                         // borderRadius: 5,
@@ -370,7 +375,7 @@ export default class LineChartMonthlyEchaets extends Component {
                         // position: 'top',
                         position: ['0', '-20'],
                         formatter: function (params) {
-                            return Math.round((params.data || 0) / 1000000) + "m"
+                            return (Math.round((params.data || 0) / 1000000)).toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,') + "m"
                         },
                         backgroundColor: '#5198ee',
                         borderRadius: 5,

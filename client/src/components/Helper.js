@@ -24,6 +24,22 @@ export const yearMonthToStr = (val) => {
   return `${String(val).slice(0, 4)} ${ID_TO_MONTH_MAP[monthId]}`
 }
 
+export const yearMonthToStrNowFinsg = (val) => {
+  // console.log(val)
+  var monthId = parseInt( String(val).slice(4, 6))
+  var yearId = parseInt( String(val).slice(0, 4))
+  if(monthId > 12 && monthId < 18){
+    var monthId = Number(monthId) - 12
+    var yearId = Number(yearId) + 1
+  }else if(monthId == 0){
+    var monthId = Number(monthId) + 12
+    var yearId = Number(yearId) - 1
+  }else if(monthId >60){
+    var monthId = Number(monthId) - 88
+  }
+  return `${ID_TO_MONTH_MAP[monthId]}.${String(yearId).slice(2, 4)}`
+}
+
 export const yearMonthToStrFull = (val) => {
   const monthId = parseInt( String(val).slice(4, 6))
   return `${String(val).slice(0, 4)} ${ID_TO_MONTH_MAP_F[monthId]}`

@@ -16,7 +16,7 @@ class AuthStore {
         try {
             const res = await ApiService.login(params)
 
-            console.log('LOGIN RES: ', res)
+            // console.log('LOGIN RES: ', res)
             if (!res.access_token) {
                 alert(LOGIN_ERR_MSG)
                 throw LOGIN_ERR_MSG

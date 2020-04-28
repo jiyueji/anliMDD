@@ -8,6 +8,7 @@ export default class AboBarLineEcharts extends Component {
         this.state = {
             nowColorAbo: false,
             clickShow: true,
+            showXShow: [],
 
             csi_per_earner_blueData: [],
             csi_earner_redData: [],
@@ -15,39 +16,39 @@ export default class AboBarLineEcharts extends Component {
             foa_sales_bv_data: [],
             total_sales_bv_data: [],
             object_ytd_data: {},
-            vcs_sales_bv_ShowNow:[],
-            foa_sales_bv_ShowNow:[],
-            NOW_MAXDATE:"",
+            vcs_sales_bv_ShowNow: [],
+            foa_sales_bv_ShowNow: [],
+            NOW_MAXDATEPF: "",
         }
     }
     render() {
-        var { clickShow,object_ytd_data } = this.state
+        var { clickShow, object_ytd_data } = this.state
         return (
             <Fragment>
                 <div style={{ position: "absolute", left: ' 3%', top: '4%', fontSize: '14px', fontWeight: '600' }}>CSI</div>
                 <div className="salesButt" onClick={this.AboBarLineEchartshandleClick.bind(this)}>
-                    <span className="salesButt-ytd">Monthly</span>
-                    <span className="salesButt-Monthly">YTD</span>
+                    <span className="salesButt-ytd">Sales BV Mix</span>
+                    <span className="salesButt-Monthly">Income</span>
                 </div>
                 {
                     clickShow ? <div style={{ position: "absolute", width: "100%", }}>
-                        <div style={{ position: "absolute", left: ' 3%', top: '12%', fontSize: '14px', color: "#333" }}>Mthly Trend</div>
-                        <div style={{ width: "100%", height: "400px", display: 'flex' }}>
-                            <div id="aboBarLineEcharts" style={{ width: "80%", height: "400px" }}></div>
-                            <div id="aboBarLineEcharts2" style={{ width: "20%", height: "400px" }}></div>
+                        <div style={{ width: "100%", height: "180", display: 'flex' }}>
+                            <div style={{ position: "absolute", top: "20%", left: "25%", fontSize: "16px", fontWeight: "600" }}>YTD Mthly Avg.<br></br>Sales BV Mix</div>
+                            <div id="aboBvMixEcharts" style={{ width: "100%", height: "180px" }}></div>
+                            <div style={{ position: "absolute", top: "5%", right: "7%", fontSize: "12px", lineHeight: "20px", textAlign: "right" }}>
+                                <div>Note: FOA / Total :{object_ytd_data.foa_sales_bv_ShowNowOne}%</div>
+                                <div>VCS / Total :{object_ytd_data.vcs_sales_bv_ShowNowOne}%</div>
+                            </div>
+                        </div>
+                        <div style={{ position: "absolute", left: ' 3%', top: '45%', fontSize: '14px', color: "#333" }}>Monthly Sales BV Mix</div>
+                        <div style={{ width: "100%", height: "220px", display: 'flex' }}>
+                            <div id="aboBvMixEcharts2" style={{ width: "100%", height: "220px" }}></div>
                         </div>
                     </div> : <div style={{ position: "absolute", width: "100%", }}>
-                            <div style={{ width: "100%", height: "180", display: 'flex' }}>
-                                <div style={{position:"absolute",top:"20%",left:"25%",fontSize:"16px",fontWeight:"600"}}>YTD Mthly Avg.<br></br>Sales BV Mix</div>
-                                <div id="aboBvMixEcharts" style={{ width: "100%", height: "180px" }}></div>
-                                <div style={{position:"absolute",top:"5%",right:"7%",fontSize:"12px",lineHeight:"20px",textAlign:"right"}}>
-                                    <div>Note: FOA / Total :{object_ytd_data.foa_sales_bv_ShowNowOne}%</div>
-                                    <div>VCS / Total :{object_ytd_data.vcs_sales_bv_ShowNowOne}%</div>
-                                </div>
-                            </div>
-                            <div style={{ position: "absolute", left: ' 3%', top: '45%', fontSize: '14px', color: "#333" }}>Monthly Sales BV Mix</div>
-                            <div style={{ width: "100%", height: "220px", display: 'flex' }}>
-                                <div id="aboBvMixEcharts2" style={{ width: "100%", height: "220px" }}></div>
+                            <div style={{ position: "absolute", left: ' 3%', top: '12%', fontSize: '14px', color: "#333" }}>Mthly Trend</div>
+                            <div style={{ width: "100%", height: "400px", display: 'flex' }}>
+                                <div id="aboBarLineEcharts" style={{ width: "80%", height: "400px" }}></div>
+                                <div id="aboBarLineEcharts2" style={{ width: "20%", height: "400px" }}></div>
                             </div>
                         </div>
                 }
@@ -65,7 +66,7 @@ export default class AboBarLineEcharts extends Component {
             nowColorAbo.style.background = "#f7f8fa";
             nowColorAbo.style.color = "#333"
         } else {
-            if (e.target.innerHTML === "YTD") {
+            if (e.target.innerHTML === "Income") {
                 e.target.previousSibling.style.background = "#f7f8fa";
                 e.target.previousSibling.style.color = "#333";
             }
@@ -78,17 +79,17 @@ export default class AboBarLineEcharts extends Component {
         }, () => {
             var { clickShow } = this.state
             if (clickShow) {
-                this.aboBarLineEchartsHandle()
-                this.aboBarLineEchartsHandle2()
-            } else {
                 this.aboBvMixEchartsHandle1()
                 this.aboBvMixEchartsHandle2()
+            } else {
+                this.aboBarLineEchartsHandle()
+                this.aboBarLineEchartsHandle2()
             }
         })
     }
     componentDidMount() {
         var data = this.props.data;
-        // console.log(data, "data")
+
         // YTD_DATA: (6) [{…}, {…}, {…}, {…}, {…}, {…}]
         // CSI_AMT: (3) [16116842.54, 14326362.73, 27683221.06]
         // CSI_COUNT: (3) [157979, 178688, 206086]
@@ -97,7 +98,11 @@ export default class AboBarLineEcharts extends Component {
         // FOA_ORDER_BV_1B: (3) [254937750.24, 190198111.02, 370292304.66]
         // VCS_AMT: (3) [211141862.9, 172951167.6, 337765763.21]
         // NOW_MAXDATE: "202003"
-        var { YTD_DATA, CSI_AMT, CSI_COUNT, QUALIF_CSI_SR, TOTAL_ORDER_BV, FOA_ORDER_BV_1B, VCS_AMT, NOW_MAXDATE } = data
+        var { YTD_DATA, CSI_AMT, CSI_COUNT, QUALIF_CSI_SR, TOTAL_ORDER_BV, FOA_ORDER_BV_1B, VCS_AMT, NOW_MAXDATE, NOW_MAXDATEPF } = data
+        var showXShow = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug',]
+        if (Number(NOW_MAXDATE) < 202009) {
+            showXShow = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug',]
+        }
         var csi_per_earner_blueData = []
         var csi_earner_redData = []
         var vcs_sales_bv_data = VCS_AMT || []
@@ -112,7 +117,7 @@ export default class AboBarLineEcharts extends Component {
         }) : ""
         var vcs_sales_bv_ShowNow = []
         var foa_sales_bv_ShowNow = []
-        TOTAL_ORDER_BV && TOTAL_ORDER_BV.length >= 0 > TOTAL_ORDER_BV.map((item,index)=>{
+        TOTAL_ORDER_BV && TOTAL_ORDER_BV.length >= 0 > TOTAL_ORDER_BV.map((item, index) => {
             vcs_sales_bv_ShowNow.push(VCS_AMT[index] / item)
             foa_sales_bv_ShowNow.push(FOA_ORDER_BV_1B[index] / item)
         })
@@ -137,12 +142,29 @@ export default class AboBarLineEcharts extends Component {
         object_ytd_data.vcs_sales_bv_ShowNowOne = ((object_ytd_data.VCS_AMT / object_ytd_data.TOTAL_ORDER_BV) * 100).toFixed(1)
         object_ytd_data.foa_sales_bv_ShowNowOne = ((object_ytd_data.FOA_ORDER_BV_1B / object_ytd_data.TOTAL_ORDER_BV) * 100).toFixed(1)
         object_ytd_data.vcsAddFoa = Number(object_ytd_data.vcs_sales_bv_ShowNowOne) + Number(object_ytd_data.foa_sales_bv_ShowNowOne)
-        // console.log(object_ytd_data, "object_ytd_data")
+
+        // //取Y轴最大值（用数组中最大的值去变成整百数来实现）
+        // var maxYShow = csi_per_earner_blueData[0];
+        // for (var i = 1; i < csi_per_earner_blueData.length; i++) {
+        //     var cur = csi_per_earner_blueData[i];
+        //     cur > maxYShow ? maxYShow = cur : null
+        // }
+        // const formatInt = (num, prec) => {
+        //     const len = String(num).length;
+        //     if (len <= prec) { return num };
+
+        //     const mult = Math.pow(10, prec);
+
+        //     return Math.ceil(num / mult) * mult;
+
+        // }
+        // maxYShow = formatInt(maxYShow, String(maxYShow).length - 1)
+
         this.setState({
-            csi_per_earner_blueData, csi_earner_redData, vcs_sales_bv_data, foa_sales_bv_data, total_sales_bv_data, object_ytd_data,vcs_sales_bv_ShowNow,foa_sales_bv_ShowNow,NOW_MAXDATE
+            csi_per_earner_blueData,csi_earner_redData, vcs_sales_bv_data, foa_sales_bv_data, total_sales_bv_data, object_ytd_data, vcs_sales_bv_ShowNow, foa_sales_bv_ShowNow, NOW_MAXDATEPF, showXShow
         }, () => {
-            this.aboBarLineEchartsHandle()
-            this.aboBarLineEchartsHandle2()
+            this.aboBvMixEchartsHandle1()
+            this.aboBvMixEchartsHandle2()
         })
 
     }
@@ -159,13 +181,13 @@ export default class AboBarLineEcharts extends Component {
             grid: {
                 top: '25%',
                 left: '4%',
-                right: '5%',
+                right: '0',
                 bottom: '15%',
                 containLabel: true
             },
             xAxis: {
                 type: 'category',
-                data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',],
+                data: this.state.showXShow,
                 axisTick: {
                     show: false //隐藏X轴刻度
                 },
@@ -204,8 +226,9 @@ export default class AboBarLineEcharts extends Component {
                     axisLine: {//隐藏X轴
                         show: false
                     },
-                    min: 0,
-                    max: 500,
+                    boundaryGap: [0, '100%'],
+                    // min: 0,
+                    // max:this.state.maxYShow,
                     nameGap: 10,
                     axisTick: {
                         show: false //隐藏X轴刻度
@@ -232,8 +255,9 @@ export default class AboBarLineEcharts extends Component {
                     axisLine: {//隐藏X轴
                         show: false
                     },
-                    min: -100,
-                    max: 100,
+                    boundaryGap: ['250%',0],
+                    // min: -200,
+                    // max: 100,
                     nameGap: 10,
                     axisTick: {
                         show: false //隐藏X轴刻度
@@ -265,7 +289,7 @@ export default class AboBarLineEcharts extends Component {
                 {
                     name: 'CSI per Earner',
                     type: 'bar',
-                    barWidth: 16,
+                    barWidth: 20,
                     yAxisIndex: 0,
                     stack: 'stack',
                     itemStyle: {
@@ -283,13 +307,12 @@ export default class AboBarLineEcharts extends Component {
                         show: true,
                         position: 'inside',
                         // formatter: (val) => {
-                        //     // console.log(val)
                         //     var value = Math.round((val.data / 1000))
                         //     var valueShow = value.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
                         //     return valueShow + "k"
                         // },
                         textStyle: {
-                            fontSize: 8,
+                            fontSize: 12,
                             color: '#ffffff',
                         }
                     },
@@ -314,7 +337,7 @@ export default class AboBarLineEcharts extends Component {
                         // borderRadius: 5,
                         // padding: 4,
                         textStyle: {
-                            fontSize: 8,
+                            fontSize: 12,
                             color: '#ec5453',
                         }
                     },
@@ -345,15 +368,15 @@ export default class AboBarLineEcharts extends Component {
         });
         aboBarLineEcharts2.setOption({
             grid: {
-                top: '18%',
-                left: '4%',
+                top: '25%',
+                left: '0%',
                 right: '5%',
                 bottom: '15%',
                 containLabel: true
             },
             xAxis: {
                 type: 'category',
-                data: ['PF20 YTD Mthly Avg'],
+                data: [this.state.NOW_MAXDATEPF + ' YTD Mthly Avg'],
                 axisTick: {
                     show: false //隐藏X轴刻度
                 },
@@ -376,41 +399,77 @@ export default class AboBarLineEcharts extends Component {
                     // }
                 }
             },
-            yAxis: [{
-                show: false,
-                yAxisIndex: 0,
-                min: 0,
-                max: 500,
-                axisLine: {       //y轴
-                    show: false
+            yAxis: [
+                {
+                    type: 'value',
+                    yAxisIndex: 0,
+                    axisLabel: {
+                        show: false,
+                        textStyle: {
+                            color: "#333"
+                        },
+                        formatter: function (params) {
+                            return params / 1
+                        }
+                    },
+                    boundaryGap: [0, '100%'],
+                    // min: 0,
+                    // max:this.state.maxYShow,
+                    nameGap: 10,
+                    axisLine: {//隐藏X轴
+                        show: true,
+                        lineStyle: {
+                            color: "e7e8ea",
+                            type: 'dashed',
+                        }
+                    },
+                    axisTick: {
+                        show: false //隐藏X轴刻度
+                    },
+                    splitLine: {//Y轴的样式虚线
+                        lineStyle: {
+                            type: 'dashed',
+                            color: '#e5e9ee'
+                        }
+                    }
                 },
-                axisTick: {       //y轴刻度线
-                    show: false
-                },
-                splitLine: {     //网格线
-                    show: false
+                {
+                    type: 'value',
+                    yAxisIndex: 1,
+                    axisLabel: {
+                        show: false,
+                        textStyle: {
+                            color: "#333"
+                        },
+                        formatter: function (params) {
+                            return params / 1
+                        }
+                    },
+                    axisLine: {//隐藏X轴
+                        show: false,
+                    },
+                    boundaryGap: ['250%',0],
+                    // min: -200,
+                    // max: 100,
+                    nameGap: 10,
+                    axisTick: {
+                        show: false //隐藏X轴刻度
+                    },
+                    splitLine: {//Y轴的样式虚线
+                        show: false,
+                        lineStyle: {
+                            type: 'dashed',
+                            color: '#e5e9ee'
+                        }
+                    }
                 }
-            }, {
-                show: false,
-                yAxisIndex: 1,
-                min: -100,
-                max: 100,
-                axisLine: {       //y轴
-                    show: false
-                },
-                axisTick: {       //y轴刻度线
-                    show: false
-                },
-                splitLine: {     //网格线
-                    show: false
-                }
-            }],
+            ],
             series: [
                 {
                     name: 'CSI per Earner',
                     type: 'bar',
                     yAxisIndex: 0,
-                    barWidth: 16,
+                    barWidth: 20,
                     stack: 'stack',
                     itemStyle: {
                         normal: {
@@ -427,13 +486,12 @@ export default class AboBarLineEcharts extends Component {
                         show: true,
                         position: 'inside',
                         // formatter: (val) => {
-                        //     // console.log(val)
                         //     var value = Math.round((val.data / 1000))
                         //     var valueShow = value.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
                         //     return valueShow + "k"
                         // },
                         textStyle: {
-                            fontSize: 8,
+                            fontSize: 12,
                             color: '#ffffff',
                         }
                     },
@@ -446,19 +504,19 @@ export default class AboBarLineEcharts extends Component {
                     type: 'line',
                     smooth: true,
                     // symbol: "none", //去掉折线点
-                    symbolSize: 1, //折线点的大小
+                    symbolSize: 5, //折线点的大小
                     label: {
                         show: true,
-                        position: 'top',
+                        position: 'right',
                         // position: ['-10', '-20'],
                         formatter: function (params) {
                             return params.data + "%"
                         },
-                        backgroundColor: '#ffa441',
+                        backgroundColor: '#ec5453',
                         borderRadius: 5,
                         padding: 4,
                         textStyle: {
-                            fontSize: 8,
+                            fontSize: 12,
                             color: '#ffffff',
                         }
                     },
@@ -467,11 +525,11 @@ export default class AboBarLineEcharts extends Component {
                         normal: { //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
                             //     // color: 'rgba(253,0,34,0.1)', //背景渐变色
                             lineStyle: { // 系列级个性化折线样式
-                                width: 3,
+                                width: 5,
                                 type: 'solid',
-                                color: "#ffa441"//折现颜色
+                                color: "#ec5453"//折现颜色
                             },
-                            borderColor: '#ffa441',  // 拐点边框颜色
+                            borderColor: '#ec5453',  // 拐点边框颜色
                         },
                     }, //线条样式
                 }
@@ -496,7 +554,7 @@ export default class AboBarLineEcharts extends Component {
             },
             xAxis: {
                 type: 'category',
-                data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',],
+                data: this.state.showXShow,
                 axisTick: {
                     show: false //隐藏X轴刻度
                 },
@@ -553,7 +611,7 @@ export default class AboBarLineEcharts extends Component {
                     }
                 }
             },
-            color:['#5497f2','#28cdad','#fea443'],
+            color: ['#5497f2', '#28cdad', '#fea443'],
             series: [
                 {
                     name: 'VCS Sales BV',
@@ -562,8 +620,8 @@ export default class AboBarLineEcharts extends Component {
                     label: {
                         show: true,
                         position: 'bottom',
-                        formatter: (params)=> {
-                            var {vcs_sales_bv_ShowNow} = this.state
+                        formatter: (params) => {
+                            var { vcs_sales_bv_ShowNow } = this.state
                             var showVcs = (vcs_sales_bv_ShowNow[params.dataIndex] * 100).toFixed(1) + "%"
                             return showVcs
                         },
@@ -596,8 +654,8 @@ export default class AboBarLineEcharts extends Component {
                     label: {
                         show: true,
                         position: 'top',
-                        formatter: (params)=> {
-                            var {foa_sales_bv_ShowNow} = this.state
+                        formatter: (params) => {
+                            var { foa_sales_bv_ShowNow } = this.state
                             var showFoa = (foa_sales_bv_ShowNow[params.dataIndex] * 100).toFixed(1) + "%"
                             return showFoa
                         },
@@ -656,7 +714,7 @@ export default class AboBarLineEcharts extends Component {
             },
         })
     }
-    aboBvMixEchartsHandle1(){
+    aboBvMixEchartsHandle1() {
         var aboBvMixEchartsWidth = document.getElementById('aboBvMixEcharts')
         aboBvMixEchartsWidth.style.width = (window.innerWidth * 0.48) + "px"
 
@@ -666,7 +724,7 @@ export default class AboBarLineEcharts extends Component {
         });
         aboBvMixEcharts.setOption({
             title: {
-                "text": this.state.NOW_MAXDATE,
+                "text": this.state.NOW_MAXDATEPF,
                 "x": "57%",
                 "y": "5%",
                 "textStyle": {
@@ -677,20 +735,20 @@ export default class AboBarLineEcharts extends Component {
                     "width": "200px"
                 },
             },
-            color:['#4e9bed','#29ccaf','#ffa441'],
+            color: ['#4e9bed', '#29ccaf', '#ffa441'],
             series: [
                 {
                     name: '访问来源',
                     type: 'pie',
-                    width:"20%",
-                    left:"50%",
-                    top:"20%",
+                    width: "20%",
+                    left: "50%",
+                    top: "20%",
                     selectedMode: 'single',
                     radius: [0, this.state.object_ytd_data.vcs_sales_bv_ShowNowOne + "%"],
                     label: {
                         show: true,
                         position: 'center',
-                        formatter: (params)=> {
+                        formatter: (params) => {
                             return this.state.object_ytd_data.vcs_sales_bv_ShowNowOne + "%"
                         },
                         textStyle: {
@@ -702,23 +760,23 @@ export default class AboBarLineEcharts extends Component {
                         show: false
                     },
                     data: [
-                        {value: this.state.object_ytd_data.vcs_sales_bv_ShowNowOne, name: 'VCS Sales BV'}
+                        { value: this.state.object_ytd_data.vcs_sales_bv_ShowNowOne, name: 'VCS Sales BV' }
                     ]
                 },
                 {
                     name: '访问来源',
                     type: 'pie',
-                    width:"20%",
-                    left:"50%",
-                    top:"20%",
-                    radius: [this.state.object_ytd_data.vcs_sales_bv_ShowNowOne + "%", this.state.object_ytd_data.vcsAddFoa + "%"],
+                    width: "20%",
+                    left: "50%",
+                    top: "20%",
+                    radius: [this.state.object_ytd_data.vcs_sales_bv_ShowNowOne + "%", this.state.object_ytd_data.foa_sales_bv_ShowNowOne + "%"],
                     data: [
-                        {value: this.state.object_ytd_data.vcsAddFoa, name: 'FOA Sales BV'},
+                        { value: this.state.object_ytd_data.vcsAddFoa, name: 'FOA Sales BV' },
                     ],
                     label: {
                         show: true,
                         position: 'inner',
-                        formatter: (params)=> {
+                        formatter: (params) => {
                             return this.state.object_ytd_data.foa_sales_bv_ShowNowOne + "%"
                         },
                         textStyle: {
@@ -733,15 +791,15 @@ export default class AboBarLineEcharts extends Component {
                 {
                     name: '访问来源',
                     type: 'pie',
-                    width:"20%",
-                    left:"50%",
-                    top:"20%",
+                    width: "20%",
+                    left: "50%",
+                    top: "20%",
                     labelLine: {
                         show: false
                     },
-                    radius: [this.state.object_ytd_data.vcsAddFoa + "%", '100%'],
+                    radius: [this.state.object_ytd_data.foa_sales_bv_ShowNowOne + "%", '100%'],
                     data: [
-                        {value: this.state.object_ytd_data.vcsAddFoa, name: 'Total Sales BV'},
+                        { value: this.state.object_ytd_data.vcsAddFoa, name: 'Total Sales BV' },
                     ]
                 }
             ],

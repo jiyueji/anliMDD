@@ -26,7 +26,7 @@ const AddCardPopup = observer((props) => {
 
   const stores = useStores()
 
-  console.log('stores', stores, stores.authStore.isAuthenticated)
+  // console.log('stores', stores, stores.authStore.isAuthenticated)
 
 
 

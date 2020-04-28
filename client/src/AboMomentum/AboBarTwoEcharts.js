@@ -20,11 +20,11 @@ export default class AboBarTwoEcharts extends Component {
             avgNoPinPbLyShowNowYear: [],
             abo19: [],
             abo20: [],
-            totalEarn:{},
+            totalEarn: {},
         }
     }
     render() {
-        var { maxMonthStr,totalEarn } = this.state
+        var { maxMonthStr, totalEarn } = this.state
         return (
             <Fragment>
                 <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Monthly Income by PIN level</div>
@@ -58,7 +58,41 @@ export default class AboBarTwoEcharts extends Component {
         // curYearMed: (3)[{ … }, { … }, { … }]
         // maxMonth: "202002"
         // maxYear: 2020
-        // console.log(data, datas)
+        //         0: {x: "SP", y: 692.259310344828, labelTooltip: "Avg income: 692"}
+        // 1: {x: "GP", y: 1051.38068965517, labelTooltip: "Avg income: 1051"}
+        // 2: {x: "DD", y: 1937.77379310345, labelTooltip: "Avg income: 1938"}
+        data.prevYear.sort(function (a, b) {
+            var order = ["DD", "GP", "SP"];
+            return order.indexOf(a.x) - order.indexOf(b.x);
+        });
+        data.curYear.sort(function (a, b) {
+            var order = ["DD", "GP", "SP"];
+            return order.indexOf(a.x) - order.indexOf(b.x);
+        });
+        data.prevYearMed.sort(function (a, b) {
+            var order = ["DD", "GP", "SP"];
+            return order.indexOf(a.x) - order.indexOf(b.x);
+        });
+        data.curYearMed.sort(function (a, b) {
+            var order = ["DD", "GP", "SP"];
+            return order.indexOf(a.x) - order.indexOf(b.x);
+        });
+        datas.avgNoPinPb.sort(function (a, b) {
+            var order = ["Bonus Level=15% ABO", "new_abo", "existing abo"];
+            return order.indexOf(a.x) - order.indexOf(b.x);
+        });
+        datas.avgNoPinPbLy.sort(function (a, b) {
+            var order = ["Bonus Level=15% ABO", "new_abo", "existing abo"];
+            return order.indexOf(a.x) - order.indexOf(b.x);
+        });
+        datas.noPinMedian.sort(function (a, b) {
+            var order = ["Bonus Level=15% ABO", "new_abo", "existing abo"];
+            return order.indexOf(a.x) - order.indexOf(b.x);
+        });
+        datas.noPinMedianLy.sort(function (a, b) {
+            var order = ["Bonus Level=15% ABO", "new_abo", "existing abo"];
+            return order.indexOf(a.x) - order.indexOf(b.x);
+        });
         var curYearNow = data.maxYear || 2020
         var maxMonthStr = String(hlp.yearMonthToStr(data.maxMonth))
         var curLegendYear = hlp.yearToPfPref(curYearNow.toString()) + "income"
@@ -71,7 +105,6 @@ export default class AboBarTwoEcharts extends Component {
         var middle20 = []
         data.prevYear ? data.prevYear.map((item, index) => {
             prevYearShowLastYear.push(Math.round(item.y))
-            // upShowX.push(item.x)
         }) : ""
         data.curYear ? data.curYear.map((item, index) => {
             curYearShowNowYear.push(Math.round(item.y))
@@ -96,23 +129,28 @@ export default class AboBarTwoEcharts extends Component {
         var avgNoPinPbLyShowNowYear = []
         var abo19 = []
         var totalEarn = {}
+        //         0: {x: "new_abo", y: 38.4117118058546, labelTooltip: "Avg income: 38↵Median income: 12"}
+        // 1: {x: "existing abo", y: 68.543329898926, labelTooltip: "Avg income: 69↵Median income: 14"}
+        // 2: {x: "Bonus Level=15% ABO", y: 406.824782089019, labelTooltip: "Avg income: 407↵Median income: 305"}
         datas.avgNoPinPb ? datas.avgNoPinPb.map((item, index) => {
-            avgNoPinPbShowNowYear.push(Math.round(item.y))
-            // ["Bronze", 'New ABO']
-            // if (item.x == 'new_abo') {
-            //     downShowX.push('New ABO')
-            // } else {
-            //     downShowX.push("Bronze")
-            // }
+            if (item.x !== "existing abo") {
+                avgNoPinPbShowNowYear.push(Math.round(item.y))
+            }
         }) : ""
         datas.avgNoPinPbLy ? datas.avgNoPinPbLy.map((item, index) => {
-            avgNoPinPbLyShowNowYear.push(Math.round(item.y))
+            if (item.x !== "existing abo") {
+                avgNoPinPbLyShowNowYear.push(Math.round(item.y))
+            }
         }) : ""
         datas.noPinMedian ? datas.noPinMedian.map((item, index) => {
-            abo20.push(Math.round(item.y))
+            if (item.x !== "existing abo") {
+                abo20.push(Math.round(item.y))
+            }
         }) : ""
         datas.noPinMedianLy ? datas.noPinMedianLy.map((item, index) => {
-            abo19.push(Math.round(item.y))
+            if (item.x !== "existing abo") {
+                abo19.push(Math.round(item.y))
+            }
         }) : ""
         datas.pctEarn ? datas.pctEarn.map((item, index) => {
             if (item.x == 'new_abo') {
@@ -126,25 +164,25 @@ export default class AboBarTwoEcharts extends Component {
         }) : ""
 
         //所有的数组按从大到小进行排序
-        var compare = function (x, y) {
-            if (x < y) {
-                return 1;
-            } else if (x > y) {
-                return -1;
-            } else {
-                return 0;
-            }
-        }
-        prevYearShowLastYear.sort(compare)
-        middle19.sort(compare)
-        curYearShowNowYear.sort(compare)
-        middle20.sort(compare)
-        avgNoPinPbShowNowYear.sort(compare)
-        abo20.sort(compare)
-        avgNoPinPbLyShowNowYear.sort(compare)
-        abo19.sort(compare)
+        // var compare = function (x, y) {
+        //     if (x < y) {
+        //         return 1;
+        //     } else if (x > y) {
+        //         return -1;
+        //     } else {
+        //         return 0;
+        //     }
+        // }
+        // prevYearShowLastYear.sort(compare)
+        // middle19.sort(compare)
+        // curYearShowNowYear.sort(compare)
+        // middle20.sort(compare)
+        // avgNoPinPbShowNowYear.sort(compare)
+        // abo20.sort(compare)
+        // avgNoPinPbLyShowNowYear.sort(compare)
+        // abo19.sort(compare)
         this.setState({
-            maxMonthStr, curLegendYear, prevLegendYear, prevYearShowLastYear, curYearShowNowYear, middle19, middle20, avgNoPinPbShowNowYear, avgNoPinPbLyShowNowYear, abo19, abo20, upShowX, downShowX,totalEarn
+            maxMonthStr, curLegendYear, prevLegendYear, prevYearShowLastYear, curYearShowNowYear, middle19, middle20, avgNoPinPbShowNowYear, avgNoPinPbLyShowNowYear, abo19, abo20, upShowX, downShowX, totalEarn
         }, () => {
             this.aboBarTwoEchartsHandle()
             this.aboBarTwoEchartsHandle2()
@@ -166,17 +204,16 @@ export default class AboBarTwoEcharts extends Component {
                 // confine: false,
                 show: true,
                 textStyle: {
-                    fontSize: 8
+                    // fontSize: 8
                 }, //提示标签字体颜色
                 // axisPointer: { // 坐标轴指示器，坐标轴触发有效
                 //     type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                 // },
                 formatter: (data) => {
-                    // console.log(data.componentIndex)
                     if (data.componentIndex == 0 || data.componentIndex == 2 || data.componentIndex == 3) {
-                        var b = parseInt(this.state.middle20[data.dataIndex]).toString();
-                    } else {
                         var b = parseInt(this.state.middle19[data.dataIndex]).toString();
+                    } else {
+                        var b = parseInt(this.state.middle20[data.dataIndex]).toString();
                     }
                     var len = b.length;
                     var number;
@@ -196,7 +233,7 @@ export default class AboBarTwoEcharts extends Component {
             xAxis: [{
                 type: 'category',
                 // data: this.state.upShowX,
-                data:["DD","GP","SP"],
+                data: ["DD", "GP", "SP"],
                 axisLine: {
                     show: false,
                     lineStyle: {
@@ -435,11 +472,10 @@ export default class AboBarTwoEcharts extends Component {
                 //     type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                 // }
                 formatter: (data) => {
-                    // console.log(data.componentIndex)
                     if (data.componentIndex == 0 || data.componentIndex == 2 || data.componentIndex == 3) {
-                        var number = parseInt(this.state.abo20[data.dataIndex]).toString();
-                    } else {
                         var number = parseInt(this.state.abo19[data.dataIndex]).toString();
+                    } else {
+                        var number = parseInt(this.state.abo20[data.dataIndex]).toString();
                     }
                     return '<div style="color:#ffa441">' + 'Median income:$' + number + '</div>'
                 }
@@ -469,7 +505,7 @@ export default class AboBarTwoEcharts extends Component {
             xAxis: [{
                 type: 'category',
                 // data: this.state.downShowX,
-                data:["Bronze", 'New ABO'],
+                data: ["Bronze (15%)", 'New ABO'],
                 axisLine: {
                     show: false,
                     lineStyle: {
@@ -618,7 +654,7 @@ export default class AboBarTwoEcharts extends Component {
                         }
 
                     },
-                    data: this.state.abo19
+                    data: this.state.abo19,
                 },
                 {
                     /*这个bar是横线的显示*/
@@ -643,7 +679,6 @@ export default class AboBarTwoEcharts extends Component {
                 {
                     name: 'Median income',
                     type: 'bar',
-                    zlevel: 9,
                     stack: 'aaa',
                     barWidth: '40',
                     xAxisIndex: 1,
@@ -653,14 +688,13 @@ export default class AboBarTwoEcharts extends Component {
                         }
 
                     },
-                    data: this.state.abo20
+                    data: this.state.abo20,
                 },
                 {
                     /*这个bar是横线的显示*/
                     name: "Median income",
                     stack: 'aaa',/*盈亏点数据组，需要设置才能将两个bar堆积在一起*/
                     type: 'bar',
-                    zlevel: 9,
                     xAxisIndex: 1,
                     // barGap: "0",
                     itemStyle: {
@@ -674,6 +708,7 @@ export default class AboBarTwoEcharts extends Component {
                     },
                     data: [1, 1],
                 },
+
             ]
         })
     }

@@ -410,7 +410,7 @@ class ChartStoreAbo {
       }
     }) : ""
     var maxYearStr = NOW_MAXDATE.toString()
-    maxYearStr = hlp.yearToPfPref2(maxYearStr)
+    var maxYearStrPF = hlp.yearToPfPref2(maxYearStr)
     return {
       YTD_DATA:YTD_DATA,
       CSI_AMT:CSI_AMT,
@@ -420,6 +420,7 @@ class ChartStoreAbo {
       FOA_ORDER_BV_1B:FOA_ORDER_BV_1B,
       VCS_AMT:VCS_AMT,
       NOW_MAXDATE:maxYearStr,
+      NOW_MAXDATEPF:maxYearStrPF
     }
   }
 
@@ -1055,7 +1056,7 @@ class ChartStoreAbo {
         return el.start_bonus_dist;
       })
       .toList()
-      console.log(dataState)
+      // console.log(dataState)
     dataState = _.reduce(dataState, (obj, param) => {
       obj[param.key] = param.elements.length && param.elements[0]
       return obj;
@@ -1269,7 +1270,7 @@ class ChartStoreAbo {
       }
     } catch (e) {
       result = false
-      console.log(e)
+      // console.log(e)
     }
     return result
   }

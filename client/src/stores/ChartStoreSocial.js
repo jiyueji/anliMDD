@@ -419,7 +419,8 @@ class ChartStoreSocial {
         num_foa_ly_data,
         pct_foa_data,
         pct_foa_ly_data,
-        maxYear
+        maxYear,
+        isPerfYear: this.isPerfYear,
         // months_data: months_data,
       }
     }
@@ -585,7 +586,6 @@ class ChartStoreSocial {
 
       const MONTH_TYPE = this.isPerfYear ? 'nth_month_of_perf_yr' : 'month'
 
-
       let total_3e_ly_data = _.sortBy( _.map( dataState, (o) => {
         return {
           x: MONTHS_MAP[o.month],
@@ -630,6 +630,42 @@ class ChartStoreSocial {
           //labelTooltip: 'Monthly sales ',
         }
       } ), 'rank')
+      
+      let total_foa_sales = _.sortBy( _.map( dataState, (o) => {
+        return {
+          x: MONTHS_MAP[o.month],
+          y: o.total_foa_sales || null,
+          rank: o[MONTH_TYPE]
+          //labelTooltip: 'Monthly sales ',
+        }
+      } ), 'rank')
+      
+      let num_existing_foa = _.sortBy( _.map( dataState, (o) => {
+        return {
+          x: MONTHS_MAP[o.month],
+          y: o.num_existing_foa || null,
+          rank: o[MONTH_TYPE]
+          //labelTooltip: 'Monthly sales ',
+        }
+      } ), 'rank')
+
+      let num_foa_with_bv = _.sortBy( _.map( dataState, (o) => {
+        return {
+          x: MONTHS_MAP[o.month],
+          y: o.num_foa_with_bv || null,
+          rank: o[MONTH_TYPE]
+          //labelTooltip: 'Monthly sales ',
+        }
+      } ), 'rank')
+
+      let num_new_foa = _.sortBy( _.map( dataState, (o) => {
+        return {
+          x: MONTHS_MAP[o.month],
+          y: o.num_new_foa || null,
+          rank: o[MONTH_TYPE]
+          //labelTooltip: 'Monthly sales ',
+        }
+      } ), 'rank')
 
       total_pct_data = _.map(total_pct_data, (o)=>{
         o.y = Math.round(o.y * 100)
@@ -642,7 +678,12 @@ class ChartStoreSocial {
         total_non3e_data,
         total_non3e_ly_data,
         total_pct_data,
-        maxYear
+        total_foa_sales,
+        num_existing_foa,
+        num_foa_with_bv,
+        num_new_foa,
+        maxYear,
+        isPerfYear: this.isPerfYear,
       }
     }
 
@@ -698,7 +739,7 @@ class ChartStoreSocial {
       } ), 'rank')
 
       pct_foa_data = _.map(pct_foa_data, (o)=>{
-        o.y = Math.round(o.y * 100)
+        o.y = (o.y * 100).toFixed(1)
         return o
       })
 

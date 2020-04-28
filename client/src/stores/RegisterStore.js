@@ -9,7 +9,7 @@ class RegisterStore {
 
     @action async register(params) {
         const reg = await ApiService.register(params)
-        console.log(reg)
+        // console.log(reg)
         if(reg.status === 201) {
             runInAction(() => {
                 this.success = true

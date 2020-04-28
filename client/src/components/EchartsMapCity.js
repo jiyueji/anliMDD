@@ -13,6 +13,7 @@ export default class EchartsMapCity extends Component {
     constructor() {
         super();
         this.state = {
+            isPerfYear:false,
             list: [
                 //地图高亮显示
                 { name: "安徽", value: 1, color: "#f5f5f6" },
@@ -39,30 +40,31 @@ export default class EchartsMapCity extends Component {
         }
     }
     render() {
+        var {isPerfYear} = this.state
         return (
             <Fragment>
-                <div className="mapTitle">YTD sales by city cluster</div>
+                <div className="mapTitle">YTD sales by city cluster <span style={{fontSize:"12px"}}>{isPerfYear ? '(By Performance Year)' : '(By Calendar Year)'}</span></div>
                 <div id="map" className="centerItem"></div>
                 <ul className="oneMapTuLiUl">
-                    <li>
-                        <img src={oneMapGreenCircular} />
-                        <div>Better vs ACCL</div>
-                        <img src={oneMapUp} />
-                    </li>
-                    <li>
-                        <img src={oneMapRedCircular} />
-                        <div>Better vs ACCL</div>
-                        <img src={oneMapDown} />
-                    </li>
                     <li style={{color:"#16b6aa"}}>
-                        <span>city cluster</span>
-                        <div>Better vs ACCL</div>
+                        <img src={oneMapGreenCircular} />
+                        <div>Better <span style={{color:'#333'}}>vs ACCL</span></div>
                         <img src={oneMapUp} />
                     </li>
                     <li style={{color:"#ff0025"}}>
-                        <span>city cluster</span>
-                        <div>Better vs ACCL</div>
+                        <img src={oneMapRedCircular} />
+                        <div>Worse <span style={{color:'#333'}}>vs ACCL</span></div>
+                        <img src={oneMapDown} />
+                    </li>
+                    <li style={{color:"#16b6aa"}}>
+                        <span>City cluster</span>
+                        <div>Better <span style={{color:'#333'}}>vs ACCL</span></div>
                         <img src={oneMapUp} />
+                    </li>
+                    <li style={{color:"#ff0025"}}>
+                        <span>City cluster</span>
+                        <div>Worse <span style={{color:'#333'}}>vs ACCL</span></div>
+                        <img src={oneMapDown} />
                     </li>
                 </ul>
             </Fragment>
@@ -81,6 +83,8 @@ export default class EchartsMapCity extends Component {
     }
     dataUpdateMap() {
         var data = this.props.data
+        // console.log(data)
+        var isPerfYear = data.isPerfYear
         var cityClusterAll = data.data
         var bigSmallShow = (this.props.bigSmall.percentVal2 - 100) || 0
         // console.log(bigSmallShow)
@@ -104,7 +108,7 @@ export default class EchartsMapCity extends Component {
         }
         // console.log(maxMinCity)
         this.setState({
-            cityClusterAll, maxMinCity, bigSmallShow
+            cityClusterAll, maxMinCity, bigSmallShow,isPerfYear
         }, () => {
             this.echartsShows(); //执行echarts地图展示
         })

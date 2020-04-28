@@ -609,12 +609,13 @@ button.res-layout-btn {
 }
 
 label.tab-cont-title {
-    font-size: 16px;
+    font-size: 18px;
     color: #333;
     /* padding-left: 20px; */
-    line-height: 28px;
+    line-height: 60px;
     /* padding-top: 5px; */
     font-weight: 600;
+    height: 40px;
 }
 
 .page-block {
@@ -815,7 +816,7 @@ label.bot-chart-com-sm {
 .salesButt{
     position: absolute;
     display: flex;
-    width: 104px;
+    width: 150px;
     z-index: 1;
     left:15%;
     top: 10px;
@@ -1256,10 +1257,11 @@ label.bot-chart-com-sm {
         position: absolute;
         bottom: 2%;
         left: 1%;
-        width: 222px;
+        width: 200px;
         text-align: right;
         border: 1px solid #f1f1f1;
         padding: 5px;
+        font-size: 12px;
     }
     .oneMapTuLiUl li{
         /* display: flex; */

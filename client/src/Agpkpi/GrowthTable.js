@@ -51,7 +51,7 @@ export default class GrowthTable extends Component {
                         </div> : ""
                     }
                     {/* 表格 */}
-                    <div style={{ marginLeft: '1%', marginRight: '1%', border: "10px solid #5198ee" }}>
+                    <div style={{ marginLeft: '1%', marginRight: '1%',width: '98%', border: "10px solid #5198ee" }}>
                         <table width="100%" border="0" border-collapse="collapse" cellSpacing="0" cellPadding="0" style={{ textAlign: "center", fontSize: "12px", wordBreak: 'break-all' }}>
                             {/* <thead>
                                 <tr>
@@ -93,7 +93,7 @@ export default class GrowthTable extends Component {
                                             <td style={{ width: "140px", height: "35px", border: "1px solid #e5e6e9", fontWeight: "700", textAlign: " left", paddingLeft: "4px", lineHeight: "22px" }}>{item.segment_desc == 'Customer' ? 'Registered Customers' : item.segment_desc == 'ABO (Purchasing Only)' ? 'Customer Equivalents' : item.segment_desc}</td>
                                             {/* <td style={{ height: "50px", border: "1px solid #e5e6e9" }}>{(item.first_time_buyer_population ? `${hlp.numberWithCommas(item.first_time_buyer_population)} (${Math.round(item.pct_first_time_buyer_population * 100)}%)` : '')}</td>
                                             <td style={{ height: "50px", border: "1px solid #e5e6e9" }}>{hlp.numberWithCommas(item.existing_buyer_population)} ({Math.round(item.pct_existing_buyer_population * 100)}%)</td> */}
-                                            <td style={{ height: "35px", border: "1px solid #e5e6e9" }}>{hlp.numberWithCommas(item.total_buyer_population)} ({Math.round(item.pct_total_buyer_population * 100)}%)</td>
+                                            <td style={{ height: "35px", border: "1px solid #e5e6e9" }}>{hlp.numberWithCommas(Math.round((item.total_buyer_population / 1000)))}k ({Math.round(item.pct_total_buyer_population * 100)}%)</td>
                                             <td style={{ height: "35px", border: "1px solid #e5e6e9",}}>${Math.round(item.productivity)}</td>
                                             <td style={{ height: "35px", border: "1px solid #e5e6e9", fontWeight: "700" }}>${`${hlp.toShortMil(item.actual_sales)}m`}</td>
                                             <td style={{height: "35px", border: "1px solid #e5e6e9", color: item.yoy_sales[0] == "+" ? "#16b6aa" : "#ff0000" }}>{item.yoy_sales}</td>

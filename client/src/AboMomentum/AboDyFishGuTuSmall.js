@@ -11,12 +11,13 @@ export default class AboDyFishGuTuSmall extends Component {
             actualMonth: '',
             futureMonthStr: [],
             futureMonth: [],
-            NAMES_IDS: []
+            NAMES_IDS: [],
+            objMonthShow:{},
         }
         this.toPerc = this.toPerc.bind(this)
     }
     render() {
-        var { actualMonth, futureMonth, futureMonthStr, NAMES_IDS, data } = this.state
+        var { actualMonth, futureMonth, futureMonthStr, NAMES_IDS, data,objMonthShow } = this.state
         return (
             <Fragment>
                 <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Prediction of Bonus Migration for Next 3 months</div>
@@ -32,8 +33,8 @@ export default class AboDyFishGuTuSmall extends Component {
                                 <li className="text-list">
                                     {/* <p className="text-item line-num1">Predict 3 months from {futureMonthStr} (Historical 3 months prior {hlp.yearMonthToStr(hlp.subtractMonth(futureMonth))})</p>
                             <p className="text-item line-num2">Historical 3 months prior {actualMonth}</p> */}
-                                    <p className="text-item line-num1 line-num1-big">Migration Sep.19-Nov.19</p>
-                                    <p className="text-item line-num2 line-num2-big">Migration Dec.19-Feb.20<br></br>(<span style={{ color: '#00b8ac' }}>better</span>/<span style={{ color: 'red' }}>worse</span>)</p>
+                                    <p className="text-item line-num1 line-num1-big">Migration {objMonthShow.actualMonthJian}-{objMonthShow.actualMonth}</p>
+                                    <p className="text-item line-num2 line-num2-big">Migration {objMonthShow.actualMonthAdd1}-{objMonthShow.actualMonthAdd3}<br></br>(<span style={{ color: '#00b8ac' }}>better</span>/<span style={{ color: 'red' }}>worse</span>)</p>
                                 </li>
                             </ul>
                             <ul className="legend legend_smallfish">
@@ -46,11 +47,11 @@ export default class AboDyFishGuTuSmall extends Component {
                                     <div className="diagram-item">
                                         <ul className="diagram-item_tagging">
                                             <li className="tagging-rise">
-                                                <span className="normal" style={{ color: "#00b8ac" }}>{this.toPerc(data[NAMES_IDS[2]].pred_pct_up)}</span>
+                                                <span className="normal" style={{color:data[NAMES_IDS[2]].pred_pct_up > data[NAMES_IDS[2]].actual_pct_up ? "#00b8ac" : "#ff0000" }}>{this.toPerc(data[NAMES_IDS[2]].pred_pct_up)}</span>
                                                 <span className="small">({this.toPerc(data[NAMES_IDS[2]].actual_pct_up)})</span>
                                             </li>
                                             <li className="tagging-fall">
-                                                <span className="normal" style={{ color: "#00b8ac" }}>{this.toPerc(data[NAMES_IDS[2]].pred_pct_down)}</span>
+                                                <span className="normal" style={{color:data[NAMES_IDS[2]].pred_pct_down < data[NAMES_IDS[2]].actual_pct_down ? "#00b8ac" : "#ff0000" }}>{this.toPerc(data[NAMES_IDS[2]].pred_pct_down)}</span>
                                                 <span className="small">({this.toPerc(data[NAMES_IDS[2]].actual_pct_down)})</span>
                                             </li>
                                         </ul>
@@ -64,11 +65,11 @@ export default class AboDyFishGuTuSmall extends Component {
                                     <div className="diagram-item">
                                         <ul className="diagram-item_tagging">
                                             <li className="tagging-rise">
-                                                <span className="normal">{this.toPerc(data[NAMES_IDS[1]].pred_pct_up)}</span>
+                                                <span className="normal" style={{color:data[NAMES_IDS[1]].pred_pct_up > data[NAMES_IDS[1]].actual_pct_up ? "#00b8ac" : "#ff0000" }}>{this.toPerc(data[NAMES_IDS[1]].pred_pct_up)}</span>
                                                 <span className="small">({this.toPerc(data[NAMES_IDS[1]].actual_pct_up)})</span>
                                             </li>
                                             <li className="tagging-fall">
-                                                <span className="normal">{this.toPerc(data[NAMES_IDS[1]].pred_pct_down)}</span>
+                                                <span className="normal" style={{color:data[NAMES_IDS[1]].pred_pct_down < data[NAMES_IDS[1]].actual_pct_down ? "#00b8ac" : "#ff0000" }}>{this.toPerc(data[NAMES_IDS[1]].pred_pct_down)}</span>
                                                 <span className="small">({this.toPerc(data[NAMES_IDS[1]].actual_pct_down)})</span>
                                             </li>
                                         </ul>
@@ -83,11 +84,11 @@ export default class AboDyFishGuTuSmall extends Component {
                                     <div className="diagram-item">
                                         <ul className="diagram-item_tagging">
                                             <li className="tagging-rise">
-                                                <span className="normal">{this.toPerc(data[NAMES_IDS[0]].pred_pct_up)}</span>
+                                                <span className="normal" style={{color:data[NAMES_IDS[0]].pred_pct_up > data[NAMES_IDS[0]].actual_pct_up ? "#00b8ac" : "#ff0000" }}>{this.toPerc(data[NAMES_IDS[0]].pred_pct_up)}</span>
                                                 <span className="small">({this.toPerc(data[NAMES_IDS[0]].actual_pct_up)})</span>
                                             </li>
                                             <li className="tagging-fall">
-                                                <span className="normal">{this.toPerc(data[NAMES_IDS[0]].pred_pct_down)}</span>
+                                                <span className="normal" style={{color:data[NAMES_IDS[0]].pred_pct_down < data[NAMES_IDS[0]].actual_pct_down ? "#00b8ac" : "#ff0000" }}>{this.toPerc(data[NAMES_IDS[0]].pred_pct_down)}</span>
                                                 <span className="small">({this.toPerc(data[NAMES_IDS[0]].actual_pct_down)})</span>
                                             </li>
                                         </ul>
@@ -108,13 +109,19 @@ export default class AboDyFishGuTuSmall extends Component {
         const allData = this.props.data || {}
         const data = allData.tableData || {}
         let { actualMonth, futureMonth } = allData
+        var objMonthShow = {}
+        objMonthShow.actualMonth = hlp.yearMonthToStrNowFinsg(actualMonth)
+        objMonthShow.actualMonthJian = hlp.yearMonthToStrNowFinsg(Number(actualMonth) - 2)
+        objMonthShow.actualMonthAdd1 = hlp.yearMonthToStrNowFinsg(Number(actualMonth) + 1)
+        objMonthShow.actualMonthAdd3 = hlp.yearMonthToStrNowFinsg(Number(actualMonth) + 3)
+        // console.log(objMonthShow)
         actualMonth = hlp.yearMonthToStr(actualMonth)
         let futureMonthStr = hlp.yearMonthToStr(futureMonth)
         const NAMES_IDS = [
             'Bonus15+', 'Bonus9-15', 'Bonus0-9'
         ]
         this.setState({
-            actualMonth, futureMonth, futureMonthStr, NAMES_IDS, data
+            actualMonth, futureMonth, futureMonthStr, NAMES_IDS, data,objMonthShow
         })
     }
     toPerc = (val) => {

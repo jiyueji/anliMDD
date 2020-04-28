@@ -61,7 +61,7 @@ export default class AboTableGar extends Component {
         // orig_tt_data: (16)["葛勇芹", "钟光文", "杜国渊  沈艳", "郭洪斌  范建平", "梁丁苏  孙东", "朱生才  张盛举", "刘红  狄晋", "简水兰", "李丽莉", "梁大工", "郑维良  罗斌", "尹建平  王成安", "武立荣", "黄安莉  林海峰", "江芝英  王纪接", "张忆平"]
         // orig_new_tt_data: (3)["朱生才  张盛举", "简水兰", "江芝英  王纪接"]
         
-        console.log(data)
+        // console.log(data)
         this.setState({
             data,
         })
