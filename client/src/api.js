@@ -62,7 +62,8 @@ const api = {
     social_sop_sal_data: '/social_sop_sal_data',
     manual_inputs: '/manual_inputs',
 //二期开发内容
-    abo_cis_kpi_data:'/abo_cis_kpi_data'
+    abo_cis_kpi_data:'/abo_cis_kpi_data',
+    query_daily_sales_line_2:'/query_daily_sales_line_2'
 }
 
 export default api

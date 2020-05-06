@@ -514,3 +514,9 @@ class AboCsiKpi(Resource):
 
         queryStr = "select *  from public.MD_ABO_21_CSI_KPI_M_F_V"
         return performQuery(queryStr)
+
+class QueryDailySalesLine2(Resource):
+    def get(self):
+
+        queryStr = "select *  from qa_test.query_daily_27_daily_sales_line"
+        return performQuery(queryStr)
