@@ -43,7 +43,6 @@ export default class AboDyBarStack extends Component {
     }
     upDateShowData() {
         var data = this.props.data || {}
-        console.log(data)
         //         new_abo_data: (2) [{…}, {…}]
         // renew_abo_data: (2) [{…}, {…}]
         // churn_abo_data: (2) [{…}, {…}]
@@ -60,10 +59,6 @@ export default class AboDyBarStack extends Component {
         data.churn_abo_data.map((item, index) => {
             churnAboData.push(item.y)
         })
-        // console.log(data, 'data')
-        // console.log(newAboData, 'newAboData')
-        // console.log(enewAboData, 'enewAboData')
-        // console.log(churnAboData, 'churnAboData')
         this.setState({
             newAboData, enewAboData, churnAboData
         }, () => {
@@ -134,7 +129,6 @@ export default class AboDyBarStack extends Component {
                     var churnedABOData = 0;
                     var monthUp = "";
                     data.map((item, index) => {
-                        // console.log(item.componentIndex)
                         if (item.componentIndex && item.componentIndex == 1) {
                             newRecruitedABOData = Math.round((item.data || 0) / 1000) || 0
                         } else if (item.componentIndex && item.componentIndex == 2) {
@@ -144,7 +138,6 @@ export default class AboDyBarStack extends Component {
                         }
                         monthUp = item.axisValue
                     })
-                    // console.log(newRecruitedABOData,existingABOData,churnedABOData)
                     if(newRecruitedABOData && existingABOData){
                         aboDataAddNumber = (Number(existingABOData) + Number(newRecruitedABOData)).toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
                         var thisAboDataAddNumber = 'ABO force size:' + aboDataAddNumber + "k";
@@ -192,7 +185,6 @@ export default class AboDyBarStack extends Component {
                         show: true,
                         position: 'top',
                         formatter: (val) => {
-                            // console.log(val)
                             var value = Math.round((val.data / 1000))
                             var valueShow = value.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
                             return valueShow + "k"

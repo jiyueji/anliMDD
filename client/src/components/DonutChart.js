@@ -116,7 +116,7 @@ const DonutChart = observer((props) => {
           <div className="col-lg-5 col-md-5" style={{marginTop:'22px'}}>
               {/* {props.isMonth ? 'donut-tl-month' : 'donut-tl-year'}>  */}
               <h4 className="donut-tl-month"> 
-                {props.isMonth ? 'Recent Month Sales' : 'YTD Sales'}
+                {props.isMonth ? 'Current Month Sales' : 'YTD Sales'}
                 <label className="st-card-tl-sub">{title}</label>
               </h4>
             

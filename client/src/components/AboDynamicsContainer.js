@@ -71,7 +71,7 @@ class AboDynamicsContainer extends React.PureComponent {
               {/* 第一个堆叠柱状图 */}
               <AboDyBarStack data={chartStoreAbo.aboRetention} />
             </div>
-            <div style={{ width: '49%', height: '420px', background: '#ffffff', borderRadius: "10px" , position: "relative"}}>
+            <div style={{ width: '49%', height: '420px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
               {/* 第二个折线图 */}
               <AboDyLineChart data={chartStoreAbo.aboRenewalRate} />
             </div>
@@ -82,7 +82,7 @@ class AboDynamicsContainer extends React.PureComponent {
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div style={{ width: '50%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
               {/* 第一个鱼骨图 */}
-              <AboDyFishGuTuBig data={chartStoreAbo.aboMigTop} data2={chartStoreAbo.aboMigBot} dataPin={chartStoreAbo.aboPinPop}/>
+              <AboDyFishGuTuBig data={chartStoreAbo.aboMigTop} data2={chartStoreAbo.aboMigBot} dataPin={chartStoreAbo.aboPinPop} />
             </div>
             <div style={{ width: '49%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
               {/* 第二个鱼骨图 */}
@@ -95,25 +95,28 @@ class AboDynamicsContainer extends React.PureComponent {
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div style={{ width: '33%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
               {/* 第一个折线图 */}
-              <AboQMonths data={chartStoreAbo.aboQualification}/>
-            </div>
-            <div style={{ width: '33%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
-              {/* 第二个竖起来柱状图 */}
-              <AboRate data={chartStoreAbo.aboQualification}/>
+              <AboQMonths data={chartStoreAbo.aboQualification} />
             </div>
             <div style={{ width: '33%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
               {/* 第二个两行柱状图 */}
-              <AboPvPer data={chartStoreAbo.aboQMonthPv} dataLegend={chartStoreAbo.aboQualification}/>
+              <AboPvPer data={chartStoreAbo.aboQMonthPv} dataLegend={chartStoreAbo.aboQualification} />
+            </div>
+            <div style={{ width: '33%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
+              {/* 第二个竖起来柱状图 */}
+              <AboRate data={chartStoreAbo.aboQualification} />
             </div>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between',marginTop:"15px" }}>
-            <div style={{ width: '50%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
+          <label className="tab-cont-title">
+            FAA & GAR
+        </label>
+          <div style={{ display: 'flex', justifyContent: 'space-between'}}>
+            <div style={{ width: '33%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
               {/* 第一个圆重叠图 */}
-              <AboFinalPie data={chartStoreAbo.aboBonus} titleData={chartStoreDaily.manualInputs}/>
+              <AboFinalPie data={chartStoreAbo.aboBonus} titleData={chartStoreDaily.manualInputs} />
             </div>
-            <div style={{ width: '49%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
+            <div style={{ width: '66%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
               {/* 右边的表格 */}
-              <AboTableGar1 data={chartStoreAbo.aboGar1}/>
+              <AboTableGar1 data={chartStoreAbo.aboGar1} />
             </div>
           </div>
           <label className="tab-cont-title">
@@ -122,11 +125,11 @@ class AboDynamicsContainer extends React.PureComponent {
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div style={{ width: '50%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
               {/* 第一个有中位线的柱状图 */}
-              <AboBarTwoEcharts data={chartStoreAbo.aboPinBarData} datas={chartStoreAbo.aboNonPinBarData}/>
+              <AboBarTwoEcharts data={chartStoreAbo.aboPinBarData} datas={chartStoreAbo.aboNonPinBarData} />
             </div>
             <div style={{ width: '49%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
               {/* 第二个柱状图加折线 */}
-              <AboBarLineEcharts data={chartStoreAbo.aboNonPinBarData}/>
+              <AboBarLineEcharts data={chartStoreAbo.aboCisKpiDataHandle} />
             </div>
           </div>
           {/* <Row>

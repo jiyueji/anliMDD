@@ -33,7 +33,7 @@ export default class AboDyFishGuTuBig extends Component {
                                 <div className="pinTuli">
                                     <div className="tuliShow">
                                         <div className="bluetuliShow"></div>
-                                        <div>{hlp.yearToPfPref2(recPerfYear)} Actual</div>
+                                        <div style={{whiteSpace:'nowrap'}}>{hlp.yearToPfPref2(recPerfYear)} Actual</div>
                                     </div>
                                     <div className="tuliShow">
                                         <div className="yellowtuliShow"></div>
@@ -56,7 +56,7 @@ export default class AboDyFishGuTuBig extends Component {
                                 <li className="legend-item">DD</li>
                                 <li className="legend-item">GP</li>
                                 <li className="legend-item">SP</li>
-                                <li className="legend-item">Plat & up:</li>
+                                <li className="legend-item">SP & up:</li>
                             </ul>
                             <ul className="platUp">
                                 <li className="platUp-item" style={{ textAlign: "left", fontSize: '14px', color: "#333",textAlign:"center" }}>Population by<br></br>PIN level</li>
@@ -78,11 +78,11 @@ export default class AboDyFishGuTuBig extends Component {
                                     <div className="diagram-item">
                                         <ul className="diagram-item_tagging">
                                             <li className="tagging-rise">
-                                                <span className="normal" style={{ color: "#00b8ac" }}>{this.toPerc(data['SP'].pred_pct_up)}</span>
+                                                <span className="normal" style={{color:data['SP'].pred_pct_up > data['SP'].actual_pct_up ? "#00b8ac" : "#ff0000" }}>{this.toPerc(data['SP'].pred_pct_up)}</span>
                                                 <span className="small">({this.toPerc(data['SP'].actual_pct_up)})</span>
                                             </li>
                                             <li className="tagging-fall">
-                                                <span className="normal" style={{ color: "#00b8ac" }}>{this.toPerc(data['SP'].pred_pct_down)}</span>
+                                                <span className="normal" style={{color:data['SP'].pred_pct_down < data['SP'].actual_pct_down ? "#00b8ac" : "#ff0000" }}>{this.toPerc(data['SP'].pred_pct_down)}</span>
                                                 <span className="small">({this.toPerc(data['SP'].actual_pct_down)})</span>
                                             </li>
                                         </ul>
@@ -96,11 +96,11 @@ export default class AboDyFishGuTuBig extends Component {
                                     <div className="diagram-item">
                                         <ul className="diagram-item_tagging">
                                             <li className="tagging-rise">
-                                                <span className="normal" style={{ color: "#00b8ac" }}>{this.toPerc(data['GP'].pred_pct_up)}</span>
+                                                <span className="normal" style={{color:data['GP'].pred_pct_up > data['GP'].actual_pct_up ? "#00b8ac" : "#ff0000" }}>{this.toPerc(data['GP'].pred_pct_up)}</span>
                                                 <span className="small">({this.toPerc(data['GP'].actual_pct_up)})</span>
                                             </li>
                                             <li className="tagging-fall">
-                                                <span className="normal">{this.toPerc(data['GP'].pred_pct_down)}</span>
+                                                <span className="normal" style={{color:data['GP'].pred_pct_down < data['GP'].actual_pct_down ? "#00b8ac" : "#ff0000" }}>{this.toPerc(data['GP'].pred_pct_down)}</span>
                                                 <span className="small">({this.toPerc(data['GP'].actual_pct_down)})</span>
                                             </li>
                                         </ul>
@@ -115,11 +115,11 @@ export default class AboDyFishGuTuBig extends Component {
                                     <div className="diagram-item">
                                         <ul className="diagram-item_tagging">
                                             <li className="tagging-rise">
-                                                <span className="normal">{this.toPerc(data['DD'].pred_pct_up)}</span>
+                                                <span className="normal" style={{color:data['DD'].pred_pct_up > data['DD'].actual_pct_up ? "#00b8ac" : "#ff0000" }}>{this.toPerc(data['DD'].pred_pct_up)}</span>
                                                 <span className="small">({this.toPerc(data['DD'].actual_pct_up)})</span>
                                             </li>
                                             <li className="tagging-fall">
-                                                <span className="normal">{this.toPerc(data['DD'].pred_pct_down)}</span>
+                                                <span className="normal" style={{color:data['DD'].pred_pct_down < data['DD'].actual_pct_down ? "#00b8ac" : "#ff0000" }}>{this.toPerc(data['DD'].pred_pct_down)}</span>
                                                 <span className="small">({this.toPerc(data['DD'].actual_pct_down)})</span>
                                             </li>
                                         </ul>
@@ -134,11 +134,11 @@ export default class AboDyFishGuTuBig extends Component {
                                     <div className="diagram-item">
                                         <ul className="diagram-item_tagging">
                                             <li className="tagging-rise">
-                                                <span className="normal">{this.toPerc(data['Emerald'].pred_pct_up)}</span>
+                                                <span className="normal" style={{color:data['Emerald'].pred_pct_up > data['Emerald'].actual_pct_up ? "#00b8ac" : "#ff0000" }}>{this.toPerc(data['Emerald'].pred_pct_up)}</span>
                                                 <span className="small">({this.toPerc(data['Emerald'].actual_pct_up)})</span>
                                             </li>
                                             <li className="tagging-fall">
-                                                <span className="normal">{this.toPerc(data['Emerald'].pred_pct_down)}</span>
+                                                <span className="normal" style={{color:data['Emerald'].pred_pct_down < data['Emerald'].actual_pct_down ? "#00b8ac" : "#ff0000" }}>{this.toPerc(data['Emerald'].pred_pct_down)}</span>
                                                 <span className="small">({this.toPerc(data['Emerald'].actual_pct_down)})</span>
                                             </li>
                                         </ul>
@@ -153,11 +153,11 @@ export default class AboDyFishGuTuBig extends Component {
                                     <div className="diagram-item">
                                         <ul className="diagram-item_tagging">
                                             <li className="tagging-rise">
-                                                <span className="normal">{this.toPerc(data['Diamond'].pred_pct_up)}</span>
+                                                <span className="normal" style={{color:data['Diamond'].pred_pct_up > data['Diamond'].actual_pct_up ? "#00b8ac" : "#ff0000" }}>{this.toPerc(data['Diamond'].pred_pct_up)}</span>
                                                 <span className="small">({this.toPerc(data['Diamond'].actual_pct_up)})</span>
                                             </li>
                                             <li className="tagging-fall">
-                                                <span className="normal">{this.toPerc(data['Diamond'].pred_pct_down)}</span>
+                                                <span className="normal" style={{color:data['Diamond'].pred_pct_down < data['Diamond'].actual_pct_down ? "#00b8ac" : "#ff0000" }}>{this.toPerc(data['Diamond'].pred_pct_down)}</span>
                                                 <span className="small">({this.toPerc(data['Diamond'].actual_pct_down)})</span>
                                             </li>
                                         </ul>
@@ -176,7 +176,7 @@ export default class AboDyFishGuTuBig extends Component {
                                                 <span className="small">0</span>
                                             </li> */}
                                             <li className="tagging-fall">
-                                                <span className="normal">{this.toPerc(data['EDC+'].pred_pct_down)}</span>
+                                                <span className="normal" style={{color:data['EDC+'].pred_pct_down < data['EDC+'].actual_pct_down ? "#00b8ac" : "#ff0000" }}>{this.toPerc(data['EDC+'].pred_pct_down)}</span>
                                                 <span className="small">({this.toPerc(data['EDC+'].actual_pct_down)})</span>
                                             </li>
                                         </ul>

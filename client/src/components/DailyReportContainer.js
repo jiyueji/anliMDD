@@ -45,9 +45,9 @@ class DailyReportContainer extends React.PureComponent {
       <div style={{ paddingBottom: "20px",marginTop:"40px",position:"relative" }}>
         {/* <div className="container-fluid"> */}
 
-        <div style={{ height: "56px", width: "100%", lineHeight: "56px", paddingLeft: "22px", fontWeight: 600, }}>
+        {/* <div style={{ height: "56px", width: "100%", lineHeight: "56px", paddingLeft: "22px", fontWeight: 600, }}>
           Daily Sales <span style={{ fontSize:'12px',position:"absolute",top:"-39px",left:"12%",zIndex:"1000"}}>{toUpDateMonth}.{toUpDateDay} {toUpDateYear}</span>
-        </div>
+        </div> */}
         <div style={{ height: '500px', width: "100%", }}>
           <PicFourChange data={chartStoreDaily.dailyTableSales} data2={chartStoreDaily.dailyTableRecruit} data3={chartStoreDaily.dailySales} />
         </div>
@@ -108,9 +108,9 @@ class DailyReportContainer extends React.PureComponent {
   }
   componentDidMount() {
     var date = new Date();
-    var toUpDateYear = date .getFullYear()
+    var toUpDateYear = date.getFullYear()
     var toUpDateMonth = date.toDateString().split(" ")[1]
-    var toUpDateDay = date .getDate()
+    var toUpDateDay = date.getDate()
     this.setState({
       toUpDateYear,
       toUpDateMonth,

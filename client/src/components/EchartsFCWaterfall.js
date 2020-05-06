@@ -18,6 +18,8 @@ export default class EchartsFCWaterfall extends Component {
             data: [],
             echX: [],
             echY: [],
+            echYAdd:[],
+            echYJian:[],
             totalSales: [],
             showAllData: [],
             falgDataTwo:false,
@@ -27,7 +29,7 @@ export default class EchartsFCWaterfall extends Component {
         var { maxMonthStr } = this.state
         return (
             <Fragment>
-                <div className="fcWaterFallTitle">YTD Variance Contribution by FC <span>(by performance year)</span></div>
+                <div className="fcWaterFallTitle">YTD Sales by FC <span>(by performance year)</span></div>
                 <div style={{ position: "absolute", top: 15, right: 60, zIndex: 1, color: "#666", fontSize: 12 }}>As of {maxMonthStr}</div>
                 {/* <div style={{ background: "yellow", position: "absolute", top: 5, right: 100, zIndex: 1 }} onClick={this.handleChange2.bind(this)}>还原</div> */}
                 <div id="main"
@@ -90,6 +92,18 @@ export default class EchartsFCWaterfall extends Component {
                 })
             }
         }
+        var echYAdd = echY.map((item,index)=>{
+            if(item >= 0){
+                return item
+            }
+            return ""
+        })
+        var echYJian = echY.map((item,index)=>{
+            if(item < 0){
+                return item
+            }
+            return ""
+        })
         falgDataTwo = !falgDataTwo
         this.setState({
             data,
@@ -99,6 +113,8 @@ export default class EchartsFCWaterfall extends Component {
             totalSales,
             showAllData,
             falgDataTwo,
+            echYAdd,
+            echYJian,
         }, () => {
             this.handleEcharts()
         })
@@ -132,6 +148,18 @@ export default class EchartsFCWaterfall extends Component {
                 }
             })
         }
+        var echYAdd = echY.map((item,index)=>{
+            if(item >= 0){
+                return item
+            }
+            return ""
+        })
+        var echYJian = echY.map((item,index)=>{
+            if(item < 0){
+                return item
+            }
+            return ""
+        })
         this.setState({
             data,
             datas,
@@ -140,6 +168,8 @@ export default class EchartsFCWaterfall extends Component {
             totalSales,
             showAllData,
             maxMonthStr,
+            echYAdd,
+            echYJian,
         }, () => {
             this.handleEcharts()
         })
@@ -236,17 +266,17 @@ export default class EchartsFCWaterfall extends Component {
                 }
             }],
             series: [{
-                name: "Sales by FC Group",
+                name: "Sales",
                 type: 'bar',
                 data: this.state.totalSales,
                 barWidth: '15px',
                 barGap: '-100%',//向左平移100%假装堆叠
                 // barCategoryGap: '20%',  // 柱形的间距
-                itemStyle: {
-                    normal: {
-                        color: "#5198ee",
-                    }
-                },
+                // itemStyle: {
+                //     normal: {
+                //         color: "#5198ee",
+                //     }
+                // },
                 label: {
                     normal: {
                         show: true,
@@ -259,27 +289,27 @@ export default class EchartsFCWaterfall extends Component {
                     }
                 }
             }, {
-                name: "Increase",
+                name: "Increase Sales",
                 type: 'bar',
-                data: this.state.echY,
+                data: this.state.echYAdd,
                 barWidth: '15px',
                 stack: "one",//同样属性值可以堆叠
                 // barCategoryGap: '20%',  // 柱形的间距
-                itemStyle: {
-                    normal: {
-                        color: (value) => {
-                            var val = ((value.data || 0) / 1000000).toFixed(1)
-                            if (val >= 0) {
-                                return "#23e1d1"
-                            } else {
-                                return "#fd0022"
-                            }
-                        },
-                        // barBorderRadius: [30, 30, 30, 30],
-                        // shadowColor: 'rgba(0,160,221,1)',
-                        // shadowBlur: 4,
-                    }
-                },
+                // itemStyle: {
+                //     normal: {
+                //         color: (value) => {
+                //             var val = ((value.data || 0) / 1000000).toFixed(1)
+                //             if (val >= 0) {
+                //                 return "#23e1d1"
+                //             } else {
+                //                 return "#fd0022"
+                //             }
+                //         },
+                //         // barBorderRadius: [30, 30, 30, 30],
+                //         // shadowColor: 'rgba(0,160,221,1)',
+                //         // shadowBlur: 4,
+                //     }
+                // },
                 label: {
                     normal: {
                         show: true,
@@ -303,22 +333,44 @@ export default class EchartsFCWaterfall extends Component {
                     }
                 }
             }, {
-                name: "Fall",
+                name: "Decrease Sales",
                 type: 'bar',
-                data: [],
+                data: this.state.echYJian,
                 stack: "one",//同样属性值可以堆叠
                 // barGap: '0',//向左平移100%假装堆叠
-                itemStyle: {
+                // itemStyle: {
+                //     normal: {
+                //         color: "#fd0022",
+                //     }
+                // },
+                label: {
                     normal: {
-                        color: "#fd0022",
+                        show: true,
+                        rotate: 0,  // 旋转角度
+                        // lineHeight: 30,
+                        position: 'bottom', // 相对位置
+                        fontSize: 10,
+                        // width: 80,
+                        // height: 30,
+                        // backgroundColor: 'rgba(0,160,221,0.1)',
+                        // borderRadius: 200,
+                        // position: ['-3', '-10'],
+                        // distance: 1,
+                        formatter: (value) => {
+                            var val = ((value.data || 0) / 1000000).toFixed(1)
+                            if (val >= 0) {
+                                val = "+" + val
+                            }
+                            return val + "m"
+                        },
                     }
-                },
+                }
             }],
             //图例名
-            // color:["#5198ee","#17b6a9","#fd0022"],
+            color:["#5198ee","#23e1d1","#fd0022"],
             legend: {
                 type: "scroll",
-                data: ["Sales by FC Group", "Increase", "Fall"],
+                data: ["Sales", "Increase Sales", "Decrease Sales"],
                 // icon: "line",
                 left: 'center',
                 bottom: 'bottom',

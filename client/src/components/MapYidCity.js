@@ -112,7 +112,18 @@ export default class MapYidCity extends Component {
         // // tableShowHidden.style.opacity = "1"
         // this.echartsCityData(); //执行echarts地图展示
     }
+    componentWillReceiveProps(nextProps){
+        // var {data} = nextProps
+        this.setState({
+
+        },()=>{
+            this.dataUpdateMapYid()
+        })
+    }
     componentDidMount() {
+        this.dataUpdateMapYid()
+    }
+    dataUpdateMapYid() {
         var data = this.props.data || {}
         var cityClusterAllTable = data.data || []
         // city_cluster: "哈尔滨城市群", actual_sales_sum: 4407761.54344828, perc_of_actual_sales: "2 %", sales_vs_sply: "-14.9 %", maxYear: 2020

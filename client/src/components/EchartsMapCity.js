@@ -3,12 +3,17 @@ import React, { Component, Fragment } from 'react'
 import echarts from 'echarts';
 import "echarts/lib/chart/line";
 import "echarts/map/js/china";
+import oneMapGreenCircular from "../styles/assets/oneMapGreenCircular.png"
+import oneMapRedCircular from "../styles/assets/oneMapRedCircular.png"
+import oneMapUp from "../styles/assets/oneMapUp.png"
+import oneMapDown from "../styles/assets/oneMapDown.png"
 
 
 export default class EchartsMapCity extends Component {
     constructor() {
         super();
         this.state = {
+            isPerfYear:false,
             list: [
                 //地图高亮显示
                 { name: "安徽", value: 1, color: "#f5f5f6" },
@@ -31,19 +36,55 @@ export default class EchartsMapCity extends Component {
             ],
             cityClusterAll: [],
             maxMinCity: [],
-            bigSmallShow:0,
+            bigSmallShow: 0,
         }
     }
     render() {
+        var {isPerfYear} = this.state
         return (
             <Fragment>
-                <div className="mapTitle">YTD sales by city cluster</div>
+                <div className="mapTitle">YTD sales by city cluster <span style={{fontSize:"12px"}}>{isPerfYear ? '(By Performance Year)' : '(By Calendar Year)'}</span></div>
                 <div id="map" className="centerItem"></div>
+                <ul className="oneMapTuLiUl">
+                    <li style={{color:"#16b6aa"}}>
+                        <img src={oneMapGreenCircular} />
+                        <div>Better <span style={{color:'#333'}}>vs ACCL</span></div>
+                        <img src={oneMapUp} />
+                    </li>
+                    <li style={{color:"#ff0025"}}>
+                        <img src={oneMapRedCircular} />
+                        <div>Worse <span style={{color:'#333'}}>vs ACCL</span></div>
+                        <img src={oneMapDown} />
+                    </li>
+                    <li style={{color:"#16b6aa"}}>
+                        <span>City cluster</span>
+                        <div>Better <span style={{color:'#333'}}>vs ACCL</span></div>
+                        <img src={oneMapUp} />
+                    </li>
+                    <li style={{color:"#ff0025"}}>
+                        <span>City cluster</span>
+                        <div>Worse <span style={{color:'#333'}}>vs ACCL</span></div>
+                        <img src={oneMapDown} />
+                    </li>
+                </ul>
             </Fragment>
         )
     }
+    componentWillReceiveProps(nextProps) {
+        // var {data} = nextProps
+        this.setState({
+
+        }, () => {
+            this.dataUpdateMap()
+        })
+    }
     componentDidMount() {
+        this.dataUpdateMap()
+    }
+    dataUpdateMap() {
         var data = this.props.data
+        // console.log(data)
+        var isPerfYear = data.isPerfYear
         var cityClusterAll = data.data
         var bigSmallShow = (this.props.bigSmall.percentVal2 - 100) || 0
         // console.log(bigSmallShow)
@@ -67,7 +108,7 @@ export default class EchartsMapCity extends Component {
         }
         // console.log(maxMinCity)
         this.setState({
-            cityClusterAll, maxMinCity,bigSmallShow
+            cityClusterAll, maxMinCity, bigSmallShow,isPerfYear
         }, () => {
             this.echartsShows(); //执行echarts地图展示
         })
@@ -524,7 +565,29 @@ export default class EchartsMapCity extends Component {
                 array.push({
                     name,
                     value: [...geoCoord],
-                    label: { fontSize: 10, shows: showLabel,show:false }//这个show代表地图的名字是否显示
+                    label: {
+                        fontSize: 10,
+                        //控制地图上显示的字体的颜色的变化
+                        //     color: (params)=>{
+                        //     var splySales = 0;
+                        //     if (this.state.cityClusterAll && this.state.cityClusterAll.length > 0) {
+                        //         for (var i = 0; i < this.state.cityClusterAll.length; i++) {
+                        //             if (this.state.cityClusterAll[i].city_cluster === params.name) {
+                        //                 splySales = this.state.cityClusterAll[i].sales_vs_sply
+                        //             }
+                        //         }
+                        //     }
+                        //     if (splySales) {
+                        //         splySales = splySales.replace(/%/g, '')
+                        //         if (Number(splySales) >= 0) {
+                        //             return "#16b6aa"
+                        //         } else {
+                        //             return "#ff0025"
+                        //         }
+                        //     }
+                        // }, 
+                        shows: showLabel, show: false
+                    }//这个show代表地图的名字是否显示
                 });
             });
             //改变回来排序，按大小来排
@@ -590,8 +653,10 @@ export default class EchartsMapCity extends Component {
                 let [pointX, pointY] = value;
                 var object = { name, coords: [[...value]] };
                 if (label.shows) {
-                    object.label = { align: 'left' };
-                    object.coords.push([pointX += 0.1, pointY += 0]);
+                    object.label = {
+                        align: 'left'
+                    };
+                    object.coords.push([pointX += 0.6, pointY += 0]);
                 } else {
                     if (pointX <= flag) {
                         object.label = { align: 'right' };
@@ -618,7 +683,7 @@ export default class EchartsMapCity extends Component {
             visualMap: {
                 show: false, //是否展示地图颜色渐变控件
                 type: "piecewise", //
-                borderWidth:0,                               //边框线宽
+                borderWidth: 0,                               //边框线宽
                 seriesIndex: 0, //指定取哪个系列的数据，即哪个系列的 series.data,默认取所有系列
                 pieces: this.state.list, //把颜色写在this.list数组中，所以可以在这里进行渲染
             },
@@ -723,11 +788,11 @@ export default class EchartsMapCity extends Component {
                         }
                     },
                     // markPoint:{
-                        itemStyle: {
-                            normal: {
-                                borderWidth: 0
-                            },
+                    itemStyle: {
+                        normal: {
+                            borderWidth: 0
                         },
+                    },
                     // },
                     itemStyle: {
                         normal: {
@@ -751,7 +816,7 @@ export default class EchartsMapCity extends Component {
                     },
                     // hoverAnimation: true,
                     label: {
-                        show:false,
+                        show: false,
                         normal: {
                             color: "#333333",
                             // formatter: "{b}",
@@ -779,7 +844,7 @@ export default class EchartsMapCity extends Component {
                                     }
                                 }
                                 if (splySales) {
-                                    var {bigSmallShow} = this.state
+                                    var { bigSmallShow } = this.state
                                     splySales = splySales.replace(/%/g, '')
                                     if (Number(splySales) >= Number(bigSmallShow)) {
                                         return "#16b6aa"
@@ -827,7 +892,7 @@ export default class EchartsMapCity extends Component {
                                     }
                                 }
                                 if (splySales) {
-                                    var {bigSmallShow} = this.state
+                                    var { bigSmallShow } = this.state
                                     splySales = splySales.replace(/%/g, '')
                                     if (Number(splySales) >= Number(bigSmallShow)) {
                                         return "#16b6aa"
@@ -842,7 +907,7 @@ export default class EchartsMapCity extends Component {
                 },
                 {
                     type: 'lines',
-                    color: '#ff8003',
+                    // color: '#ff8003',
                     label: {
                         show: true,
                         formatter: (data) => {
@@ -852,12 +917,29 @@ export default class EchartsMapCity extends Component {
                         },
                         // formatter: "{b}",
                         fontSize: 10,
-                        color: '#333',
-                        align: 'left'
+                        // color:"red",
+                        align: 'left',
                     },
                     lineStyle: {
                         type: 'solid',
-                        color: '#333'
+                        color: (params) => {
+                            var splySales = 0;
+                            if (this.state.cityClusterAll && this.state.cityClusterAll.length > 0) {
+                                for (var i = 0; i < this.state.cityClusterAll.length; i++) {
+                                    if (this.state.cityClusterAll[i].city_cluster === params.name) {
+                                        splySales = this.state.cityClusterAll[i].sales_vs_sply
+                                    }
+                                }
+                            }
+                            if (splySales) {
+                                splySales = splySales.replace(/%/g, '')
+                                if (Number(splySales) >= 0) {
+                                    return "#16b6aa"
+                                } else {
+                                    return "#ff0025"
+                                }
+                            }
+                        }
                     },
                     data: convertData4(convertData3(this.state.cityClusterAll))
                 }

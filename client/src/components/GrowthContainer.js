@@ -52,7 +52,7 @@ class GrowthContainer extends React.PureComponent {
           {/* <TableViewGrowth data={chartStoreGrowth.growthTable}/> */}
         </div>
         
-        <div style={{height:'60px',lineHeight:'60px',fontSize:'14px',fontWeight:'700',paddingLeft:'1%'}}>
+        <div style={{height:'40px',lineHeight:'50px',fontSize:'18px',fontWeight:'600'}}>
           Sustainability
         </div>
 

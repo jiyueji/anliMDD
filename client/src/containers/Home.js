@@ -41,10 +41,14 @@ class Home extends Component {
 
     constructor(props) {
         super(props)
+        this.state = {
+            thisWindowWidth:false,
+        }
         //        this.onClickEditDashboard = this.onClickEditDashboard.bind(this)
     }
 
     componentDidMount() {
+        // console.log()
         // 实现吸顶
         window.addEventListener("scroll", () => {
             let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -77,6 +81,7 @@ class Home extends Component {
 
 
 
+        this.props.chartStoreAbo.fetchAboCisKpiData();
         this.props.chartStoreAbo.fetchAboRenewalData();
         this.props.chartStoreAbo.fetchAboPinData();
         this.props.chartStoreAbo.fetchAboNonPinData();
@@ -144,7 +149,13 @@ class Home extends Component {
         }
     }
     handleClickToUp = () =>{
+        console.log(window.innerWidth)
+        var thisWindowWidth = window.innerWidth
+        // window.location.reload()
         document.body.scrollTop = document.documentElement.scrollTop = 0;
+        this.setState({
+            thisWindowWidth,
+        })
     }
 
     // onClickEditDashboard() {
@@ -223,7 +234,7 @@ class Home extends Component {
 
         // }
 
-
+        var {thisWindowWidth} = this.state
         return <div className="dashboard-wrap">
             {authStore.isAuthenticated &&
                 <React.Fragment>
@@ -283,7 +294,7 @@ class Home extends Component {
                                             </div>
                                         </div>
                                     </div> */}
-                                    <SalesPerformanceContainer />
+                                    <SalesPerformanceContainer thisWindowWidth={thisWindowWidth}/>
                                 </Tab>
                                 <Tab eventKey="AGP KPI" title={<div><i className="fas fa-chart-bar"></i>AGP KPI</div>}>
                                     <GrowthContainer />
@@ -294,7 +305,7 @@ class Home extends Component {
                                 {/* <Tab eventKey="ABO Leader Dynamics" title={<div><i className="fas fa-home"></i>ABO Leader Dynamics</div>}>
                             <AboLeaderContainer/>
                         </Tab> */}
-                                <Tab eventKey="Social and Promotional" title={<div><i className="fas fa-home"></i>Social & Promotion Initiatives</div>}>
+                                <Tab eventKey="Customer Dynamics" title={<div><i className="fas fa-home"></i>Customer Dynamics</div>}>
                                     <SocialPromContainer />
                                 </Tab>
                                 <Tab eventKey="Daily Report" title={<div><i className="fas fa-home"></i>Daily Report</div>}>
