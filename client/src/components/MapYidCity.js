@@ -26,7 +26,9 @@ export default class MapYidCity extends Component {
                 <div id="tableShowHidden">
                     {/* <div className="mapTitle">YIL sales by city cluster</div> */}
                     <div className="mapTitleTwo">As of {maxMonthStr}</div>
-                    <div id="cityMap" className="centerItemTable"></div>
+                    <div style={{display:"flex"}}>
+                        <div id="cityMap" className="centerItemTable"></div>
+                    </div>
                     <div className="mapSortData" onClick={this.mapSortDataHandler.bind(this)}></div>
                     <div className="changeButt">
                         <div>YTD sales</div>
@@ -143,9 +145,11 @@ export default class MapYidCity extends Component {
         })
     }
     echartsCityData() {
-        var myChart = echarts.init(document.getElementById('cityMap'));
+        var myChartCityMapEchartsWidth = document.getElementById('cityMap')
+        myChartCityMapEchartsWidth.style.width = (window.innerWidth * 0.32) + "px"
+        var myChartCity = echarts.init(document.getElementById('cityMap'));
         window.addEventListener('resize', function () {
-            myChart.resize()
+            myChartCity.resize()
         });
         // city_cluster: "杭州城市群"
         // actual_sales_sum: 118605668.12960227
@@ -203,7 +207,7 @@ export default class MapYidCity extends Component {
             }
             return res;
         }
-        myChart.setOption({
+        myChartCity.setOption({
             tooltip: {
                 trigger: 'axis',
                 show: false,
@@ -292,7 +296,7 @@ export default class MapYidCity extends Component {
                 type: 'category',
                 data: dataShowNumberSply(this.state.cityClusterAllTable),
                 position: 'right',
-                offset: 100,
+                offset: 95,
                 nameRotate:0.2,
                 // nameLoaction: "center",
                 axisLabel: {

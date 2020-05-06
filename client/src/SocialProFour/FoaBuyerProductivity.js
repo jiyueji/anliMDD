@@ -141,7 +141,7 @@ export default class FoaBuyerProductivity extends Component {
                     axisLine: {//隐藏X轴
                         show: false
                     },
-                    boundaryGap: [0, '100%'],
+                    boundaryGap: [0, '200%'],
                     // min: 0,
                     // max: this.state.maxYShow,
                     nameGap: 10,
@@ -193,7 +193,8 @@ export default class FoaBuyerProductivity extends Component {
                 // icon: 'rect',
                 itemWidth: 10,
                 itemHeight: 10,
-                itemGap: 90,//图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
+                left: 'center',
+                // itemGap: 30,//图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
                 // data: ['Actual Renewal Rate', 'Prediction Renewal Rate'],
                 data: [
                     {name: 'FOA Buyer Count', icon: "image://" + foaRedkuang },

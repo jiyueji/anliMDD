@@ -161,7 +161,7 @@ class ChartStoreDaily {
       let dataStateCom = jsArr2
 
       let maxYear, maxMonth, maxMonthStr, maxYearStr, prevYearStr
-
+      console.log(dataState,"1")
       if (dataState.length) {
         maxMonthStr = dataState[0].n_month
         maxYear = parseInt( maxMonthStr.slice(0, 4) )
@@ -175,7 +175,7 @@ class ChartStoreDaily {
         o.n_date_ly = String(parseInt(o.n_date) - 10000)
         return o
       })
-
+      console.log(dataState,"2")
       dataStateCom = _.map(dataStateCom, (o)=>{
         o.isPrevYear = String(o.start_day).indexOf(prevYearStr) === 0
         return o
@@ -320,7 +320,7 @@ class ChartStoreDaily {
       let dataState = _.sortBy(jsArr, (o) => {
         return ROWS_ORDER_MAP[o.agg_type]
       })
-
+      // console.log(dataState,"1")
       let maxDateStr, maxDateTitle,
         maxDateRaw, maxDMin1, maxDMin2
 

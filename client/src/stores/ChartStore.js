@@ -686,11 +686,11 @@ class ChartStore {
 
       revenue_forecast_usd_data = _.filter(revenue_forecast_usd_data, o=>o.y!==null)
 
-
-      if (revenue_forecast_usd_data.length && actual_sales_data.length) {
-        revenue_forecast_usd_data.unshift( actual_sales_data[ actual_sales_data.length-1 ] )
-      }
-
+      //预测值添加一个实际值作为预测值开始的日期数据；
+      // if (revenue_forecast_usd_data.length && actual_sales_data.length) {
+      //   revenue_forecast_usd_data.unshift( actual_sales_data[ actual_sales_data.length-1 ] )
+      // }
+      // console.log(revenue_forecast_usd_data)
       //const t_sales_with_forecast_data = actual_sales_data.concat( revenue_forecast_usd_data )
 
       // const months_data = _.map( dataState, (o)=>{

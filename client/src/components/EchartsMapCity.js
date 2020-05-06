@@ -13,7 +13,7 @@ export default class EchartsMapCity extends Component {
     constructor() {
         super();
         this.state = {
-            isPerfYear:false,
+            isPerfYear: false,
             list: [
                 //地图高亮显示
                 { name: "安徽", value: 1, color: "#f5f5f6" },
@@ -40,30 +40,32 @@ export default class EchartsMapCity extends Component {
         }
     }
     render() {
-        var {isPerfYear} = this.state
+        var { isPerfYear } = this.state
         return (
             <Fragment>
-                <div className="mapTitle">YTD sales by city cluster <span style={{fontSize:"12px"}}>{isPerfYear ? '(By Performance Year)' : '(By Calendar Year)'}</span></div>
-                <div id="map" className="centerItem"></div>
+                <div className="mapTitle">YTD sales by city cluster <span style={{ fontSize: "12px" }}>{isPerfYear ? '(By Performance Year)' : '(By Calendar Year)'}</span></div>
+                <div style={{display:"flex"}}>
+                    <div id="map" className="centerItem"></div>
+                </div>
                 <ul className="oneMapTuLiUl">
-                    <li style={{color:"#16b6aa"}}>
+                    <li style={{ color: "#16b6aa" }}>
                         <img src={oneMapGreenCircular} />
-                        <div>Better <span style={{color:'#333'}}>vs ACCL</span></div>
+                        <div>Better <span style={{ color: '#333' }}>vs ACCL</span></div>
                         <img src={oneMapUp} />
                     </li>
-                    <li style={{color:"#ff0025"}}>
+                    <li style={{ color: "#ff0025" }}>
                         <img src={oneMapRedCircular} />
-                        <div>Worse <span style={{color:'#333'}}>vs ACCL</span></div>
+                        <div>Worse <span style={{ color: '#333' }}>vs ACCL</span></div>
                         <img src={oneMapDown} />
                     </li>
-                    <li style={{color:"#16b6aa"}}>
+                    <li style={{ color: "#16b6aa" }}>
                         <span>City cluster</span>
-                        <div>Better <span style={{color:'#333'}}>vs ACCL</span></div>
+                        <div>Better <span style={{ color: '#333' }}>vs ACCL</span></div>
                         <img src={oneMapUp} />
                     </li>
-                    <li style={{color:"#ff0025"}}>
+                    <li style={{ color: "#ff0025" }}>
                         <span>City cluster</span>
-                        <div>Worse <span style={{color:'#333'}}>vs ACCL</span></div>
+                        <div>Worse <span style={{ color: '#333' }}>vs ACCL</span></div>
                         <img src={oneMapDown} />
                     </li>
                 </ul>
@@ -108,7 +110,7 @@ export default class EchartsMapCity extends Component {
         }
         // console.log(maxMinCity)
         this.setState({
-            cityClusterAll, maxMinCity, bigSmallShow,isPerfYear
+            cityClusterAll, maxMinCity, bigSmallShow, isPerfYear
         }, () => {
             this.echartsShows(); //执行echarts地图展示
         })
@@ -674,9 +676,11 @@ export default class EchartsMapCity extends Component {
         }
         /*获取地图数据*/
         // var mapEchartsWidth = document.getElementById("map");
-        var myChart = echarts.init(document.getElementById("map"));
+        var myChartMapEchartsWidth = document.getElementById('map')
+        myChartMapEchartsWidth.style.width = (window.innerWidth * 0.63) + "px"
+        var myChartMap = echarts.init(document.getElementById("map"));
         window.addEventListener('resize', function () {
-            myChart.resize()
+            myChartMap.resize()
         });
         var option = {
             // 地图颜色渐变
@@ -945,12 +949,12 @@ export default class EchartsMapCity extends Component {
                 }
             ]
         };
-        myChart.setOption(option);
+        myChartMap.setOption(option);
         //设置鼠标移入指定省份颜色不变的效果(去掉判断条件，现在是全部不变色)
-        myChart.on("mouseover", function (params) {
+        myChartMap.on("mouseover", function (params) {
             // console.log(params)
             // if (params.data.value != undefined) {
-            myChart.dispatchAction({
+            myChartMap.dispatchAction({
                 type: "downplay"
             });
             // }

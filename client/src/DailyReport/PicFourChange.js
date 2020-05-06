@@ -10,6 +10,7 @@ export default class PicFourChange extends Component {
         super();
         this.state = {
             allEvents:"Net Sales(MTD)",//下面的可以变化的标题
+            allEventsArr:["Net Sales(MTD)","Order BV Sales(MTD)","Recruitment(MTD)","Buyer Counts(MTD)"],
 
             data: {},
             data2: {},
@@ -72,7 +73,7 @@ export default class PicFourChange extends Component {
                 <div style={{ width: '100%', height: "340px", background: "#ffffff", borderRadius: "10px", display: "flex" }}>
                     <div style={{ width: '75%', height: "100%", display: "flex", flexWrap: "wrap" }}>
                         <div style={{ paddingLeft: '1%', paddingRight: '1%', height: '58px', display: 'flex' }}>
-                            <h3 style={{ fontSize: "12px", lineHeight: '58px', margin: '0', marginRight: "20px", fontWeight: '700' }}>{allEvents}</h3>
+                            <h3 style={{ fontSize: "12px", lineHeight: '58px', margin: '0', marginRight: "20px", fontWeight: '700',whiteSpace:'nowrap' }}>{allEvents}</h3>
                             <ul className="picFourChangeNav">
                                 <li className="picFourChangeNav-item picFourChangeNavActive" id="upDateBlueShow" onClick={this.changeDateHandle.bind(this, 0)}>Total</li>
                                 {
@@ -234,11 +235,12 @@ export default class PicFourChange extends Component {
     }
     //点击图片下面切换数据
     picChangeDateHandle(idx, e) {
-        var { data, data2, changeName,allEvents } = this.state
+        var { data, data2, changeName,allEvents,allEventsArr } = this.state
         changeName = []
-        if(e.target.childNodes[1].innerHTML){
-            allEvents = e.target.childNodes[1].innerHTML
-        }
+        allEvents = allEventsArr[idx]
+        // if(e.target.childNodes[1].innerHTML){
+        //     allEvents = e.target.childNodes[1].innerHTML
+        // }
         if (idx == 0) {
             data.tableData ? data.tableData.map((item, index) => {
                 if (item.agg_type !== "Net Sales" && item.agg_type !== "Order BV Sales") {

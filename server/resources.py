@@ -512,5 +512,5 @@ class SecretResource(Resource):
 class AboCsiKpi(Resource):
     def get(self):
 
-        queryStr = "select *  from public.MD_ABO_21_CSI_KPI_M_F"
+        queryStr = "select *  from public.MD_ABO_21_CSI_KPI_M_F_V"
         return performQuery(queryStr)

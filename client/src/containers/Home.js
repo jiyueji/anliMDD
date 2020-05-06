@@ -149,13 +149,13 @@ class Home extends Component {
         }
     }
     handleClickToUp = () =>{
-        console.log(window.innerWidth)
-        var thisWindowWidth = window.innerWidth
+        // console.log(window.innerWidth)
+        // var thisWindowWidth = window.innerWidth
         // window.location.reload()
         document.body.scrollTop = document.documentElement.scrollTop = 0;
-        this.setState({
-            thisWindowWidth,
-        })
+        // this.setState({
+        //     thisWindowWidth,
+        // })
     }
 
     // onClickEditDashboard() {

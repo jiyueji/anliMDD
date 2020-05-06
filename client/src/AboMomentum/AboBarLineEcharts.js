@@ -32,17 +32,17 @@ export default class AboBarLineEcharts extends Component {
                 </div>
                 {
                     clickShow ? <div style={{ position: "absolute", width: "100%", }}>
-                        <div style={{ width: "100%", height: "180", display: 'flex' }}>
-                            <div style={{ position: "absolute", top: "20%", left: "25%", fontSize: "16px", fontWeight: "600" }}>YTD Mthly Avg.<br></br>Sales BV Mix</div>
-                            <div id="aboBvMixEcharts" style={{ width: "100%", height: "180px" }}></div>
-                            <div style={{ position: "absolute", top: "5%", right: "7%", fontSize: "12px", lineHeight: "20px", textAlign: "right" }}>
+                        <div style={{ width: "100%", height: "120px", display: 'flex',marginTop:"20px" }}>
+                            {/* <div style={{ position: "absolute", top: "20%", left: "25%", fontSize: "16px", fontWeight: "600" }}>YTD Mthly Avg.<br></br>Sales BV Mix</div> */}
+                            <div id="aboBvMixEcharts" style={{ width: "100%", height: "120px" }}></div>
+                            {/* <div style={{ position: "absolute", top: "5%", right: "7%", fontSize: "12px", lineHeight: "20px", textAlign: "right" }}>
                                 <div>Note: FOA / Total :{object_ytd_data.foa_sales_bv_ShowNowOne}%</div>
                                 <div>VCS / Total :{object_ytd_data.vcs_sales_bv_ShowNowOne}%</div>
-                            </div>
+                            </div> */}
                         </div>
-                        <div style={{ position: "absolute", left: ' 3%', top: '45%', fontSize: '14px', color: "#333" }}>Monthly Sales BV Mix</div>
-                        <div style={{ width: "100%", height: "220px", display: 'flex' }}>
-                            <div id="aboBvMixEcharts2" style={{ width: "100%", height: "220px" }}></div>
+                        <div style={{ position: "absolute", left: ' 3%', top: '30%', fontSize: '12px', color: "#333" }}>Monthly Sales BV ($)</div>
+                        <div style={{ width: "100%", height: "280px", display: 'flex' }}>
+                            <div id="aboBvMixEcharts2" style={{ width: "100%", height: "280px" }}></div>
                         </div>
                     </div> : <div style={{ position: "absolute", width: "100%", }}>
                             <div style={{ position: "absolute", left: ' 3%', top: '12%', fontSize: '14px', color: "#333" }}>Mthly Trend</div>
@@ -278,16 +278,16 @@ export default class AboBarLineEcharts extends Component {
                 // icon: 'rect',
                 itemWidth: 10,
                 itemHeight: 10,
-                itemGap: 30,//图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
+                // itemGap: 30,//图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
                 // data: ['Actual Renewal Rate', 'Prediction Renewal Rate'],
                 data: [
-                    { name: 'CSI per Earner', icon: 'rect' },
+                    { name: 'CSI per Earner ($)', icon: 'rect' },
                     { name: 'CSI earner % of total eligible earner', icon: "line" }
                 ],
             },
             series: [
                 {
-                    name: 'CSI per Earner',
+                    name: 'CSI per Earner ($)',
                     type: 'bar',
                     barWidth: 20,
                     yAxisIndex: 0,
@@ -546,7 +546,7 @@ export default class AboBarLineEcharts extends Component {
         });
         aboBvMixEcharts2.setOption({
             grid: {
-                top: '16%',
+                top: '6%',
                 left: '4%',
                 right: '5%',
                 bottom: '15%',
@@ -622,7 +622,7 @@ export default class AboBarLineEcharts extends Component {
                         position: 'bottom',
                         formatter: (params) => {
                             var { vcs_sales_bv_ShowNow } = this.state
-                            var showVcs = (vcs_sales_bv_ShowNow[params.dataIndex] * 100).toFixed(1) + "%"
+                            var showVcs = Math.round(vcs_sales_bv_ShowNow[params.dataIndex] * 100) + "%"
                             return showVcs
                         },
                         textStyle: {
@@ -656,7 +656,7 @@ export default class AboBarLineEcharts extends Component {
                         position: 'top',
                         formatter: (params) => {
                             var { foa_sales_bv_ShowNow } = this.state
-                            var showFoa = (foa_sales_bv_ShowNow[params.dataIndex] * 100).toFixed(1) + "%"
+                            var showFoa = Math.round(foa_sales_bv_ShowNow[params.dataIndex] * 100) + "%"
                             return showFoa
                         },
                         textStyle: {
@@ -724,8 +724,8 @@ export default class AboBarLineEcharts extends Component {
         });
         aboBvMixEcharts.setOption({
             title: {
-                "text": this.state.NOW_MAXDATEPF,
-                "x": "57%",
+                "text": this.state.NOW_MAXDATEPF + "YTD",
+                "x": "center",
                 "y": "5%",
                 "textStyle": {
                     "color": "#333",
@@ -735,24 +735,25 @@ export default class AboBarLineEcharts extends Component {
                     "width": "200px"
                 },
             },
-            color: ['#4e9bed', '#29ccaf', '#ffa441'],
+            color: ['#4e9bed', '#29ccaf', 'rgba(239,163,62,0.8)'],
             series: [
                 {
                     name: '访问来源',
                     type: 'pie',
+                    hoverAnimation:false,
                     width: "20%",
-                    left: "50%",
-                    top: "20%",
+                    left: "center",
+                    top: "30%",
                     selectedMode: 'single',
                     radius: [0, this.state.object_ytd_data.vcs_sales_bv_ShowNowOne + "%"],
                     label: {
                         show: true,
                         position: 'center',
                         formatter: (params) => {
-                            return this.state.object_ytd_data.vcs_sales_bv_ShowNowOne + "%"
+                            return Math.round(this.state.object_ytd_data.vcs_sales_bv_ShowNowOne) + "%"
                         },
                         textStyle: {
-                            // fontSize: 8,
+                            fontSize: 10,
                             color: '#ffffff',
                         }
                     },
@@ -766,10 +767,11 @@ export default class AboBarLineEcharts extends Component {
                 {
                     name: '访问来源',
                     type: 'pie',
+                    hoverAnimation:false,
                     width: "20%",
-                    left: "50%",
-                    top: "20%",
-                    radius: [this.state.object_ytd_data.vcs_sales_bv_ShowNowOne + "%", this.state.object_ytd_data.foa_sales_bv_ShowNowOne + "%"],
+                    left: "center",
+                    top: "30%",
+                    radius: [this.state.object_ytd_data.vcs_sales_bv_ShowNowOne + "%", this.state.object_ytd_data.vcsAddFoa + "%"],
                     data: [
                         { value: this.state.object_ytd_data.vcsAddFoa, name: 'FOA Sales BV' },
                     ],
@@ -777,10 +779,10 @@ export default class AboBarLineEcharts extends Component {
                         show: true,
                         position: 'inner',
                         formatter: (params) => {
-                            return this.state.object_ytd_data.foa_sales_bv_ShowNowOne + "%"
+                            return Math.round(this.state.object_ytd_data.foa_sales_bv_ShowNowOne) + "%"
                         },
                         textStyle: {
-                            // fontSize: 8,
+                            fontSize: 10,
                             color: '#ffffff',
                         }
                     },
@@ -791,31 +793,32 @@ export default class AboBarLineEcharts extends Component {
                 {
                     name: '访问来源',
                     type: 'pie',
+                    hoverAnimation:false,
                     width: "20%",
-                    left: "50%",
-                    top: "20%",
+                    left: "center",
+                    top: "30%",
                     labelLine: {
                         show: false
                     },
-                    radius: [this.state.object_ytd_data.foa_sales_bv_ShowNowOne + "%", '100%'],
+                    radius: [this.state.object_ytd_data.vcsAddFoa + "%", '100%'],
                     data: [
                         { value: this.state.object_ytd_data.vcsAddFoa, name: 'Total Sales BV' },
                     ]
                 }
             ],
-            legend: {
-                orient: 'vertical',
-                "textStyle": {
-                    "color": "#333",
-                    // "fontSize": 16
-                },
-                "icon": "circle",
-                "right": "5%",
-                "bottom": "0",
-                // "padding": [30, 60],
-                "itemGap": 10,
-                "data": ["VCS Sales BV", "FOA Sales BV", "Total Sales BV"]
-            },
+            // legend: {
+            //     orient: 'vertical',
+            //     "textStyle": {
+            //         "color": "#333",
+            //         // "fontSize": 16
+            //     },
+            //     "icon": "circle",
+            //     "right": "5%",
+            //     "bottom": "0",
+            //     // "padding": [30, 60],
+            //     "itemGap": 10,
+            //     "data": ["VCS Sales BV", "FOA Sales BV", "Total Sales BV"]
+            // },
         })
     }
 }

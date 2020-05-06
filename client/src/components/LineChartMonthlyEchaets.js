@@ -41,7 +41,9 @@ export default class LineChartMonthlyEchaets extends Component {
                     <span className="salesButt-ytd">Monthly</span>
                     <span className="salesButt-Monthly">YTD</span>
                 </div>
-                <div id="LineChartMonthlyEchaetsMain" style={{ width: "100%", height: "100%", background: "#ffffff", }}></div>
+                <div style={{display:"flex"}}>
+                <div id="LineChartMonthlyEchaetsMain" style={{ width: "100%", height:"300px", background: "#ffffff", }}></div>
+                </div>
                 {/* <div className='custom-control custom-switch perf-switch-wrap lineChartMonthlyButt' style={{position:"absolute",left:"75px"}}>
                     <label className='perf-lbl' htmlFor='lineChartMonthlyEchaets'>
                         PF
@@ -135,14 +137,14 @@ export default class LineChartMonthlyEchaets extends Component {
             })
         }
         // if (dataShowForClick) {
-            if (allData && allData.revenue_forecast_usd_data.length > 0) {
-                allData.revenue_forecast_usd_data.map((item, index) => {
-                    forecastYear.push(item.y)
-                })
-            }
-            for (var i = 0; forecastYear.length < 12; i++) {
-                forecastYear.unshift("")
-            }
+        if (allData && allData.revenue_forecast_usd_data.length > 0) {
+            allData.revenue_forecast_usd_data.map((item, index) => {
+                forecastYear.push(item.y)
+            })
+        }
+        for (var i = 0; forecastYear.length < 12; i++) {
+            forecastYear.unshift("")
+        }
         // }
         var yearShow = new Date().getFullYear() //今年
         var lastYearShow = (yearShow - 1).toString()   //去年
@@ -188,6 +190,9 @@ export default class LineChartMonthlyEchaets extends Component {
         })
     }
     handleEcharts() {
+        //页面自适应
+        var myChartEchartsWidth = document.getElementById('LineChartMonthlyEchaetsMain')
+        myChartEchartsWidth.style.width = (window.innerWidth * 0.46) + "px"
         var myChart = echarts.init(document.getElementById('LineChartMonthlyEchaetsMain'));
         window.addEventListener('resize', function () {
             myChart.resize()
@@ -199,8 +204,9 @@ export default class LineChartMonthlyEchaets extends Component {
                     x: '0',
                     y: '0',
                     textStyle: {                  //标题样式
-                        fontSize: '18',
+                        fontSize: '16',
                         color: '#333333',
+                        fontWeight:"500",
                     },
                 }
             ],
@@ -242,11 +248,11 @@ export default class LineChartMonthlyEchaets extends Component {
                         var thisNow = this.state.yearShow + " Actual:" + yearThisData + "m";
                         // var thisNow = "Monthly Sales This Year:" + yearThisData;
                     }
-                    if (forecastData){
+                    if (forecastData) {
                         forecastData = forecastData.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
                         var thisForecast = this.state.nameFroecast + ":" + forecastData + "m";
                     }
-                    if(yearLastData){
+                    if (yearLastData) {
                         yearLastData = yearLastData.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
                     }
                     if (tooltipData && tooltipData[nameShow] && tooltipData[nameShow].events) {

@@ -92,6 +92,8 @@
 }
 /** 鱼骨图-副标题 **/
 .fishbone-diagram .sub-title {
+  position: relative;
+  top: -4%;
   float: left;
   border: 2px solid #e6e6e8;
   /* width: 35%; */
@@ -238,7 +240,7 @@
   /* top: 199px; */
   bottom: 0;
   font-weight: 600;
-  width: 15%;
+  width: 16%;
 }
 .platUp .platUp-item {
   position: relative;
@@ -281,12 +283,12 @@
   /* margin: auto; */
 }
 .fishbone-diagram-big .diagram{
-  width: 60%;
-  right: 27%;
+  width: 54%;
+  right: 33%;
   bottom: 31px;
 }
 .fishbone-diagram-big .legend {
-  right: 17%;
+  right: 19%;
   bottom: 0;
 }
 
