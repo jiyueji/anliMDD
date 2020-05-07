@@ -14,7 +14,7 @@ export default class FoaRepeat extends Component {
     render() {
         return (
             <Fragment>
-                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Foa Repeat Buyer</div>
+                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Repeat Buyer</div>
                 <div style={{ width: "100%", height: "420px", display: 'flex' }}>
                     <div id="foaRepeatEcharts" style={{ width: "100%", height: "420px" }}></div>
                 </div>

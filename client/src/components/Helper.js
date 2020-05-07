@@ -24,6 +24,11 @@ export const yearMonthToStr = (val) => {
   return `${String(val).slice(0, 4)} ${ID_TO_MONTH_MAP[monthId]}`
 }
 
+export const yearMonthFiveToStr = (val) => {
+  const monthId = parseInt( String(val).slice(4, 6))
+  return `${ID_TO_MONTH_MAP[monthId]}`
+}
+
 export const yearMonthToStrNowFinsg = (val) => {
   // console.log(val)
   var monthId = parseInt( String(val).slice(4, 6))

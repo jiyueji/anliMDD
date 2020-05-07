@@ -17,7 +17,7 @@ export default class FoaBuyerProductivity extends Component {
     render() {
         return (
             <Fragment>
-                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Foa Buyer & Productivity</div>
+                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Buyer & Productivity</div>
                 <div style={{ width: "100%", height: "420px", display: 'flex' }}>
                     <div id="foaBuyerProductivityEcharts" style={{ width: "100%", height: "420px" }}></div>
                 </div>

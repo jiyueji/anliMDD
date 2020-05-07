@@ -446,6 +446,12 @@ class ApiSerice {
         return res.body;
     }
 
+    async get_query_daily_sales_line_2(params, token) {
+        const res = await this.apiCall(api.query_daily_sales_line_2, 'GET', token, params);
+        this.handleCommonError(res);
+        return res.body;
+    }
+
 }
 
 export default new ApiSerice()

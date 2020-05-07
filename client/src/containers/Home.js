@@ -113,6 +113,7 @@ class Home extends Component {
         this.props.chartStoreDaily.fetchDailyTableRecData()
         this.props.chartStoreDaily.fetchManualInputsData()
         this.props.chartStoreDaily.fetchDailyCommentsData()
+        this.props.chartStoreDaily.fetchGetQueryDailySalesLine()
 
         this.props.chartStoreSocial.fetchSocialRepBuyData()
         this.props.chartStoreSocial.fetchSocialFoaProdData()

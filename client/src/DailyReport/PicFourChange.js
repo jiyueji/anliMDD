@@ -4,16 +4,19 @@ import handPics from "../styles/assets/fiveHands.png"
 import tuliLine from "../styles/assets/tuliLine.jpg"
 import tulibackground from "../styles/assets/tulibackground.png"
 import echarts from 'echarts';
+import * as hlp from '../components/Helper'
 
 export default class PicFourChange extends Component {
     constructor() {
         super();
         this.state = {
-            allEvents:"Net Sales(MTD)",//下面的可以变化的标题
-            allEventsArr:["Net Sales(MTD)","Order BV Sales(MTD)","Recruitment(MTD)","Buyer Counts(MTD)"],
+            allEvents: "Net Sales",//下面的可以变化的标题
+            allEventsArr: ["Net Sales", "Order BV Sales", "Recruitment", "Buyer Counts"],
+            idxIndexShow: 0,
 
             data: {},
             data2: {},
+            data3: [],
             netData: {},
             bvData: {},
             recruitmentDate: {},
@@ -32,7 +35,7 @@ export default class PicFourChange extends Component {
         }
     }
     render() {
-        var { allEvents,netData, bvData, recruitmentDate, buyerCountsDate,changeName,} = this.state
+        var { allEvents, netData, bvData, recruitmentDate, buyerCountsDate, changeName, } = this.state
         return (
             <Fragment>
                 <div style={{ height: '160px', width: '100%', display: 'flex', justifyContent: 'space-between' }}>
@@ -41,9 +44,9 @@ export default class PicFourChange extends Component {
                         <div style={{ marginTop: "16px", fontWeight: "600", fontSize: "14px", color: "#ffffff", marginLeft: '9%' }}>Net Sales(MTD)</div>
                         {/* <div style={{ marginTop: "22px", fontSize: "12px", color: "#ffffff", marginLeft: '9%' }}>Month to date</div> */}
                         <h3 style={{ marginTop: "55px", fontSize: "28px", color: "#ffffff", marginLeft: '9%' }}>${netData.monthData || 0}m</h3>
-                        <div style={{ position: 'absolute', left: "49%", top: "46px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>Target Completion:{netData.lmData || 0}%</div>
+                        <div style={{ position: 'absolute', left: "49%", top: "46px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>Target Completion:{netData.targetCompletionDta || 0}%</div>
                         <div style={{ position: 'absolute', left: "66%", top: "72px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>vs SPLM:{(netData.lmData > 0 ? "+" + netData.lmData : netData.lmData) || 0}%</div>
-                        <div style={{ position: 'absolute', left: "66%", top: "100px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>vs SPLY:{(netData.splyData > 0 ? "+" + netData.splyData : netData.splyData) || 0}%</div>
+                        <div style={{ position: 'absolute', left: "66%", top: "100px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>vs SPLY :{(netData.splyData > 0 ? "+" + netData.splyData : netData.splyData) || 0}%</div>
                     </div>
                     <div className="yellowPic" style={{ width: '24%', height: "140px", position: 'relative' }} onClick={this.picChangeDateHandle.bind(this, 1)}>
                         <img src={handPics} style={{ height: "30px", width: "30px", position: "absolute", right: "10%", top: "6%" }} />
@@ -51,7 +54,7 @@ export default class PicFourChange extends Component {
                         {/* <div style={{ marginTop: "22px", fontSize: "12px", color: "#ffffff", marginLeft: '9%' }}>Month to date</div> */}
                         <h3 style={{ marginTop: "55px", fontSize: "28px", color: "#ffffff", marginLeft: '9%' }}>${bvData.monthData || 0}m</h3>
                         <div style={{ position: 'absolute', left: "66%", top: "72px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>vs SPLM:{(bvData.lmData > 0 ? "+" + bvData.lmData : bvData.lmData) || 0}%</div>
-                        <div style={{ position: 'absolute', left: "66%", top: "102px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>vs SPLY:{(bvData.splyData > 0 ? "+" + bvData.splyData : bvData.splyData) || 0}%</div>
+                        <div style={{ position: 'absolute', left: "66%", top: "102px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>vs SPLY :{(bvData.splyData > 0 ? "+" + bvData.splyData : bvData.splyData) || 0}%</div>
                     </div>
                     <div className="redPic" style={{ width: '24%', height: "140px", position: 'relative' }} onClick={this.picChangeDateHandle.bind(this, 2)} >
                         <img src={handPics} style={{ height: "30px", width: "30px", position: "absolute", right: "10%", top: "6%" }} />
@@ -59,7 +62,7 @@ export default class PicFourChange extends Component {
                         {/* <div style={{ marginTop: "22px", fontSize: "12px", color: "#ffffff", marginLeft: '9%' }}>Month to date</div> */}
                         <h3 style={{ marginTop: "55px", fontSize: "28px", color: "#ffffff", marginLeft: '9%' }}>{recruitmentDate.monthData || 0}k</h3>
                         <div style={{ position: 'absolute', left: "66%", top: "72px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>vs SPLM:{(recruitmentDate.lmData > 0 ? "+" + recruitmentDate.lmData : recruitmentDate.lmData) || 0}%</div>
-                        <div style={{ position: 'absolute', left: "66%", top: "102px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>vs SPLY:{(recruitmentDate.splyData > 0 ? "+" + recruitmentDate.splyData : recruitmentDate.splyData) || 0}%</div>
+                        <div style={{ position: 'absolute', left: "66%", top: "102px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>vs SPLY :{(recruitmentDate.splyData > 0 ? "+" + recruitmentDate.splyData : recruitmentDate.splyData) || 0}%</div>
                     </div>
                     <div className="bluePic" style={{ width: '24%', height: "140px", position: 'relative' }} onClick={this.picChangeDateHandle.bind(this, 3)} >
                         <img src={handPics} style={{ height: "30px", width: "30px", position: "absolute", right: "10%", top: "6%" }} />
@@ -67,13 +70,13 @@ export default class PicFourChange extends Component {
                         {/* <div style={{ marginTop: "22px", fontSize: "12px", color: "#ffffff", marginLeft: '9%' }}>Month to date</div> */}
                         <h3 style={{ marginTop: "55px", fontSize: "28px", color: "#ffffff", marginLeft: '9%' }}>{buyerCountsDate.monthData || 0}k</h3>
                         <div style={{ position: 'absolute', left: "66%", top: "72px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>vs SPLM:{(buyerCountsDate.lmData > 0 ? "+" + buyerCountsDate.lmData : buyerCountsDate.lmData) || 0}%</div>
-                        <div style={{ position: 'absolute', left: "66%", top: "102px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>vs SPLY:{(buyerCountsDate.splyData > 0 ? "+" + buyerCountsDate.splyData : buyerCountsDate.splyData) || 0}%</div>
+                        <div style={{ position: 'absolute', left: "66%", top: "102px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>vs SPLY :{(buyerCountsDate.splyData > 0 ? "+" + buyerCountsDate.splyData : buyerCountsDate.splyData) || 0}%</div>
                     </div>
                 </div>
                 <div style={{ width: '100%', height: "340px", background: "#ffffff", borderRadius: "10px", display: "flex" }}>
                     <div style={{ width: '75%', height: "100%", display: "flex", flexWrap: "wrap" }}>
                         <div style={{ paddingLeft: '1%', paddingRight: '1%', height: '58px', display: 'flex' }}>
-                            <h3 style={{ fontSize: "12px", lineHeight: '58px', margin: '0', marginRight: "20px", fontWeight: '700',whiteSpace:'nowrap' }}>{allEvents}</h3>
+                            <h3 style={{ fontSize: "12px", lineHeight: '58px', margin: '0', marginRight: "20px", fontWeight: '700', whiteSpace: 'nowrap' }}>{allEvents}</h3>
                             <ul className="picFourChangeNav">
                                 <li className="picFourChangeNav-item picFourChangeNavActive" id="upDateBlueShow" onClick={this.changeDateHandle.bind(this, 0)}>Total</li>
                                 {
@@ -111,9 +114,18 @@ export default class PicFourChange extends Component {
         var data = this.props.data || {}
         var data2 = this.props.data2 || {}
         var data3 = this.props.data3 || {}
+        var dataOneLine = this.props.dataOneLine || {}
         var changeName = []
         var netData = {}
         var bvData = {}
+        // 切换数据时下边的选项的变动
+        var changeNameArrShow = [
+            { name: ["ACCL", "3E", "ECOM"] },
+            { name: [] },
+            { name: ["ABO", "PC"] },
+            { name: ["ABO", "PC", "FOA", "New FOA buyer"] },
+        ];
+        changeName = changeNameArrShow[0].name
         // n_date: "20200304"
         // agg_type: "ACCL"
         // sales: 6856868.64214831
@@ -123,9 +135,23 @@ export default class PicFourChange extends Component {
         // pct_mtd_splm: 0.562395147931947
         // pct_mtd_sply: 0.103270530035608
         var pieThreeDataArr = []// 饼图的三个数据
+        // revenue_forecast_usd_data: Array(12)
+        // 0: {x: "Jan", y: 219628779.310345, labelTooltip: "target_sales"}
+        // 1: {x: "Feb", y: 173510045.37931, labelTooltip: "target_sales"}
+        // 2: {x: "Mar", y: 191296390.758621, labelTooltip: "target_sales"}
+        // 3: {x: "Apr", y: 175198325.37931, labelTooltip: "target_sales"}
+        // 4: {x: "May", y: 191066128.827586, labelTooltip: "target_sales"}
         data.tableData ? data.tableData.map((item, index) => {
             var pieThreeData = {}
             if (item.agg_type == "Net Sales") {
+                var dataNowStr = hlp.yearMonthFiveToStr(item.n_date)
+                var oneForecastData = 0
+                dataOneLine.revenue_forecast_usd_data ? dataOneLine.revenue_forecast_usd_data.map((items,indexs)=>{
+                    if(items.x == dataNowStr){
+                        oneForecastData = items.y
+                    }
+                }) : ""
+                netData.targetCompletionDta = Math.round(((item.mtd_sales / oneForecastData) * 100))
                 netData.monthData = Math.round(((item.mtd_sales || 0) / 1000000))
                 netData.monthData = netData.monthData.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
                 netData.lmData = Math.round((item.pct_mtd_splm || 0) * 100)
@@ -136,7 +162,7 @@ export default class PicFourChange extends Component {
                 bvData.lmData = Math.round((item.pct_mtd_splm || 0) * 100)
                 bvData.splyData = Math.round((item.pct_mtd_sply || 0) * 100)
             } else {
-                changeName.push(item.agg_type)
+                // changeName.push(item.agg_type)
                 // 饼图的三个数据
                 pieThreeData.value = Math.round(((item.mtd_sales || 0) / 1000000));
                 pieThreeData.name = item.agg_type;
@@ -201,21 +227,32 @@ export default class PicFourChange extends Component {
         var data3XShow = []; //X轴的展示
         var data3ThisYear = []; //今年的数据
         var data3LastYear = []; //去年的数据
+        // console.log(data3)
         var data3PrevYear = data3.prevYearStr || ""; //去年的年
         var data3MaxYear = data3.maxYearStr || ""; //今年的年
         var data3MaxMonth = data3.maxMonth || ""; //现在的月
+        // 0: {x: "01", y: 12884624.9324138, type: "NET_SALES", labelTooltip: "2020 - 13m↵↵"}
+        // 1: {x: "01", y: 9464008.34613366, type: "ACCL", labelTooltip: "2020 - 9m↵↵"}
+        // 2: {x: "01", y: 909694.068965517, type: "ECOM", labelTooltip: "2020 - 1m↵↵"}
+        // 3: {x: "01", y: 2510922.51731462, type: "3E", labelTooltip: "2020 - 3m↵↵"}
         data3.sales_data ? data3.sales_data.map((item, index) => {
-            item.y ? data3ThisYear.push(Math.round(((item.y || 0) / 1000000))) : ""
+            if (item.type == "NET_SALES") {
+                item.y ? data3ThisYear.push(Math.round(((item.y || 0) / 1000000))) : ""
+            }
         }) : ""
         data3.sales_ly_data ? data3.sales_ly_data.map((item, index) => {
-            item.x ? data3XShow.push(item.x) : ""
-            item.y ? data3LastYear.push(Math.round(((item.y || 0) / 1000000))) : ""
+            if (item.type == "NET_SALES") {
+                item.x ? data3XShow.push(item.x) : ""
+                item.y ? data3LastYear.push(Math.round(((item.y || 0) / 1000000))) : ""
+            }
         }) : ""
         this.setState({
             data,
             data2,
+            data3,
             netData,
             bvData,
+            changeNameArrShow,// 切换数据时下边的选项的变动
             recruitmentDate,
             buyerCountsDate,
             changeName,//切换数据的名字
@@ -227,6 +264,7 @@ export default class PicFourChange extends Component {
             data3MaxMonth,
             pieThreeDataArr,
             pieThreeShowData,//玫瑰图加了数据的
+
         }, () => {
             this.echartsShowLine();
             this.pieAngleHandle();
@@ -235,47 +273,58 @@ export default class PicFourChange extends Component {
     }
     //点击图片下面切换数据
     picChangeDateHandle(idx, e) {
-        var { data, data2, changeName,allEvents,allEventsArr } = this.state
-        changeName = []
+        var { data, data2, changeNameArrShow, changeName, allEvents, allEventsArr } = this.state
+
         allEvents = allEventsArr[idx]
         // if(e.target.childNodes[1].innerHTML){
         //     allEvents = e.target.childNodes[1].innerHTML
         // }
-        if (idx == 0) {
-            data.tableData ? data.tableData.map((item, index) => {
-                if (item.agg_type !== "Net Sales" && item.agg_type !== "Order BV Sales") {
-                    changeName.push(item.agg_type)
-                }
-            }) : ""
-        } else if (idx == 1) {
+        var idxIndexShow = idx
+        if (changeNameArrShow[idx].name) {
+            changeName = changeNameArrShow[idx].name
+        } else {
             changeName = []
-        } else if (idx == 2) {
-            data2.tableData ? data2.tableData.map((item, index) => {
-                if (item.type !== "Recruitment" && item.type !== "Buyer Counts") {
-                    changeName.push(item.type)
-                }
-            }) : ""
-            changeName.length = 3
-        } else if (idx == 3) {
-            data2.tableData ? data2.tableData.map((item, index) => {
-                if (item.type !== "Recruitment" && item.type !== "Buyer Counts") {
-                    changeName.push(item.type)
-                }
-            }) : ""
-            changeName = changeName.slice(3)
         }
+        // console.log(changeName)
+        // if (idx == 0) {
+        //     data.tableData ? data.tableData.map((item, index) => {
+        //         if (item.agg_type !== "Net Sales" && item.agg_type !== "Order BV Sales") {
+        //             changeName.push(item.agg_type)
+        //         }
+        //     }) : ""
+        // } else if (idx == 1) {
+        //     changeName = []
+        // } else if (idx == 2) {
+        //     data2.tableData ? data2.tableData.map((item, index) => {
+        //         if (item.type !== "Recruitment" && item.type !== "Buyer Counts") {
+        //             changeName.push(item.type)
+        //         }
+        //     }) : ""
+        //     changeName.length = 3
+        // } else if (idx == 3) {
+        //     data2.tableData ? data2.tableData.map((item, index) => {
+        //         if (item.type !== "Recruitment" && item.type !== "Buyer Counts") {
+        //             changeName.push(item.type)
+        //         }
+        //     }) : ""
+        //     changeName = changeName.slice(3)
+        // }
         this.setState({
-            changeName,allEvents
+            changeName, allEvents, idxIndexShow
         }, () => {
             var { elmUpDateBlue } = this.state
             if (elmUpDateBlue) {
                 elmUpDateBlue.classList.remove("picFourChangeNavActive");
                 document.getElementById("upDateBlueShow").classList.add("picFourChangeNavActive");
             }
+            this.changeClickDataHandle(0);
         })
     }
     // 点击切换数据
     changeDateHandle(index, e) {
+
+        this.changeClickDataHandle(index);
+
         var elm = e.currentTarget,
             elmClassList = elm.classList;
         if (elmClassList.contains('picFourChangeNavActive')) return false;
@@ -285,6 +334,39 @@ export default class PicFourChange extends Component {
         elmClassList.add('picFourChangeNavActive');
         this.setState({
             elmUpDateBlue: elm,
+        })
+    }
+    // 当被点击的时候数据进行切换的一个专用方法
+    changeClickDataHandle(index) {
+        var { data3, idxIndexShow } = this.state
+        var changeNameArrDataShow = [
+            { name: ["NET_SALES", "ACCL", "3E", "ECOM"] },
+            { name: ["Order BV Sales"] },
+            { name: ["Recruitment", "ABO", "PC"] },
+            { name: ["Buyer Counts", "ABO buyer count", "PC buyer count", "FOA buyer count", "New FOA buyer"] },
+        ];
+        var dataIndex = changeNameArrDataShow[idxIndexShow].name[index]
+        var data3XShow = []; //X轴的展示
+        var data3ThisYear = []; //今年的数据
+        var data3LastYear = []; //去年的数据
+        data3.sales_data ? data3.sales_data.map((item, index) => {
+            if (item.type == dataIndex) {
+                item.y ? data3ThisYear.push(Math.round(((item.y || 0) / 1000000))) : ""
+            }
+        }) : ""
+        data3.sales_ly_data ? data3.sales_ly_data.map((item, index) => {
+            if (item.type == dataIndex) {
+                item.x ? data3XShow.push(item.x) : ""
+                item.y ? data3LastYear.push(Math.round(((item.y || 0) / 1000000))) : ""
+            }
+        }) : ""
+        this.setState({
+            data3XShow,
+            data3ThisYear,
+            data3LastYear,
+        }, () => {
+            this.echartsShowLine();
+            this.pieAngleHandle();
         })
     }
     // 可以切换的折线图Echarts
