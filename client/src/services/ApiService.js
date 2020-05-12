@@ -9,8 +9,8 @@ class ApiSerice {
 
     constructor() {
     //    this.api_url = 'http://52.82.35.187:5000'; //'http://52.82.35.187:5000'
-        this.api_url = 'http://localhost:80';
-        // this.api_url = "http://52.82.15.213:5000";//新配置环境
+        // this.api_url = 'http://localhost:80';
+        this.api_url = "http://52.82.15.213:5000";//新配置环境
     }
 
     /**

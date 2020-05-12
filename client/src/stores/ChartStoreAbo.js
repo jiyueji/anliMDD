@@ -349,7 +349,6 @@ class ChartStoreAbo {
     // // dataState = jslinq(dataState[maxYear].concat())
     // dataState = dataState.toList()
 
-
     let YTD_DATA = [];
     let CSI_AMT = [];
     let CSI_COUNT = [];
@@ -399,7 +398,7 @@ class ChartStoreAbo {
           //   kpi_desc:o.kpi_desc,
           // }
           CSI_COUNT.push(o.kpi_cy_values_usd)
-        }else if(o.kpi_code == "QUALIF_CSI_SR" && o.data_desc.indexOf("YTD") == -1){
+        }else if(o.kpi_code == "QUALIF_CSI_SR_PPV" && o.data_desc.indexOf("YTD") == -1){
           QUALIF_CSI_SR.push(o.kpi_cy_values_usd)
         }else if(o.kpi_code == "TOTAL_ORDER_BV" && o.data_desc.indexOf("YTD") == -1){
           TOTAL_ORDER_BV.push(o.kpi_cy_values_usd)

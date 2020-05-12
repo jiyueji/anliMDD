@@ -42,7 +42,7 @@ class Home extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            thisWindowWidth:false,
+            thisWindowWidth: false,
         }
         //        this.onClickEditDashboard = this.onClickEditDashboard.bind(this)
     }
@@ -149,7 +149,7 @@ class Home extends Component {
             this.props.chartStoreSocial.isPerfYear = !this.props.chartStoreSocial.isPerfYear
         }
     }
-    handleClickToUp = () =>{
+    handleClickToUp = () => {
         // console.log(window.innerWidth)
         // var thisWindowWidth = window.innerWidth
         // window.location.reload()
@@ -212,8 +212,8 @@ class Home extends Component {
     //     </div>
     // </div>
     render() {
-
         const authStore = this.props.authStore
+        const fivePageDateUp = this.props.chartStoreDaily.queryDailySalesLineHandle.pageUpShowDate//第五屏的时间显示
         // console.log('AUTH STORE IN RENDER', authStore, authStore.isAuthenticated)
 
         // TODO: temporary add auto login
@@ -232,10 +232,8 @@ class Home extends Component {
         //             <Link className="ut__button" to={routes.sign_up}>Sign up!</Link>
         //         </section>
         //     </div>
-
         // }
-
-        var {thisWindowWidth} = this.state
+        var { thisWindowWidth } = this.state
         return <div className="dashboard-wrap">
             {authStore.isAuthenticated &&
                 <React.Fragment>
@@ -261,22 +259,22 @@ class Home extends Component {
                         <div className="page-title bigTatie" id="topTatilShow">
                             <h1 className="main-title">{this.selectedTab}</h1>
                             {
-                                (this.selectedTab === "AGP KPI" ) || (this.selectedTab === "Daily Report") ? "" : <div className='custom-control custom-switch perf-switch-wrap' style={{ marginRight: "11%" }}>
-                                <label className='perf-lbl' htmlFor='perfYearSwitcher'>
-                                    PF
+                                this.selectedTab === "AGP KPI" ? "" : this.selectedTab === "Daily Report" ? <div style={{ marginRight: "11%", lineHeight: "30px" }}>{fivePageDateUp}</div> : <div className='custom-control custom-switch perf-switch-wrap' style={{ marginRight: "11%" }}>
+                                    <label className='perf-lbl' htmlFor='perfYearSwitcher'>
+                                        PF
                                 </label>
-                                <input
-                                    type='checkbox'
-                                    className='custom-control-input'
-                                    id='perfYearSwitcher'
-                                    checked={this.isPerfYear}
-                                    onChange={this.handleSwitchChange()}
-                                    readOnly
-                                />
-                                <label className='custom-control-label' htmlFor='perfYearSwitcher'>
-                                    CY
+                                    <input
+                                        type='checkbox'
+                                        className='custom-control-input'
+                                        id='perfYearSwitcher'
+                                        checked={this.isPerfYear}
+                                        onChange={this.handleSwitchChange()}
+                                        readOnly
+                                    />
+                                    <label className='custom-control-label' htmlFor='perfYearSwitcher'>
+                                        CY
                                 </label>
-                            </div>
+                                </div>
                             }
                         </div>
                         <div className="main-navigation">
@@ -295,7 +293,7 @@ class Home extends Component {
                                             </div>
                                         </div>
                                     </div> */}
-                                    <SalesPerformanceContainer thisWindowWidth={thisWindowWidth}/>
+                                    <SalesPerformanceContainer thisWindowWidth={thisWindowWidth} />
                                 </Tab>
                                 <Tab eventKey="AGP KPI" title={<div><i className="fas fa-chart-bar"></i>AGP KPI</div>}>
                                     <GrowthContainer />

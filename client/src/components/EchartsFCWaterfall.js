@@ -202,9 +202,9 @@ export default class EchartsFCWaterfall extends Component {
                     if (salesVsSply) {
                         salesVsSply = salesVsSply.replace(/%/g, '')
                         if (Number(salesVsSply) >= 0) {
-                            salesVsSply = "Sales vs SPLY:" + "<span style='color:#17b6a9'>" + salesVsSply + "%" + "</span>"
+                            salesVsSply = "Sales vs SPLY:" + "<span style='color:#16b6aa'>" + "+" + Number(salesVsSply).toFixed(1) + "%" + "</span>"
                         } else {
-                            salesVsSply = "Sales vs SPLY:" + "<span style='color:#fd0022'>" + salesVsSply + "%" + "</span>"
+                            salesVsSply = "Sales vs SPLY:" + "<span style='color:#eb5652'>" + Number(salesVsSply).toFixed(1) + "%" + "</span>"
                         }
                     }
                     // console.log(value,this.state.showAllData)
@@ -369,7 +369,7 @@ export default class EchartsFCWaterfall extends Component {
                 }
             }],
             //图例名
-            color:["#5198ee","#23e1d1","#fd0022"],
+            color:["#5198ee","#23e1d1","#eb5652"],
             legend: {
                 type: "scroll",
                 // selectedMode:false,//取消图例上的点击事件

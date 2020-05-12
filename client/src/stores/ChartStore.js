@@ -350,7 +350,7 @@ class ChartStore {
     }
 
     @computed get totalSalesLineYear() {
-      // console.log(12580)
+
       if ( !(this.performanceData2.length && this.performanceData2Tooltip.length) ) {
         return false
       }
@@ -360,14 +360,15 @@ class ChartStore {
       //   obj[param.n_month] = param.promotion_desc
       //   return obj;
       // }, {});
-      let monthToInfoMap = {}
 
+      let monthToInfoMap = {}
       _.each(this.performanceData2Tooltip, (o)=>{
         if (!monthToInfoMap[o.n_month]) {
           monthToInfoMap[o.n_month] = []
         }
         monthToInfoMap[o.n_month].push(o.promotion_desc)
       })
+
       //prepare axis data
       const jsArr = toJS(this.performanceData2) || []
       if (!jsArr.length) {
@@ -388,7 +389,7 @@ class ChartStore {
         .max((el)=>{
             return parseInt( el['key'] );
         });
-        // console.log(dataState)
+
       dataState = _.reduce(dataState, (obj,param)=>{
         obj[param.key] = param.elements
         return obj;
@@ -402,7 +403,7 @@ class ChartStore {
       //   prevYearData = jslinq( dataState[maxYear-1].concat() )
       // }
       dataState = dataState[ maxYear ].concat()
-      // console.log(dataState)
+
       //原版
       // dataState = jslinq( dataState[maxYear].concat() )
       // dataState = dataState.groupBy(function(el){
@@ -442,6 +443,7 @@ class ChartStore {
           labelTooltip: 'YTD Sales'
         }
       } )
+
       // 原本的forecast数据
       // const target_sales_data = _.map( dataState, (o) => {
       //   return {
@@ -487,7 +489,7 @@ class ChartStore {
         }
         return result;
       }
-      // console.log(dataState,1)
+
       const months_data = _.map( dataState, (o)=>{
         return {
           x: MONTHS_MAP[o.month],
@@ -533,7 +535,7 @@ class ChartStore {
     }
 
     @computed get totalSalesLineMonth() {
-      // console.log(33333)
+
       const jsArr = toJS(this.performanceData2) || []
       if (!jsArr.length) {
         return false
@@ -541,7 +543,7 @@ class ChartStore {
 
       // prepare tooltip data map
       let monthToInfoMap = {}
-      // console.log(this.performanceData2Tooltip,"this.performanceData2Tooltip")
+
       _.each(this.performanceData2Tooltip, (o)=>{
         if (!monthToInfoMap[o.n_month]) {
           monthToInfoMap[o.n_month] = []
@@ -578,7 +580,7 @@ class ChartStore {
       }, {});
 
       dataState = dataState[ maxYear ].concat()
-      // console.log(dataState)
+
       // dataState = jslinq( dataState[ maxYear ].concat() )
 
       // dataState = dataState.groupBy(function(el){
@@ -624,12 +626,10 @@ class ChartStore {
 
 
       let tooltip_data_map = {}
-      // console.log(dataState,"actual_sales_data_dataState")
       let actual_sales_data = _.map( dataState, (o) => {
         // fill tooltip data months and actual sales
         const monthId = `${maxYear}${padNumber(o.month)}`
-        // console.log(monthId,o.n_month,String(o.n_month).slice(0, 4))
-        // console.log(o.n_month)
+
         tooltip_data_map[ MONTHS_MAP[o.month] ] = {
           monthName: hlp.yearMonthToStrFull(o.n_month),
           actual_sales: o.actual_sales && `$${hlp.toShortMil(o.actual_sales)}m`,
@@ -638,15 +638,15 @@ class ChartStore {
           // events: monthToInfoMap[monthId]// && addNewlines( monthToInfoMap[monthId]),
           events:monthToInfoMap[o.n_month]
         }
-        // console.log("totalSalesLineMonth")
-        // console.log(dataState)
+
+
         return {
           x: MONTHS_MAP[o.month],
           y: o.actual_sales || null,
           labelTooltip: 'Monthly Sales'
         }
       } )
-      // console.log(tooltip_data_map)
+
 
       actual_sales_data = _.filter(actual_sales_data, o=>o.y!==null)
 
@@ -690,7 +690,7 @@ class ChartStore {
       // if (revenue_forecast_usd_data.length && actual_sales_data.length) {
       //   revenue_forecast_usd_data.unshift( actual_sales_data[ actual_sales_data.length-1 ] )
       // }
-      // console.log(revenue_forecast_usd_data)
+
       //const t_sales_with_forecast_data = actual_sales_data.concat( revenue_forecast_usd_data )
 
       // const months_data = _.map( dataState, (o)=>{

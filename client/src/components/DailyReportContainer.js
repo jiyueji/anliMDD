@@ -50,7 +50,7 @@ class DailyReportContainer extends React.PureComponent {
           Daily Sales <span style={{ fontSize:'12px',position:"absolute",top:"-39px",left:"12%",zIndex:"1000"}}>{toUpDateMonth}.{toUpDateDay} {toUpDateYear}</span>
         </div> */}
         <div style={{ height: '500px', width: "100%", }}>
-          <PicFourChange data={chartStoreDaily.dailyTableSales} data2={chartStoreDaily.dailyTableRecruit} data3={chartStoreDaily.queryDailySalesLineHandle} dataOneLine={chartStore.totalSalesLineMonth}/>
+          <PicFourChange data={chartStoreDaily.dailyTableSales} data2={chartStoreDaily.dailyTableRecruit} data3={chartStoreDaily.queryDailySalesLineHandle} dataOneLine={chartStore.totalSalesLineMonth} dataPromptBox={chartStoreDaily.dailySalesEvents}/>
         </div>
 
 

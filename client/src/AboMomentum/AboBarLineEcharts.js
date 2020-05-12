@@ -89,7 +89,6 @@ export default class AboBarLineEcharts extends Component {
     }
     componentDidMount() {
         var data = this.props.data;
-
         // YTD_DATA: (6) [{…}, {…}, {…}, {…}, {…}, {…}]
         // CSI_AMT: (3) [16116842.54, 14326362.73, 27683221.06]
         // CSI_COUNT: (3) [157979, 178688, 206086]
@@ -127,7 +126,7 @@ export default class AboBarLineEcharts extends Component {
                 object_ytd_data.CSI_AMT = item.kpi_cy_values
             } else if (item.kpi_code == "CSI_COUNT") {
                 object_ytd_data.CSI_COUNT = item.kpi_cy_values
-            } else if (item.kpi_code == "QUALIF_CSI_SR") {
+            } else if (item.kpi_code == "QUALIF_CSI_SR_PPV") {
                 object_ytd_data.QUALIF_CSI_SR = item.kpi_cy_values
             } else if (item.kpi_code == "TOTAL_ORDER_BV") {
                 object_ytd_data.TOTAL_ORDER_BV = item.kpi_cy_values

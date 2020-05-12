@@ -197,7 +197,6 @@ export default class AboDyFishGuTuBig extends Component {
     componentDidMount() {
         const allData = this.props.data || {}
         const allData2 = this.props.data2 || {}//右上角的时间
-        console.log(allData)
 
         const data = allData.tableData || {}
         let { actualMonth } = allData2
@@ -205,7 +204,7 @@ export default class AboDyFishGuTuBig extends Component {
         const { recPerfYear, prevRecPerfYear, futurePerfYear } = allData
         // Pin的数字的数据
         var dataPin = this.props.dataPin || {}
-        console.log(dataPin)
+
         var { actualYear, predYear } = dataPin
         var actualArr = []
         var predArr = []

@@ -66,7 +66,7 @@ export default class LineChartMonthlyEchaets extends Component {
     handleSwitchChange = nr => () => {
         this.isPerfYear = !this.isPerfYear
         this.props.chartStore.isPerfYear = !this.props.chartStore.isPerfYear
-        // console.log(this.props.data)
+
         var { monthShow } = this.state
         if (!this.isPerfYear) {
             monthShow = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']
@@ -83,7 +83,6 @@ export default class LineChartMonthlyEchaets extends Component {
 
     }
     componentWillReceiveProps(nextProps) {
-        // console.log(nextProps)
         var { data, datas } = nextProps
         var isPerfYear = data.isPerfYear
         var { monthShow, allData, dataShowForClick, thisYearLength } = this.state
@@ -118,14 +117,11 @@ export default class LineChartMonthlyEchaets extends Component {
     }
     dataUpdate() {
         var { allData, dataShowForClick, thisYearLength } = this.state
-        // console.log(allData)
         // var allData = this.props.data;
-        // console.log(thisYearLength)
         var thisYear = [];
         var lastYear = [];
         var forecastYear = [];
         var tooltipData = allData.tooltip_data_map
-        // console.log(allData.tooltip_data_map)
         if (allData && allData.actual_sales_data.length > 0) {
             allData.actual_sales_data.map((item, index) => {
                 thisYear.push(item.y)
@@ -222,7 +218,6 @@ export default class LineChartMonthlyEchaets extends Component {
                 // events: (3) ["Olive Oil Launch", "Nutrilite XS Jan Promotion", "Olive Oil Experience"]
                 formatter: (data) => {
                     var { tooltipData } = this.state
-                    // console.log(data)
                     var yearThisData = 0;
                     var yearLastData = 0;
                     var forecastData = 0;
@@ -256,6 +251,7 @@ export default class LineChartMonthlyEchaets extends Component {
                         yearLastData = yearLastData.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
                     }
                     if (tooltipData && tooltipData[nameShow] && tooltipData[nameShow].events) {
+                        tooltipData[nameShow].events.sort()
                         tooltipData[nameShow].events.map((item, index) => {
                             toolShow += "<div style='display:flex;justify-content: space-between'><span style='color:#f2df3f'>" + "★" + "</span>" + item + "</div>"
                         })

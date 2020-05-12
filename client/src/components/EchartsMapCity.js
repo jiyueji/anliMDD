@@ -53,7 +53,7 @@ export default class EchartsMapCity extends Component {
                         <div>Better <span style={{ color: '#333' }}>vs ACCL</span></div>
                         <img src={oneMapUp} />
                     </li>
-                    <li style={{ color: "#ff0025" }}>
+                    <li style={{ color: "#eb5652" }}>
                         <img src={oneMapRedCircular} />
                         <div>Worse <span style={{ color: '#333' }}>vs ACCL</span></div>
                         <img src={oneMapDown} />
@@ -63,7 +63,7 @@ export default class EchartsMapCity extends Component {
                         <div>Better <span style={{ color: '#333' }}>vs ACCL</span></div>
                         <img src={oneMapUp} />
                     </li>
-                    <li style={{ color: "#ff0025" }}>
+                    <li style={{ color: "#eb5652" }}>
                         <span>City cluster</span>
                         <div>Worse <span style={{ color: '#333' }}>vs ACCL</span></div>
                         <img src={oneMapDown} />
@@ -765,9 +765,9 @@ export default class EchartsMapCity extends Component {
                     if (splySales) {
                         splySales = splySales.replace(/%/g, '')
                         if (Number(splySales) >= 0) {
-                            splySales = "<span style='color:#16b6aa'>" + splySales + "%" + "</span>"
+                            splySales = "<span style='color:#16b6aa'>" + "+" + Number(splySales).toFixed(1) + "%" + "</span>"
                         } else {
-                            splySales = "<span style='color:#ff0025'>" + splySales + "%" + "</span>"
+                            splySales = "<span style='color:#eb5652'>" + Number(splySales).toFixed(1) + "%" + "</span>"
                         }
                     }
                     if (data.componentIndex >= 1) {
@@ -853,7 +853,7 @@ export default class EchartsMapCity extends Component {
                                     if (Number(splySales) >= Number(bigSmallShow)) {
                                         return "#16b6aa"
                                     } else {
-                                        return "#ff0025"
+                                        return "#eb5652"
                                     }
                                 }
                             },
@@ -901,7 +901,7 @@ export default class EchartsMapCity extends Component {
                                     if (Number(splySales) >= Number(bigSmallShow)) {
                                         return "#16b6aa"
                                     } else {
-                                        return "#ff0025"
+                                        return "#eb5652"
                                     }
                                 }
                             },
@@ -940,7 +940,7 @@ export default class EchartsMapCity extends Component {
                                 if (Number(splySales) >= 0) {
                                     return "#16b6aa"
                                 } else {
-                                    return "#ff0025"
+                                    return "#eb5652"
                                 }
                             }
                         }
