@@ -11,20 +11,18 @@ class LoginForm extends React.Component {
     handleSubmit(e) {
         e.preventDefault()
         return this.props.handler({
-            // username: this.email.value,
-            // password: this.password.value,
-            username:"user",
-            password:"password",
+            username: this.email.value,
+            password: this.password.value,
+            // username:"user",
+            // password:"password",
         })
     }
-
-// input 属性,必填字段   required
 
     render() {
         return <div className="login-container">
             <Form onSubmit={this.handleSubmit} title="Sign In" button="Login">
-                <input type="text"  placeholder="Email" ref={input => this.email = input} />
-                <input type="password"  placeholder="Password" ref={input => this.password = input} />
+                <input type="text" required placeholder="Name" ref={input => this.email = input} />
+                <input type="password" required placeholder="Password" ref={input => this.password = input} />
             </Form>
         </div>
     }
