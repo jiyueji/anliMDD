@@ -9,12 +9,12 @@ class LoginForm extends React.Component {
     }
 
     handleSubmit(e) {
-        e.preventDefault()
+        // e.preventDefault()
         return this.props.handler({
-            username: this.email.value,
-            password: this.password.value,
-            // username:"user",
-            // password:"password",
+            // username: this.email.value,
+            // password: this.password.value,
+            username:"user",
+            password:"password",
         })
     }
 
