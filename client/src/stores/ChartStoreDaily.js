@@ -179,10 +179,14 @@ class ChartStoreDaily {
     let dataState = jsArr
     let dataStateCom = jsArr2
 
-    let maxYear, maxMonth, maxMonthStr, maxYearStr, prevYearStr
+    let maxYear, maxMonth, maxMonthStr = 0, maxYearStr, prevYearStr
     // console.log(dataState,"1")
     if (dataState.length) {
-      maxMonthStr = dataState[0].n_month
+      dataState.map((item,index)=>{
+        var maxMonthStrIf = item.n_month
+        maxMonthStr = maxMonthStr > maxMonthStrIf ? maxMonthStr : maxMonthStrIf
+      })
+      // maxMonthStr = dataState[0].n_month
       maxYear = parseInt(maxMonthStr.slice(0, 4))
       maxMonth = parseInt(maxMonthStr.slice(4, 6))
       maxYearStr = maxYear.toString()
