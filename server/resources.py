@@ -21,6 +21,9 @@ parser.add_argument('password', help = 'This field cannot be blank', required = 
 parser2 = reqparse.RequestParser()
 parser2.add_argument('username', help = 'This field cannot be blank', required = True)
 
+parser3 = reqparse.RequestParser()
+parser3.add_argument('month', help = 'This field cannot be blank', required = True)
+
 def performQuery(queryStr):
   try:
     con=psycopg2.connect(dbname= DATABASE, host=HOST, port= PORT, user= USER, password= PASSWORD)
@@ -518,5 +521,14 @@ class AboCsiKpi(Resource):
 class QueryDailySalesLine2(Resource):
     def get(self):
 
-        queryStr = "select *  from qa_test.query_daily_27_daily_sales_line"
+        queryStr = "select *  from public.query_daily_27_daily_type_line"
         return performQuery(queryStr)
+
+class QueryDailySalesLine2ByMonth(Resource):
+    def get(self):
+        data = parser3.parse_args()
+        month = data['month']
+        
+        queryStr = "select *  from public.query_daily_27_daily_type_line where " + "n_date='" +month + "'"
+        return performQuery(queryStr)
+        
