@@ -209,13 +209,13 @@ class ChartStore {
     if (jsArr.length) {
       maxMonthStr = jsArr[0].max_month
     }
-
+    // console.log(jsArr)
     let dataState = queryObj
       .groupBy(function (el) {
         return el[YEAR_TYPE];
       })
       .toList()
-
+      // console.log(dataState)
     const maxYear = jslinq(dataState)
       .max((el) => {
         return parseInt(el['key']);

@@ -28,7 +28,9 @@ import GrowthContainer from '../components/GrowthContainer'
 import DailyReportContainer from '../components/DailyReportContainer'
 import SocialPromContainer from '../components/SocialPromContainer'
 
-
+import {DatePicker} from 'antd';
+import moment from 'moment';
+import "antd/dist/antd.css";
 
 /**
  * Home page extra component
@@ -38,6 +40,8 @@ class Home extends Component {
 
     @observable selectedTab = 'Sales Performance'
     @observable isPerfYear = true
+    @observable isFiveDatePicker = ""
+    @observable isMonthDatePicker = ""
 
     constructor(props) {
         super(props)
@@ -166,6 +170,13 @@ class Home extends Component {
         this.props.chartStoreGrowth.fetchGrowthTableData()
         this.props.chartStoreAbo.fetchAboPinPopData()
     }
+    //日期范围发生变化的回调
+    clickDateChange = (date) =>{
+        this.isFiveDatePicker = moment(date).format('YYYYMMDD')
+        this.props.chartStoreDaily.isFiveDatePicker = moment(date).format('YYYYMMDD')
+        // console.log(moment(date).format('YYYYMMDD'))
+        // this.props.chartStore
+    }
     // onClickEditDashboard() {
     //     this.dashboardRef.onClickEditDashboard()
     // }
@@ -221,6 +232,10 @@ class Home extends Component {
     render() {
         const authStore = this.props.authStore
         const fivePageDateUp = this.props.chartStoreDaily.queryDailySalesLineHandle.pageUpShowDate//第五屏的时间显示
+        const monthFormat = 'YYYY/MM';
+        const dateFormat = 'YYYY/MM/DD';
+        const dateFormatFive = this.props.chartStoreDaily.queryDailySalesLineHandle.dateChangeOld;
+        const { MonthPicker } = DatePicker;
         // console.log('AUTH STORE IN RENDER', authStore, authStore.isAuthenticated)
 
         // TODO: temporary add auto login
@@ -264,7 +279,7 @@ class Home extends Component {
                             </div>
                         </div> */}
                         <div className="page-title bigTatie" id="topTatilShow">
-                            <h1 className="main-title">{this.selectedTab}</h1>
+                            <h1 className="main-title" style={{lineHeight:"inherit"}}>{this.selectedTab}</h1>
                             {
                                 this.selectedTab === "AGP KPI" ? "" : this.selectedTab === "Daily Report" ? <div style={{ marginRight: "11%", lineHeight: "30px" }}>{fivePageDateUp}</div> : <div className='custom-control custom-switch perf-switch-wrap' style={{ marginRight: "11%" }}>
                                     <label className='perf-lbl' htmlFor='perfYearSwitcher'>
@@ -282,6 +297,9 @@ class Home extends Component {
                                         Calendar Year
                                 </label>
                                 </div>
+                            }
+                            {
+                                this.selectedTab === "Daily Report" ? <DatePicker defaultValue={moment(dateFormatFive, dateFormat)} format={dateFormat} allowClear={false} inputReadOnly={true} showToday={false} onChange={this.clickDateChange.bind(this)}/> : <MonthPicker defaultValue={moment('2015/01', monthFormat)} format={monthFormat} picker="month" />
                             }
                         </div>
                         <div className="main-navigation">
@@ -321,9 +339,7 @@ class Home extends Component {
                                 {/* <Tab style={{}} className="aaaa"  title={<div onClick={this.handleDataUpdate.bind(this)}><i className="fa fa-retweet" aria-hidden="true"></i></div>}>
 
                                 </Tab> */}
-                                
                             </Tabs>
-
                         </div>
                     </div>
                 </React.Fragment>

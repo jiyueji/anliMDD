@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "antd": "^4.2.4",
     "bootstrap": "^4.3.1",
     "custom-react-scripts": "^0.2.2",
     "date-and-time": "^0.10.0",

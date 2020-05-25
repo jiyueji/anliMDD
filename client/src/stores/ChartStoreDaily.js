@@ -12,6 +12,7 @@ class ChartStoreDaily {
   @observable isLoading = true
   @observable isFailure = false
   @observable isPerfYear = false
+  @observable isFiveDatePicker = ""
   @observable dailySalesData = []
   @observable dailyRecData = []
   @observable dailyTableSalData = []
@@ -175,14 +176,16 @@ class ChartStoreDaily {
     if (!jsArr.length || !jsArr2.length) {
       return false
     }
+    // console.log(this.isPerfYear)
+    console.log(this.isFiveDatePicker)
     // console.log(jsArr,jsArr3,"2222")
     let dataState = jsArr
     let dataStateCom = jsArr2
 
     let maxYear, maxMonth, maxMonthStr = 0, maxYearStr, prevYearStr
-    // console.log(dataState,"1")
+    // console.log(dataState, "1")
     if (dataState.length) {
-      dataState.map((item,index)=>{
+      dataState.map((item, index) => {
         var maxMonthStrIf = item.n_month
         maxMonthStr = maxMonthStr > maxMonthStrIf ? maxMonthStr : maxMonthStrIf
       })
@@ -231,31 +234,67 @@ class ChartStoreDaily {
 
 
     // add current year or last year events to data
-    let sales_data = _.map(dataState, (o) => {
-      const ttObj = dataStateCom[o['n_date']]
-      let tooltipPref = ttObj && (ttObj[0]['activity'] + ':\n' + ttObj[0]['promotion_desc']) || ''
-      tooltipPref = `\n${tooltipPref}\n`
-      let labelToolTip = maxYearStr + ' - ' + hlp.toShortMil(o.sales) + 'm' + tooltipPref
-      return {
-        x: o.day,
-        y: o.sales,
-        type: o.type,
-        labelTooltip: labelToolTip //maxYearStr
+    var sales_data = []
+    var sales_ly_data = []
+    dataState.map((o, index) => {
+      if (o.n_month == maxMonthStr) {
+        const ttObj = dataStateCom[o['n_date']]
+        let tooltipPref = ttObj && (ttObj[0]['activity'] + ':\n' + ttObj[0]['promotion_desc']) || ''
+        tooltipPref = `\n${tooltipPref}\n`
+        let labelToolTip = maxYearStr + ' - ' + hlp.toShortMil(o.sales) + 'm' + tooltipPref
+        var sales_data_obj = {
+          x: o.day,
+          y: o.sales,
+          type: o.type,
+          labelTooltip: labelToolTip //maxYearStr
+        }
+        sales_data.push(sales_data_obj)
+
+        const ttObj_ly = dataStateComLy[o['n_date_ly']]
+        let tooltipPref_ly = ttObj_ly && (ttObj_ly[0]['activity'] + ':\n' + ttObj_ly[0]['promotion_desc']) || ''
+        tooltipPref_ly = `\n${tooltipPref_ly}\n`
+        let labelToolTip_ly = prevYearStr + ' - ' + hlp.toShortMil(o.sales_ly) + 'm' + tooltipPref_ly
+        var sales_ly_data_obj = {
+          x: o.day,
+          y: o.sales_ly,
+          type: o.type,
+          labelTooltip: labelToolTip_ly//prevYearStr
+        }
+        sales_ly_data.push(sales_ly_data_obj)
       }
     })
 
-    let sales_ly_data = _.map(dataState, (o) => {
-      const ttObj = dataStateComLy[o['n_date_ly']]
-      let tooltipPref = ttObj && (ttObj[0]['activity'] + ':\n' + ttObj[0]['promotion_desc']) || ''
-      tooltipPref = `\n${tooltipPref}\n`
-      let labelToolTip = prevYearStr + ' - ' + hlp.toShortMil(o.sales_ly) + 'm' + tooltipPref
-      return {
-        x: o.day,
-        y: o.sales_ly,
-        type: o.type,
-        labelTooltip: labelToolTip//prevYearStr
-      }
-    })
+    // let sales_data = _.map(dataState, (o) => {
+    //   if (o.n_month == maxMonthStr) {
+    //     // const ttObj = dataStateCom[o['n_date']]
+    //     // let tooltipPref = ttObj && (ttObj[0]['activity'] + ':\n' + ttObj[0]['promotion_desc']) || ''
+    //     // tooltipPref = `\n${tooltipPref}\n`
+    //     // let labelToolTip = maxYearStr + ' - ' + hlp.toShortMil(o.sales) + 'm' + tooltipPref
+    //     return {
+    //       x: o.day,
+    //       y: o.sales,
+    //       type: o.type,
+    //       // labelTooltip: labelToolTip //maxYearStr
+    //     }
+    //   }
+    // })
+
+
+    console.log(dataState,sales_data,sales_ly_data)
+    // let sales_ly_data = _.map(dataState, (o) => {
+    //   if (o.n_month == maxMonthStr) {
+    //     const ttObj = dataStateComLy[o['n_date_ly']]
+    //     let tooltipPref = ttObj && (ttObj[0]['activity'] + ':\n' + ttObj[0]['promotion_desc']) || ''
+    //     tooltipPref = `\n${tooltipPref}\n`
+    //     let labelToolTip = prevYearStr + ' - ' + hlp.toShortMil(o.sales_ly) + 'm' + tooltipPref
+    //     return {
+    //       x: o.day,
+    //       y: o.sales_ly,
+    //       type: o.type,
+    //       labelTooltip: labelToolTip//prevYearStr
+    //     }
+    //   }
+    // })
 
     // const months_data = _.map( dataState, (o)=>{
     //   return {
@@ -265,12 +304,14 @@ class ChartStoreDaily {
     //   }
     // } )
     var pageUpDate = 0
+
     sales_data.map((item, index) => {
-      if (item.type == "NET_SALES" && item.y) {
+      if (item.type && item.type == "NET_SALES" && item.y) {
         pageUpDate++
       }
     })
     var pageUpShowDate = hlp.yearMonthFiveTooltipToStr(maxMonth) + "." + pageUpDate + " " + maxYearStr
+    var dateChangeOld = maxYear + "/" + maxMonthStr.slice(4, 6) + "/" + pageUpDate
     return {
       sales_data,
       sales_ly_data,
@@ -279,6 +320,7 @@ class ChartStoreDaily {
       maxMonth,
       pageUpDate,
       pageUpShowDate,
+      dateChangeOld,
       // months_data: months_data,
     }
     // const jsArr = toJS(this.queryDailySalesLine) || 0

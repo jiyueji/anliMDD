@@ -63,7 +63,8 @@ const api = {
     manual_inputs: '/manual_inputs',
 //二期开发内容
     abo_cis_kpi_data:'/abo_cis_kpi_data',
-    query_daily_sales_line_2:'/query_daily_sales_line_2'
+    query_daily_sales_line_2:'/query_daily_sales_line_2',
+    queryDailySalesLine2ByMonth:'/queryDailySalesLine2ByMonth',//get请求发送月份获取第五屏折线图的历史数据
 }
 
 export default api
