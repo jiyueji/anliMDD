@@ -5,6 +5,7 @@ import { observable } from 'mobx'
 import { observer, inject } from 'mobx-react'
 
 import _ from 'lodash'
+import * as hlp from './Helper'
 
 import DonutChart from '../components/DonutChart'
 //import LineChart from '../components/LineChart'
@@ -65,8 +66,11 @@ class SalesPerformanceContainer extends React.PureComponent {
 
     const authStore = this.props.authStore
     const chartStore = this.props.chartStore
-
-    // console.log('performance2Com ', chartStore.performance2Com)    
+    const thisWindowWidth = this.props.thisWindowWidth
+    var contrastData = this.props.chartStore.donutTotalSalesYear
+    var contrastDate = contrastData ? contrastData.contrastDate : ""
+    var contrastAllData = this.props.chartStore.performance2Com
+    var contrastmaxMonthStr = String( hlp.yearMonthToStr( contrastAllData.maxMonth ) )
 
     return (
 
@@ -119,10 +123,10 @@ class SalesPerformanceContainer extends React.PureComponent {
                   </div>
                 </Col> 
               </Row> */}
-          <Row>
+          {/* <Row>
             <Col>
-              <div className="sb-wrap sb-wrapFirst">
-                {/* <LineChartMonthly data={chartStore.totalSalesLineMonth} /> */}
+              <div className="sb-wrap sb-wrapFirst" style={{display:"flex"}}>
+                <LineChartMonthly data={chartStore.totalSalesLineMonth} />
                 <LineChartMonthlyEchaets data={chartStore.totalSalesLineMonth} datas={chartStore.totalSalesLineYear}/>
               </div>
             </Col>
@@ -131,7 +135,19 @@ class SalesPerformanceContainer extends React.PureComponent {
                 <TableViewComments data={chartStore.performance2Com} />
               </div>
             </Col>
-          </Row>
+          </Row> */}
+          <div style={{ display: 'flex', justifyContent: 'space-between',padding:'0 0.5%'}}>
+            <div className="sb-wrap sb-wrapFirst" style={{ width: '48.5%', height: '300px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
+              {/* 多功能折线图 */}
+              <LineChartMonthlyEchaets data={chartStore.totalSalesLineMonth} datas={chartStore.totalSalesLineYear}/>
+            </div>
+            <div className="sb-wrap" style={{ width: '48.5%', height: '300px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
+              {/* text */}
+              {
+                contrastDate == contrastmaxMonthStr ? <TableViewComments data={chartStore.performance2Com}/> : ""
+              }
+            </div>
+          </div>
           {/* <Row>
             <Col>
               <div className="sb-wrap">

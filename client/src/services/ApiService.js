@@ -11,6 +11,7 @@ class ApiSerice {
     //    this.api_url = 'http://52.82.35.187:5000'; //'http://52.82.35.187:5000'
         this.api_url = 'http://localhost:80';
         // this.api_url = "http://52.82.15.213:5000";//新配置环境
+        // this.api_url = 'http://52.83.75.191:5000';//老版本保存
     }
 
     /**
@@ -442,6 +443,12 @@ class ApiSerice {
 //二期开发内容
     async get_abo_cis_kpi_data(params, token) {
         const res = await this.apiCall(api.abo_cis_kpi_data, 'GET', token, params);
+        this.handleCommonError(res);
+        return res.body;
+    }
+
+    async get_query_daily_sales_line_2(params, token) {
+        const res = await this.apiCall(api.query_daily_sales_line_2, 'GET', token, params);
         this.handleCommonError(res);
         return res.body;
     }

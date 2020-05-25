@@ -39,7 +39,7 @@ class GrowthContainer extends React.PureComponent {
 
     return (
       // <div className="container-fluid">
-      <div>
+      <div style={{paddingBottom:"10px"}}>
         <div className="page-block" style={{display: 'flex',justifyContent: 'space-between'}}>
           <div style={{ width: '50%', height: '435px', background: '#ffffff',borderRadius:"10px" }}>
             {/* 第一个表格 */}

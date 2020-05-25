@@ -41,7 +41,9 @@ export default class LineChartMonthlyEchaets extends Component {
                     <span className="salesButt-ytd">Monthly</span>
                     <span className="salesButt-Monthly">YTD</span>
                 </div>
-                <div id="LineChartMonthlyEchaetsMain" style={{ width: "100%", height: "100%", background: "#ffffff", }}></div>
+                <div style={{display:"flex"}}>
+                <div id="LineChartMonthlyEchaetsMain" style={{ width: "100%", height:"300px", background: "#ffffff", }}></div>
+                </div>
                 {/* <div className='custom-control custom-switch perf-switch-wrap lineChartMonthlyButt' style={{position:"absolute",left:"75px"}}>
                     <label className='perf-lbl' htmlFor='lineChartMonthlyEchaets'>
                         PF
@@ -64,7 +66,7 @@ export default class LineChartMonthlyEchaets extends Component {
     handleSwitchChange = nr => () => {
         this.isPerfYear = !this.isPerfYear
         this.props.chartStore.isPerfYear = !this.props.chartStore.isPerfYear
-        // console.log(this.props.data)
+
         var { monthShow } = this.state
         if (!this.isPerfYear) {
             monthShow = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']
@@ -81,7 +83,6 @@ export default class LineChartMonthlyEchaets extends Component {
 
     }
     componentWillReceiveProps(nextProps) {
-        // console.log(nextProps)
         var { data, datas } = nextProps
         var isPerfYear = data.isPerfYear
         var { monthShow, allData, dataShowForClick, thisYearLength } = this.state
@@ -116,14 +117,11 @@ export default class LineChartMonthlyEchaets extends Component {
     }
     dataUpdate() {
         var { allData, dataShowForClick, thisYearLength } = this.state
-        // console.log(allData)
         // var allData = this.props.data;
-        // console.log(thisYearLength)
         var thisYear = [];
         var lastYear = [];
         var forecastYear = [];
         var tooltipData = allData.tooltip_data_map
-        // console.log(allData.tooltip_data_map)
         if (allData && allData.actual_sales_data.length > 0) {
             allData.actual_sales_data.map((item, index) => {
                 thisYear.push(item.y)
@@ -135,14 +133,14 @@ export default class LineChartMonthlyEchaets extends Component {
             })
         }
         // if (dataShowForClick) {
-            if (allData && allData.revenue_forecast_usd_data.length > 0) {
-                allData.revenue_forecast_usd_data.map((item, index) => {
-                    forecastYear.push(item.y)
-                })
-            }
-            for (var i = 0; forecastYear.length < 12; i++) {
-                forecastYear.unshift("")
-            }
+        if (allData && allData.revenue_forecast_usd_data.length > 0) {
+            allData.revenue_forecast_usd_data.map((item, index) => {
+                forecastYear.push(item.y)
+            })
+        }
+        for (var i = 0; forecastYear.length < 12; i++) {
+            forecastYear.unshift("")
+        }
         // }
         var yearShow = new Date().getFullYear() //今年
         var lastYearShow = (yearShow - 1).toString()   //去年
@@ -188,6 +186,9 @@ export default class LineChartMonthlyEchaets extends Component {
         })
     }
     handleEcharts() {
+        //页面自适应
+        var myChartEchartsWidth = document.getElementById('LineChartMonthlyEchaetsMain')
+        myChartEchartsWidth.style.width = (window.innerWidth * 0.46) + "px"
         var myChart = echarts.init(document.getElementById('LineChartMonthlyEchaetsMain'));
         window.addEventListener('resize', function () {
             myChart.resize()
@@ -199,8 +200,9 @@ export default class LineChartMonthlyEchaets extends Component {
                     x: '0',
                     y: '0',
                     textStyle: {                  //标题样式
-                        fontSize: '18',
+                        fontSize: '16',
                         color: '#333333',
+                        fontWeight:"500",
                     },
                 }
             ],
@@ -216,7 +218,6 @@ export default class LineChartMonthlyEchaets extends Component {
                 // events: (3) ["Olive Oil Launch", "Nutrilite XS Jan Promotion", "Olive Oil Experience"]
                 formatter: (data) => {
                     var { tooltipData } = this.state
-                    // console.log(data)
                     var yearThisData = 0;
                     var yearLastData = 0;
                     var forecastData = 0;
@@ -242,16 +243,17 @@ export default class LineChartMonthlyEchaets extends Component {
                         var thisNow = this.state.yearShow + " Actual:" + yearThisData + "m";
                         // var thisNow = "Monthly Sales This Year:" + yearThisData;
                     }
-                    if (forecastData){
+                    if (forecastData) {
                         forecastData = forecastData.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
                         var thisForecast = this.state.nameFroecast + ":" + forecastData + "m";
                     }
-                    if(yearLastData){
+                    if (yearLastData) {
                         yearLastData = yearLastData.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
                     }
                     if (tooltipData && tooltipData[nameShow] && tooltipData[nameShow].events) {
+                        tooltipData[nameShow].events.sort()
                         tooltipData[nameShow].events.map((item, index) => {
-                            toolShow += "<div style='display:flex;justify-content: space-between'><span style='color:#f2df3f'>" + "★" + "</span>" + item + "</div>"
+                            toolShow += "<div style='display:flex;justify-content: space-between;font-size:12px;line-height:14px'><span style='color:#f2df3f'>" + "★" + "</span>" + item + "</div>"
                         })
                     }
                     return "<div style='border-bottom:1px solid #ffffff'>" + monthUp + "</div>" + "<div style='color:#ff9c46'>" + thisForecast + "</div>" + "<div style='color:#5198ee'>" + thisNow + "</div>" + "<div style='border-bottom:1px solid #ffffff;color:rgba(211,212,214)'>" + this.state.lastYearShow + " Actual:" + yearLastData + "m" + "</div>" + toolShow

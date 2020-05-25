@@ -21,7 +21,7 @@ import LineChartDailyRec from "./LineChartDailyRec";
 import TableViewDailySalEvents from "./TableViewDailySalEvents";
 
 
-@inject('chartStoreDaily') @observer
+@inject('chartStoreDaily','chartStore') @observer
 class DailyReportContainer extends React.PureComponent {
 
   @observable selectedTab = 'Sales Impact'
@@ -38,8 +38,14 @@ class DailyReportContainer extends React.PureComponent {
 
   render() {
 
+    const chartStore = this.props.chartStore//拿到第一图折线图的数据
     const chartStoreDaily = this.props.chartStoreDaily
+    var contrastData = this.props.chartStoreDaily.queryDailySalesLineHandle
+    var contrastDate = contrastData ? contrastData.pageUpShowDate : ""
+    var contrastAllData = this.props.chartStoreDaily.dailyComments
+    var contrastmaxMonthStr = contrastAllData ? contrastAllData.maxDate : ""
     var { toUpDateYear,toUpDateMonth,toUpDateDay, } = this.state
+    // console.log(contrastDate,contrastmaxMonthStr,"!1111")
 
     return (
       <div style={{ paddingBottom: "20px",marginTop:"40px",position:"relative" }}>
@@ -49,7 +55,7 @@ class DailyReportContainer extends React.PureComponent {
           Daily Sales <span style={{ fontSize:'12px',position:"absolute",top:"-39px",left:"12%",zIndex:"1000"}}>{toUpDateMonth}.{toUpDateDay} {toUpDateYear}</span>
         </div> */}
         <div style={{ height: '500px', width: "100%", }}>
-          <PicFourChange data={chartStoreDaily.dailyTableSales} data2={chartStoreDaily.dailyTableRecruit} data3={chartStoreDaily.dailySales} />
+          <PicFourChange data={chartStoreDaily.dailyTableSales} data2={chartStoreDaily.dailyTableRecruit} data3={chartStoreDaily.queryDailySalesLineHandle} dataOneLine={chartStore.totalSalesLineMonth} dataPromptBox={chartStoreDaily.dailySalesEvents}/>
         </div>
 
 
@@ -99,7 +105,9 @@ class DailyReportContainer extends React.PureComponent {
 
         <div className="page-block">
           <div className="sb-wrap" style={{ marginBottom: "0", height: "auto" }}>
-            <TableViewComments data={chartStoreDaily.dailyComments} isMaxDate={true} />
+            {
+              contrastDate == contrastmaxMonthStr ? <TableViewComments data={chartStoreDaily.dailyComments} isMaxDate={true} /> : ""
+            }
           </div>
         </div>
 

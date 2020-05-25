@@ -17,7 +17,7 @@ export default class FoaSalesLineBar extends Component {
         return (
             <Fragment>
                 <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Sales($)</div>
-                <div style={{ width: "100%", height: "420px", display: 'flex' }}>
+                <div style={{ width: "100%", height: "420px",}}>
                     <div id="foaBarEcharts" style={{ width: "100%", height: "420px" }}></div>
                 </div>
             </Fragment>
@@ -132,7 +132,7 @@ export default class FoaSalesLineBar extends Component {
                     axisLine: {//隐藏X轴
                         show: false
                     },
-                    boundaryGap: [0, '100%'],
+                    boundaryGap: [0, '200%'],
                     // min: 0,
                     // max: this.state.maxYShow,
                     nameGap: 10,
@@ -185,7 +185,7 @@ export default class FoaSalesLineBar extends Component {
                 // icon: 'rect',
                 itemWidth: 10,
                 itemHeight: 10,
-                itemGap: 120,//图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
+                // itemGap: 90,//图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
                 // data: ['Actual Renewal Rate', 'Prediction Renewal Rate'],
                 data: [
                     { name: 'FOA Sales', icon: 'rect' },

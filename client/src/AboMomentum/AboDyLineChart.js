@@ -27,9 +27,9 @@ export default class AboDyBarStack extends Component {
         this.upDateShowData()
     }
     componentWillReceiveProps(nextProps) {
-        var { data, isPerfYear } = nextProps
+        var { data } = nextProps
         var { monthShowAboLine } = this.state
-        if (isPerfYear) {
+        if (data.isPerfYear) {
             monthShowAboLine = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']
         } else {
             monthShowAboLine = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']

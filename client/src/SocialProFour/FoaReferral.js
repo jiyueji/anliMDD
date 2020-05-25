@@ -137,7 +137,7 @@ export default class FoaReferral extends Component {
                 // icon: 'rect',
                 itemWidth: 10,
                 itemHeight: 10,
-                itemGap: 120,//图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
+                // itemGap: 120,//图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
                 // data: ['Actual Renewal Rate', 'Prediction Renewal Rate'],
                 data: [
                     { name: '# of New FOA buyer referred by FOA', icon: 'rect' },

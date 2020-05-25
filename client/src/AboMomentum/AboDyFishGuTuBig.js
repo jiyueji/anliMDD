@@ -204,7 +204,7 @@ export default class AboDyFishGuTuBig extends Component {
         const { recPerfYear, prevRecPerfYear, futurePerfYear } = allData
         // Pin的数字的数据
         var dataPin = this.props.dataPin || {}
-        // console.log(dataPin)
+
         var { actualYear, predYear } = dataPin
         var actualArr = []
         var predArr = []

@@ -23,7 +23,7 @@ class LoginForm extends React.Component {
     render() {
         return <div className="login-container">
             <Form onSubmit={this.handleSubmit} title="Sign In" button="Login">
-                <input type="text"  placeholder="Email" ref={input => this.email = input} />
+                <input type="text"  placeholder="Name" ref={input => this.email = input} />
                 <input type="password"  placeholder="Password" ref={input => this.password = input} />
             </Form>
         </div>

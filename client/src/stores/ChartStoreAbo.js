@@ -349,7 +349,6 @@ class ChartStoreAbo {
     // // dataState = jslinq(dataState[maxYear].concat())
     // dataState = dataState.toList()
 
-
     let YTD_DATA = [];
     let CSI_AMT = [];
     let CSI_COUNT = [];
@@ -364,6 +363,7 @@ class ChartStoreAbo {
       return a.data_period-b.data_period
     })
     let NOW_MAXDATE = dataState[0].clnd_month
+    // console.log(dataState)
     // console.log(dataState, "dataState")
     dataState && dataState.length >= 0 ? dataState.map((o,index)=>{
       var objData = {}
@@ -372,7 +372,7 @@ class ChartStoreAbo {
           objData = {
             clnd_month:o.clnd_month,
             data_period: o.data_period,
-            kpi_cy_values: o.kpi_cy_values,
+            kpi_cy_values: o.kpi_cy_values_usd,
             data_desc:o.data_desc,
             kpi_code:o.kpi_code,
             kpi_desc:o.kpi_desc,
@@ -387,7 +387,7 @@ class ChartStoreAbo {
           //   kpi_code:o.kpi_code,
           //   kpi_desc:o.kpi_desc,
           // }
-          CSI_AMT.push(o.kpi_cy_values)
+          CSI_AMT.push(o.kpi_cy_values_usd)
         }else if(o.kpi_code == "CSI_COUNT" && o.data_desc.indexOf("YTD") == -1){
           // objData = {
           //   clnd_month:o.clnd_month,
@@ -397,15 +397,15 @@ class ChartStoreAbo {
           //   kpi_code:o.kpi_code,
           //   kpi_desc:o.kpi_desc,
           // }
-          CSI_COUNT.push(o.kpi_cy_values)
-        }else if(o.kpi_code == "QUALIF_CSI_SR" && o.data_desc.indexOf("YTD") == -1){
-          QUALIF_CSI_SR.push(o.kpi_cy_values)
+          CSI_COUNT.push(o.kpi_cy_values_usd)
+        }else if(o.kpi_code == "QUALIF_CSI_SR_PPV" && o.data_desc.indexOf("YTD") == -1){
+          QUALIF_CSI_SR.push(o.kpi_cy_values_usd)
         }else if(o.kpi_code == "TOTAL_ORDER_BV" && o.data_desc.indexOf("YTD") == -1){
-          TOTAL_ORDER_BV.push(o.kpi_cy_values)
+          TOTAL_ORDER_BV.push(o.kpi_cy_values_usd)
         }else if(o.kpi_code == "FOA_ORDER_BV_1B" && o.data_desc.indexOf("YTD") == -1){
-          FOA_ORDER_BV_1B.push(o.kpi_cy_values)
+          FOA_ORDER_BV_1B.push(o.kpi_cy_values_usd)
         }else if(o.kpi_code == "VCS_AMT" && o.data_desc.indexOf("YTD") == -1){
-          VCS_AMT.push(o.kpi_cy_values)
+          VCS_AMT.push(o.kpi_cy_values_usd)
         }
       }
     }) : ""
@@ -982,7 +982,7 @@ class ChartStoreAbo {
     //      console.log('garOrigData', garOrigData, garOrigNewData)
 
     let dataState = _.sortBy(jsArr, 'pin_rank')
-
+    // console.log(dataState)
     // update rank 1-4
     const RANK_TT = 4
     dataState = _.map(dataState, (o) => {

@@ -429,7 +429,6 @@ export default class SegmentsThree extends Component {
                             //     padding: [0, 40]
                             // }
                         },
-                        'Developing ABO',
                     ]
                 },{
                     type:"plain",
@@ -441,6 +440,7 @@ export default class SegmentsThree extends Component {
                     width:'80%',
                     itemGap: 15,//图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
                     data: [
+                        'Developing ABO',
                         'Building ABO',
                         'ABO Leader'
                     ]

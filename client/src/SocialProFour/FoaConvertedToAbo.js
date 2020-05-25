@@ -113,7 +113,7 @@ export default class FoaConvertedToAbo extends Component {
                     axisLine: {//隐藏X轴
                         show: false
                     },
-                    boundaryGap: [0, '100%'],
+                    boundaryGap: [0, '200%'],
                     // min: 0,
                     // max: this.state.maxYShow,
                     nameGap: 10,
@@ -166,7 +166,7 @@ export default class FoaConvertedToAbo extends Component {
                 // icon: 'rect',
                 itemWidth: 10,
                 itemHeight: 10,
-                itemGap: 120,//图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
+                // itemGap: 120,//图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
                 // data: ['Actual Renewal Rate', 'Prediction Renewal Rate'],
                 data: [
                     { name: 'FOA Converted to ABO/PC Count', icon: 'rect' },
