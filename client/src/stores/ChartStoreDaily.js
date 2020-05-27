@@ -21,6 +21,7 @@ class ChartStoreDaily {
   @observable dailyCommentsData = []
   @observable dailySalEventsData = []
   @observable queryDailySalesLine = []
+  @observable queryDailySalesLine2ByMonth = []
 
   @action async fetchGetQueryDailySalesLine(params) {
     try {
@@ -34,6 +35,23 @@ class ChartStoreDaily {
         this.isLoading = false
         this.isFailure = true
         this.queryDailySalesLine = []
+      })
+    }
+  }
+
+  @action async fetchGetQueryQueryDailySalesLine2ByMonth(params,send) {
+    try {
+      const data = await ApiService.get_queryDailySalesLine2ByMonth(params,send)
+      runInAction(() => {
+        this.isLoading = false
+        this.queryDailySalesLine2ByMonth = data ? JSON.parse(data) : []
+        // console.log(this.queryDailySalesLine2ByMonth,"queryDailySalesLine2ByMonth")
+      })
+    } catch (e) {
+      runInAction(() => {
+        this.isLoading = false
+        this.isFailure = true
+        this.queryDailySalesLine2ByMonth = []
       })
     }
   }
@@ -170,24 +188,26 @@ class ChartStoreDaily {
   @computed get queryDailySalesLineHandle() {
 
     // const jsArr = toJS(this.dailySalesData) || []
-    const jsArr = toJS(this.queryDailySalesLine) || []
+    const jsArr = toJS(this.queryDailySalesLine2ByMonth) || []
     const jsArr2 = toJS(this.dailySalEventsData) || []
 
     if (!jsArr.length || !jsArr2.length) {
       return false
     }
     // console.log(this.isPerfYear)
-    console.log(this.isFiveDatePicker)
+    // console.log(this.isFiveDatePicker)
+
     // console.log(jsArr,jsArr3,"2222")
     let dataState = jsArr
     let dataStateCom = jsArr2
-
+    console.log(jsArr2)
+    // var isFiveDatePickerLine = this.isFiveDatePicker.slice(0,6)
     let maxYear, maxMonth, maxMonthStr = 0, maxYearStr, prevYearStr
     // console.log(dataState, "1")
     if (dataState.length) {
       dataState.map((item, index) => {
         var maxMonthStrIf = item.n_month
-        maxMonthStr = maxMonthStr > maxMonthStrIf ? maxMonthStr : maxMonthStrIf
+        maxMonthStr = this.isFiveDatePicker ? this.isFiveDatePicker.slice(0,6) : maxMonthStr > maxMonthStrIf ? maxMonthStr : maxMonthStrIf
       })
       // maxMonthStr = dataState[0].n_month
       maxYear = parseInt(maxMonthStr.slice(0, 4))
@@ -279,7 +299,7 @@ class ChartStoreDaily {
     //   }
     // })
 
-
+    console.log(maxMonthStr,"maxMonthStr")
     console.log(dataState,sales_data,sales_ly_data)
     // let sales_ly_data = _.map(dataState, (o) => {
     //   if (o.n_month == maxMonthStr) {

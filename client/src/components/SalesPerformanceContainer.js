@@ -71,7 +71,7 @@ class SalesPerformanceContainer extends React.PureComponent {
     var contrastDate = contrastData ? contrastData.contrastDate : ""
     var contrastAllData = this.props.chartStore.performance2Com
     var contrastmaxMonthStr = String( hlp.yearMonthToStr( contrastAllData.maxMonth ) )
-
+    console.log("11111")
     return (
 
       // <div className="container-fluid">

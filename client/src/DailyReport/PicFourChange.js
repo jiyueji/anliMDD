@@ -113,24 +113,23 @@ export default class PicFourChange extends Component {
             </Fragment>
         )
     }
+    componentWillReceiveProps(nextProps) {
+        var { data, data2,data3,dataOneLine,dataPromptBox } = nextProps
+        this.dateUpdateShowHandle(data, data2,data3,dataOneLine,dataPromptBox)
+    }
     componentDidMount() {
-        // tableData: Array(5)
-        // 0:
-        // n_date: "20200225"
-        // agg_type: "Net Sales"
-        // sales: 5704194.4262069
-        // sales_minus_1d: 3741290.88965517
-        // sales_minus_2d: 4251392.66068965
-        // mtd_sales: 95514621.1986207
-        // pct_mtd_splm: -0.52700492819066
-        // pct_mtd_sply: -0.0912532014079843
+        // var { data, data2,data3,dataOneLine,dataPromptBox } = this.props
         var data = this.props.data || {}
+        console.log(data,"data")
         var data2 = this.props.data2 || {}
         var data3 = this.props.data3 || {}
-        console.log(data3,"data3")
         var dataOneLine = this.props.dataOneLine || {}
         var dataPromptBox = this.props.dataPromptBox || {}
 
+        this.dateUpdateShowHandle(data, data2,data3,dataOneLine,dataPromptBox)
+    }
+    dateUpdateShowHandle(data, data2,data3,dataOneLine,dataPromptBox){
+        console.log(data3,"data3")
         var changeName = []
         var netData = {}
         var bvData = {}
@@ -401,7 +400,6 @@ export default class PicFourChange extends Component {
             this.echartsShowLine();
             this.pieAngleHandle();
         })
-        // console.log(data2)
     }
     //点击图片下面切换数据
     picChangeDateHandle(idx, e) {

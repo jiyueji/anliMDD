@@ -122,6 +122,7 @@ class Home extends Component {
         this.props.chartStoreDaily.fetchManualInputsData()
         this.props.chartStoreDaily.fetchDailyCommentsData()
         this.props.chartStoreDaily.fetchGetQueryDailySalesLine()
+        this.props.chartStoreDaily.fetchGetQueryQueryDailySalesLine2ByMonth("",'20')
 
         this.props.chartStoreSocial.fetchSocialRepBuyData()
         this.props.chartStoreSocial.fetchSocialFoaProdData()

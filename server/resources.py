@@ -529,6 +529,6 @@ class QueryDailySalesLine2ByMonth(Resource):
         data = parser3.parse_args()
         month = data['month']
         
-        queryStr = "select *  from public.query_daily_27_daily_type_line where " + "n_date='" +month + "'"
+        queryStr = "select *  from qa_test.query_daily_27_daily_sales_line where " + "n_date like '" +month + "%'"
         return performQuery(queryStr)
         

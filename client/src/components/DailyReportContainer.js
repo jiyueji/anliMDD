@@ -46,6 +46,7 @@ class DailyReportContainer extends React.PureComponent {
     var contrastmaxMonthStr = contrastAllData ? contrastAllData.maxDate : ""
     var { toUpDateYear,toUpDateMonth,toUpDateDay, } = this.state
     // console.log(contrastDate,contrastmaxMonthStr,"!1111")
+    console.log("555555")
 
     return (
       <div style={{ paddingBottom: "20px",marginTop:"40px",position:"relative" }}>

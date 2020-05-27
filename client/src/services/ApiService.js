@@ -21,7 +21,7 @@ class ApiSerice {
      * @param {string|boolean} token  - authentication token
      * @param {object|null} params - params payload
      */
-    async apiCall(url, method = 'GET', token = false, params = null) {
+    async apiCall(url, method = 'GET', token = false, params = null,send = null) {
         let payload = {
             method,
             mode: 'cors',
@@ -30,7 +30,7 @@ class ApiSerice {
         if (params) {
             payload.body = JSON.stringify(params);
         }
-        const res = await fetch(`${this.api_url}${url}`, payload);
+        const res = send ? await fetch(`${this.api_url}${url}?month=${send}`) : await fetch(`${this.api_url}${url}`, payload)
         const status = res.status;
         const body = await res.json();
         return { status, body };
@@ -449,6 +449,13 @@ class ApiSerice {
 
     async get_query_daily_sales_line_2(params, token) {
         const res = await this.apiCall(api.query_daily_sales_line_2, 'GET', token, params);
+        this.handleCommonError(res);
+        return res.body;
+    }
+
+    async get_queryDailySalesLine2ByMonth(params,send,token) {
+        // console.log(send)
+        const res = await this.apiCall(api.queryDailySalesLine2ByMonth, 'GET', token, params,send);
         this.handleCommonError(res);
         return res.body;
     }
