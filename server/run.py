@@ -110,6 +110,8 @@ api.add_resource(resources.AboCsiKpi, '/abo_cis_kpi_data')
 api.add_resource(resources.QueryDailySalesLine2, '/query_daily_sales_line_2')
 
 api.add_resource(resources.QueryDailySalesLine2ByMonth, '/queryDailySalesLine2ByMonth')
-
+api.add_resource(resources.DailySalesTableByMonth, '/dailySalesTableByMonth')
+api.add_resource(resources.DailyRecTableByMonth, '/dailyRecTableByMonth')
+api.add_resource(resources.DailySalEventsByMonth, '/dailySalEventsByMonth')
 if __name__ == '__main__':
       app.run(host='0.0.0.0', port=80)

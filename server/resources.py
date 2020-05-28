@@ -532,3 +532,26 @@ class QueryDailySalesLine2ByMonth(Resource):
         queryStr = "select *  from qa_test.query_daily_27_daily_sales_line where " + "n_date like '" +month + "%'"
         return performQuery(queryStr)
         
+class DailySalesTableByMonth(Resource):
+    def get(self):
+        data = parser3.parse_args()
+        month = data['month']
+
+        queryStr = "select * from qa_test.query_daily_25_daily_sales where n_date='"+month+"'"
+        return performQuery(queryStr)
+
+class DailyRecTableByMonth(Resource):
+    def get(self):
+        data = parser3.parse_args()
+        month = data['month']
+
+        queryStr = "select * from dashboard.qa_test.query_daily_26_daily_recruit where n_date='"+month+"'"
+        return performQuery(queryStr)
+
+class DailySalEventsByMonth(Resource):
+    def get(self):
+        data = parser3.parse_args()
+        month = data['month']
+
+        queryStr = "select * from qa_test.query_daily_48_promotions where " + "n_month like '" +month + "%'"
+        return performQuery(queryStr)
