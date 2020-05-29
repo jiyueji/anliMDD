@@ -122,6 +122,7 @@ export default class PicFourChange extends Component {
         var data = this.props.data || {}
         console.log(data,"data")
         var data2 = this.props.data2 || {}
+        console.log(data2,"fivedata2")
         var data3 = this.props.data3 || {}
         var dataOneLine = this.props.dataOneLine || {}
         var dataPromptBox = this.props.dataPromptBox || {}

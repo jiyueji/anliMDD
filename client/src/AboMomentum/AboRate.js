@@ -18,7 +18,7 @@ export default class AboRate extends Component {
     render() {
         return (
             <Fragment>
-                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Consequtive qualification rate</div>
+                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Consecutive qualification rate</div>
                 <div style={{ width: "100%", height: "420px", display: 'flex' }}>
                 <div id="aboRateEcharts" style={{ width: "100%", height: "400px" }}></div>
                 </div>

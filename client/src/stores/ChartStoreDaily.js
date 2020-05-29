@@ -188,7 +188,8 @@ class ChartStoreDaily {
   @computed get queryDailySalesLineHandle() {
 
     // const jsArr = toJS(this.dailySalesData) || []
-    const jsArr = toJS(this.queryDailySalesLine2ByMonth) || []
+    // const jsArr = toJS(this.queryDailySalesLine2ByMonth) || [] //新接口
+    const jsArr = toJS(this.queryDailySalesLine) || []//旧的
     const jsArr2 = toJS(this.dailySalEventsData) || []
 
     if (!jsArr.length || !jsArr2.length) {

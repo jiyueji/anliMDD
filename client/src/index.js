@@ -14,6 +14,7 @@ import chartStoreDaily from './stores/ChartStoreDaily'
 import chartStoreSocial from './stores/ChartStoreSocial'
 import App from './App'
 import Home from './containers/Home'
+import AAA from './containers/AAA'
 import LoginContainer from './containers/LoginContainer'
 import UserListContainer from './containers/UserListContainer'
 import RegisterContainer from './containers/RegisterContainer'
@@ -35,8 +36,8 @@ const stores = {
 };
 
 ReactDOM.render(
-    <Provider { ...stores }>
-        <App>
+    <Provider {...stores}>
+        {/* <App>
             <Router history={history}>
                 <Switch>
                     <Route exact path="/" component={Home} />
@@ -45,7 +46,22 @@ ReactDOM.render(
                     <Route path={routes.users} component={UserListContainer} />
                 </Switch>
             </Router>
-        </App>
+        </App> */}
+        <Router history={history}>
+            <Switch>
+                <Route path="/aaa" component={AAA} />
+                <App>
+                    <Router history={history}>
+                        <Switch>
+                            <Route exact path="/" component={Home} />
+                            <Route path={routes.login} component={LoginContainer} />
+                            <Route path={routes.sign_up} component={RegisterContainer} />
+                            <Route path={routes.users} component={UserListContainer} />
+                        </Switch>
+                    </Router>
+                </App>
+            </Switch>
+        </Router>
     </Provider>,
     document.getElementById('root')
 );

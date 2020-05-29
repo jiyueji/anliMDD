@@ -60,7 +60,7 @@ class AboDynamicsContainer extends React.PureComponent {
 
     return (
       // <div className="container-fluid">
-      <div style={{paddingBottom:"10px"}}>
+      <div style={{ paddingBottom: "10px" }}>
 
         <div className="page-block">
           <label className="tab-cont-title">
@@ -76,21 +76,9 @@ class AboDynamicsContainer extends React.PureComponent {
               <AboDyLineChart data={chartStoreAbo.aboRenewalRate} />
             </div>
           </div>
+
           <label className="tab-cont-title">
-            Migration
-          </label>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div style={{ width: '50%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
-              {/* 第一个鱼骨图 */}
-              <AboDyFishGuTuBig data={chartStoreAbo.aboMigTop} data2={chartStoreAbo.aboMigBot} dataPin={chartStoreAbo.aboPinPop} />
-            </div>
-            <div style={{ width: '49%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
-              {/* 第二个鱼骨图 */}
-              <AboDyFishGuTuSmall data={chartStoreAbo.aboMigBot} />
-            </div>
-          </div>
-          <label className="tab-cont-title">
-            Q Months (by performance year)
+            Q Months (by performance year) <span style={{fontSize:"13px"}}>excluding manual Q</span>
           </label>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div style={{ width: '33%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
@@ -109,7 +97,7 @@ class AboDynamicsContainer extends React.PureComponent {
           <label className="tab-cont-title">
             FAA & GAR
         </label>
-          <div style={{ display: 'flex', justifyContent: 'space-between'}}>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div style={{ width: '33%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
               {/* 第一个圆重叠图 */}
               <AboFinalPie data={chartStoreAbo.aboBonus} titleData={chartStoreDaily.manualInputs} />
@@ -130,6 +118,19 @@ class AboDynamicsContainer extends React.PureComponent {
             <div style={{ width: '49%', height: '420px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
               {/* 第二个柱状图加折线 */}
               <AboBarLineEcharts data={chartStoreAbo.aboCisKpiDataHandle} />
+            </div>
+          </div>
+          <label className="tab-cont-title">
+            Migration
+        </label>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            {/* <div style={{ width: '50%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}> */}
+              {/* 第一个鱼骨图 */}
+              {/* <AboDyFishGuTuBig data={chartStoreAbo.aboMigTop} data2={chartStoreAbo.aboMigBot} dataPin={chartStoreAbo.aboPinPop} />
+            </div> */}
+            <div style={{ width: '49%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
+              {/* 第二个鱼骨图 */}
+              <AboDyFishGuTuSmall data={chartStoreAbo.aboMigBot} />
             </div>
           </div>
           {/* <Row>

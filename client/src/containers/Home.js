@@ -47,6 +47,7 @@ class Home extends Component {
         super(props)
         this.state = {
             thisWindowWidth: false,
+            thisPageTitle:"Update on 9th of each month"
         }
         //        this.onClickEditDashboard = this.onClickEditDashboard.bind(this)
     }
@@ -122,7 +123,7 @@ class Home extends Component {
         this.props.chartStoreDaily.fetchManualInputsData()
         this.props.chartStoreDaily.fetchDailyCommentsData()
         this.props.chartStoreDaily.fetchGetQueryDailySalesLine()
-        this.props.chartStoreDaily.fetchGetQueryQueryDailySalesLine2ByMonth("",'20')
+        // this.props.chartStoreDaily.fetchGetQueryQueryDailySalesLine2ByMonth("",'20')//第五屏折线图的所有数据
 
         this.props.chartStoreSocial.fetchSocialRepBuyData()
         this.props.chartStoreSocial.fetchSocialFoaProdData()
@@ -158,13 +159,25 @@ class Home extends Component {
         }
     }
     handleClickToUp = () => {
+        var {thisPageTitle} = this.state
         // console.log(window.innerWidth)
         // var thisWindowWidth = window.innerWidth
         // window.location.reload()
         document.body.scrollTop = document.documentElement.scrollTop = 0;
         // this.setState({
         //     thisWindowWidth,
-        // })
+        // }),AGP KPI,,,
+        if(this.selectedTab && (this.selectedTab == "Sales Performance" || this.selectedTab == "Customer Dynamics")){
+            thisPageTitle = "Update on 9th of each month"
+        }else if(this.selectedTab && (this.selectedTab == "AGP KPI" || this.selectedTab == "ABO Momentum & Goal Tracking")){
+            thisPageTitle = "Update on 12th of each month"
+        }else if(this.selectedTab && this.selectedTab == "Daily Report"){
+            thisPageTitle = "Update around 2 pm of each day"
+        }
+        this.setState({
+            thisPageTitle,
+        })
+        // console.log(this.selectedTab)
     }
     handleDataUpdate = () =>{
         // this.apiDataUpdate()
@@ -256,7 +269,7 @@ class Home extends Component {
         //         </section>
         //     </div>
         // }
-        var { thisWindowWidth } = this.state
+        var { thisWindowWidth,thisPageTitle } = this.state
         return <div className="dashboard-wrap">
             {authStore.isAuthenticated &&
                 <React.Fragment>
@@ -280,7 +293,7 @@ class Home extends Component {
                             </div>
                         </div> */}
                         <div className="page-title bigTatie" id="topTatilShow">
-                            <h1 className="main-title" style={{lineHeight:"inherit"}}>{this.selectedTab}</h1>
+                            <h1 className="main-title" style={{lineHeight:"inherit"}}>{this.selectedTab} <span style={{fontSize:"12px",color:"#417bff"}}>({thisPageTitle})</span></h1>
                             {
                                 this.selectedTab === "AGP KPI" ? "" : this.selectedTab === "Daily Report" ? <div style={{ marginRight: "11%", lineHeight: "30px" }}>{fivePageDateUp}</div> : <div className='custom-control custom-switch perf-switch-wrap' style={{ marginRight: "11%" }}>
                                     <label className='perf-lbl' htmlFor='perfYearSwitcher'>
@@ -299,9 +312,9 @@ class Home extends Component {
                                 </label>
                                 </div>
                             }
-                            {
+                            {/* {
                                 this.selectedTab === "Daily Report" ? <DatePicker defaultValue={moment(dateFormatFive, dateFormat)} format={dateFormat} allowClear={false} inputReadOnly={true} showToday={false} onChange={this.clickDateChange.bind(this)}/> : <MonthPicker defaultValue={moment('2015/01', monthFormat)} format={monthFormat} picker="month" />
-                            }
+                            } */}
                         </div>
                         <div className="main-navigation">
                             <Tabs activeKey={this.selectedTab} onSelect={k => this.selectedTab = k} onClick={this.handleClickToUp.bind(this)}>
@@ -324,7 +337,7 @@ class Home extends Component {
                                 <Tab eventKey="AGP KPI" title={<div><i className="fas fa-chart-bar"></i>AGP KPI</div>}>
                                     <GrowthContainer />
                                 </Tab>
-                                <Tab eventKey="ABO Momentum and Goal Tracking" title={<div><i className="fas fa-dollar-sign"></i>ABO Momentum & Goal Tracking</div>}>
+                                <Tab eventKey="ABO Momentum & Goal Tracking" title={<div><i className="fas fa-dollar-sign"></i>ABO Momentum & Goal Tracking</div>}>
                                     <AboDynamicsContainer />
                                 </Tab>
                                 {/* <Tab eventKey="ABO Leader Dynamics" title={<div><i className="fas fa-home"></i>ABO Leader Dynamics</div>}>
@@ -338,7 +351,6 @@ class Home extends Component {
                                     {/* <CardsLayout onRef={ref => (this.dashboardRef = ref)}/> */}
                                 </Tab>
                                 {/* <Tab style={{}} className="aaaa"  title={<div onClick={this.handleDataUpdate.bind(this)}><i className="fa fa-retweet" aria-hidden="true"></i></div>}>
-
                                 </Tab> */}
                             </Tabs>
                         </div>
