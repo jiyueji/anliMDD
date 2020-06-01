@@ -120,9 +120,7 @@ export default class PicFourChange extends Component {
     componentDidMount() {
         // var { data, data2,data3,dataOneLine,dataPromptBox } = this.props
         var data = this.props.data || {}
-        console.log(data,"data")
         var data2 = this.props.data2 || {}
-        console.log(data2,"fivedata2")
         var data3 = this.props.data3 || {}
         var dataOneLine = this.props.dataOneLine || {}
         var dataPromptBox = this.props.dataPromptBox || {}
@@ -130,7 +128,7 @@ export default class PicFourChange extends Component {
         this.dateUpdateShowHandle(data, data2,data3,dataOneLine,dataPromptBox)
     }
     dateUpdateShowHandle(data, data2,data3,dataOneLine,dataPromptBox){
-        console.log(data3,"data3")
+        console.log(dataPromptBox,"dataPromptBox")
         var changeName = []
         var netData = {}
         var bvData = {}

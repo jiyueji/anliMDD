@@ -460,6 +460,26 @@ class ApiSerice {
         return res.body;
     }
 
+    async get_dailySalesTableByMonth(params,send,token) {
+        const res = await this.apiCall(api.dailySalesTableByMonth, 'GET', token, params,send);
+        this.handleCommonError(res);
+        return res.body;
+    }
+
+    async get_dailyRecTableByMonth(params,send,token) {
+        // console.log(send)
+        const res = await this.apiCall(api.dailyRecTableByMonth, 'GET', token, params,send);
+        this.handleCommonError(res);
+        return res.body;
+    }
+
+    async get_dailySalEventsByMonth(params,send,token) {
+        // console.log(send)
+        const res = await this.apiCall(api.dailySalEventsByMonth, 'GET', token, params,send);
+        this.handleCommonError(res);
+        return res.body;
+    }
+
 }
 
 export default new ApiSerice()

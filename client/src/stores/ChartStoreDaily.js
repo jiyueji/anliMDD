@@ -12,7 +12,7 @@ class ChartStoreDaily {
   @observable isLoading = true
   @observable isFailure = false
   @observable isPerfYear = false
-  @observable isFiveDatePicker = ""
+  @observable isFiveDatePicker = ""//第五屏的时间选择
   @observable dailySalesData = []
   @observable dailyRecData = []
   @observable dailyTableSalData = []
@@ -21,7 +21,75 @@ class ChartStoreDaily {
   @observable dailyCommentsData = []
   @observable dailySalEventsData = []
   @observable queryDailySalesLine = []
+
   @observable queryDailySalesLine2ByMonth = []
+  @observable dailySalesTableByMonth = []
+  @observable dailyRecTableByMonth = []
+  @observable dailySalEventsByMonth = []
+
+  @action async fetchGetQueryDailySalEventsByMonth(params,send) {
+    try {
+      const data = await ApiService.get_dailySalEventsByMonth(params,send)
+      runInAction(() => {
+        this.isLoading = false
+        this.dailySalEventsByMonth = data ? JSON.parse(data) : []
+      })
+    } catch (e) {
+      runInAction(() => {
+        this.isLoading = false
+        this.isFailure = true
+        this.dailySalEventsByMonth = []
+      })
+    }
+  }
+
+  @action async fetchGetQueryDailyRecTableByMonth(params,send) {
+    try {
+      const data = await ApiService.get_dailyRecTableByMonth(params,send)
+      runInAction(() => {
+        this.isLoading = false
+        this.dailyRecTableByMonth = data ? JSON.parse(data) : []
+      })
+    } catch (e) {
+      runInAction(() => {
+        this.isLoading = false
+        this.isFailure = true
+        this.dailyRecTableByMonth = []
+      })
+    }
+  }
+
+  @action async fetchGetQueryDailySalesTableByMonth(params,send) {
+    try {
+      const data = await ApiService.get_dailySalesTableByMonth(params,send)
+      runInAction(() => {
+        this.isLoading = false
+        this.dailySalesTableByMonth = data ? JSON.parse(data) : []
+      })
+    } catch (e) {
+      runInAction(() => {
+        this.isLoading = false
+        this.isFailure = true
+        this.dailySalesTableByMonth = []
+      })
+    }
+  }
+
+  @action async fetchGetQueryQueryDailySalesLine2ByMonth(params,send) {
+    try {
+      const data = await ApiService.get_queryDailySalesLine2ByMonth(params,send)
+      runInAction(() => {
+        this.isLoading = false
+        this.queryDailySalesLine2ByMonth = data ? JSON.parse(data) : []
+      })
+    } catch (e) {
+      runInAction(() => {
+        this.isLoading = false
+        this.isFailure = true
+        this.queryDailySalesLine2ByMonth = []
+      })
+    }
+  }
 
   @action async fetchGetQueryDailySalesLine(params) {
     try {
@@ -35,23 +103,6 @@ class ChartStoreDaily {
         this.isLoading = false
         this.isFailure = true
         this.queryDailySalesLine = []
-      })
-    }
-  }
-
-  @action async fetchGetQueryQueryDailySalesLine2ByMonth(params,send) {
-    try {
-      const data = await ApiService.get_queryDailySalesLine2ByMonth(params,send)
-      runInAction(() => {
-        this.isLoading = false
-        this.queryDailySalesLine2ByMonth = data ? JSON.parse(data) : []
-        // console.log(this.queryDailySalesLine2ByMonth,"queryDailySalesLine2ByMonth")
-      })
-    } catch (e) {
-      runInAction(() => {
-        this.isLoading = false
-        this.isFailure = true
-        this.queryDailySalesLine2ByMonth = []
       })
     }
   }
@@ -188,23 +239,22 @@ class ChartStoreDaily {
   @computed get queryDailySalesLineHandle() {
 
     // const jsArr = toJS(this.dailySalesData) || []
-    // const jsArr = toJS(this.queryDailySalesLine2ByMonth) || [] //新接口
-    const jsArr = toJS(this.queryDailySalesLine) || []//旧的
+    const jsArr = toJS(this.queryDailySalesLine2ByMonth) || [] //新接口
+    // const jsArr = toJS(this.queryDailySalesLine) || []//旧的
     const jsArr2 = toJS(this.dailySalEventsData) || []
 
     if (!jsArr.length || !jsArr2.length) {
       return false
     }
-    // console.log(this.isPerfYear)
+
     // console.log(this.isFiveDatePicker)
 
-    // console.log(jsArr,jsArr3,"2222")
     let dataState = jsArr
     let dataStateCom = jsArr2
-    console.log(jsArr2)
+
     // var isFiveDatePickerLine = this.isFiveDatePicker.slice(0,6)
     let maxYear, maxMonth, maxMonthStr = 0, maxYearStr, prevYearStr
-    // console.log(dataState, "1")
+
     if (dataState.length) {
       dataState.map((item, index) => {
         var maxMonthStrIf = item.n_month
@@ -222,7 +272,6 @@ class ChartStoreDaily {
       o.n_date_ly = String(parseInt(o.n_date) - 10000)
       return o
     })
-    // console.log(dataState,"2")
     dataStateCom = _.map(dataStateCom, (o) => {
       o.isPrevYear = String(o.start_day).indexOf(prevYearStr) === 0
       return o
@@ -300,8 +349,9 @@ class ChartStoreDaily {
     //   }
     // })
 
-    console.log(maxMonthStr,"maxMonthStr")
-    console.log(dataState,sales_data,sales_ly_data)
+    // console.log(maxMonthStr,"maxMonthStr")
+    // console.log(dataState,sales_data,sales_ly_data)
+
     // let sales_ly_data = _.map(dataState, (o) => {
     //   if (o.n_month == maxMonthStr) {
     //     const ttObj = dataStateComLy[o['n_date_ly']]
@@ -332,7 +382,7 @@ class ChartStoreDaily {
       }
     })
     var pageUpShowDate = hlp.yearMonthFiveTooltipToStr(maxMonth) + "." + pageUpDate + " " + maxYearStr
-    var dateChangeOld = maxYear + "/" + maxMonthStr.slice(4, 6) + "/" + pageUpDate
+    var dateChangeOld = this.isFiveDatePicker ? maxYear + "/" + maxMonthStr.slice(4, 6) + "/" + this.isFiveDatePicker.slice(6, 8) : maxYear + "/" + maxMonthStr.slice(4, 6) + "/" + pageUpDate
     return {
       sales_data,
       sales_ly_data,
@@ -350,7 +400,6 @@ class ChartStoreDaily {
     // }
 
     // let dataState = jsArr
-    // console.log(dataState,"1")
     // dataState = _.reduce(dataState, (obj,param)=>{
     //   obj[param.input_type] = param.input_text
     //   return obj;
@@ -515,7 +564,8 @@ class ChartStoreDaily {
   }
 
   @computed get dailyTableSales() {
-    const jsArr = toJS(this.dailyTableSalData) || 0
+    // const jsArr = toJS(this.dailyTableSalData) || 0
+    const jsArr = this.isFiveDatePicker ? toJS(this.dailySalesTableByMonth) || 0 : toJS(this.dailyTableSalData) || 0
     if (!jsArr.length) {
       return false
     }
@@ -562,7 +612,8 @@ class ChartStoreDaily {
   }
 
   @computed get dailyTableRecruit() {
-    const jsArr = toJS(this.dailyTableRecData) || 0
+    // const jsArr = toJS(this.dailyTableRecData) || 0
+    const jsArr = this.isFiveDatePicker ? toJS(this.dailyRecTableByMonth) || 0 : toJS(this.dailyTableRecData) || 0
     if (!jsArr.length) {
       return false
     }
@@ -612,7 +663,10 @@ class ChartStoreDaily {
   }
 
   @computed get dailySalesEvents() {
-    const jsArr = toJS(this.dailySalEventsData) || []
+    // const jsArr = toJS(this.dailySalEventsData) || []
+    // const jsArr = this.isFiveDatePicker ? toJS(this.dailySalEventsByMonth) || [] : toJS(this.dailySalEventsData) || []
+    const jsArr = toJS(this.dailySalEventsByMonth) || []
+    
     if (!jsArr.length) {
       return false
     }

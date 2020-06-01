@@ -65,6 +65,9 @@ const api = {
     abo_cis_kpi_data:'/abo_cis_kpi_data',
     query_daily_sales_line_2:'/query_daily_sales_line_2',
     queryDailySalesLine2ByMonth:'/queryDailySalesLine2ByMonth',//get请求发送月份获取第五屏折线图的历史数据
+    dailySalesTableByMonth:'/dailySalesTableByMonth',//
+    dailyRecTableByMonth:'/dailyRecTableByMonth',
+    dailySalEventsByMonth:'/dailySalEventsByMonth',
 }
 
 export default api

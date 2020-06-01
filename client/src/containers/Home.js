@@ -123,7 +123,11 @@ class Home extends Component {
         this.props.chartStoreDaily.fetchManualInputsData()
         this.props.chartStoreDaily.fetchDailyCommentsData()
         this.props.chartStoreDaily.fetchGetQueryDailySalesLine()
-        // this.props.chartStoreDaily.fetchGetQueryQueryDailySalesLine2ByMonth("",'20')//第五屏折线图的所有数据
+
+        this.props.chartStoreDaily.fetchGetQueryQueryDailySalesLine2ByMonth("",'20')//第五屏折线图的所有数据
+        // this.props.chartStoreDaily.fetchGetQueryDailySalesTableByMonth("",this.isFiveDatePicker)//前两个图的
+        // this.props.chartStoreDaily.fetchGetQueryDailyRecTableByMonth("",'20')//后两个图的
+        this.props.chartStoreDaily.fetchGetQueryDailySalEventsByMonth("",'20')//提示框
 
         this.props.chartStoreSocial.fetchSocialRepBuyData()
         this.props.chartStoreSocial.fetchSocialFoaProdData()
@@ -188,6 +192,9 @@ class Home extends Component {
     clickDateChange = (date) =>{
         this.isFiveDatePicker = moment(date).format('YYYYMMDD')
         this.props.chartStoreDaily.isFiveDatePicker = moment(date).format('YYYYMMDD')
+
+        this.props.chartStoreDaily.fetchGetQueryDailySalesTableByMonth("",this.isFiveDatePicker)//
+        this.props.chartStoreDaily.fetchGetQueryDailyRecTableByMonth("",this.isFiveDatePicker)//后两个图的
         // console.log(moment(date).format('YYYYMMDD'))
         // this.props.chartStore
     }
@@ -295,7 +302,7 @@ class Home extends Component {
                         <div className="page-title bigTatie" id="topTatilShow">
                             <h1 className="main-title" style={{lineHeight:"inherit"}}>{this.selectedTab} <span style={{fontSize:"12px",color:"#417bff"}}>({thisPageTitle})</span></h1>
                             {
-                                this.selectedTab === "AGP KPI" ? "" : this.selectedTab === "Daily Report" ? <div style={{ marginRight: "11%", lineHeight: "30px" }}>{fivePageDateUp}</div> : <div className='custom-control custom-switch perf-switch-wrap' style={{ marginRight: "11%" }}>
+                                this.selectedTab === "AGP KPI" ? "" : this.selectedTab === "Daily Report" ? <div style={{ marginRight: "11%", lineHeight: "30px" }}>{dateFormatFive}</div> : <div className='custom-control custom-switch perf-switch-wrap' style={{ marginRight: "11%" }}>
                                     <label className='perf-lbl' htmlFor='perfYearSwitcher'>
                                         Performance Year
                                 </label>
@@ -312,9 +319,9 @@ class Home extends Component {
                                 </label>
                                 </div>
                             }
-                            {/* {
+                            {
                                 this.selectedTab === "Daily Report" ? <DatePicker defaultValue={moment(dateFormatFive, dateFormat)} format={dateFormat} allowClear={false} inputReadOnly={true} showToday={false} onChange={this.clickDateChange.bind(this)}/> : <MonthPicker defaultValue={moment('2015/01', monthFormat)} format={monthFormat} picker="month" />
-                            } */}
+                            }
                         </div>
                         <div className="main-navigation">
                             <Tabs activeKey={this.selectedTab} onSelect={k => this.selectedTab = k} onClick={this.handleClickToUp.bind(this)}>
