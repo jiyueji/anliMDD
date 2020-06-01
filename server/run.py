@@ -113,5 +113,6 @@ api.add_resource(resources.QueryDailySalesLine2ByMonth, '/queryDailySalesLine2By
 api.add_resource(resources.DailySalesTableByMonth, '/dailySalesTableByMonth')
 api.add_resource(resources.DailyRecTableByMonth, '/dailyRecTableByMonth')
 api.add_resource(resources.DailySalEventsByMonth, '/dailySalEventsByMonth')
+api.add_resource(resources.DailyCommentsByMonth, '/dailyCommentsByMonth')
 if __name__ == '__main__':
       app.run(host='0.0.0.0', port=80)

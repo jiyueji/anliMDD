@@ -555,3 +555,11 @@ class DailySalEventsByMonth(Resource):
 
         queryStr = "select * from qa_test.query_daily_48_promotions where " + "n_month like '" +month + "%'"
         return performQuery(queryStr)
+
+class DailyCommentsByMonth(Resource):
+    def get(self):
+        data = parser3.parse_args()
+        month = data['month']
+
+        queryStr = "select * from dashboard.qa_test.query_daily_49_daily_comments where date='"+month+"'"
+        return performQuery(queryStr)
