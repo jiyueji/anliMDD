@@ -9,8 +9,8 @@ class ApiSerice {
 
     constructor() {
     //    this.api_url = 'http://52.82.35.187:5000'; //'http://52.82.35.187:5000'
-        this.api_url = 'http://localhost:80';
-        // this.api_url = "http://52.82.15.213:5000";//新配置环境
+        // this.api_url = 'http://localhost:80';
+        this.api_url = "http://52.82.15.213:5000";//新配置环境QA
         // this.api_url = 'http://52.83.75.191:5000';//老版本保存
     }
 
@@ -476,6 +476,13 @@ class ApiSerice {
     async get_dailySalEventsByMonth(params,send,token) {
         // console.log(send)
         const res = await this.apiCall(api.dailySalEventsByMonth, 'GET', token, params,send);
+        this.handleCommonError(res);
+        return res.body;
+    }
+
+    async get_dailyCommentsByMonth(params,send,token) {
+        // console.log(send)
+        const res = await this.apiCall(api.dailyCommentsByMonth, 'GET', token, params,send);
         this.handleCommonError(res);
         return res.body;
     }

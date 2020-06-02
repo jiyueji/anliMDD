@@ -68,6 +68,7 @@ const api = {
     dailySalesTableByMonth:'/dailySalesTableByMonth',//
     dailyRecTableByMonth:'/dailyRecTableByMonth',
     dailySalEventsByMonth:'/dailySalEventsByMonth',
+    dailyCommentsByMonth:'/dailyCommentsByMonth',
 }
 
 export default api

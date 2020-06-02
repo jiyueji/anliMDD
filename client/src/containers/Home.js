@@ -28,7 +28,7 @@ import GrowthContainer from '../components/GrowthContainer'
 import DailyReportContainer from '../components/DailyReportContainer'
 import SocialPromContainer from '../components/SocialPromContainer'
 
-import {DatePicker} from 'antd';
+import { DatePicker } from 'antd';
 import moment from 'moment';
 import "antd/dist/antd.css";
 
@@ -47,7 +47,7 @@ class Home extends Component {
         super(props)
         this.state = {
             thisWindowWidth: false,
-            thisPageTitle:"Update on 9th of each month"
+            thisPageTitle: "Update on 9th of each month"
         }
         //        this.onClickEditDashboard = this.onClickEditDashboard.bind(this)
     }
@@ -80,8 +80,8 @@ class Home extends Component {
         this.apiDataUpdate()
     }
 
-    apiDataUpdate(){
-        
+    apiDataUpdate() {
+
         this.props.chartStore.fetchPerformanceData1();
         this.props.chartStore.fetchPerformanceData2Tooltip();
         this.props.chartStore.fetchPerformanceData2Com()
@@ -124,10 +124,11 @@ class Home extends Component {
         this.props.chartStoreDaily.fetchDailyCommentsData()
         this.props.chartStoreDaily.fetchGetQueryDailySalesLine()
 
-        this.props.chartStoreDaily.fetchGetQueryQueryDailySalesLine2ByMonth("",'20')//第五屏折线图的所有数据
+        this.props.chartStoreDaily.fetchGetQueryQueryDailySalesLine2ByMonth("", '20')//第五屏折线图的所有数据
         // this.props.chartStoreDaily.fetchGetQueryDailySalesTableByMonth("",this.isFiveDatePicker)//前两个图的
         // this.props.chartStoreDaily.fetchGetQueryDailyRecTableByMonth("",'20')//后两个图的
-        this.props.chartStoreDaily.fetchGetQueryDailySalEventsByMonth("",'20')//提示框
+        this.props.chartStoreDaily.fetchGetQueryDailySalEventsByMonth("", '20')//提示框
+        // this.props.chartStoreDaily.fetchGetQueryDailyCommentsByMonth("",'20')//下面的文本框
 
         this.props.chartStoreSocial.fetchSocialRepBuyData()
         this.props.chartStoreSocial.fetchSocialFoaProdData()
@@ -163,7 +164,7 @@ class Home extends Component {
         }
     }
     handleClickToUp = () => {
-        var {thisPageTitle} = this.state
+        var { thisPageTitle } = this.state
         // console.log(window.innerWidth)
         // var thisWindowWidth = window.innerWidth
         // window.location.reload()
@@ -171,11 +172,11 @@ class Home extends Component {
         // this.setState({
         //     thisWindowWidth,
         // }),AGP KPI,,,
-        if(this.selectedTab && (this.selectedTab == "Sales Performance" || this.selectedTab == "Customer Dynamics")){
+        if (this.selectedTab && (this.selectedTab == "Sales Performance" || this.selectedTab == "Customer Dynamics")) {
             thisPageTitle = "Update on 9th of each month"
-        }else if(this.selectedTab && (this.selectedTab == "AGP KPI" || this.selectedTab == "ABO Momentum & Goal Tracking")){
+        } else if (this.selectedTab && (this.selectedTab == "AGP KPI" || this.selectedTab == "ABO Momentum & Goal Tracking")) {
             thisPageTitle = "Update on 12th of each month"
-        }else if(this.selectedTab && this.selectedTab == "Daily Report"){
+        } else if (this.selectedTab && this.selectedTab == "Daily Report") {
             thisPageTitle = "Update around 2 pm of each day"
         }
         this.setState({
@@ -183,21 +184,39 @@ class Home extends Component {
         })
         // console.log(this.selectedTab)
     }
-    handleDataUpdate = () =>{
+    handleDataUpdate = () => {
         // this.apiDataUpdate()
         this.props.chartStoreGrowth.fetchGrowthTableData()
         this.props.chartStoreAbo.fetchAboPinPopData()
     }
     //日期范围发生变化的回调
-    clickDateChange = (date) =>{
-        this.isFiveDatePicker = moment(date).format('YYYYMMDD')
-        this.props.chartStoreDaily.isFiveDatePicker = moment(date).format('YYYYMMDD')
+    clickDateChange = (date, dateString) => {
+        if (!this.isFiveDatePicker) {//当刚进入系统的时候获取目前数据的实际月份和日
+            var nowDateMonth = this.props.chartStoreDaily.queryDailySalesLineHandle.dateChangeOld.slice(5, 7)
+            var nowDateDay = this.props.chartStoreDaily.queryDailySalesLineHandle.dateChangeOld.slice(8, 10)
+            this.setState({
+                nowDateMonth,
+                nowDateDay,
+            })
+        }else{
+            var {nowDateMonth,nowDateDay} = this.state
+        }
+        //dateString是目前选择的年加月
+        var antdChangeDateMonth = dateString.slice(5, 7)//目前选择的月
+        var antdChangeDateYear = dateString.slice(0, 4)//目前选择的年
+        var getThisMonthDay = new Date(antdChangeDateYear, antdChangeDateMonth, 0).getDate()//根据选择年月算月有多少天
+        this.isFiveDatePicker = antdChangeDateMonth == nowDateMonth ? moment(date).format('YYYYMM') + nowDateDay : moment(date).format('YYYYMM') + getThisMonthDay
+        //如果没有进行日期选择那么就用最之前的日期进行传值，选择后默认为选择月+最后一天
+        this.props.chartStoreDaily.isFiveDatePicker = antdChangeDateMonth == nowDateMonth ? moment(date).format('YYYYMM') + nowDateDay : moment(date).format('YYYYMM') + getThisMonthDay
 
-        this.props.chartStoreDaily.fetchGetQueryDailySalesTableByMonth("",this.isFiveDatePicker)//
-        this.props.chartStoreDaily.fetchGetQueryDailyRecTableByMonth("",this.isFiveDatePicker)//后两个图的
-        // console.log(moment(date).format('YYYYMMDD'))
-        // this.props.chartStore
+        this.props.chartStoreDaily.fetchGetQueryDailySalesTableByMonth("", this.isFiveDatePicker)//
+        this.props.chartStoreDaily.fetchGetQueryDailyRecTableByMonth("", this.isFiveDatePicker)//后两个图的
+        this.props.chartStoreDaily.fetchGetQueryDailyCommentsByMonth("", this.isFiveDatePicker)
     }
+    //限制日期选择
+    disabledDate = (current) => {
+        return current < moment(new Date('2018/01')) || current > moment().endOf('day')
+      }
     // onClickEditDashboard() {
     //     this.dashboardRef.onClickEditDashboard()
     // }
@@ -254,7 +273,7 @@ class Home extends Component {
         const authStore = this.props.authStore
         const fivePageDateUp = this.props.chartStoreDaily.queryDailySalesLineHandle.pageUpShowDate//第五屏的时间显示
         const monthFormat = 'YYYY/MM';
-        const dateFormat = 'YYYY/MM/DD';
+        const dateFormat = 'YYYY/MM';
         const dateFormatFive = this.props.chartStoreDaily.queryDailySalesLineHandle.dateChangeOld;
         const { MonthPicker } = DatePicker;
         // console.log('AUTH STORE IN RENDER', authStore, authStore.isAuthenticated)
@@ -276,7 +295,7 @@ class Home extends Component {
         //         </section>
         //     </div>
         // }
-        var { thisWindowWidth,thisPageTitle } = this.state
+        var { thisWindowWidth, thisPageTitle } = this.state
         return <div className="dashboard-wrap">
             {authStore.isAuthenticated &&
                 <React.Fragment>
@@ -300,7 +319,7 @@ class Home extends Component {
                             </div>
                         </div> */}
                         <div className="page-title bigTatie" id="topTatilShow">
-                            <h1 className="main-title" style={{lineHeight:"inherit"}}>{this.selectedTab} <span style={{fontSize:"12px",color:"#417bff"}}>({thisPageTitle})</span></h1>
+                            <h1 className="main-title" style={{ lineHeight: "inherit" }}>{this.selectedTab} <span style={{ fontSize: "12px", color: "#417bff" }}>({thisPageTitle})</span></h1>
                             {
                                 this.selectedTab === "AGP KPI" ? "" : this.selectedTab === "Daily Report" ? <div style={{ marginRight: "11%", lineHeight: "30px" }}>{dateFormatFive}</div> : <div className='custom-control custom-switch perf-switch-wrap' style={{ marginRight: "11%" }}>
                                     <label className='perf-lbl' htmlFor='perfYearSwitcher'>
@@ -320,7 +339,7 @@ class Home extends Component {
                                 </div>
                             }
                             {
-                                this.selectedTab === "Daily Report" ? <DatePicker defaultValue={moment(dateFormatFive, dateFormat)} format={dateFormat} allowClear={false} inputReadOnly={true} showToday={false} onChange={this.clickDateChange.bind(this)}/> : <MonthPicker defaultValue={moment('2015/01', monthFormat)} format={monthFormat} picker="month" />
+                                this.selectedTab === "Daily Report" ? <DatePicker picker="month" defaultValue={moment(dateFormatFive, dateFormat)} format={dateFormat} allowClear={false} inputReadOnly={true} showToday={true} onChange={this.clickDateChange.bind(this)} disabledDate={this.disabledDate.bind(this)}/> : <MonthPicker defaultValue={moment('2020/06', monthFormat)} format={monthFormat} picker="month" />
                             }
                         </div>
                         <div className="main-navigation">

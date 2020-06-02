@@ -128,7 +128,7 @@ export default class PicFourChange extends Component {
         this.dateUpdateShowHandle(data, data2,data3,dataOneLine,dataPromptBox)
     }
     dateUpdateShowHandle(data, data2,data3,dataOneLine,dataPromptBox){
-        console.log(dataPromptBox,"dataPromptBox")
+        // console.log(dataPromptBox,"dataPromptBox")
         var changeName = []
         var netData = {}
         var bvData = {}

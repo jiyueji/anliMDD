@@ -26,6 +26,23 @@ class ChartStoreDaily {
   @observable dailySalesTableByMonth = []
   @observable dailyRecTableByMonth = []
   @observable dailySalEventsByMonth = []
+  @observable dailyCommentsByMonth = []
+
+  @action async fetchGetQueryDailyCommentsByMonth(params,send) {
+    try {
+      const data = await ApiService.get_dailyCommentsByMonth(params,send)
+      runInAction(() => {
+        this.isLoading = false
+        this.dailyCommentsByMonth = data ? JSON.parse(data) : []
+      })
+    } catch (e) {
+      runInAction(() => {
+        this.isLoading = false
+        this.isFailure = true
+        this.dailyCommentsByMonth = []
+      })
+    }
+  }
 
   @action async fetchGetQueryDailySalEventsByMonth(params,send) {
     try {
@@ -376,12 +393,16 @@ class ChartStoreDaily {
     // } )
     var pageUpDate = 0
 
-    sales_data.map((item, index) => {
+    sales_data.map((item, index) => {//根据数据的多少算出日期
       if (item.type && item.type == "NET_SALES" && item.y) {
         pageUpDate++
       }
     })
-    var pageUpShowDate = hlp.yearMonthFiveTooltipToStr(maxMonth) + "." + pageUpDate + " " + maxYearStr
+    if(pageUpDate < 10){//给日期补0
+      pageUpDate = "0" + pageUpDate
+    }
+    // var pageUpShowDate = hlp.yearMonthFiveTooltipToStr(maxMonth) + "." + pageUpDate + " " + maxYearStr
+    var pageUpShowDate = this.isFiveDatePicker ? hlp.yearMonthFiveTooltipToStr(maxMonth) + "." + this.isFiveDatePicker.slice(6, 8) + " " + maxYearStr : hlp.yearMonthFiveTooltipToStr(maxMonth) + "." + pageUpDate + " " + maxYearStr
     var dateChangeOld = this.isFiveDatePicker ? maxYear + "/" + maxMonthStr.slice(4, 6) + "/" + this.isFiveDatePicker.slice(6, 8) : maxYear + "/" + maxMonthStr.slice(4, 6) + "/" + pageUpDate
     return {
       sales_data,
@@ -695,7 +716,8 @@ class ChartStoreDaily {
   }
 
   @computed get dailyComments() {
-    const jsArr = toJS(this.dailyCommentsData) || []
+    // const jsArr = toJS(this.dailyCommentsData) || []
+    const jsArr = this.isFiveDatePicker ? toJS(this.dailyCommentsByMonth) || [] : toJS(this.dailyCommentsData) || []
     if (!jsArr.length) {
       return false
     }
