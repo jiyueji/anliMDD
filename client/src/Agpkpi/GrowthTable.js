@@ -122,7 +122,7 @@ export default class GrowthTable extends Component {
     componentDidMount() {
         const allData = this.props.data || {}
         const data = allData.tableData || []
-        console.log(allData, "第二页面的表格allData")
+        // console.log(allData, "第二页面的表格allData")
 
         const maxMonthStr = String(hlp.yearMonthToStr(allData.maxMonth))
         const maxYear = String(allData.maxYear)

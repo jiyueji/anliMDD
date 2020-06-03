@@ -128,7 +128,7 @@ export default class PicFourChange extends Component {
         this.dateUpdateShowHandle(data, data2,data3,dataOneLine,dataPromptBox)
     }
     dateUpdateShowHandle(data, data2,data3,dataOneLine,dataPromptBox){
-        // console.log(dataPromptBox,"dataPromptBox")
+        // console.log(data3,"data3")
         var changeName = []
         var netData = {}
         var bvData = {}
@@ -717,7 +717,7 @@ export default class PicFourChange extends Component {
                         {
                             name: this.state.data3MaxMonth + "/" + this.state.data3MaxYear,
                             data: this.state.data3ThisYear,
-                            animationDuration: 2000,
+                            animationDuration:0,
                             type: 'line',
                             smooth: true,
                             symbolSize: 8, //折线点的大小
@@ -737,6 +737,7 @@ export default class PicFourChange extends Component {
                         {
                             name: this.state.data3MaxMonth + "/" + this.state.data3PrevYear,
                             data: this.state.data3LastYear,
+                            animationDuration:0,
                             type: 'line',
                             smooth: true,
                             symbol: "none", //去掉折线点
@@ -782,6 +783,7 @@ export default class PicFourChange extends Component {
                             type: 'effectScatter',
                             coordinateSystem: 'cartesian2d',
                             data: this.state.thisYearDataTwinkle, //2d坐标系
+                            animationDuration:0,
                             symbolSize: 10,
                             label: {
                                 show: false,
@@ -851,7 +853,7 @@ export default class PicFourChange extends Component {
                             rippleEffect: {
                                 brushType: 'stroke'
                             },
-                            hoverAnimation: true,
+                            // hoverAnimation: true,
                             itemStyle: {
                                 normal: {
                                     color: '#4d96f1',
@@ -871,6 +873,7 @@ export default class PicFourChange extends Component {
         window.addEventListener('resize', function () {
             myChartThree && myChartThree.resize && myChartThree.resize();
         });
+        myChartThree.clear();//把数据完全清除重新加载
         myChartThree.setOption({ ...defaultFourOpt, ...chartArray[0] });
         // this.segmentsHandleEcharts(chartArray, defaultFourOpt)
     }
@@ -897,8 +900,10 @@ export default class PicFourChange extends Component {
         window.addEventListener('resize', function () {
             pieAngleEcharts.resize();
         });
+        pieAngleEcharts.clear();//把数据完全清除重新加载
         pieAngleEcharts.setOption({
             // backgroundColor: '#2c343c',
+            animationDuration:0,
             tooltip: {
                 trigger: 'item',
                 formatter: (data) => {

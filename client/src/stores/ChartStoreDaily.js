@@ -727,7 +727,7 @@ class ChartStoreDaily {
     const maxDateRaw = dataState.length && dataState[0].date || 0
     const maxMonth = parseInt(maxDateRaw)
     const maxDate = dLib.parse(maxDateRaw, 'YYYYMMDD')
-    const maxDateStr = dLib.format(maxDate, 'MMM.DD YYYY')
+    const maxDateStr = dLib.format(maxDate, 'MMM.D YYYY')
 
     dataState = _.sortBy(dataState, (o) => parseInt(o.order_row));
     dataState = _.map(dataState, 'comment_row')
