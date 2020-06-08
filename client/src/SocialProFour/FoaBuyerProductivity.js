@@ -7,10 +7,10 @@ export default class FoaBuyerProductivity extends Component {
     constructor() {
         super();
         this.state = {
-            numFoaWithBvData:[],
-            numNewFoaData:[],
-            productivityData:[],
-            monthShowAbo:['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            numFoaWithBvData: [],
+            numNewFoaData: [],
+            productivityData: [],
+            monthShowAbo: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             // maxYShow:"",
         }
     }
@@ -46,20 +46,33 @@ export default class FoaBuyerProductivity extends Component {
         var datas = this.props.datas || {}
         var data = this.props.data || {}
         // console.log(data,"111")
-        var {num_foa_with_bv,num_new_foa} = data
-        var {avg_bv_data} = datas
+        var { num_foa_with_bv, num_new_foa } = data
+        var { avg_bv_data } = datas
+        var { monthShowAbo } = this.state
         var numFoaWithBvData = []
         var numNewFoaData = []
         var productivityData = []
-        num_foa_with_bv && num_foa_with_bv.length >= 0 ? num_foa_with_bv.map((item,index)=>{
+        num_foa_with_bv && num_foa_with_bv.length >= 0 ? num_foa_with_bv.map((item, index) => {
             numFoaWithBvData.push(Math.round(item.y / 1000))
         }) : ""
-        num_new_foa && num_new_foa.length >= 0 ? num_new_foa.map((item,index)=>{
+        num_new_foa && num_new_foa.length >= 0 ? num_new_foa.map((item, index) => {
             numNewFoaData.push(Math.round(item.y / 1000))
         }) : ""
-        avg_bv_data && avg_bv_data.length >= 0 ? avg_bv_data.map((item,index)=>{
+        avg_bv_data && avg_bv_data.length >= 0 ? avg_bv_data.map((item, index) => {
             productivityData.push(Math.round(item.y))
         }) : ""
+        //判断当前月份是否有数据
+        for (var i = 0; i < 12; i++) {
+            if (num_foa_with_bv && num_foa_with_bv.length > 0 && monthShowAbo) {
+                if (num_foa_with_bv[0].x == monthShowAbo[i]) {
+                    break
+                } else {
+                    numFoaWithBvData.unshift("")
+                    numNewFoaData.unshift("")
+                    productivityData.unshift("")
+                }
+            }
+        }
         // var maxYShow = numFoaWithBvData[0];
         // for (var i = 1; i < numFoaWithBvData.length; i++) {
         //     var cur = numFoaWithBvData[i];
@@ -76,7 +89,7 @@ export default class FoaBuyerProductivity extends Component {
         // }
         // maxYShow = formatInt(maxYShow, String(maxYShow).length - 1)
         this.setState({
-            numFoaWithBvData,numNewFoaData,productivityData,
+            numFoaWithBvData, numNewFoaData, productivityData,
         }, () => {
             this.foaBuyerProductivityEcharts()
         })
@@ -172,7 +185,7 @@ export default class FoaBuyerProductivity extends Component {
                     },
                     // min: -200,
                     // max: 100,
-                    boundaryGap: ['250%',0],
+                    boundaryGap: ['250%', 0],
                     nameGap: 10,
                     axisTick: {
                         show: false //隐藏X轴刻度
@@ -197,14 +210,14 @@ export default class FoaBuyerProductivity extends Component {
                 // itemGap: 30,//图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
                 // data: ['Actual Renewal Rate', 'Prediction Renewal Rate'],
                 data: [
-                    {name: 'FOA Buyer Count', icon: "image://" + foaRedkuang },
+                    { name: 'FOA Buyer Count', icon: "image://" + foaRedkuang },
                     { name: 'inclu.new FOA Buyer', icon: 'rect' },
                     { name: 'Productivity($)', icon: "line" }
                 ],
             },
             series: [{
                 // 分隔
-                type:"pictorialBar",
+                type: "pictorialBar",
                 name: "inclu.new FOA Buyer",
                 itemStyle: {
                     normal: {
@@ -215,7 +228,7 @@ export default class FoaBuyerProductivity extends Component {
                     normal: {
                         show: true,
                         position: "inside",
-                        formatter:(val) => {
+                        formatter: (val) => {
                             // console.log(val)
                             var value = val.data
                             var valueShow = value.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')

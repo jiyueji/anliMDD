@@ -20,6 +20,8 @@ import UserListContainer from './containers/UserListContainer'
 import RegisterContainer from './containers/RegisterContainer'
 import routes from './routes'
 
+// import { useStores } from '../services/StoreUtils'
+
 import * as serviceWorker from './registerServiceWorker';
 
 
@@ -35,6 +37,16 @@ const stores = {
     chartStoreSocial
 };
 
+// componentDidMount(){
+//     const stores = useStores()
+//     const authStoreLogin = stores.authStore
+//     const handleLogin = async (params) => {
+//         // console.log(params)
+//         var paramss = {username: "user", password: "password"}
+//         await authStoreLogin.login(paramss)
+//     }
+// }
+
 ReactDOM.render(
     <Provider {...stores}>
         {/* <App>
@@ -49,7 +61,9 @@ ReactDOM.render(
         </App> */}
         <Router history={history}>
             <Switch>
+                {/* <Route exact path="/" component={Home} /> */}
                 <Route path="/aaa" component={AAA} />
+                <Route path="/bbb" component={Home} />
                 <App>
                     <Router history={history}>
                         <Switch>

@@ -11,6 +11,7 @@ class ChartStoreSocial {
     @observable isLoading = true
     @observable isFailure = false
     @observable isPerfYear = false
+    @observable isAllDatePicker = ""//时间选择
     @observable socialRepBuyData = []
     @observable socialFoaProdData = []
     @observable socialPopData = []
@@ -349,13 +350,14 @@ class ChartStoreSocial {
 
       const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'
       if (dataState.length) {
-        maxYear = dataState[0][`max_${YEAR_TYPE}`]
+        // maxYear = dataState[0][`max_${YEAR_TYPE}`]
+        maxYear = this.isAllDatePicker ? this.isAllDatePicker.slice(0, 4) : dataState[0][`max_${YEAR_TYPE}`]
         maxMonthStr = dataState[0].max_n_month
         maxMonth = parseInt(maxMonthStr.slice(4, 6))
       }
 
       dataState=_.filter(dataState, (o)=>{
-        return o[YEAR_TYPE] === maxYear
+        return o[YEAR_TYPE] == maxYear
       })
 
       const MONTH_TYPE = this.isPerfYear ? 'nth_month_of_perf_yr' : 'month'
@@ -436,15 +438,21 @@ class ChartStoreSocial {
       let maxYear, maxMonth, maxMonthStr, prevYear
 
       const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'
+      // if (dataState.length) {
+      //   maxYear = dataState[0][`max_${YEAR_TYPE}`]
+      //   maxMonthStr = dataState[0].max_n_month
+      //   maxMonth = parseInt(maxMonthStr.slice(4, 6))
+      //   prevYear = maxYear-1
+      // }
       if (dataState.length) {
-        maxYear = dataState[0][`max_${YEAR_TYPE}`]
+        maxYear = this.isAllDatePicker ? this.isAllDatePicker.slice(0, 4) : dataState[0][`max_${YEAR_TYPE}`]
         maxMonthStr = dataState[0].max_n_month
         maxMonth = parseInt(maxMonthStr.slice(4, 6))
         prevYear = maxYear-1
       }
 
       dataState=_.filter(dataState, (o)=>{
-        return o[YEAR_TYPE] === maxYear
+        return o[YEAR_TYPE] == maxYear
       })
 
       const MONTH_TYPE = this.isPerfYear ? 'nth_month_of_perf_yr' : 'month'
@@ -508,7 +516,6 @@ class ChartStoreSocial {
       })
 
       const MONTH_TYPE = this.isPerfYear ? 'nth_month_of_perf_yr' : 'month'
-
 
       let new_foa_ly_data = _.sortBy( _.map( dataState, (o) => {
         return {
@@ -575,17 +582,16 @@ class ChartStoreSocial {
 
       const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'
       if (dataState.length) {
-        maxYear = dataState[0][`max_${YEAR_TYPE}`]
+        maxYear = this.isAllDatePicker ? this.isAllDatePicker.slice(0, 4) : dataState[0][`max_${YEAR_TYPE}`]
         maxMonthStr = dataState[0].max_n_month
         maxMonth = parseInt(maxMonthStr.slice(4, 6))
       }
 
       dataState=_.filter(dataState, (o)=>{
-        return o[YEAR_TYPE] === maxYear
+        return o[YEAR_TYPE] == maxYear
       })
 
       const MONTH_TYPE = this.isPerfYear ? 'nth_month_of_perf_yr' : 'month'
-
       let total_3e_ly_data = _.sortBy( _.map( dataState, (o) => {
         return {
           x: MONTHS_MAP[o.month],
@@ -698,14 +704,16 @@ class ChartStoreSocial {
       let maxYear, maxMonth, maxMonthStr
 
       const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'
+
       if (dataState.length) {
-        maxYear = dataState[0][`max_${YEAR_TYPE}`]
+        // maxYear = dataState[0][`max_${YEAR_TYPE}`]
+        maxYear = this.isAllDatePicker ? this.isAllDatePicker.slice(0, 4) : dataState[0][`max_${YEAR_TYPE}`]
         maxMonthStr = dataState[0].max_n_month
         maxMonth = parseInt(maxMonthStr.slice(4, 6))
       }
 
       dataState=_.filter(dataState, (o)=>{
-        return o[YEAR_TYPE] === maxYear
+        return o[YEAR_TYPE] == maxYear
       })
 
       const MONTH_TYPE = this.isPerfYear ? 'nth_month_of_perf_yr' : 'month'
@@ -771,23 +779,26 @@ class ChartStoreSocial {
       let maxYear, maxMonth, maxMonthStr
 
       const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'
+      // console.log(dataState)
       if (dataState.length) {
-        maxYear = dataState[0][`max_${YEAR_TYPE}`]
+        // maxYear = dataState[0][`max_${YEAR_TYPE}`]
+        maxYear = this.isAllDatePicker ? this.isAllDatePicker.slice(0, 4) : dataState[0][`max_${YEAR_TYPE}`]
         maxMonthStr = dataState[0].max_n_month
         maxMonth = parseInt(maxMonthStr.slice(4, 6))
       }
 
       dataState=_.filter(dataState, (o)=>{
-        return o[YEAR_TYPE] === maxYear
+        return o[YEAR_TYPE] == maxYear
       })
-
+      // console.log(dataState)
       const MONTH_TYPE = this.isPerfYear ? 'nth_month_of_perf_yr' : 'month'
 
       let foa_ref_link_data = _.sortBy( _.map( dataState, (o) => {
         return {
           x: MONTHS_MAP[o.month],
           y: o.num_new_foa_referred_thru_link || null,
-          rank: o[MONTH_TYPE]
+          rank: o[MONTH_TYPE],
+          monthNum:o.month,
           //labelTooltip: 'Monthly sales ',
         }
       } ), 'rank')
