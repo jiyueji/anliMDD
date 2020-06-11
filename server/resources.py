@@ -539,7 +539,7 @@ class DailySalesTableByMonth(Resource):
 
         queryStr = "select * from qa_test.query_daily_25_daily_sales where n_date='"+month+"'"
         return performQuery(queryStr)
-
+]
 class DailyRecTableByMonth(Resource):
     def get(self):
         data = parser3.parse_args()
