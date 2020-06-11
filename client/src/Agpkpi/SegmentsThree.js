@@ -73,19 +73,19 @@ export default class SegmentsThree extends Component {
         var salesDeveloping = []
         var salesBuilding = []
         var salesLeader = []
-        dataSales.segments[0] ? dataSales.segments[0].chartData.map((item,index)=>{
+        dataSales.segments ? dataSales.segments[0].chartData.map((item,index)=>{
             salesCustomer.push(item.y)
         }) : ""
-        dataSales.segments[1] ? dataSales.segments[1].chartData.map((item,index)=>{
+        dataSales.segments ? dataSales.segments[1].chartData.map((item,index)=>{
             salesPurchasing.push(item.y)
         }) : ""
-        dataSales.segments[2] ? dataSales.segments[2].chartData.map((item,index)=>{
+        dataSales.segments ? dataSales.segments[2].chartData.map((item,index)=>{
             salesDeveloping.push(item.y)
         }) : ""
-        dataSales.segments[3] ? dataSales.segments[3].chartData.map((item,index)=>{
+        dataSales.segments ? dataSales.segments[3].chartData.map((item,index)=>{
             salesBuilding.push(item.y)
         }) : ""
-        dataSales.segments[4] ? dataSales.segments[4].chartData.map((item,index)=>{
+        dataSales.segments ? dataSales.segments[4].chartData.map((item,index)=>{
             salesLeader.push(item.y)
         }) : ""
 
@@ -94,19 +94,19 @@ export default class SegmentsThree extends Component {
         var populationDeveloping = []
         var populationBuilding = []
         var populationLeader = []
-        dataPopulation.segments[0] ? dataPopulation.segments[0].chartData.map((item,index)=>{
+        dataPopulation.segments ? dataPopulation.segments[0].chartData.map((item,index)=>{
             populationCustomer.push(item.y)
         }) : ""
-        dataPopulation.segments[1] ? dataPopulation.segments[1].chartData.map((item,index)=>{
+        dataPopulation.segments ? dataPopulation.segments[1].chartData.map((item,index)=>{
             populationPurchasing.push(item.y)
         }) : ""
-        dataPopulation.segments[2] ? dataPopulation.segments[2].chartData.map((item,index)=>{
+        dataPopulation.segments ? dataPopulation.segments[2].chartData.map((item,index)=>{
             populationDeveloping.push(item.y)
         }) : ""
-        dataPopulation.segments[3] ? dataPopulation.segments[3].chartData.map((item,index)=>{
+        dataPopulation.segments ? dataPopulation.segments[3].chartData.map((item,index)=>{
             populationBuilding.push(item.y)
         }) : ""
-        dataPopulation.segments[4] ? dataPopulation.segments[4].chartData.map((item,index)=>{
+        dataPopulation.segments ? dataPopulation.segments[4].chartData.map((item,index)=>{
             populationLeader.push(item.y)
         }) : ""
 
@@ -115,19 +115,19 @@ export default class SegmentsThree extends Component {
         var productivityDeveloping = []
         var productivityBuilding = []
         var productivityLeader = []
-        dataProductivity.segments[0] ? dataProductivity.segments[0].chartData.map((item,index)=>{
+        dataProductivity.segments ? dataProductivity.segments[0].chartData.map((item,index)=>{
             productivityCustomer.push(item.y)
         }) : ""
-        dataProductivity.segments[1] ? dataProductivity.segments[1].chartData.map((item,index)=>{
+        dataProductivity.segments ? dataProductivity.segments[1].chartData.map((item,index)=>{
             productivityPurchasing.push(item.y)
         }) : ""
-        dataProductivity.segments[2] ? dataProductivity.segments[2].chartData.map((item,index)=>{
+        dataProductivity.segments ? dataProductivity.segments[2].chartData.map((item,index)=>{
             productivityDeveloping.push(item.y)
         }) : ""
-        dataProductivity.segments[3] ? dataProductivity.segments[3].chartData.map((item,index)=>{
+        dataProductivity.segments ? dataProductivity.segments[3].chartData.map((item,index)=>{
             productivityBuilding.push(item.y)
         }) : ""
-        dataProductivity.segments[4] ? dataProductivity.segments[4].chartData.map((item,index)=>{
+        dataProductivity.segments ? dataProductivity.segments[4].chartData.map((item,index)=>{
             productivityLeader.push(item.y)
         }) : ""
         this.setState({

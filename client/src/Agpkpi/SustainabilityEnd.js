@@ -88,9 +88,9 @@ export default class Sustainability extends Component {
         var chartData = this.props.data || {}
         var maxCalendarYear = chartData.maxCalendarYear
         var sustainData = []
-        chartData.eom_pct_of_sales_actual_data.map((item, index) => {
+        chartData.eom_pct_of_sales_actual_data ? chartData.eom_pct_of_sales_actual_data.map((item, index) => {
             sustainData.push(Math.round(item.y * 100))
-        })
+        }) : ""
 
         var ytd = chartData.last_ytd_end_of_month_pct || 0
         var ytdShowFont = (ytd * 100).toFixed(1)

@@ -105,7 +105,7 @@ export default class LineChartMonthlyEchaets extends Component {
     }
     componentDidMount() {
         var allData = this.props.data;
-        var thisYearLength = allData.actual_sales_data.length || 12
+        var thisYearLength = allData.actual_sales_data ? allData.actual_sales_data.length || 12 : 12
         // revenue_forecast_usd_data: Array(2)
         // 0: {x: "Nov", y: 194158289.726068, labelTooltip: "Monthly Sales"}
         // 1: {x: "Dec", y: 205400000, labelTooltip: "Sales Forecast"}

@@ -31,12 +31,13 @@ import SocialPromContainer from '../components/SocialPromContainer'
 import { DatePicker } from 'antd';
 import moment from 'moment';
 import "antd/dist/antd.css";
+import { withOktaAuth } from '@okta/okta-react';
 
 /**
  * Home page extra component
  */
 @inject('authStore', 'chartStore', 'chartStoreAbo', 'chartStoreGrowth', 'chartStoreDaily', 'chartStoreSocial') @observer
-class Home extends Component {
+export default withOktaAuth(class Home extends Component {
 
     @observable selectedTab = 'Sales Performance'
     @observable isPerfYear = true
@@ -46,13 +47,23 @@ class Home extends Component {
 
     constructor(props) {
         super(props)
+        this.login = this.login.bind(this);
+        this.logout = this.logout.bind(this);
         this.state = {
             thisWindowWidth: false,
             thisPageTitle: "Update on 9th of each month",
-            nowDateMonth:"",
-            nowDateDay:"",
+            nowDateMonth: "",
+            nowDateDay: "",
         }
         //        this.onClickEditDashboard = this.onClickEditDashboard.bind(this)
+    }
+
+    async login() {
+        this.props.authService.login('/');
+    }
+
+    async logout() {
+        this.props.authService.logout('/');
     }
 
     componentDidMount() {
@@ -84,7 +95,6 @@ class Home extends Component {
     }
 
     apiDataUpdate() {
-
         this.props.chartStore.fetchPerformanceData1();
         this.props.chartStore.fetchPerformanceData2Tooltip();
         this.props.chartStore.fetchPerformanceData2Com()
@@ -305,96 +315,125 @@ class Home extends Component {
         //     </div>
         // }
         var { thisWindowWidth, thisPageTitle } = this.state
-        return <div className="dashboard-wrap">
-            {authStore.isAuthenticated &&
-                <React.Fragment>
-                    <div className="container-fluid">
-                        {/* <div className="col-md-5" style={{ position: 'fixed', left: '88%', zIndex: '11' }}>
-                            <div className='custom-control custom-switch perf-switch-wrap'>
-                                <label className='perf-lbl' htmlFor='perfYearSwitcher'>
-                                    PF
-                                                        </label>
-                                <input
-                                    type='checkbox'
-                                    className='custom-control-input'
-                                    id='perfYearSwitcher'
-                                    checked={this.isPerfYear}
-                                    onChange={this.handleSwitchChange()}
-                                    readOnly
-                                />
-                                <label className='custom-control-label' htmlFor='perfYearSwitcher'>
-                                    CY
-                                                        </label>
-                            </div>
-                        </div> */}
-                        <div className="page-title bigTatie" id="topTatilShow">
-                            <h1 className="main-title" style={{ lineHeight: "inherit" }}>{this.selectedTab} <span style={{ fontSize: "12px", color: "#417bff" }}>({thisPageTitle})</span></h1>
-                            {
-                                this.selectedTab === "AGP KPI" ? "" : this.selectedTab === "Daily Report" ? <div style={{ marginRight: "11%", lineHeight: "30px" }}>{dateFormatFive}</div> : <div className='custom-control custom-switch perf-switch-wrap' style={{ marginRight: "11%" }}>
-                                    <label className='perf-lbl' htmlFor='perfYearSwitcher'>
-                                        Performance Year
-                                </label>
-                                    <input
-                                        type='checkbox'
-                                        className='custom-control-input'
-                                        id='perfYearSwitcher'
-                                        checked={this.isPerfYear}
-                                        onChange={this.handleSwitchChange()}
-                                        readOnly
-                                    />
-                                    <label className='custom-control-label' htmlFor='perfYearSwitcher'>
-                                        Calendar Year
-                                </label>
-                                </div>
-                            }
-                            {
-                                this.selectedTab === "Daily Report" ? <DatePicker picker="month" defaultValue={moment(dateFormatFive, dateFormat)} format={dateFormat} allowClear={false} inputReadOnly={true} showToday={true} onChange={this.clickDateChange.bind(this)} disabledDate={this.disabledDate.bind(this)} /> : <MonthPicker defaultValue={moment('2020/06', monthFormat)} format={monthFormat} picker="month" allowClear={false} inputReadOnly={true} showToday={true} onChange={this.clickDateChangeAll.bind(this)} disabledDate={this.disabledDate.bind(this)} />
-                            }
-                        </div>
-                        <div className="main-navigation">
-                            <Tabs activeKey={this.selectedTab} onSelect={k => this.selectedTab = k} onClick={this.handleClickToUp.bind(this)}>
-                                {/* <Tab eventKey="Home" title={<div><i className="fas fa-home"></i>Home</div>}>
-                            <HomeContainer />
-                        </Tab> */}
-                                <Tab eventKey="Sales Performance" title={<div><i className="fas fa-dollar-sign"></i>Sales Performance</div>}>
-                                    {/* <div className="page-title bigTatie" id="topTatilShow">
-                                        <div className="container-fluid">
-                                            <div className="row align-items-center headerTitle">
-                                                <div className="col-md-4">
-                                                    <h2 className="main-subtitle">Overview</h2>
-                                                    <h1 className="main-title">{this.selectedTab}</h1>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> */}
-                                    <SalesPerformanceContainer thisWindowWidth={thisWindowWidth} />
-                                </Tab>
-                                <Tab eventKey="AGP KPI" title={<div><i className="fas fa-chart-bar"></i>AGP KPI</div>}>
-                                    <GrowthContainer />
-                                </Tab>
-                                <Tab eventKey="ABO Momentum & Goal Tracking" title={<div><i className="fas fa-dollar-sign"></i>ABO Momentum & Goal Tracking</div>}>
-                                    <AboDynamicsContainer />
-                                </Tab>
-                                {/* <Tab eventKey="ABO Leader Dynamics" title={<div><i className="fas fa-home"></i>ABO Leader Dynamics</div>}>
-                            <AboLeaderContainer/>
-                        </Tab> */}
-                                <Tab eventKey="Customer Dynamics" title={<div><i className="fas fa-home"></i>Customer Dynamics</div>}>
-                                    <SocialPromContainer />
-                                </Tab>
-                                <Tab eventKey="Daily Report" title={<div><i className="fas fa-home"></i>Daily Report</div>}>
-                                    <DailyReportContainer />
-                                    {/* <CardsLayout onRef={ref => (this.dashboardRef = ref)}/> */}
-                                </Tab>
-                                {/* <Tab style={{}} className="aaaa"  title={<div onClick={this.handleDataUpdate.bind(this)}><i className="fa fa-retweet" aria-hidden="true"></i></div>}>
-                                </Tab> */}
-                            </Tabs>
-                        </div>
+        if (this.props.authState.isPending) return <div>Loading...</div>;
+        return this.props.authState.isAuthenticated ?
+            <div className="dashboard-wrap">
+                {authStore.isAuthenticated &&
+                    <React.Fragment>
+                        <div className="container-fluid">
+                            {/* <div className="col-md-5" style={{ position: 'fixed', left: '88%', zIndex: '11' }}>
+                    <div className='custom-control custom-switch perf-switch-wrap'>
+                        <label className='perf-lbl' htmlFor='perfYearSwitcher'>
+                            PF
+                                                </label>
+                        <input
+                            type='checkbox'
+                            className='custom-control-input'
+                            id='perfYearSwitcher'
+                            checked={this.isPerfYear}
+                            onChange={this.handleSwitchChange()}
+                            readOnly
+                        />
+                        <label className='custom-control-label' htmlFor='perfYearSwitcher'>
+                            CY
+                                                </label>
                     </div>
-                </React.Fragment>
-            }
-        </div>
+                </div> */}
+                            <div className="page-title bigTatie" id="topTatilShow">
+                                <h1 className="main-title" style={{ lineHeight: "inherit" }}>{this.selectedTab} <span style={{ fontSize: "12px", color: "#417bff" }}>({thisPageTitle})</span></h1>
+                                <button onClick={this.logout}>Logout</button>
+                                {
+                                    this.selectedTab === "AGP KPI" ? "" : this.selectedTab === "Daily Report" ? <div style={{ marginRight: "11%", lineHeight: "30px" }}>{dateFormatFive}</div> : <div className='custom-control custom-switch perf-switch-wrap' style={{ marginRight: "11%" }}>
+                                        <label className='perf-lbl' htmlFor='perfYearSwitcher'>
+                                            Performance Year
+                        </label>
+                                        <input
+                                            type='checkbox'
+                                            className='custom-control-input'
+                                            id='perfYearSwitcher'
+                                            checked={this.isPerfYear}
+                                            onChange={this.handleSwitchChange()}
+                                            readOnly
+                                        />
+                                        <label className='custom-control-label' htmlFor='perfYearSwitcher'>
+                                            Calendar Year
+                        </label>
+                                    </div>
+                                }
+                                {
+                                    this.selectedTab === "Daily Report" ? <DatePicker picker="month" defaultValue={moment(dateFormatFive, dateFormat)} format={dateFormat} allowClear={false} inputReadOnly={true} showToday={true} onChange={this.clickDateChange.bind(this)} disabledDate={this.disabledDate.bind(this)} /> : <MonthPicker defaultValue={moment('2020/06', monthFormat)} format={monthFormat} picker="month" allowClear={false} inputReadOnly={true} showToday={true} onChange={this.clickDateChangeAll.bind(this)} disabledDate={this.disabledDate.bind(this)} />
+                                }
+                            </div>
+                            <div className="main-navigation">
+                                <Tabs activeKey={this.selectedTab} onSelect={k => this.selectedTab = k} onClick={this.handleClickToUp.bind(this)}>
+                                    {/* <Tab eventKey="Home" title={<div><i className="fas fa-home"></i>Home</div>}>
+                    <HomeContainer />
+                </Tab> */}
+                                    <Tab eventKey="Sales Performance" title={<div><i className="fas fa-dollar-sign"></i>Sales Performance</div>}>
+                                        {/* <div className="page-title bigTatie" id="topTatilShow">
+                                <div className="container-fluid">
+                                    <div className="row align-items-center headerTitle">
+                                        <div className="col-md-4">
+                                            <h2 className="main-subtitle">Overview</h2>
+                                            <h1 className="main-title">{this.selectedTab}</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> */}
+                                        <SalesPerformanceContainer thisWindowWidth={thisWindowWidth} />
+                                    </Tab>
+                                    <Tab eventKey="AGP KPI" title={<div><i className="fas fa-chart-bar"></i>AGP KPI</div>}>
+                                        <GrowthContainer />
+                                    </Tab>
+                                    <Tab eventKey="ABO Momentum & Goal Tracking" title={<div><i className="fas fa-dollar-sign"></i>ABO Momentum & Goal Tracking</div>}>
+                                        <AboDynamicsContainer />
+                                    </Tab>
+                                    {/* <Tab eventKey="ABO Leader Dynamics" title={<div><i className="fas fa-home"></i>ABO Leader Dynamics</div>}>
+                    <AboLeaderContainer/>
+                </Tab> */}
+                                    <Tab eventKey="Customer Dynamics" title={<div><i className="fas fa-home"></i>Customer Dynamics</div>}>
+                                        <SocialPromContainer />
+                                    </Tab>
+                                    <Tab eventKey="Daily Report" title={<div><i className="fas fa-home"></i>Daily Report</div>}>
+                                        <DailyReportContainer />
+                                        {/* <CardsLayout onRef={ref => (this.dashboardRef = ref)}/> */}
+                                    </Tab>
+                                    {/* <Tab style={{}} className="aaaa"  title={<div onClick={this.handleDataUpdate.bind(this)}><i className="fa fa-retweet" aria-hidden="true"></i></div>}>
+                        </Tab> */}
+                                </Tabs>
+                            </div>
+                        </div>
+                    </React.Fragment>
+                }
+            </div> :
+            <button onClick={this.login}>Login</button>;
     }
+})
 
-}
+// export default Home
 
-export default Home
+// import React, { Component } from 'react';
+// import { withOktaAuth } from '@okta/okta-react';
+
+// export default withOktaAuth(class Home extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.login = this.login.bind(this);
+//     this.logout = this.logout.bind(this);
+//   }
+
+//   async login() {
+//     this.props.authService.login('/');
+//   }
+
+//   async logout() {
+//     this.props.authService.logout('/');
+//   }
+
+//   render() {
+//     if (this.props.authState.isPending) return <div>Loading...</div>;
+//     return this.props.authState.isAuthenticated ?
+//       <button onClick={this.logout}>Logout</button> :
+//       <button onClick={this.login}>Login</button>;
+//   }
+// });

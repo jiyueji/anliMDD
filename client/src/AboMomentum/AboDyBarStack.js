@@ -48,17 +48,17 @@ export default class AboDyBarStack extends Component {
         // churn_abo_data: (2) [{…}, {…}]
         // months_data: (2) [{…}, {…}]
         var newAboData = []
-        data.new_abo_data.map((item, index) => {
+        data.new_abo_data ? data.new_abo_data.map((item, index) => {
             newAboData.push(item.y)
-        })
+        }) : ""
         var enewAboData = []
-        data.renew_abo_data.map((item, index) => {
+        data.renew_abo_data ? data.renew_abo_data.map((item, index) => {
             enewAboData.push((item.y) * 3)
-        })
+        }) : ""
         var churnAboData = []
-        data.churn_abo_data.map((item, index) => {
+        data.churn_abo_data ? data.churn_abo_data.map((item, index) => {
             churnAboData.push(item.y)
-        })
+        }) : ""
         this.setState({
             newAboData, enewAboData, churnAboData
         }, () => {
