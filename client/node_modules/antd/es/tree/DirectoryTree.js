@@ -73,7 +73,7 @@ var DirectoryTree = function DirectoryTree(_a) {
 
   var lastSelectedKey = React.useRef();
   var cachedSelectedKeys = React.useRef();
-  var ref = React.createRef();
+  var ref = /*#__PURE__*/React.createRef();
 
   var getInitExpandedKeys = function getInitExpandedKeys() {
     var _convertDataToEntitie = convertDataToEntities(getTreeData(props)),

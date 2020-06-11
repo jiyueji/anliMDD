@@ -34,7 +34,7 @@ import RcHandle from "rc-slider/es/Handle";
 import classNames from 'classnames';
 import SliderTooltip from './SliderTooltip';
 import { ConfigContext } from '../config-provider';
-var Slider = React.forwardRef(function (props, ref) {
+var Slider = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var _React$useContext = React.useContext(ConfigContext),
       getPrefixCls = _React$useContext.getPrefixCls,
       direction = _React$useContext.direction,

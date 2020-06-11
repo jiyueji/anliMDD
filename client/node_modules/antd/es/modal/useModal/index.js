@@ -24,7 +24,7 @@ export default function useModal() {
   function getConfirmFunc(withFunc) {
     return function hookConfirm(config) {
       uuid += 1;
-      var modalRef = React.createRef();
+      var modalRef = /*#__PURE__*/React.createRef();
       var closeFunc;
       var modal = /*#__PURE__*/React.createElement(HookModal, {
         key: "modal-".concat(uuid),
