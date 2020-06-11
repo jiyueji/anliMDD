@@ -6,10 +6,10 @@ export default class FoaForcesize extends Component {
     constructor() {
         super();
         this.state = {
-            numExistingFoaData:[],
+            numExistingFoaData: [],
             // maxYShow:"",
             // isPerfYearAbo:false,
-            monthShowAbo:['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            monthShowAbo: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         }
     }
     render() {
@@ -27,7 +27,7 @@ export default class FoaForcesize extends Component {
     }
     componentWillReceiveProps(nextProps) {
         var { data } = nextProps
-        var { monthShowAbo,  } = this.state
+        var { monthShowAbo, } = this.state
         // isPerfYearAbo = !isPerfYearAbo
         if (data.isPerfYear) {
             monthShowAbo = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']
@@ -35,7 +35,7 @@ export default class FoaForcesize extends Component {
             monthShowAbo = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         }
         this.setState({
-            monthShowAbo, 
+            monthShowAbo,
         }, () => {
             this.upDateShowDataFoaForcesize()
         })
@@ -43,11 +43,22 @@ export default class FoaForcesize extends Component {
     upDateShowDataFoaForcesize() {
         var data = this.props.data || {}
         // console.log(data,"1")
-        var {num_existing_foa} = data
+        var { num_existing_foa } = data
+        var {monthShowAbo} = this.state
         var numExistingFoaData = []
-        num_existing_foa && num_existing_foa.length >= 0 ? num_existing_foa.map((item,index)=>{
+        num_existing_foa && num_existing_foa.length >= 0 ? num_existing_foa.map((item, index) => {
             numExistingFoaData.push(((item.y - 250000) / 1000000).toFixed(1))
         }) : ""
+        //判断当前月份是否有数据
+        for (var i = 0; i < 12; i++) {
+            if (num_existing_foa && num_existing_foa.length > 0 && monthShowAbo) {
+                if (num_existing_foa[0].x == monthShowAbo[i]) {
+                    break
+                } else {
+                    numExistingFoaData.unshift("")
+                }
+            }
+        }
         this.setState({
             numExistingFoaData,
         }, () => {

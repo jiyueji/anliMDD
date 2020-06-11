@@ -6,8 +6,8 @@ export default class FoaRepeat extends Component {
     constructor() {
         super();
         this.state = {
-            repeatBuyerCountData:[],
-            repeatBuyerData:[],
+            repeatBuyerCountData: [],
+            repeatBuyerData: [],
             monthShowAbo: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         }
     }
@@ -41,17 +41,29 @@ export default class FoaRepeat extends Component {
     upDateShowDataFoaRepeat() {
         var data = this.props.data || {}
         // console.log(data, "show")
-        var {num_foa_data,pct_foa_data} = data
+        var { num_foa_data, pct_foa_data } = data
+        var { monthShowAbo } = this.state
         var repeatBuyerCountData = [];
         var repeatBuyerData = []
-        num_foa_data && num_foa_data.length >= 0 ? num_foa_data.map((item,index)=>{
+        num_foa_data && num_foa_data.length >= 0 ? num_foa_data.map((item, index) => {
             repeatBuyerCountData.push(Math.round(item.y / 1000))
         }) : ""
-        pct_foa_data && pct_foa_data.length >= 0 ? pct_foa_data.map((item,index)=>{
+        pct_foa_data && pct_foa_data.length >= 0 ? pct_foa_data.map((item, index) => {
             repeatBuyerData.push(Math.round(item.y))
         }) : ""
+        //判断当前月份是否有数据
+        for (var i = 0; i < 12; i++) {
+            if (num_foa_data && num_foa_data.length > 0 && monthShowAbo) {
+                if (num_foa_data[0].x == monthShowAbo[i]) {
+                    break
+                } else {
+                    repeatBuyerCountData.unshift("")
+                    repeatBuyerData.unshift("")
+                }
+            }
+        }
         this.setState({
-            repeatBuyerCountData,repeatBuyerData
+            repeatBuyerCountData, repeatBuyerData
         }, () => {
             this.foaRepeatEcharts()
         })
@@ -143,7 +155,7 @@ export default class FoaRepeat extends Component {
                     axisLine: {//隐藏X轴
                         show: false
                     },
-                    boundaryGap: ['250%',0],
+                    boundaryGap: ['250%', 0],
                     // min: -200,
                     // max: 100,
                     nameGap: 10,

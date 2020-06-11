@@ -41,6 +41,7 @@ export default class FoaConvertedToAbo extends Component {
     upDateShowDataFoaConvertedToAbo() {
         var data = this.props.data || {}
         var {total_foa_data,pct_foa_data} = data
+        var {monthShowAbo} = this.state
         var foaConvertedToAboPcData = []
         var convertionDowmData = []
         total_foa_data && total_foa_data.length >= 0 ? total_foa_data.map((item,index)=>{
@@ -49,6 +50,17 @@ export default class FoaConvertedToAbo extends Component {
         pct_foa_data && pct_foa_data.length >= 0 ? pct_foa_data.map((item,index)=>{
             convertionDowmData.push(item.y)
         }) : ""
+        //判断当前月份是否有数据
+        for(var i = 0 ; i < 12 ; i ++ ){
+            if(total_foa_data && total_foa_data.length > 0 && monthShowAbo){
+                if(total_foa_data[0].x == monthShowAbo[i]){
+                    break
+                }else{
+                    foaConvertedToAboPcData.unshift("")
+                    convertionDowmData.unshift("")
+                }
+            }
+        }
         this.setState({
             foaConvertedToAboPcData,convertionDowmData
         }, () => {
