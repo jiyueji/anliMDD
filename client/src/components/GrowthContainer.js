@@ -57,10 +57,10 @@ class GrowthContainer extends React.PureComponent {
         </div>
 
         <div style={{display: 'flex',justifyContent: 'space-between'}}>
-          <div style={{width:'49.5%',height:'442px', background: '#ffffff',borderRadius:"10px" }}>
+          <div style={{width:'49.5%',height:'442px', background: '#ffffff',borderRadius:"10px",overflow:"hidden" }}>
             <Sustainability data={chartStoreGrowth.growthSustainability}/>
           </div>
-          <div style={{width:'49.5%',height:'442px', background: '#ffffff',borderRadius:"10px" }}>
+          <div style={{width:'49.5%',height:'442px', background: '#ffffff',borderRadius:"10px",overflow:"hidden" }}>
             <SustainabilityEnd data={chartStoreGrowth.growthSustainability}/>
           </div>
         </div>

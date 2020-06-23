@@ -263,7 +263,7 @@ class ChartStoreDaily {
       return false
     }
 
-    // console.log(this.isFiveDatePicker)
+    // console.log(jsArr,jsArr2,"111111")
 
     let dataState = jsArr
     let dataStateCom = jsArr2
@@ -585,11 +585,14 @@ class ChartStoreDaily {
 
   @computed get dailyTableSales() {
     // const jsArr = toJS(this.dailyTableSalData) || 0
-    const jsArr = this.isFiveDatePicker ? toJS(this.dailySalesTableByMonth) || 0 : toJS(this.dailyTableSalData) || 0
+    // const jsArr = this.isFiveDatePicker ? toJS(this.dailySalesTableByMonth) || 0 : toJS(this.dailyTableSalData) || 0
+    const jsArr = toJS(this.dailySalesTableByMonth) || 0
+    // const jsArr2 = toJS(this.dailyTableSalData) || 0
     if (!jsArr.length) {
       return false
     }
-
+    // console.log(jsArr,"1111")
+    // console.log(jsArr2,"22222")
     const ROWS_ORDER_MAP = {
       'Net Sales': 1,
       'ACCL': 2,
@@ -597,11 +600,10 @@ class ChartStoreDaily {
       'ECOM': 4,
       'Order BV Sales': 5
     }
-    // console.log(jsArr,"11")
     let dataState = _.sortBy(jsArr, (o) => {
       return ROWS_ORDER_MAP[o.agg_type]
     })
-
+    // console.log(dataState,"22222")
     let maxDateStr, maxDateTitle,
       maxDateRaw, maxDMin1, maxDMin2
 

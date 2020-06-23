@@ -357,7 +357,13 @@ class ChartStoreSocial {
     }
 
     dataState = _.filter(dataState, (o) => {
-      return o[YEAR_TYPE] == maxYear
+      //数据在perf_yr且月份＞8以后从九月开始显示
+      if (this.isPerfYear && this.isAllDatePicker && this.isAllDatePicker.slice(4, 6) > 8) {
+        return o[YEAR_TYPE] == Number(maxYear) + 1
+      } else {
+        return o[YEAR_TYPE] == maxYear
+      }
+      // return o[YEAR_TYPE] == maxYear
     })
     if (this.isAllDatePicker) {//按月份进行数据展示
       dataState = _.filter(dataState, (o) => {
@@ -456,7 +462,12 @@ class ChartStoreSocial {
     }
 
     dataState = _.filter(dataState, (o) => {
-      return o[YEAR_TYPE] == maxYear
+      //数据在perf_yr且月份＞8以后从九月开始显示
+      if (this.isPerfYear && this.isAllDatePicker && this.isAllDatePicker.slice(4, 6) > 8) {
+        return o[YEAR_TYPE] == Number(maxYear) + 1
+      } else {
+        return o[YEAR_TYPE] == maxYear
+      }
     })
     if (this.isAllDatePicker) {//按月份进行数据展示
       dataState = _.filter(dataState, (o) => {
@@ -595,7 +606,12 @@ class ChartStoreSocial {
       maxMonth = parseInt(maxMonthStr.slice(4, 6))
     }
     dataState = _.filter(dataState, (o) => {//按PF和CY进行数据展示
-      return o[YEAR_TYPE] == maxYear
+      //数据在perf_yr且月份＞8以后从九月开始显示
+      if (this.isPerfYear && this.isAllDatePicker && this.isAllDatePicker.slice(4, 6) > 8) {
+        return o[YEAR_TYPE] == Number(maxYear) + 1
+      } else {
+        return o[YEAR_TYPE] == maxYear
+      }
     })
     if (this.isAllDatePicker) {//按月份进行数据展示
       dataState = _.filter(dataState, (o) => {
@@ -725,7 +741,13 @@ class ChartStoreSocial {
     }
 
     dataState = _.filter(dataState, (o) => {
-      return o[YEAR_TYPE] == maxYear
+      //数据在perf_yr且月份＞8以后从九月开始显示
+      if (this.isPerfYear && this.isAllDatePicker && this.isAllDatePicker.slice(4, 6) > 8) {
+        return o[YEAR_TYPE] == Number(maxYear) + 1
+      } else {
+        return o[YEAR_TYPE] == maxYear
+      }
+      // return o[YEAR_TYPE] == maxYear
     })
     if (this.isAllDatePicker) {//按月份进行数据展示
       dataState = _.filter(dataState, (o) => {
@@ -804,7 +826,13 @@ class ChartStoreSocial {
     }
 
     dataState = _.filter(dataState, (o) => {
-      return o[YEAR_TYPE] == maxYear
+      //数据在perf_yr且月份＞8以后从九月开始显示
+      if (this.isPerfYear && this.isAllDatePicker && this.isAllDatePicker.slice(4, 6) > 8) {
+        return o[YEAR_TYPE] == Number(maxYear) + 1
+      } else {
+        return o[YEAR_TYPE] == maxYear
+      }
+      // return o[YEAR_TYPE] == maxYear
     })
     if (this.isAllDatePicker) {//按月份进行数据展示
       dataState = _.filter(dataState, (o) => {

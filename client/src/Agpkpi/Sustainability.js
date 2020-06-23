@@ -16,13 +16,13 @@ export default class Sustainability extends Component {
             targetLine: 0,
             targetFont: 0,
             sustainDataNumber: 0,
-            kpiflagShow1:false,
+            kpiflagShow1: false,
         }
     }
     // style={{ top: ballYtd }}
     // style={{ position: 'absolute', left: '267px', top: ytd, display: 'none' }}
     render() {
-        var { maxCalendarYear, ytdShowFont, ballYtd, ytd, targetLine, targetFont, sustainDataNumber,kpiflagShow1 } = this.state
+        var { maxCalendarYear, ytdShowFont, ballYtd, ytd, targetLine, targetFont, sustainDataNumber, kpiflagShow1 } = this.state
         return (
             <Fragment>
                 <div style={{ position: 'relative' }}>
@@ -38,7 +38,7 @@ export default class Sustainability extends Component {
                         </div> : ""
                     }
                     <div style={{ width: "100%", height: "383px", display: 'flex' }}>
-                    <div id="salesHomeEchartsPpv" className="salesHomePpv"></div>
+                        <div id="salesHomeEchartsPpv" className="salesHomePpv"></div>
                     </div>
                     <div className="redball redball-flicker">
                         <div className="ballDiv" style={{ top: ballYtd, left: sustainDataNumber }}>
@@ -55,14 +55,22 @@ export default class Sustainability extends Component {
             </Fragment>
         )
     }
-    kpiflagShowhandle1(){
-        var {kpiflagShow1} = this.state
+    kpiflagShowhandle1() {
+        var { kpiflagShow1 } = this.state
         kpiflagShow1 = !kpiflagShow1
         this.setState({
             kpiflagShow1,
         })
     }
+    componentWillReceiveProps(nextProps) {
+        var { data } = nextProps
+        this.dateUpdateHandle(data)
+    }
     componentDidMount() {
+        var chartData = this.props.data || {}
+        this.dateUpdateHandle(chartData)
+    }
+    dateUpdateHandle(chartData) {
         // 延迟加载
         var redball = document.getElementsByClassName("redball")
         setTimeout(() => {
@@ -79,7 +87,6 @@ export default class Sustainability extends Component {
             remarkTarget[0] ? remarkTarget[0].style.display = "block" : ""
         }, 1000);
 
-        var chartData = this.props.data || {}
         var maxCalendarYear = chartData.maxCalendarYear
         var sustainData = []
         chartData.high_ppv_pct_of_sales_actual_data ? chartData.high_ppv_pct_of_sales_actual_data.map((item, index) => {
@@ -95,7 +102,7 @@ export default class Sustainability extends Component {
         var targetFont = ((((1 - ((targetLine * 100) / 20)) * 100))).toFixed(1) - 4 + "%"
         targetLine = (targetLine * 100).toFixed(1)
         // console.log(targetLine)
-        
+
         var sustainDataNumber = sustainData.length || 0
         if (sustainDataNumber >= 9) {
             remark[0].style.marginLeft = "-115px"

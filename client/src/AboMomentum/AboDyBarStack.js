@@ -10,7 +10,6 @@ export default class AboDyBarStack extends Component {
             newAboData: [],
             enewAboData: [],
             churnAboData: [],
-            isPerfYearAbo: false,
         }
     }
     render() {
@@ -28,15 +27,14 @@ export default class AboDyBarStack extends Component {
     }
     componentWillReceiveProps(nextProps) {
         var { data } = nextProps
-        var { monthShowAbo, isPerfYearAbo } = this.state
-        isPerfYearAbo = !isPerfYearAbo
-        if (isPerfYearAbo) {
+        var { monthShowAbo } = this.state
+        if (data.isPerfYear) {
             monthShowAbo = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']
         } else {
             monthShowAbo = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         }
         this.setState({
-            monthShowAbo, isPerfYearAbo
+            monthShowAbo
         }, () => {
             this.upDateShowData()
         })

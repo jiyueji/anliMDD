@@ -53,19 +53,17 @@ export default class SegmentsThree extends Component {
             </Fragment>
         )
     }
+    componentWillReceiveProps(nextProps) {
+        var {dataSales, dataPopulation,dataProductivity} = nextProps
+        this.dateUpdateNowHandle(dataSales, dataPopulation,dataProductivity)
+    }
     componentDidMount() {
         var dataSales = this.props.dataSales || {}
-        //         segments: Array(4)
-        // 0:
-        // key: "Registered Customers"
-        // count: 1
-        // elements: [{…}]
-        // rank: 1
-        // lastMonthVal: 44361682.4965517
-        // chartData: Array(1)
-        // 0: {x: "Jan", y: 44361682.4965517, labelTooltip: "Monthly sales ", rank: 1}
         var dataPopulation = this.props.dataPopulation || {}
         var dataProductivity = this.props.dataProductivity || {}
+        this.dateUpdateNowHandle(dataSales, dataPopulation,dataProductivity)
+    }
+    dateUpdateNowHandle(dataSales, dataPopulation,dataProductivity){
         var maxMonthStr = String(hlp.yearMonthToStr(dataSales.maxMonth))
 
         var salesCustomer = []
@@ -155,9 +153,10 @@ export default class SegmentsThree extends Component {
             maxMonthStr,
 
         }, () => {
-            this.echartsShow();
+            var { sheet } = this.state
+            this.echartsShow(sheet)
+            // sheet ? this.echartsShow(sheet) : this.echartsShow()
         })
-        // console.log(dataSales, "dataSales")
     }
     switchChart(idx, e) {
         var { sheet } = this.state
@@ -189,6 +188,7 @@ export default class SegmentsThree extends Component {
         var idx = 0,
             option = chartArray[idx];
         document.querySelector(`.nav-item:nth-child(${idx + 1})`).classList.add('segmentsNavActive');
+        // myChartThree.clear();//把数据完全清除重新加载
         idIndex ? myChartThree.setOption(chartArray[idIndex]) : myChartThree.setOption({ ...defaultOpt, ...option });
     }
     echartsShow(idx) {
@@ -388,7 +388,7 @@ export default class SegmentsThree extends Component {
                                     }
                                     return val;
                                 }
-                                return val / 1 + 'm';
+                                // return val / 1 + 'm';
                             }
                         },
                         splitLine: {

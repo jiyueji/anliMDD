@@ -65,7 +65,15 @@ export default class Sustainability extends Component {
             kpiflagShow2,
         })
     }
+    componentWillReceiveProps(nextProps) {
+        var { data } = nextProps
+        this.dateUpdateHandle(data)
+    }
     componentDidMount() {
+        var chartData = this.props.data || {}
+        this.dateUpdateHandle(chartData)
+    }
+    dateUpdateHandle(chartData){
         // 延迟加载
         var redball = document.getElementsByClassName("redball1")
         // console.log(redball[0])
@@ -85,7 +93,6 @@ export default class Sustainability extends Component {
             remarkTarget ? remarkTarget[0].style.display = "block" : ""
         }, 1000);
 
-        var chartData = this.props.data || {}
         var maxCalendarYear = chartData.maxCalendarYear
         var sustainData = []
         chartData.eom_pct_of_sales_actual_data ? chartData.eom_pct_of_sales_actual_data.map((item, index) => {
