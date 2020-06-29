@@ -11,6 +11,7 @@ class ChartStore {
   @observable isLoading = true
   @observable isFailure = false
   @observable isPerfYear = false
+  @observable isAllDatePicker = ""//时间选择
   @observable performanceData1 = []
   @observable performanceData2 = []
   @observable performanceData3 = []
@@ -102,7 +103,7 @@ class ChartStore {
     if (!jsArr.length) {
       return false
     }
-
+    // console.log(jsArr, "jsArr")
     let maxMonthStr
     if (jsArr.length) {
       maxMonthStr = jsArr[0].max_month
@@ -116,10 +117,18 @@ class ChartStore {
       })
       .toList()
 
-    const maxYear = jslinq(dataState)
-      .max((el) => {
-        return parseInt(el['key']);
-      });
+    if (this.isAllDatePicker) {//根据时间改变时间
+      var maxYear = this.isAllDatePicker.slice(0, 4)
+    } else {
+      var maxYear = jslinq(dataState)
+        .max((el) => {
+          return parseInt(el['key']);
+        });
+    }
+    // const maxYear = jslinq(dataState)
+    //   .max((el) => {
+    //     return parseInt(el['key']);
+    //   });
 
     dataState = _.reduce(dataState, (obj, param) => {
       obj[param.key] = param.elements
@@ -131,19 +140,30 @@ class ChartStore {
     const MONTH_TYPE = 'nth_month_of_perf_yr'
 
     // get max month of a current year
+
     const maxMonth = jslinq(dataState)
       .max((el) => {
         return el[MONTH_TYPE];
       });
-
-    dataState = _.filter(dataState, (o) => {
-      return o.nth_month_of_perf_yr === maxMonth
-    })
-
+    console.log(maxMonth,dataState,"dataStatedataState")
+    if(this.isAllDatePicker){
+      dataState = _.filter(dataState, (o) => {
+        return o.n_month == this.isAllDatePicker
+      })
+    }else{
+      dataState = _.filter(dataState, (o) => {
+        return o.nth_month_of_perf_yr === maxMonth
+      })
+    }
+    // dataState = _.filter(dataState, (o) => {
+    //   return o.nth_month_of_perf_yr === maxMonth
+    // })
+    console.log(dataState,"dataStat")
     dataState = jslinq(dataState).groupBy(function (el) {
       return el.fc_name;
     })
       .toList()
+    console.log(dataState,"dataState")
 
     dataState = _.map(dataState, (o) => {
       o.total_sales_sum = jslinq(o.elements).sum(function (el) {
@@ -160,6 +180,9 @@ class ChartStore {
     })
       .toList();
 
+    // if(this.isAllDatePicker){
+    //   var totalSumAllRegions
+    // }
     const totalSumAllRegions = jslinq(dataState).sum(function (el) {
       return el.total_sales_sum;
     });
@@ -215,11 +238,19 @@ class ChartStore {
         return el[YEAR_TYPE];
       })
       .toList()
-      // console.log(dataState)
-    const maxYear = jslinq(dataState)
-      .max((el) => {
-        return parseInt(el['key']);
-      });
+    // console.log(dataState)
+    if (this.isAllDatePicker) {//根据时间改变时间
+      var maxYear = this.isAllDatePicker.slice(0, 4)
+    } else {
+      var maxYear = jslinq(dataState)
+        .max((el) => {
+          return parseInt(el['key']);
+        });
+    }
+    // const maxYear = jslinq(dataState)
+    //   .max((el) => {
+    //     return parseInt(el['key']);
+    //   });
 
     dataState = _.reduce(dataState, (obj, param) => {
       obj[param.key] = param.elements
@@ -234,12 +265,29 @@ class ChartStore {
       .toList()
 
     dataState = _.map(dataState, (o) => {
-      o.actual_sales_sum = jslinq(o.elements).sum(function (el) {
-        return el.actual_sales;
-      })
-      o.actual_sales_ly_sum = jslinq(o.elements).sum(function (el) {
-        return el.actual_sales_ly || 0;
-      })
+      if (this.isAllDatePicker) {//根据时间改变数据
+        o.actual_sales_sum = 0
+        o.actual_sales_ly_sum = 0
+        o.elements.map((item, index) => {
+          if (item.n_month <= this.isAllDatePicker) {
+            o.actual_sales_sum += item.actual_sales || 0
+            o.actual_sales_ly_sum += item.actual_sales_ly || 0
+          }
+        })
+      } else {
+        o.actual_sales_sum = jslinq(o.elements).sum(function (el) {
+          return el.actual_sales;
+        })
+        o.actual_sales_ly_sum = jslinq(o.elements).sum(function (el) {
+          return el.actual_sales_ly || 0;
+        })
+      }
+      // o.actual_sales_sum = jslinq(o.elements).sum(function (el) {
+      //   return el.actual_sales;
+      // })
+      // o.actual_sales_ly_sum = jslinq(o.elements).sum(function (el) {
+      //   return el.actual_sales_ly || 0;
+      // })
       return o
     })
 
@@ -288,6 +336,7 @@ class ChartStore {
 
   @computed get waterfallChartData() {
     const allData = this.calcTotalSalesTable()
+    console.log(allData,"allData")
     let waterfallData = allData.data
     waterfallData = _.map(waterfallData, (o) => {
       return {
@@ -540,7 +589,7 @@ class ChartStore {
     if (!jsArr.length) {
       return false
     }
-
+    // console.log(jsArr,"jsArr")
     // prepare tooltip data map
     let monthToInfoMap = {}
 
@@ -565,7 +614,13 @@ class ChartStore {
         return el[YEAR_TYPE];
       })
       .toList()
-    const maxYear = dataState.length && dataState[0].elements.length && dataState[0].elements[0][`max_${YEAR_TYPE}`]
+
+    if (this.isAllDatePicker) {//时间选择
+      var maxYear = this.isAllDatePicker.slice(0, 4)
+    } else {
+      var maxYear = dataState.length && dataState[0].elements.length && dataState[0].elements[0][`max_${YEAR_TYPE}`]
+    }
+    // const maxYear = dataState.length && dataState[0].elements.length && dataState[0].elements[0][`max_${YEAR_TYPE}`]
 
     // const maxCalendarYear = dataState.length && dataState[0].elements.length && dataState[0].elements[0][ 'max_calendar_yr' ]
     // dataState
@@ -578,9 +633,9 @@ class ChartStore {
       obj[param.key] = param.elements
       return obj;
     }, {});
-
+    // console.log(dataState,"dataStatedataState")
     dataState = dataState[maxYear].concat()
-
+    // console.log(dataState,"dataStatedataStatedataStatedataState")
     // dataState = jslinq( dataState[ maxYear ].concat() )
 
     // dataState = dataState.groupBy(function(el){
@@ -629,7 +684,6 @@ class ChartStore {
     let actual_sales_data = _.map(dataState, (o) => {
       // fill tooltip data months and actual sales
       const monthId = `${maxYear}${padNumber(o.month)}`
-
       tooltip_data_map[MONTHS_MAP[o.month]] = {
         monthName: hlp.yearMonthToStrFull(o.n_month),
         actual_sales: o.actual_sales && `$${hlp.toShortMil(o.actual_sales)}m`,
@@ -642,7 +696,8 @@ class ChartStore {
 
       return {
         x: MONTHS_MAP[o.month],
-        y: o.actual_sales || null,
+        // 时间插件对数据进行筛选
+        y: this.isAllDatePicker ? o.n_month <= this.isAllDatePicker ? o.actual_sales || null : null : o.actual_sales || null,
         labelTooltip: 'Monthly Sales'
       }
     })
@@ -738,7 +793,6 @@ class ChartStore {
     if (!jsArr.length) {
       return false
     }
-
     let queryObj = jslinq(jsArr)
     // always calendar year
     const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'// this.isPerfYear ? 'perf_yr' : 'calendar_yr'
@@ -751,11 +805,24 @@ class ChartStore {
 
     let maxYear, maxMonth, yearTitle
     if (dataState.length && dataState[0].elements.length) {
-      maxYear = dataState[0].elements[0][`max_${YEAR_TYPE}`]
-      yearTitle = parseInt(dataState[0].elements[0].max_n_month.slice(0, 4))
-      maxMonth = parseInt(dataState[0].elements[0].max_n_month.slice(4, 6))
+      if (this.isAllDatePicker) {//时间选择判断当前年份
+        maxYear = this.isAllDatePicker.slice(0, 4)
+        if (this.isAllDatePicker >= dataState[0].elements[0].max_n_month) {
+          yearTitle = parseInt(dataState[0].elements[0].max_n_month.slice(0, 4))
+          maxMonth = parseInt(dataState[0].elements[0].max_n_month.slice(4, 6))
+        } else {
+          yearTitle = parseInt(this.isAllDatePicker.slice(0, 4))
+          maxMonth = parseInt(this.isAllDatePicker.slice(4, 6))
+        }
+      } else {
+        maxYear = dataState[0].elements[0][`max_${YEAR_TYPE}`]
+        yearTitle = parseInt(dataState[0].elements[0].max_n_month.slice(0, 4))
+        maxMonth = parseInt(dataState[0].elements[0].max_n_month.slice(4, 6))
+      }
+      // maxYear = dataState[0].elements[0][`max_${YEAR_TYPE}`]
+      // yearTitle = parseInt(dataState[0].elements[0].max_n_month.slice(0, 4))
+      // maxMonth = parseInt(dataState[0].elements[0].max_n_month.slice(4, 6))
     }
-
     // dataState
     //  jslinq(dataState)
     //   .max((el)=>{
@@ -770,17 +837,39 @@ class ChartStore {
     const rawDataState = dataState[maxYear].concat()
     dataState = jslinq(rawDataState)
 
-    const yearActualSales = dataState.sum(function (el) {
-      return el.actual_sales || 0;
-    });
+    if (this.isAllDatePicker) {//根据时间判断数据
+      var yearActualSales = 0, yearActualSalesLY = 0, yearTargetSales = 0
+      rawDataState && rawDataState.length >= 0 ? rawDataState.map((item, index) => {
+        if (item.n_month <= this.isAllDatePicker) {
+          yearActualSales += item.actual_sales || 0
+          yearActualSalesLY += item.actual_sales_ly_for_compare || 0
+          yearTargetSales += item.target_sales_for_compare || 0
+        }
+      }) : ""
+    } else {
+      var yearActualSales = dataState.sum(function (el) {
+        return el.actual_sales || 0;
+      });
 
-    const yearActualSalesLY = dataState.sum(function (el) {
-      return el.actual_sales_ly_for_compare || 0;
-    });
+      var yearActualSalesLY = dataState.sum(function (el) {
+        return el.actual_sales_ly_for_compare || 0;
+      });
 
-    const yearTargetSales = dataState.sum(function (el) {
-      return el.target_sales_for_compare || 0;
-    });
+      var yearTargetSales = dataState.sum(function (el) {
+        return el.target_sales_for_compare || 0;
+      });
+    }
+    // const yearActualSales = dataState.sum(function (el) {
+    //   return el.actual_sales || 0;
+    // });
+
+    // const yearActualSalesLY = dataState.sum(function (el) {
+    //   return el.actual_sales_ly_for_compare || 0;
+    // });
+
+    // const yearTargetSales = dataState.sum(function (el) {
+    //   return el.target_sales_for_compare || 0;
+    // });
 
     const actualToTargetRatioPerc = Math.round((yearActualSales / yearTargetSales) * 1000) / 10
     const splyVal = Math.round((yearActualSales / yearActualSalesLY) * 1000) / 10
@@ -821,11 +910,24 @@ class ChartStore {
       .toList()
 
     let maxYear, maxMonth, yearTitle
-
     if (dataState.length && dataState[0].elements.length) {
-      maxYear = dataState[0].elements[0][`max_${YEAR_TYPE}`]
-      yearTitle = parseInt(dataState[0].elements[0].max_n_month.slice(0, 4))
-      maxMonth = parseInt(dataState[0].elements[0].max_n_month.slice(4, 6))
+      if (this.isAllDatePicker) {//时间选择判断当前年份
+        maxYear = this.isAllDatePicker.slice(0, 4)
+        if (this.isAllDatePicker >= dataState[0].elements[0].max_n_month) {
+          yearTitle = parseInt(dataState[0].elements[0].max_n_month.slice(0, 4))
+          maxMonth = parseInt(dataState[0].elements[0].max_n_month.slice(4, 6))
+        } else {
+          yearTitle = parseInt(this.isAllDatePicker.slice(0, 4))
+          maxMonth = parseInt(this.isAllDatePicker.slice(4, 6))
+        }
+      } else {
+        maxYear = dataState[0].elements[0][`max_${YEAR_TYPE}`]
+        yearTitle = parseInt(dataState[0].elements[0].max_n_month.slice(0, 4))
+        maxMonth = parseInt(dataState[0].elements[0].max_n_month.slice(4, 6))
+      }
+      // maxYear = dataState[0].elements[0][`max_${YEAR_TYPE}`]
+      // yearTitle = parseInt(dataState[0].elements[0].max_n_month.slice(0, 4))
+      // maxMonth = parseInt(dataState[0].elements[0].max_n_month.slice(4, 6))
     }
 
     // dataState
@@ -851,8 +953,13 @@ class ChartStore {
     //       return el[MONTH_TYPE];
     //   });
 
-    dataState = dataState.where(function (el) {
-      return el['month'] == maxMonth;
+    dataState = dataState.where((el) => {//时间选择改变数据
+      if (this.isAllDatePicker && this.isAllDatePicker < el['n_month']) {
+        return el['n_month'] == this.isAllDatePicker;
+      } else if (!this.isAllDatePicker || this.isAllDatePicker >= el['n_month']) {
+        return el['month'] == maxMonth;
+      }
+      // return el['month'] == maxMonth;
     })
       .toList();
 
@@ -890,7 +997,7 @@ class ChartStore {
     if (!jsArr.length) {
       return false
     }
-
+    // console.log(jsArr,"jsArr")
     let dataState = jsArr
 
     const maxMonth = parseInt(dataState.length && dataState[0].n_month)

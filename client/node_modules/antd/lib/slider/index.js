@@ -56,7 +56,7 @@ var __rest = void 0 && (void 0).__rest || function (s, e) {
   return t;
 };
 
-var Slider = React.forwardRef(function (props, ref) {
+var Slider = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var _React$useContext = React.useContext(_configProvider.ConfigContext),
       getPrefixCls = _React$useContext.getPrefixCls,
       direction = _React$useContext.direction,

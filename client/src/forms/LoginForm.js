@@ -11,10 +11,10 @@ class LoginForm extends React.Component {
     handleSubmit(e) {
         e.preventDefault()
         return this.props.handler({
-            // username: this.email.value,
-            // password: this.password.value,
-            username:"user",
-            password:"password",
+            username: this.email.value,
+            password: this.password.value,
+            // username:"user",
+            // password:"password",
         })
     }
 
@@ -23,8 +23,8 @@ class LoginForm extends React.Component {
     render() {
         return <div className="login-container">
             <Form onSubmit={this.handleSubmit} title="Sign In" button="Login">
-                <input type="text" style={{color:"#333"}}  placeholder="Name" ref={input => this.email = input} />
-                <input type="password" style={{color:"#333"}}  placeholder="Password" ref={input => this.password = input} />
+                <input type="text" style={{color:"#333"}} required placeholder="Name" ref={input => this.email = input} />
+                <input type="password" style={{color:"#333"}} required placeholder="Password" ref={input => this.password = input} />
             </Form>
         </div>
     }

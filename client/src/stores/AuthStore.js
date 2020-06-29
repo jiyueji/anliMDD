@@ -15,7 +15,6 @@ class AuthStore {
         const LOGIN_ERR_MSG = 'Username and password combination is incorrect'
         try {
             const res = await ApiService.login(params)
-
             // console.log('LOGIN RES: ', res)
             if (!res.access_token) {
                 alert(LOGIN_ERR_MSG)

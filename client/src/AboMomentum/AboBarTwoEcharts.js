@@ -52,6 +52,7 @@ export default class AboBarTwoEcharts extends Component {
     componentDidMount() {
         var data = this.props.data;
         var datas = this.props.datas;
+        // console.log(data,datas)
         // prevYear: (3)[{ … }, { … }, { … }]
         // curYear: (3)[{ … }, { … }, { … }]
         // prevYearMed: (3)[{ … }, { … }, { … }]
@@ -104,16 +105,16 @@ export default class AboBarTwoEcharts extends Component {
         var curYearShowNowYear = []
         var middle20 = []
         data.prevYear ? data.prevYear.map((item, index) => {
-            prevYearShowLastYear.push(Math.round(item.y))
+            prevYearShowLastYear.push(Math.round(item.y || 0))
         }) : ""
         data.curYear ? data.curYear.map((item, index) => {
-            curYearShowNowYear.push(Math.round(item.y))
+            curYearShowNowYear.push(Math.round(item.y || 0))
         }) : ""
         data.prevYearMed ? data.prevYearMed.map((item, index) => {
-            middle19.push(Math.round(item.y))
+            middle19.push(Math.round(item.y || 0))
         }) : ""
         data.curYearMed ? data.curYearMed.map((item, index) => {
-            middle20.push(Math.round(item.y))
+            middle20.push(Math.round(item.y || 0))
         }) : ""
         // avgNoPinPb: (2) [{…}, {…}]
         // avgNoPinPbLy: (2) [{…}, {…}]
@@ -134,22 +135,22 @@ export default class AboBarTwoEcharts extends Component {
         // 2: {x: "Bonus Level=15% ABO", y: 406.824782089019, labelTooltip: "Avg income: 407↵Median income: 305"}
         datas.avgNoPinPb ? datas.avgNoPinPb.map((item, index) => {
             if (item.x !== "existing abo") {
-                avgNoPinPbShowNowYear.push(Math.round(item.y))
+                avgNoPinPbShowNowYear.push(Math.round(item.y || 0))
             }
         }) : ""
         datas.avgNoPinPbLy ? datas.avgNoPinPbLy.map((item, index) => {
             if (item.x !== "existing abo") {
-                avgNoPinPbLyShowNowYear.push(Math.round(item.y))
+                avgNoPinPbLyShowNowYear.push(Math.round(item.y || 0))
             }
         }) : ""
         datas.noPinMedian ? datas.noPinMedian.map((item, index) => {
             if (item.x !== "existing abo") {
-                abo20.push(Math.round(item.y))
+                abo20.push(Math.round(item.y || 0))
             }
         }) : ""
         datas.noPinMedianLy ? datas.noPinMedianLy.map((item, index) => {
             if (item.x !== "existing abo") {
-                abo19.push(Math.round(item.y))
+                abo19.push(Math.round(item.y || 0))
             }
         }) : ""
         datas.pctEarn ? datas.pctEarn.map((item, index) => {

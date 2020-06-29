@@ -11,6 +11,7 @@ class ChartStoreAbo {
   @observable isLoading = true
   @observable isFailure = false
   @observable isPerfYear = false
+  @observable isAllDatePicker = ""//时间选择
   @observable aboCisKpiData = []
   @observable aboRenewalData = []
   @observable aboPinData = []
@@ -295,32 +296,32 @@ class ChartStoreAbo {
     if (!jsArr.length) {
       return false
     }
-
+    // console.log(jsArr,"jsArr9")
     let dataState = jsArr
-//     0: {clnd_month: "202003", data_period: "2020", data_desc: "PF20YTD", kpi_code: "CSI_COUNT", kpi_desc: "获取CSI的ABO户数", …}
-// 1: {clnd_month: "202003", data_period: "202001", data_desc: "PF20", kpi_code: "QUALIF_CSI_SR", kpi_desc: "有资格领取CSI营销人员 202001月之后开始计算", …}
-// 2: {clnd_month: "202003", data_period: "202001", data_desc: "PF20", kpi_code: "CSI_COUNT", kpi_desc: "获取CSI的ABO户数", …}
-// 3: {clnd_month: "202003", data_period: "202003", data_desc: "PF20", kpi_code: "CSI_COUNT", kpi_desc: "获取CSI的ABO户数", …}
-// 4: {clnd_month: "202003", data_period: "2020", data_desc: "PF20YTD", kpi_code: "QUALIF_CSI_SR", kpi_desc: "有资格领取CSI营销人员 202001月之后开始计算", …}
-// 5: {clnd_month: "202003", data_period: "2020", data_desc: "PF20YTD", kpi_code: "CSI_AMT", kpi_desc: "CSI 实际获取金额", …}
-// 6: {clnd_month: "202003", data_period: "2020", data_desc: "PF20YTD", kpi_code: "TOTAL_ORDER_BV", kpi_desc: "整体BV值", …}
-// 7: {clnd_month: "202003", data_period: "202002", data_desc: "PF20", kpi_code: "QUALIF_CSI_SR", kpi_desc: "有资格领取CSI营销人员 202001月之后开始计算", …}
-// 8: {clnd_month: "202003", data_period: "202003", data_desc: "PF20", kpi_code: "VCS_AMT", kpi_desc: "VCS整体金额（按BV)", …}
-// 9: {clnd_month: "202003", data_period: "202002", data_desc: "PF20", kpi_code: "CSI_COUNT", kpi_desc: "获取CSI的ABO户数", …}
-// 10: {clnd_month: "202003", data_period: "202002", data_desc: "PF20", kpi_code: "VCS_AMT", kpi_desc: "VCS整体金额（按BV)", …}
-// 11: {clnd_month: "202003", data_period: "202002", data_desc: "PF20", kpi_code: "TOTAL_ORDER_BV", kpi_desc: "整体BV值", …}
-// 12: {clnd_month: "202003", data_period: "202001", data_desc: "PF20", kpi_code: "VCS_AMT", kpi_desc: "VCS整体金额（按BV)", …}
-// 13: {clnd_month: "202003", data_period: "202003", data_desc: "PF20", kpi_code: "QUALIF_CSI_SR", kpi_desc: "有资格领取CSI营销人员 202001月之后开始计算", …}
-// 14: {clnd_month: "202003", data_period: "2020", data_desc: "PF20YTD", kpi_code: "VCS_AMT", kpi_desc: "VCS整体金额（按BV)", …}
-// 15: {clnd_month: "202003", data_period: "202002", data_desc: "PF20", kpi_code: "CSI_AMT", kpi_desc: "CSI 实际获取金额", …}
-// 16: {clnd_month: "202003", data_period: "202001", data_desc: "PF20", kpi_code: "TOTAL_ORDER_BV", kpi_desc: "整体BV值", …}
-// 17: {clnd_month: "202003", data_period: "202001", data_desc: "PF20", kpi_code: "CSI_AMT", kpi_desc: "CSI 实际获取金额", …}
-// 18: {clnd_month: "202003", data_period: "202003", data_desc: "PF20", kpi_code: "FOA_ORDER_BV_1B", kpi_desc: "FOA order BV（按BV，使用月底身份）202001月之后开始计算", …}
-// 19: {clnd_month: "202003", data_period: "202001", data_desc: "PF20", kpi_code: "FOA_ORDER_BV_1B", kpi_desc: "FOA order BV（按BV，使用月底身份）202001月之后开始计算", …}
-// 20: {clnd_month: "202003", data_period: "202003", data_desc: "PF20", kpi_code: "TOTAL_ORDER_BV", kpi_desc: "整体BV值", …}
-// 21: {clnd_month: "202003", data_period: "202002", data_desc: "PF20", kpi_code: "FOA_ORDER_BV_1B", kpi_desc: "FOA order BV（按BV，使用月底身份）202001月之后开始计算", …}
-// 22: {clnd_month: "202003", data_period: "2020", data_desc: "PF20YTD", kpi_code: "FOA_ORDER_BV_1B", kpi_desc: "FOA order BV（按BV，使用月底身份）202001月之后开始计算", …}
-// 23: {clnd_month: "202003", data_period: "202003", data_desc: "PF20", kpi_code: "CSI_AMT", kpi_desc: "CSI 实际获取金额", …}
+    //     0: {clnd_month: "202003", data_period: "2020", data_desc: "PF20YTD", kpi_code: "CSI_COUNT", kpi_desc: "获取CSI的ABO户数", …}
+    // 1: {clnd_month: "202003", data_period: "202001", data_desc: "PF20", kpi_code: "QUALIF_CSI_SR", kpi_desc: "有资格领取CSI营销人员 202001月之后开始计算", …}
+    // 2: {clnd_month: "202003", data_period: "202001", data_desc: "PF20", kpi_code: "CSI_COUNT", kpi_desc: "获取CSI的ABO户数", …}
+    // 3: {clnd_month: "202003", data_period: "202003", data_desc: "PF20", kpi_code: "CSI_COUNT", kpi_desc: "获取CSI的ABO户数", …}
+    // 4: {clnd_month: "202003", data_period: "2020", data_desc: "PF20YTD", kpi_code: "QUALIF_CSI_SR", kpi_desc: "有资格领取CSI营销人员 202001月之后开始计算", …}
+    // 5: {clnd_month: "202003", data_period: "2020", data_desc: "PF20YTD", kpi_code: "CSI_AMT", kpi_desc: "CSI 实际获取金额", …}
+    // 6: {clnd_month: "202003", data_period: "2020", data_desc: "PF20YTD", kpi_code: "TOTAL_ORDER_BV", kpi_desc: "整体BV值", …}
+    // 7: {clnd_month: "202003", data_period: "202002", data_desc: "PF20", kpi_code: "QUALIF_CSI_SR", kpi_desc: "有资格领取CSI营销人员 202001月之后开始计算", …}
+    // 8: {clnd_month: "202003", data_period: "202003", data_desc: "PF20", kpi_code: "VCS_AMT", kpi_desc: "VCS整体金额（按BV)", …}
+    // 9: {clnd_month: "202003", data_period: "202002", data_desc: "PF20", kpi_code: "CSI_COUNT", kpi_desc: "获取CSI的ABO户数", …}
+    // 10: {clnd_month: "202003", data_period: "202002", data_desc: "PF20", kpi_code: "VCS_AMT", kpi_desc: "VCS整体金额（按BV)", …}
+    // 11: {clnd_month: "202003", data_period: "202002", data_desc: "PF20", kpi_code: "TOTAL_ORDER_BV", kpi_desc: "整体BV值", …}
+    // 12: {clnd_month: "202003", data_period: "202001", data_desc: "PF20", kpi_code: "VCS_AMT", kpi_desc: "VCS整体金额（按BV)", …}
+    // 13: {clnd_month: "202003", data_period: "202003", data_desc: "PF20", kpi_code: "QUALIF_CSI_SR", kpi_desc: "有资格领取CSI营销人员 202001月之后开始计算", …}
+    // 14: {clnd_month: "202003", data_period: "2020", data_desc: "PF20YTD", kpi_code: "VCS_AMT", kpi_desc: "VCS整体金额（按BV)", …}
+    // 15: {clnd_month: "202003", data_period: "202002", data_desc: "PF20", kpi_code: "CSI_AMT", kpi_desc: "CSI 实际获取金额", …}
+    // 16: {clnd_month: "202003", data_period: "202001", data_desc: "PF20", kpi_code: "TOTAL_ORDER_BV", kpi_desc: "整体BV值", …}
+    // 17: {clnd_month: "202003", data_period: "202001", data_desc: "PF20", kpi_code: "CSI_AMT", kpi_desc: "CSI 实际获取金额", …}
+    // 18: {clnd_month: "202003", data_period: "202003", data_desc: "PF20", kpi_code: "FOA_ORDER_BV_1B", kpi_desc: "FOA order BV（按BV，使用月底身份）202001月之后开始计算", …}
+    // 19: {clnd_month: "202003", data_period: "202001", data_desc: "PF20", kpi_code: "FOA_ORDER_BV_1B", kpi_desc: "FOA order BV（按BV，使用月底身份）202001月之后开始计算", …}
+    // 20: {clnd_month: "202003", data_period: "202003", data_desc: "PF20", kpi_code: "TOTAL_ORDER_BV", kpi_desc: "整体BV值", …}
+    // 21: {clnd_month: "202003", data_period: "202002", data_desc: "PF20", kpi_code: "FOA_ORDER_BV_1B", kpi_desc: "FOA order BV（按BV，使用月底身份）202001月之后开始计算", …}
+    // 22: {clnd_month: "202003", data_period: "2020", data_desc: "PF20YTD", kpi_code: "FOA_ORDER_BV_1B", kpi_desc: "FOA order BV（按BV，使用月底身份）202001月之后开始计算", …}
+    // 23: {clnd_month: "202003", data_period: "202003", data_desc: "PF20", kpi_code: "CSI_AMT", kpi_desc: "CSI 实际获取金额", …}
     // const maxYear = parseInt(dataState.length && dataState[0].max_perf_yr)
     // let maxMonthStr
     // if (dataState.length) {
@@ -356,29 +357,29 @@ class ChartStoreAbo {
     let TOTAL_ORDER_BV = [];
     let FOA_ORDER_BV_1B = [];
     let VCS_AMT = [];
-    dataState.sort((a,b)=>{
-      return b.clnd_month-a.clnd_month
+    dataState.sort((a, b) => {
+      return b.clnd_month - a.clnd_month
     })
-    dataState.sort((a,b)=>{
-      return a.data_period-b.data_period
+    dataState.sort((a, b) => {
+      return a.data_period - b.data_period
     })
     let NOW_MAXDATE = dataState[0].clnd_month
     // console.log(dataState)
     // console.log(dataState, "dataState")
-    dataState && dataState.length >= 0 ? dataState.map((o,index)=>{
+    dataState && dataState.length >= 0 ? dataState.map((o, index) => {
       var objData = {}
-      if(o.clnd_month == NOW_MAXDATE){
-        if(o.data_desc.indexOf("YTD") >= 0){
+      if (o.clnd_month == NOW_MAXDATE) {
+        if (o.data_desc.indexOf("YTD") >= 0) {
           objData = {
-            clnd_month:o.clnd_month,
+            clnd_month: o.clnd_month,
             data_period: o.data_period,
             kpi_cy_values: o.kpi_cy_values_usd,
-            data_desc:o.data_desc,
-            kpi_code:o.kpi_code,
-            kpi_desc:o.kpi_desc,
+            data_desc: o.data_desc,
+            kpi_code: o.kpi_code,
+            kpi_desc: o.kpi_desc,
           }
           YTD_DATA.push(objData)
-        }else if(o.kpi_code == "CSI_AMT" && o.data_desc.indexOf("YTD") == -1){
+        } else if (o.kpi_code == "CSI_AMT" && o.data_desc.indexOf("YTD") == -1) {
           // objData = {
           //   clnd_month:o.clnd_month,
           //   data_period: o.data_period,
@@ -388,7 +389,7 @@ class ChartStoreAbo {
           //   kpi_desc:o.kpi_desc,
           // }
           CSI_AMT.push(o.kpi_cy_values_usd)
-        }else if(o.kpi_code == "CSI_COUNT" && o.data_desc.indexOf("YTD") == -1){
+        } else if (o.kpi_code == "CSI_COUNT" && o.data_desc.indexOf("YTD") == -1) {
           // objData = {
           //   clnd_month:o.clnd_month,
           //   data_period: o.data_period,
@@ -398,13 +399,13 @@ class ChartStoreAbo {
           //   kpi_desc:o.kpi_desc,
           // }
           CSI_COUNT.push(o.kpi_cy_values_usd)
-        }else if(o.kpi_code == "QUALIF_CSI_SR_PPV" && o.data_desc.indexOf("YTD") == -1){
+        } else if (o.kpi_code == "QUALIF_CSI_SR_PPV" && o.data_desc.indexOf("YTD") == -1) {
           QUALIF_CSI_SR.push(o.kpi_cy_values_usd)
-        }else if(o.kpi_code == "TOTAL_ORDER_BV" && o.data_desc.indexOf("YTD") == -1){
+        } else if (o.kpi_code == "TOTAL_ORDER_BV" && o.data_desc.indexOf("YTD") == -1) {
           TOTAL_ORDER_BV.push(o.kpi_cy_values_usd)
-        }else if(o.kpi_code == "FOA_ORDER_BV_1B" && o.data_desc.indexOf("YTD") == -1){
+        } else if (o.kpi_code == "FOA_ORDER_BV_1B" && o.data_desc.indexOf("YTD") == -1) {
           FOA_ORDER_BV_1B.push(o.kpi_cy_values_usd)
-        }else if(o.kpi_code == "VCS_AMT" && o.data_desc.indexOf("YTD") == -1){
+        } else if (o.kpi_code == "VCS_AMT" && o.data_desc.indexOf("YTD") == -1) {
           VCS_AMT.push(o.kpi_cy_values_usd)
         }
       }
@@ -412,15 +413,15 @@ class ChartStoreAbo {
     var maxYearStr = NOW_MAXDATE.toString()
     var maxYearStrPF = hlp.yearToPfPref2(maxYearStr)
     return {
-      YTD_DATA:YTD_DATA,
-      CSI_AMT:CSI_AMT,
-      CSI_COUNT:CSI_COUNT,
-      QUALIF_CSI_SR:QUALIF_CSI_SR,
-      TOTAL_ORDER_BV:TOTAL_ORDER_BV,
-      FOA_ORDER_BV_1B:FOA_ORDER_BV_1B,
-      VCS_AMT:VCS_AMT,
-      NOW_MAXDATE:maxYearStr,
-      NOW_MAXDATEPF:maxYearStrPF
+      YTD_DATA: YTD_DATA,
+      CSI_AMT: CSI_AMT,
+      CSI_COUNT: CSI_COUNT,
+      QUALIF_CSI_SR: QUALIF_CSI_SR,
+      TOTAL_ORDER_BV: TOTAL_ORDER_BV,
+      FOA_ORDER_BV_1B: FOA_ORDER_BV_1B,
+      VCS_AMT: VCS_AMT,
+      NOW_MAXDATE: maxYearStr,
+      NOW_MAXDATEPF: maxYearStrPF
     }
   }
 
@@ -434,9 +435,13 @@ class ChartStoreAbo {
     const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'
 
     const MAX_YEAR_PROP = this.isPerfYear ? 'max_perf_yr' : 'max_calendar_yr'
-    const maxYear = parseInt(jsArr.length && jsArr[0][MAX_YEAR_PROP])
+    if (this.isAllDatePicker) {//时间选择判断当前年份
+      var maxYear = this.isAllDatePicker.slice(0, 4)
+    } else {
+      var maxYear = parseInt(jsArr.length && jsArr[0][MAX_YEAR_PROP])
+    }
+    // const maxYear = parseInt(jsArr.length && jsArr[0][MAX_YEAR_PROP])
     let dataState = jslinq(jsArr)
-
     dataState = dataState
       .groupBy(function (el) {
         return el[YEAR_TYPE];
@@ -447,15 +452,11 @@ class ChartStoreAbo {
     //   .max((el)=>{
     //       return parseInt( el['key'] );
     //   });
-
-
     dataState = _.reduce(dataState, (obj, param) => {
       obj[param.key] = param.elements
       return obj;
     }, {});
-
     dataState = jslinq(dataState[maxYear].concat())
-
     // dataState = dataState.groupBy(function(el){
     //   return el.month;
     // })
@@ -505,7 +506,7 @@ class ChartStoreAbo {
     if (!jsArr.length) {
       return false
     }
-
+    // console.log(jsArr,"jsArr8")
     let dataState = jsArr
 
     const maxYear = parseInt(dataState.length && dataState[0].perf_yr)
@@ -562,7 +563,7 @@ class ChartStoreAbo {
     if (!jsArr.length) {
       return false
     }
-
+    // console.log(jsArr,"jsArr9")
     let dataState = jsArr
 
     const maxYear = parseInt(dataState.length && dataState[0].max_perf_yr)
@@ -697,27 +698,38 @@ class ChartStoreAbo {
     }
 
     const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'
-
     let queryObj = jslinq(jsArr)
-
     let dataState = queryObj
       .groupBy(function (el) {
         return el[YEAR_TYPE];
       })
       .toList()
 
-    const maxYear = jslinq(dataState)
-      .max((el) => {
-        return parseInt(el['key']);
-      });
-
+    if (this.isAllDatePicker) {//时间选择判断当前年份
+      var maxYear = this.isAllDatePicker.slice(0, 4)
+    } else {
+      var maxYear = jslinq(dataState)
+        .max((el) => {
+          return parseInt(el['key']);
+        });
+    }
     dataState = _.reduce(dataState, (obj, param) => {
       obj[param.key] = param.elements
       return obj;
     }, {});
-
-    dataState = dataState[maxYear]
-
+    // console.log(this.isAllDatePicker.slice(4,6), "dataState1")
+    //数据在perf_yr且月份＞8以后从九月开始显示
+    if (this.isPerfYear && this.isAllDatePicker && this.isAllDatePicker.slice(4,6) > 8) {
+      dataState = dataState[Number(maxYear) + 1] || []
+    } else {
+      dataState = dataState[maxYear]
+    }
+    // dataState = dataState[maxYear]
+    if (this.isAllDatePicker) {//按月份进行数据展示
+      dataState = _.filter(dataState, (o) => {
+        return o.n_month <= this.isAllDatePicker
+      })
+    }
     let new_abo_data = _.map(dataState, (o) => {
       return {
         x: MONTHS_MAP[o.month],
@@ -756,7 +768,8 @@ class ChartStoreAbo {
       new_abo_data: new_abo_data,
       renew_abo_data: renew_abo_data,
       churn_abo_data: churn_abo_data,
-      months_data: months_data
+      months_data: months_data,
+      isPerfYear: this.isPerfYear,
     }
   }
 
@@ -768,7 +781,7 @@ class ChartStoreAbo {
 
     let queryObj = jslinq(jsArr)
 
-
+    // console.log(queryObj,"queryObj")
     let dataState = queryObj
       .groupBy(function (el) {
         return el.perf_yr;
@@ -776,7 +789,7 @@ class ChartStoreAbo {
       .toList()
 
     let maxYear
-
+    // console.log(dataState,"dataState")
     if (dataState.length && dataState[0].elements.length) {
       maxYear = dataState[0].elements[0][`max_perf_yr`]
     }
@@ -797,9 +810,9 @@ class ChartStoreAbo {
       obj[param.key] = param.elements
       return obj;
     }, {});
-
+    // console.log(dataState,"dataStateelements")
     dataState = dataState[maxYear]
-
+    // console.log(dataState,"dataStatemaxYea")
     // console.log(dataState)
     let num_q_month_data = _.map(dataState, (o) => {
       return {
@@ -920,7 +933,7 @@ class ChartStoreAbo {
     if (!jsArr.length) {
       return false
     }
-
+    // console.log(jsArr,"jsArr")
     return jsArr
   }
 
@@ -931,7 +944,7 @@ class ChartStoreAbo {
     if (!jsArr.length || !jsArr2.length) {
       return false
     }
-
+    // console.log(jsArr,jsArr2,"jsArr,jsArr2,7")
     let maxMonthStr = jsArr[0].latest_month
 
 
@@ -1045,7 +1058,7 @@ class ChartStoreAbo {
     if (!jsArr.length) {
       return false
     }
-
+    // console.log(jsArr,"jsArr10")
     let dataState = jsArr
 
     const actualMonth = dataState.length && dataState[0]['n_month_actual'],
@@ -1056,7 +1069,7 @@ class ChartStoreAbo {
         return el.start_bonus_dist;
       })
       .toList()
-      // console.log(dataState)
+    // console.log(dataState)
     dataState = _.reduce(dataState, (obj, param) => {
       obj[param.key] = param.elements.length && param.elements[0]
       return obj;

@@ -10,7 +10,6 @@ export default class AboDyBarStack extends Component {
             newAboData: [],
             enewAboData: [],
             churnAboData: [],
-            isPerfYearAbo: false,
         }
     }
     render() {
@@ -28,15 +27,14 @@ export default class AboDyBarStack extends Component {
     }
     componentWillReceiveProps(nextProps) {
         var { data } = nextProps
-        var { monthShowAbo, isPerfYearAbo } = this.state
-        isPerfYearAbo = !isPerfYearAbo
-        if (isPerfYearAbo) {
+        var { monthShowAbo } = this.state
+        if (data.isPerfYear) {
             monthShowAbo = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']
         } else {
             monthShowAbo = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         }
         this.setState({
-            monthShowAbo, isPerfYearAbo
+            monthShowAbo
         }, () => {
             this.upDateShowData()
         })
@@ -48,17 +46,17 @@ export default class AboDyBarStack extends Component {
         // churn_abo_data: (2) [{…}, {…}]
         // months_data: (2) [{…}, {…}]
         var newAboData = []
-        data.new_abo_data.map((item, index) => {
+        data.new_abo_data ? data.new_abo_data.map((item, index) => {
             newAboData.push(item.y)
-        })
+        }) : ""
         var enewAboData = []
-        data.renew_abo_data.map((item, index) => {
+        data.renew_abo_data ? data.renew_abo_data.map((item, index) => {
             enewAboData.push((item.y) * 3)
-        })
+        }) : ""
         var churnAboData = []
-        data.churn_abo_data.map((item, index) => {
+        data.churn_abo_data ? data.churn_abo_data.map((item, index) => {
             churnAboData.push(item.y)
-        })
+        }) : ""
         this.setState({
             newAboData, enewAboData, churnAboData
         }, () => {

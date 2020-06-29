@@ -103,7 +103,7 @@ export default class AboFinalPie extends Component {
         var data = this.props.data;
         // console.log(data[0].update_month)
         var chartData = data.length && data[0]
-        var maxMonthStr = String(hlp.yearMonthToStr(chartData.update_month))
+        var maxMonthStr = chartData ? String(hlp.yearMonthToStr(chartData.update_month)) : ""
         var title = this.props.titleData && this.props.titleData['gar_title']
 
         var pieAboFinalRightNumber = (chartData.num_tracking_old_faa / (chartData.num_tracking_new_faa / 160)) || 0

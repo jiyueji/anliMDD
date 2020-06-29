@@ -13,6 +13,7 @@ export default class PicFourChange extends Component {
             allEvents: "Net Sales",//下面的可以变化的标题
             allEventsArr: ["Net Sales", "Order BV Sales", "Recruitment", "Buyer Counts"],
             idxIndexShow: 0,
+            activityFlag:true,//如果是第一个图就显示提示框的开关
 
             data: {},
             data2: {},
@@ -36,8 +37,8 @@ export default class PicFourChange extends Component {
             pieThreeDataFourNew: {},//第四个的新的独立数据
             thisYearDataTwinkle: [],//散点图
             lastYearPrompBoxData: [],//去年的数据特殊标记
-            tempPromptBoxShowAllData:[],
-            promptBoxShowLastYearData:[],
+            tempPromptBoxShowAllData: [],
+            promptBoxShowLastYearData: [],
             // pieThreeDataArrOne:[],//饼图的第一个图的数据
             // pieThreeDataArrTwo:[],//饼图的第二个图的数据
             // pieThreeDataArrThree:[],//饼图的第三个图的数据
@@ -48,7 +49,7 @@ export default class PicFourChange extends Component {
         }
     }
     render() {
-        var { allEvents, netData, bvData, recruitmentDate, buyerCountsDate, changeName, } = this.state
+        var { allEvents, netData, bvData, recruitmentDate, buyerCountsDate, changeName,activityFlag,promptBoxShow } = this.state
         return (
             <Fragment>
                 <div style={{ height: '160px', width: '100%', display: 'flex', justifyContent: 'space-between' }}>
@@ -105,8 +106,34 @@ export default class PicFourChange extends Component {
                         </div>
                         <div id="fourChangeLine" style={{ width: "100%", height: '280px' }}></div>
                     </div>
-                    <div style={{ width: '25%', height: "100%", display: "flex" }}>
-                        <div id="pieAngleEcharts" style={{ width: "100%", height: '320px' }}></div>
+                    {/* <div style={{ width: '25%', height: "100%", display: "flex" }}>
+                        {
+                            activityFlag ? <div>123123</div> : <div id="pieAngleEcharts" style={{ width: "100%", height: '320px' }}></div>
+                        }
+                    </div> */}
+                    <div style={{ width: '25%', height: "100%", display: "flex",overflow:"auto" }}>
+                        {
+                            activityFlag ? <table width="100%" border="0" border-collapse="collapse" cellSpacing="0" cellPadding="0" style={{ textAlign: "center", fontSize: "12px", wordBreak: 'break-all' }}>
+                            <thead>
+                                <tr>
+                                    <th style={{ height: "35px", border: "1px solid #e5e6e9" }}>Start Day</th>
+                                    {/* <th style={{ height: "35px", border: "1px solid #e5e6e9" }}>Activity</th> */}
+                                    <th style={{ height: "35px", border: "1px solid #e5e6e9" }}>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    promptBoxShow.map((item, index) => {
+                                        return <tr key={index} style={{}}>
+                                            <td style={{ height: "35px", border: "1px solid #e5e6e9"}}>{item.start_day}</td>
+                                            {/* <td style={{ height: "35px", border: "1px solid #e5e6e9"}}>{item.activity}</td> */}
+                                            <td style={{ height: "35px", border: "1px solid #e5e6e9"}}>{item.promotion_desc}</td>
+                                        </tr>
+                                    })
+                                }
+                            </tbody>
+                        </table> : <div id="pieAngleEcharts" style={{ width: "100%", height: '320px' }}></div>
+                        }
                     </div>
                 </div>
 
@@ -114,8 +141,8 @@ export default class PicFourChange extends Component {
         )
     }
     componentWillReceiveProps(nextProps) {
-        var { data, data2,data3,dataOneLine,dataPromptBox } = nextProps
-        this.dateUpdateShowHandle(data, data2,data3,dataOneLine,dataPromptBox)
+        var { data, data2, data3, dataOneLine, dataPromptBox } = nextProps
+        this.dateUpdateShowHandle(data, data2, data3, dataOneLine, dataPromptBox)
     }
     componentDidMount() {
         // var { data, data2,data3,dataOneLine,dataPromptBox } = this.props
@@ -124,21 +151,23 @@ export default class PicFourChange extends Component {
         var data3 = this.props.data3 || {}
         var dataOneLine = this.props.dataOneLine || {}
         var dataPromptBox = this.props.dataPromptBox || {}
-        this.dateUpdateShowHandle(data, data2,data3,dataOneLine,dataPromptBox)
+        this.dateUpdateShowHandle(data, data2, data3, dataOneLine, dataPromptBox)
     }
-    dateUpdateShowHandle(data, data2,data3,dataOneLine,dataPromptBox){
-        // console.log(data3,"data3")
+    dateUpdateShowHandle(data, data2, data3, dataOneLine, dataPromptBox) {
+        // console.log(data, "data")
+        var {allEvents,allEventsArr} = this.state
         var changeName = []
         var netData = {}
         var bvData = {}
         // 切换数据时下边的选项的变动
         var changeNameArrShow = [
-            { name: ["ACCL", "3E", "ECOM"] },
             { name: [] },
+            { name: ["ABO", "PC", "FOA"] },
             { name: ["New ABO", "New PC"] },
             { name: ["ABO Buyer", "PC Buyer", "FOA Buyer", "New FOA Buyer"] },
         ];
         changeName = changeNameArrShow[0].name
+        allEvents = allEventsArr[0]//切换时的每一个的标题
         // n_date: "20200304"
         // agg_type: "ACCL"
         // sales: 6856868.64214831
@@ -161,9 +190,9 @@ export default class PicFourChange extends Component {
         // 2: {x: "Mar", y: 191296390.758621, labelTooltip: "target_sales"}
         // 3: {x: "Apr", y: 175198325.37931, labelTooltip: "target_sales"}
         // 4: {x: "May", y: 191066128.827586, labelTooltip: "target_sales"}
-        // console.log(data2)
         data.tableData ? data.tableData.map((item, index) => {
             var pieThreeDataOne = {}
+            var pieThreeDataTwo = {}
             if (item.agg_type == "Net Sales") {
                 var dataNowStr = hlp.yearMonthFiveToStr(item.n_date)
                 var oneForecastData = 0
@@ -177,11 +206,24 @@ export default class PicFourChange extends Component {
                 netData.monthData = netData.monthData.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
                 netData.lmData = Math.round((item.pct_mtd_splm || 0) * 100)
                 netData.splyData = Math.round((item.pct_mtd_sply || 0) * 100)
-            } else if (item.agg_type == "Order BV Sales") {
-                bvData.monthData = Math.round(((item.mtd_sales || 0) / 1000000))
-                bvData.monthData = bvData.monthData.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
-                bvData.lmData = Math.round((item.pct_mtd_splm || 0) * 100)
-                bvData.splyData = Math.round((item.pct_mtd_sply || 0) * 100)
+                // {n_date: "20200616", agg_type: "Order BV Sales All", sales: 4179595.28880073, sales_minus_1d: 6540128.47636253, sales_minus_2d: 3917904.97613671, …}
+                // 5: {n_date: "20200616", agg_type: "Order BV Sales SR", sales: 3184264.54358254, sales_minus_1d: 5322825.51383583, sales_minus_2d: 3055322.87257858, …}
+                // 6: {n_date: "20200616", agg_type: "Order BV Sales FOA", sales: 871311.183021056, sales_minus_1d: 1079798.47556912, sales_minus_2d: 774048.890765944, …}
+                // 7: {n_date: "20200616", agg_type: "Order BV Sales PC", sales: 124019.562197132, sales_minus_1d: 137504.486957583, sales_minus_2d: 88533.212792188, …}
+            } else if (item.agg_type.indexOf("Order BV Sales") > -1) {
+                if (item.agg_type == "Order BV Sales All") {
+                    bvData.monthData = Math.round(((item.mtd_sales || 0) / 1000000))
+                    bvData.monthData = bvData.monthData.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
+                    bvData.lmData = Math.round((item.pct_mtd_splm || 0) * 100)
+                    bvData.splyData = Math.round((item.pct_mtd_sply || 0) * 100)
+                } else {
+                    //饼图的三个数据中的第一个
+                    pieThreeDataTwo.value = Math.round(((item.mtd_sales || 0) / 1000000));
+                    pieThreeDataTwo.name = item.agg_type == "Order BV Sales SR" ? "ABO" : item.agg_type == "Order BV Sales FOA" ? "FOA" : "PC";
+                    pieThreeDataTwo.lmData = Math.round((item.pct_mtd_splm || 0) * 100);
+                    pieThreeDataTwo.splyData = Math.round((item.pct_mtd_sply || 0) * 100);
+                    pieThreeDataArrTwo.push(pieThreeDataTwo)
+                }
             } else {
                 // 饼图的三个数据中的第一个
                 // pieThreeDataOne.value = Math.round(((item.mtd_sales || 0) / 1000000));
@@ -303,19 +345,21 @@ export default class PicFourChange extends Component {
         //         tableData: Array(15)
         // 0: {n_month: "202005", start_day: "May. 11 2020", activity: "PROMOTION", promotion_desc: "May Random Coupon Campaign"}
         var promptBoxShow = []//提示框里面要展示的活动
+        // console.log(dataPromptBox, "dataPromptBox")
         dataPromptBox.tableData ? dataPromptBox.tableData.map((item, index) => {
             var itemMonthId = parseInt(String(item.n_month).slice(4, 6))
             if (itemMonthId == data3MaxMonth) {
                 promptBoxShow.push(item)
             }
         }) : ""
+        // console.log(promptBoxShow, "promptBoxShow")
         //         {n_month: "201905", start_day: "May. 11 2019", end_day: "20190630", activity: "PROMOTION", promotion_desc: "May Artistry Promotion - 2nd wave"}
         //{n_month: "201905", start_day: "May. 06 2019", end_day: "20190630", activity: "PROMOTION", promotion_desc: "May Artistry Promotion"}
         //(12) ["12.9", "3.8", "3.6", "3.0", "5.4", "4.6", "4.1", "3.5", "3.7", "3.8", "3.2", "6.9"]
         var thisYearDataTwinkle = []
         var promptBoxShowAllData = []
         var promptBoxShowLastYear = []//去年的数据集合
-        console.log(promptBoxShow)
+        // console.log(promptBoxShow)
         promptBoxShow.map((item, index) => {
             var monthIdDay = parseInt(String(item.start_day).slice(5, 7))//日子
             var yearDay = parseInt(String(item.start_day).slice(-4))//年份
@@ -394,14 +438,16 @@ export default class PicFourChange extends Component {
             thisYearDataTwinkle,
             // pieThreeShowData,//玫瑰图加了数据的
             promptBoxShow,
+            activityFlag:true,
+            allEvents,
         }, () => {
             this.echartsShowLine();
-            this.pieAngleHandle();
+            // this.pieAngleHandle();
         })
     }
     //点击图片下面切换数据
     picChangeDateHandle(idx, e) {
-        var { data, data2, changeNameArrShow, changeName, allEvents, allEventsArr, pieThreeDataArr, pieThreeDataArrAll, pieThreeLegend } = this.state
+        var { data, data2, changeNameArrShow, changeName, allEvents, allEventsArr, pieThreeDataArr, pieThreeDataArrAll, pieThreeLegend,activityFlag } = this.state
 
         allEvents = allEventsArr[idx]
         // if(e.target.childNodes[1].innerHTML){
@@ -413,7 +459,8 @@ export default class PicFourChange extends Component {
         } else {
             changeName = []
         }
-        // console.log(changeName)
+        // 判断当前是不是最上面第一个图
+        activityFlag = idxIndexShow == 0 ? true : false
         // if (idx == 0) {
         //     data.tableData ? data.tableData.map((item, index) => {
         //         if (item.agg_type !== "Net Sales" && item.agg_type !== "Order BV Sales") {
@@ -443,15 +490,17 @@ export default class PicFourChange extends Component {
             item.name !== "New FOA Buyer" ? pieThreeLegend.push(item.name) : ""
         }) : ""
         this.setState({
-            changeName, allEvents, idxIndexShow, pieThreeDataArr, pieThreeLegend
+            changeName, allEvents, idxIndexShow, pieThreeDataArr, pieThreeLegend,activityFlag
         }, () => {
-            var { elmUpDateBlue } = this.state
+            var { elmUpDateBlue,activityFlag } = this.state
             if (elmUpDateBlue) {
                 elmUpDateBlue.classList.remove("picFourChangeNavActive");
                 document.getElementById("upDateBlueShow").classList.add("picFourChangeNavActive");
             }
             this.changeClickDataHandle(0);
-            this.pieAngleHandle();
+            if(!activityFlag){
+                this.pieAngleHandle();
+            }
         })
     }
     // 点击切换数据
@@ -472,10 +521,10 @@ export default class PicFourChange extends Component {
     }
     // 当被点击的时候数据进行切换的一个专用方法
     changeClickDataHandle(index) {
-        var { data3, idxIndexShow,tempPromptBoxShowAllData,promptBoxShowLastYearData } = this.state
+        var { data3, idxIndexShow, tempPromptBoxShowAllData, promptBoxShowLastYearData } = this.state
         var changeNameArrDataShow = [
             { name: ["NET_SALES", "ACCL", "3E", "ECOM"] },
-            { name: ["ORDER_BV_SALES"] },
+            { name: ["ORDER_BV_SALES", "ORDER_BV_SALES_SR", "ORDER_BV_SALES_PC", "ORDER_BV_SALES_FOA"] },
             { name: ["Recruitment", "ABO", "PC"] },
             { name: ["Buyer Counts", "ABO buyer count", "PC buyer count", "FOA buyer count", "NEW FOA buyer count"] },
         ];
@@ -489,7 +538,7 @@ export default class PicFourChange extends Component {
                     data3ThisYear.push((((item.y || 0) / 1000000)).toFixed(1))
                 } else if (item.y && idxIndexShow >= 2) {
                     data3ThisYear.push((((item.y || 0) / 1000)).toFixed(1))
-                }else{
+                } else {
                     data3ThisYear.push("")
                 }
             }
@@ -538,8 +587,11 @@ export default class PicFourChange extends Component {
             thisYearDataTwinkle,
             lastYearPrompBoxData,
         }, () => {
+            // var {activityFlag} = this.state
+            // if(!activityFlag){
+            //     this.pieAngleHandle();
+            // }
             this.echartsShowLine();
-            this.pieAngleHandle();
         })
     }
     // 可以切换的折线图Echarts
@@ -716,7 +768,7 @@ export default class PicFourChange extends Component {
                         {
                             name: this.state.data3MaxMonth + "/" + this.state.data3MaxYear,
                             data: this.state.data3ThisYear,
-                            animationDuration:0,
+                            animationDuration: 0,
                             type: 'line',
                             smooth: true,
                             symbolSize: 8, //折线点的大小
@@ -736,7 +788,7 @@ export default class PicFourChange extends Component {
                         {
                             name: this.state.data3MaxMonth + "/" + this.state.data3PrevYear,
                             data: this.state.data3LastYear,
-                            animationDuration:0,
+                            animationDuration: 0,
                             type: 'line',
                             smooth: true,
                             symbol: "none", //去掉折线点
@@ -782,7 +834,7 @@ export default class PicFourChange extends Component {
                             type: 'effectScatter',
                             coordinateSystem: 'cartesian2d',
                             data: this.state.thisYearDataTwinkle, //2d坐标系
-                            animationDuration:0,
+                            animationDuration: 0,
                             symbolSize: 10,
                             label: {
                                 show: false,
@@ -815,20 +867,20 @@ export default class PicFourChange extends Component {
                                 rich: {
                                     11: {
                                         // width: 1,
-                                        height:61,
+                                        height: 61,
                                         align: "center",
                                         verticalAlign: "middle",
-                                        color:'red',
-                                        lineHeight:8,
+                                        color: 'red',
+                                        lineHeight: 8,
                                         // padding : [15, 0, 0, 0],
                                     },
                                     16: {
-                                        height:20,
+                                        height: 20,
                                         align: "center",
                                         verticalAlign: "middle",
-                                        lineHeight:8,
+                                        lineHeight: 8,
                                         // padding : [20, 0, 0, 0],
-                                        color:'yellow',
+                                        color: 'yellow',
                                     },
                                     19: {
                                         // height:900,
@@ -893,16 +945,17 @@ export default class PicFourChange extends Component {
     pieAngleHandle() {
         //页面自适应
         var pieAngleWidth = document.getElementById('pieAngleEcharts')
+        pieAngleWidth.removeAttribute('_echarts_instance_'); // 移除容器上的 _echarts_instance_ 属性
         pieAngleWidth.style.width = (window.innerWidth * 0.24) + "px"
 
         var pieAngleEcharts = echarts.init(pieAngleWidth);
         window.addEventListener('resize', function () {
             pieAngleEcharts.resize();
         });
-        pieAngleEcharts.clear();//把数据完全清除重新加载
+        // pieAngleEcharts.clear();//把数据完全清除重新加载
         pieAngleEcharts.setOption({
             // backgroundColor: '#2c343c',
-            animationDuration:0,
+            animationDuration: 0,
             tooltip: {
                 trigger: 'item',
                 formatter: (data) => {

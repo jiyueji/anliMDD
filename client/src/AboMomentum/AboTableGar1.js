@@ -69,7 +69,7 @@ export default class AboTableGar extends Component {
         var orig_new = 0
         var total_account = 0
         var total_new = 0
-        var maxMonthStr = String(hlp.yearMonthToStr(data[0].update_month))
+        var maxMonthStr = data ? String(hlp.yearMonthToStr(data[0].update_month)) : ""
         var rowsHtml = data.map((o) => {
             gar_account += o.gar_account
             gar_new += o.gar_new

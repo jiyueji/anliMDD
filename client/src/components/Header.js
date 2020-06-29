@@ -53,39 +53,7 @@ const Header = inject('authStore')(observer((props) => {
                     </div>
 
                 </Col>
-                <Col md={{ span: 5, offset: 3 }}>
-                    {!authStore.isAuthenticated && <LoginForm handler={handleLogin} />}
-                    {!authStore.isAuthenticated && <a href="/sign_up">Not registered? Sign up!</a>}
-
-
-                    {authStore.isAuthenticated &&
-                        <nav>
-                            <ul>
-                                <li className="current">
-                                    {/* <a href="#">User {props.authStore.currentUser}</a>                                 */}
-                                </li>
-                                <li>
-                                    {/* <a href="#" onClick={(e) => { e.preventDefault(); props.logout(); }}>Log Out</a>                                 */}
-                                </li>
-                            </ul>
-                        </nav>
-                    }
-
-
-                    {/* { 
-                        props.authStore.currentUser &&  <nav>
-                        <ul>
-                            <li className="current">
-                                <a href="#">Account Settings {props.authStore.currentUser}</a>                                
-                            </li>
-                            <li>
-                                <a href="#" onClick={(e) => { e.preventDefault(); props.logout(); }}>Log Out</a>                                
-                            </li>
-                        </ul>
-                        </nav>                    
-                    } */}
-
-                </Col>
+                {/* 下面注释代码为原登录组件 */}
             </Row>
 
             <Row>
@@ -107,10 +75,6 @@ const Header = inject('authStore')(observer((props) => {
 
         </div>
 
-
-
-
-
         {/* <p className="header__greeting">
             <span>
                 Welcome
@@ -130,3 +94,39 @@ const Header = inject('authStore')(observer((props) => {
 }))
 
 export default Header
+
+
+
+// <Col md={{ span: 5, offset: 3 }}>
+// {!authStore.isAuthenticated && <LoginForm handler={handleLogin} />}
+// {!authStore.isAuthenticated && <a href="/sign_up">Not registered? Sign up!</a>}
+
+
+// {authStore.isAuthenticated &&
+//     <nav>
+//         <ul>
+//             <li className="current">
+//                 {/* <a href="#">User {props.authStore.currentUser}</a> */}
+//             </li>
+//             <li>
+//                 {/* <a href="#" onClick={(e) => { e.preventDefault(); props.logout(); }}>Log Out</a> */}
+//             </li>
+//         </ul>
+//     </nav>
+// }
+
+
+// {/* { 
+//     props.authStore.currentUser &&  <nav>
+//     <ul>
+//         <li className="current">
+//             <a href="#">Account Settings {props.authStore.currentUser}</a>                                
+//         </li>
+//         <li>
+//             <a href="#" onClick={(e) => { e.preventDefault(); props.logout(); }}>Log Out</a>                                
+//         </li>
+//     </ul>
+//     </nav>                    
+// } */}
+
+// </Col>

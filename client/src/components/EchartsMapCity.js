@@ -87,7 +87,7 @@ export default class EchartsMapCity extends Component {
         var data = this.props.data
         // console.log(data)
         var isPerfYear = data.isPerfYear
-        var cityClusterAll = data.data
+        var cityClusterAll = data.data || []
         var bigSmallShow = (this.props.bigSmall.percentVal2 - 100) || 0
         // console.log(bigSmallShow)
         // console.log(cityClusterAll)

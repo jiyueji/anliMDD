@@ -128,6 +128,6 @@ var InternalForm = function InternalForm(props, ref) {
   }))));
 };
 
-var Form = React.forwardRef(InternalForm);
+var Form = /*#__PURE__*/React.forwardRef(InternalForm);
 var _default = Form;
 exports["default"] = _default;
