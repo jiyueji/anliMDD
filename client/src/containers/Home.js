@@ -71,7 +71,7 @@ import { withOktaAuth } from '@okta/okta-react';
             window.addEventListener("scroll", () => {
                 let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
                 // console.log(document.getElementById('topTatilShow'))
-                let offsetTopNav = document.getElementsByClassName('nav-tabs')[0].offsetTop;
+                let offsetTopNav = document.getElementsByClassName('nav-tabs')[0].offsetTop && 0;
                 if (scrollTop > offsetTopNav) {
                     document.getElementsByClassName('nav-tabs')[0].style.position = "fixed";
                     document.getElementsByClassName('nav-tabs')[0].style.top = "0";

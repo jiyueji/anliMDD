@@ -18,11 +18,11 @@ export default class EchartsFCWaterfall extends Component {
             data: [],
             echX: [],
             echY: [],
-            echYAdd:[],
-            echYJian:[],
+            echYAdd: [],
+            echYJian: [],
             totalSales: [],
             showAllData: [],
-            falgDataTwo:false,
+            falgDataTwo: false,
         }
     }
     render() {
@@ -40,12 +40,12 @@ export default class EchartsFCWaterfall extends Component {
         )
     }
     mapSortLastDataHandler() {
-        var { falgDataTwo,data, datas, echX, echY, totalSales, showAllData } = this.state
+        var { falgDataTwo, data, datas, echX, echY, totalSales, showAllData } = this.state
         echX = [];
         echY = [];
         totalSales = [];
         showAllData = [];
-        if(falgDataTwo){
+        if (falgDataTwo) {
             if (data || data.length > 0) {
                 data.map((item, index) => {
                     echX.push(item.x)
@@ -67,7 +67,7 @@ export default class EchartsFCWaterfall extends Component {
                     }
                 })
             }
-        }else{
+        } else {
             datas.sort((a, b) => {
                 return b.total_sales_sum - a.total_sales_sum;
             })
@@ -92,14 +92,14 @@ export default class EchartsFCWaterfall extends Component {
                 })
             }
         }
-        var echYAdd = echY.map((item,index)=>{
-            if(item >= 0){
+        var echYAdd = echY.map((item, index) => {
+            if (item >= 0) {
                 return item
             }
             return ""
         })
-        var echYJian = echY.map((item,index)=>{
-            if(item < 0){
+        var echYJian = echY.map((item, index) => {
+            if (item < 0) {
                 return item
             }
             return ""
@@ -119,10 +119,20 @@ export default class EchartsFCWaterfall extends Component {
             this.handleEcharts()
         })
     }
+    componentWillReceiveProps(nextProps) {
+        // var { data,datas } = nextProps
+        var data = nextProps.data.data || []
+        var datas = nextProps.datas.data || []
+        var maxMonthStr = String(hlp.yearMonthToStr(nextProps.data.maxMonth))
+        this.updateHandle(data,datas,maxMonthStr);
+    }
     componentDidMount() {
         var data = this.props.data.data || []
         var datas = this.props.datas.data || []
         var maxMonthStr = String(hlp.yearMonthToStr(this.props.data.maxMonth))
+        this.updateHandle(data,datas,maxMonthStr);
+    }
+    updateHandle(data,datas,maxMonthStr){
         var echX = [];
         var echY = [];
         var totalSales = [];
@@ -148,14 +158,14 @@ export default class EchartsFCWaterfall extends Component {
                 }
             })
         }
-        var echYAdd = echY.map((item,index)=>{
-            if(item >= 0){
+        var echYAdd = echY.map((item, index) => {
+            if (item >= 0) {
                 return item
             }
             return ""
         })
-        var echYJian = echY.map((item,index)=>{
-            if(item < 0){
+        var echYJian = echY.map((item, index) => {
+            if (item < 0) {
                 return item
             }
             return ""
@@ -369,7 +379,7 @@ export default class EchartsFCWaterfall extends Component {
                 }
             }],
             //图例名
-            color:["#5198ee","#23e1d1","#eb5652"],
+            color: ["#5198ee", "#23e1d1", "#eb5652"],
             legend: {
                 type: "scroll",
                 // selectedMode:false,//取消图例上的点击事件

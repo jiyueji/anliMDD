@@ -721,7 +721,7 @@ class ChartStoreDaily {
     if (!jsArr.length) {
       return false
     }
-
+    // console.log(jsArr,"jsArr")
     let dataState = jsArr
     const maxDateRaw = dataState.length && dataState[0].date || 0
     const maxMonth = parseInt(maxDateRaw)

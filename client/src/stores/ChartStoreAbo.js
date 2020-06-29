@@ -722,7 +722,7 @@ class ChartStoreAbo {
     if (this.isPerfYear && this.isAllDatePicker && this.isAllDatePicker.slice(4,6) > 8) {
       dataState = dataState[Number(maxYear) + 1] || []
     } else {
-      dataState = dataState[maxYear]
+      dataState = dataState[maxYear] || []
     }
     // dataState = dataState[maxYear]
     if (this.isAllDatePicker) {//按月份进行数据展示
