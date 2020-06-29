@@ -539,7 +539,7 @@ class DailySalesTableByMonth(Resource):
 
         queryStr = "select * from qa_test.query_daily_25_daily_sales where n_date='"+month+"'"
         return performQuery(queryStr)
-
+]
 class DailyRecTableByMonth(Resource):
     def get(self):
         data = parser3.parse_args()
@@ -562,4 +562,60 @@ class DailyCommentsByMonth(Resource):
         month = data['month']
 
         queryStr = "select * from dashboard.qa_test.query_daily_49_daily_comments where date='"+month+"'"
+        return performQuery(queryStr)
+
+class AboQualificationDataByMonth(Resource):
+    def get(self):
+        data = parser3.parse_args()
+        month = data['month']
+
+        queryStr = "select * from qa_test.query_abo_7_q_month where n_month like "+"'"+month+"'"
+        return performQuery(queryStr)
+
+class AboBonusByMonth(Resource):
+    def get(self):
+        data = parser3.parse_args()
+        month = data['month']
+
+        queryStr = "select * from qa_test.query_abo_18_gar_pie_chart where update_month like "+"'"+month+"'"
+        return performQuery(queryStr)
+
+class GarTracking1ByMonth(Resource):
+    def get(self):
+        data = parser3.parse_args()
+        month = data['month']
+
+        queryStr = "select * from qa_test.query_abo_16_gar_summary where update_month like "+"'"+month+"'"
+        return performQuery(queryStr)
+
+class GarTracking2ByMonth(Resource):
+    def get(self):
+        data = parser3.parse_args()
+        month = data['month']
+
+        queryStr = "select * from qa_test.query_abo_17_gar_detail where update_month like "+"'"+month+"'"
+        return performQuery(queryStr)
+
+class AboPinDataByMonth(Resource):
+    def get(self):
+        data = parser3.parse_args()
+        month = data['month']
+
+        queryStr = "select * from qa_test.query_abo_8_income_by_pin where n_month like "+"'"+month+"'"
+        return performQuery(queryStr)
+
+class AboNonPinDataByMonth(Resource):
+    def get(self):
+        data = parser3.parse_args()
+        month = data['month']
+
+        queryStr = "select  *  from qa_test.query_abo_21_nopin_income where n_month like "+"'"+month+"'"
+        return performQuery(queryStr)
+
+class AboCsiKpiByMonth(Resource):
+    def get(self):
+        data = parser3.parse_args()
+        month = data['month']
+        
+        queryStr = "select *  from qa_test.MD_ABO_21_CSI_KPI_M_F_V where n_month like "+"'"+month+"'"
         return performQuery(queryStr)
