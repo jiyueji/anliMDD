@@ -569,7 +569,7 @@ class AboQualificationDataByMonth(Resource):
         data = parser3.parse_args()
         month = data['month']
 
-        queryStr = "select * from qa_test.query_abo_7_q_month where n_month like "+"'"+month+"'"
+        queryStr = "select * from qa_test.query_abo_7_q_month where n_month like "+"'"+month+"%'"
         return performQuery(queryStr)
 
 class AboBonusByMonth(Resource):
@@ -577,7 +577,7 @@ class AboBonusByMonth(Resource):
         data = parser3.parse_args()
         month = data['month']
 
-        queryStr = "select * from qa_test.query_abo_18_gar_pie_chart where update_month like "+"'"+month+"'"
+        queryStr = "select * from qa_test.query_abo_18_gar_pie_chart where update_month like "+"'"+month+"%'"
         return performQuery(queryStr)
 
 class GarTracking1ByMonth(Resource):
@@ -585,7 +585,7 @@ class GarTracking1ByMonth(Resource):
         data = parser3.parse_args()
         month = data['month']
 
-        queryStr = "select * from qa_test.query_abo_16_gar_summary where update_month like "+"'"+month+"'"
+        queryStr = "select * from qa_test.query_abo_16_gar_summary where update_month like "+"'"+month+"%'"
         return performQuery(queryStr)
 
 class GarTracking2ByMonth(Resource):
@@ -593,7 +593,7 @@ class GarTracking2ByMonth(Resource):
         data = parser3.parse_args()
         month = data['month']
 
-        queryStr = "select * from qa_test.query_abo_17_gar_detail where update_month like "+"'"+month+"'"
+        queryStr = "select * from qa_test.query_abo_17_gar_detail where update_month like "+"'"+month+"%'"
         return performQuery(queryStr)
 
 class AboPinDataByMonth(Resource):
@@ -601,7 +601,7 @@ class AboPinDataByMonth(Resource):
         data = parser3.parse_args()
         month = data['month']
 
-        queryStr = "select * from qa_test.query_abo_8_income_by_pin where n_month like "+"'"+month+"'"
+        queryStr = "select * from qa_test.query_abo_8_income_by_pin where n_month like "+"'"+month+"%'"
         return performQuery(queryStr)
 
 class AboNonPinDataByMonth(Resource):
@@ -609,13 +609,14 @@ class AboNonPinDataByMonth(Resource):
         data = parser3.parse_args()
         month = data['month']
 
-        queryStr = "select  *  from qa_test.query_abo_21_nopin_income where n_month like "+"'"+month+"'"
+        queryStr = "select  *  from qa_test.query_abo_21_nopin_income where n_month like "+"'"+month+"%'"
         return performQuery(queryStr)
 
 class AboCsiKpiByMonth(Resource):
     def get(self):
         data = parser3.parse_args()
         month = data['month']
+<<<<<<< HEAD
 
         queryStr = "select *  from qa_test.MD_ABO_21_CSI_KPI_M_F_V where n_month like "+"'"+month+"'"
         return performQuery(queryStr)
@@ -626,4 +627,8 @@ class QMonthPvByMonth(Resource):
         month = data['month']
 
         queryStr = "select * from qa_test.query_abo_23_pv_per_q where n_month like "+"'"+month+"'"
+=======
+        
+        queryStr = "select *  from public.MD_ABO_21_CSI_KPI_M_F_V where clnd_month like "+"'"+month+"%'"
+>>>>>>> 20422ba75be98c350c07b8747bb0d1f85816fd1c
         return performQuery(queryStr)

@@ -69,6 +69,13 @@ const api = {
     dailyRecTableByMonth:'/dailyRecTableByMonth',
     dailySalEventsByMonth:'/dailySalEventsByMonth',
     dailyCommentsByMonth:'/dailyCommentsByMonth',
+    aboQualificationDataByMonth:'/aboQualificationDataByMonth',
+    aboBonusByMonth:'/aboBonusByMonth',
+    garTracking1ByMonth:'/garTracking1ByMonth',
+    garTracking2ByMonth:'/garTracking2ByMonth',
+    aboPinDataByMonth:'/aboPinDataByMonth',
+    aboNonPinDataByMonth:'/aboNonPinDataByMonth',
+    aboCsiKpiByMonth:'/aboCsiKpiByMonth',
 }
 
 export default api

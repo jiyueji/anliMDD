@@ -650,7 +650,7 @@ class ChartStoreGrowth {
     if (!jsArr.length) {
       return false
     }
-
+    // console.log(jsArr)
     let maxMonthStr = jsArr[0].max_month
     let maxYear = jsArr[0].calendar_yr
     const maxTargCalYear = jsArr[0].max_target_calendar_year

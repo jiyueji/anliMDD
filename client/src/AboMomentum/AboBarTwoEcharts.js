@@ -49,10 +49,13 @@ export default class AboBarTwoEcharts extends Component {
             </Fragment>
         )
     }
+    componentWillReceiveProps(nextProps) {
+        var { data,datas } = nextProps
+        this.upDateShowData(data,datas)
+    }
     componentDidMount() {
         var data = this.props.data;
         var datas = this.props.datas;
-        // console.log(data,datas)
         // prevYear: (3)[{ … }, { … }, { … }]
         // curYear: (3)[{ … }, { … }, { … }]
         // prevYearMed: (3)[{ … }, { … }, { … }]
@@ -62,6 +65,9 @@ export default class AboBarTwoEcharts extends Component {
         //         0: {x: "SP", y: 692.259310344828, labelTooltip: "Avg income: 692"}
         // 1: {x: "GP", y: 1051.38068965517, labelTooltip: "Avg income: 1051"}
         // 2: {x: "DD", y: 1937.77379310345, labelTooltip: "Avg income: 1938"}
+        this.upDateShowData(data,datas)
+    }
+    upDateShowData(data,datas){
         data.prevYear.sort(function (a, b) {
             var order = ["DD", "GP", "SP"];
             return order.indexOf(a.x) - order.indexOf(b.x);
@@ -188,7 +194,6 @@ export default class AboBarTwoEcharts extends Component {
             this.aboBarTwoEchartsHandle()
             this.aboBarTwoEchartsHandle2()
         })
-
     }
     aboBarTwoEchartsHandle() {
         //页面自适应

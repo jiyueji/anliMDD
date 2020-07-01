@@ -78,20 +78,20 @@ export default class AboFinalPie extends Component {
                             <div id="pieAboFinalRight2" style={{ position: "absolute",textAlign: "right", height: "90px", borderRadius: "50%", background: "rgba(255, 183, 111,0.7)",paddingRight:"2%"  }}></div>
                         </div> */}
                     </div>
-                    <img src={faaBrackets} style={{position:"absolute",top:"120px",width:"90%",left:"5%"}}/>
+                    <img src={faaBrackets} style={{ position: "absolute", top: "120px", width: "90%", left: "5%" }} />
                     <div style={{ width: "100%", display: 'flex', justifyContent: 'space-between', textAlign: "center", fontSize: "14px", lineHeight: "32px", position: "absolute", top: "135px" }}>
-                        <div style={{ color: "#71bae4", width: "33.3%" ,marginTop:"35px"}}>
+                        <div style={{ color: "#71bae4", width: "33.3%", marginTop: "35px" }}>
                             <div style={{ fontWeight: "600", marginBottom: "55px" }}>New FAA</div>
-                            <div style={{ fontWeight: "600"}}>{chartData.num_tracking_new_faa_only}</div>
+                            <div style={{ fontWeight: "600" }}>{chartData.num_tracking_new_faa_only}</div>
                         </div>
                         <div style={{ color: "#9e84da", width: "33.3%" }}>
-                            <div style={{ fontWeight: "600"}}>Both</div>
-                            <img src={faaArrow} style={{height:"90px"}}/>
-                            <div style={{ fontWeight: "600"}}>{chartData.num_new_old_faa}</div>
+                            <div style={{ fontWeight: "600" }}>Both</div>
+                            <img src={faaArrow} style={{ height: "90px" }} />
+                            <div style={{ fontWeight: "600" }}>{chartData.num_new_old_faa}</div>
                         </div>
-                        <div style={{ color: "#ce99e3", width: "33.3%",marginTop:"35px"}}>
+                        <div style={{ color: "#ce99e3", width: "33.3%", marginTop: "35px" }}>
                             <div style={{ fontWeight: "600", marginBottom: "55px" }}>Old FAA</div>
-                            <div style={{ fontWeight: "600"}}>{chartData.num_tracking_old_faa_only}</div>
+                            <div style={{ fontWeight: "600" }}>{chartData.num_tracking_old_faa_only}</div>
                         </div>
                     </div>
                 </div>
@@ -99,12 +99,18 @@ export default class AboFinalPie extends Component {
             </Fragment>
         )
     }
+    componentWillReceiveProps(nextProps) {
+        var { data } = nextProps
+        this.upDateShowData(data)
+    }
     componentDidMount() {
         var data = this.props.data;
-        // console.log(data[0].update_month)
+        // var title = this.props.titleData && this.props.titleData['gar_title']
+        this.upDateShowData(data)
+    }
+    upDateShowData(data) {
         var chartData = data.length && data[0]
         var maxMonthStr = chartData ? String(hlp.yearMonthToStr(chartData.update_month)) : ""
-        var title = this.props.titleData && this.props.titleData['gar_title']
 
         var pieAboFinalRightNumber = (chartData.num_tracking_old_faa / (chartData.num_tracking_new_faa / 160)) || 0
 
@@ -116,7 +122,8 @@ export default class AboFinalPie extends Component {
         pieAboFinalRight.style.left = (pieAboFinalLeftWidth * 0.36) + "px"
 
         this.setState({
-            title, chartData, maxMonthStr, pieAboFinalRightNumber
+            // title,
+            chartData, maxMonthStr, pieAboFinalRightNumber
         })
 
 

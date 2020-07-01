@@ -104,11 +104,10 @@ class ChartStore {
       return false
     }
     // console.log(jsArr, "jsArr")
-    let maxMonthStr
-    if (jsArr.length) {
-      maxMonthStr = jsArr[0].max_month
-    }
-
+    // let maxMonthStr
+    // if (jsArr.length) {
+    //   maxMonthStr = jsArr[0].max_month
+    // }
     let queryObj = jslinq(jsArr)
 
     let dataState = queryObj
@@ -117,13 +116,15 @@ class ChartStore {
       })
       .toList()
 
-    if (this.isAllDatePicker) {//根据时间改变时间
+    if (this.isAllDatePicker && jsArr.length && this.isAllDatePicker <= jsArr[0].max_month) {//根据时间改变时间
       var maxYear = this.isAllDatePicker.slice(0, 4)
+      var maxMonthStr = this.isAllDatePicker
     } else {
       var maxYear = jslinq(dataState)
         .max((el) => {
           return parseInt(el['key']);
         });
+        var maxMonthStr = jsArr[0].max_month
     }
     // const maxYear = jslinq(dataState)
     //   .max((el) => {
@@ -134,9 +135,12 @@ class ChartStore {
       obj[param.key] = param.elements
       return obj;
     }, {});
-
-    dataState = dataState[maxYear].concat()
-
+    // console.log(dataState,"dataState")
+    if (this.isAllDatePicker && this.isAllDatePicker.slice(4, 6) >= 9) {
+      dataState = dataState[Number(maxYear) + 1].concat() || []
+    } else {
+      dataState = dataState[maxYear].concat() || []
+    }
     const MONTH_TYPE = 'nth_month_of_perf_yr'
 
     // get max month of a current year
@@ -145,12 +149,16 @@ class ChartStore {
       .max((el) => {
         return el[MONTH_TYPE];
       });
-    console.log(maxMonth,dataState,"dataStatedataState")
-    if(this.isAllDatePicker){
+    // console.log(dataState,"dataState")
+    if (this.isAllDatePicker) {//根据时间判断数据
       dataState = _.filter(dataState, (o) => {
-        return o.n_month == this.isAllDatePicker
+        if (this.isAllDatePicker >= maxMonthStr) {
+          return o.nth_month_of_perf_yr === maxMonth
+        } else {
+          return o.n_month == this.isAllDatePicker
+        }
       })
-    }else{
+    } else {
       dataState = _.filter(dataState, (o) => {
         return o.nth_month_of_perf_yr === maxMonth
       })
@@ -158,12 +166,12 @@ class ChartStore {
     // dataState = _.filter(dataState, (o) => {
     //   return o.nth_month_of_perf_yr === maxMonth
     // })
-    console.log(dataState,"dataStat")
+
     dataState = jslinq(dataState).groupBy(function (el) {
       return el.fc_name;
     })
       .toList()
-    console.log(dataState,"dataState")
+    // console.log(dataState,"dataState")
 
     dataState = _.map(dataState, (o) => {
       o.total_sales_sum = jslinq(o.elements).sum(function (el) {
@@ -228,10 +236,10 @@ class ChartStore {
 
     let queryObj = jslinq(jsArr)
 
-    let maxMonthStr
-    if (jsArr.length) {
-      maxMonthStr = jsArr[0].max_month
-    }
+    // let maxMonthStr
+    // if (jsArr.length) {
+    //   maxMonthStr = jsArr[0].max_month
+    // }
     // console.log(jsArr)
     let dataState = queryObj
       .groupBy(function (el) {
@@ -239,13 +247,15 @@ class ChartStore {
       })
       .toList()
     // console.log(dataState)
-    if (this.isAllDatePicker) {//根据时间改变时间
+    if (this.isAllDatePicker && jsArr.length && this.isAllDatePicker <= jsArr[0].max_month) {//根据时间改变时间
       var maxYear = this.isAllDatePicker.slice(0, 4)
+      var maxMonthStr = this.isAllDatePicker
     } else {
       var maxYear = jslinq(dataState)
         .max((el) => {
           return parseInt(el['key']);
         });
+      var maxMonthStr = jsArr[0].max_month
     }
     // const maxYear = jslinq(dataState)
     //   .max((el) => {
@@ -336,7 +346,7 @@ class ChartStore {
 
   @computed get waterfallChartData() {
     const allData = this.calcTotalSalesTable()
-    console.log(allData,"allData")
+    // console.log(allData,"allData")
     let waterfallData = allData.data
     waterfallData = _.map(waterfallData, (o) => {
       return {
@@ -634,7 +644,13 @@ class ChartStore {
       return obj;
     }, {});
     // console.log(dataState,"dataStatedataState")
-    dataState = dataState[maxYear].concat()
+    //数据在perf_yr且月份＞8以后从九月开始显示
+    if (this.isPerfYear && this.isAllDatePicker && this.isAllDatePicker.slice(4, 6) > 8) {
+      dataState = dataState[Number(maxYear) + 1].concat() || []
+    } else {
+      dataState = dataState[maxYear].concat() || []
+    }
+    // dataState = dataState[maxYear].concat()
     // console.log(dataState,"dataStatedataStatedataStatedataState")
     // dataState = jslinq( dataState[ maxYear ].concat() )
 
@@ -698,7 +714,7 @@ class ChartStore {
         x: MONTHS_MAP[o.month],
         // 时间插件对数据进行筛选
         y: this.isAllDatePicker ? o.n_month <= this.isAllDatePicker ? o.actual_sales || null : null : o.actual_sales || null,
-        labelTooltip: 'Monthly Sales'
+        labelTooltip: 'Monthly Sales',
       }
     })
 
@@ -784,7 +800,8 @@ class ChartStore {
       //tooltip_info_data,
       // t_sales_with_forecast_data,
       // months_data,
-      isPerfYear: this.isPerfYear
+      isPerfYear: this.isPerfYear,
+      maxYear:maxYear,
     }
   }
 
@@ -897,7 +914,6 @@ class ChartStore {
     if (!jsArr.length) {
       return false
     }
-
     let queryObj = jslinq(jsArr)
 
     // always calendar year
