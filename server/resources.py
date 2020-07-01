@@ -539,7 +539,7 @@ class DailySalesTableByMonth(Resource):
 
         queryStr = "select * from qa_test.query_daily_25_daily_sales where n_date='"+month+"'"
         return performQuery(queryStr)
-]
+
 class DailyRecTableByMonth(Resource):
     def get(self):
         data = parser3.parse_args()
@@ -616,6 +616,14 @@ class AboCsiKpiByMonth(Resource):
     def get(self):
         data = parser3.parse_args()
         month = data['month']
-        
+
         queryStr = "select *  from qa_test.MD_ABO_21_CSI_KPI_M_F_V where n_month like "+"'"+month+"'"
+        return performQuery(queryStr)
+
+class QMonthPvByMonth(Resource):
+    def get(self):
+        data = parser3.parse_args()
+        month = data['month']
+
+        queryStr = "select * from qa_test.query_abo_23_pv_per_q where n_month like "+"'"+month+"'"
         return performQuery(queryStr)
