@@ -104,10 +104,10 @@ class ChartStore {
       return false
     }
     // console.log(jsArr, "jsArr")
-    let maxMonthStr
-    if (jsArr.length) {
-      maxMonthStr = jsArr[0].max_month
-    }
+    // let maxMonthStr
+    // if (jsArr.length) {
+    //   maxMonthStr = jsArr[0].max_month
+    // }
     let queryObj = jslinq(jsArr)
 
     let dataState = queryObj
@@ -116,13 +116,15 @@ class ChartStore {
       })
       .toList()
 
-    if (this.isAllDatePicker) {//根据时间改变时间
+    if (this.isAllDatePicker && jsArr.length && this.isAllDatePicker <= jsArr[0].max_month) {//根据时间改变时间
       var maxYear = this.isAllDatePicker.slice(0, 4)
+      var maxMonthStr = this.isAllDatePicker
     } else {
       var maxYear = jslinq(dataState)
         .max((el) => {
           return parseInt(el['key']);
         });
+        var maxMonthStr = jsArr[0].max_month
     }
     // const maxYear = jslinq(dataState)
     //   .max((el) => {
@@ -234,10 +236,10 @@ class ChartStore {
 
     let queryObj = jslinq(jsArr)
 
-    let maxMonthStr
-    if (jsArr.length) {
-      maxMonthStr = jsArr[0].max_month
-    }
+    // let maxMonthStr
+    // if (jsArr.length) {
+    //   maxMonthStr = jsArr[0].max_month
+    // }
     // console.log(jsArr)
     let dataState = queryObj
       .groupBy(function (el) {
@@ -245,13 +247,15 @@ class ChartStore {
       })
       .toList()
     // console.log(dataState)
-    if (this.isAllDatePicker) {//根据时间改变时间
+    if (this.isAllDatePicker && jsArr.length && this.isAllDatePicker <= jsArr[0].max_month) {//根据时间改变时间
       var maxYear = this.isAllDatePicker.slice(0, 4)
+      var maxMonthStr = this.isAllDatePicker
     } else {
       var maxYear = jslinq(dataState)
         .max((el) => {
           return parseInt(el['key']);
         });
+      var maxMonthStr = jsArr[0].max_month
     }
     // const maxYear = jslinq(dataState)
     //   .max((el) => {
@@ -710,7 +714,7 @@ class ChartStore {
         x: MONTHS_MAP[o.month],
         // 时间插件对数据进行筛选
         y: this.isAllDatePicker ? o.n_month <= this.isAllDatePicker ? o.actual_sales || null : null : o.actual_sales || null,
-        labelTooltip: 'Monthly Sales'
+        labelTooltip: 'Monthly Sales',
       }
     })
 
@@ -796,7 +800,8 @@ class ChartStore {
       //tooltip_info_data,
       // t_sales_with_forecast_data,
       // months_data,
-      isPerfYear: this.isPerfYear
+      isPerfYear: this.isPerfYear,
+      maxYear:maxYear,
     }
   }
 

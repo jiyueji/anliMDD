@@ -118,6 +118,7 @@ export default class LineChartMonthlyEchaets extends Component {
     dataUpdate() {
         var { allData, dataShowForClick, thisYearLength } = this.state
         // var allData = this.props.data;
+        console.log(allData)
         var thisYear = [];
         var lastYear = [];
         var forecastYear = [];
@@ -142,7 +143,8 @@ export default class LineChartMonthlyEchaets extends Component {
             forecastYear.unshift("")
         }
         // }
-        var yearShow = new Date().getFullYear() //今年
+        // var yearShow = new Date().getFullYear() //今年
+        var yearShow = allData.maxYear //今年
         var lastYearShow = (yearShow - 1).toString()   //去年
         yearShow = yearShow.toString()//转换成字符串可以显示在图例里，数字不可以
         var nameFroecast = yearShow + ' Target'
@@ -193,6 +195,7 @@ export default class LineChartMonthlyEchaets extends Component {
         window.addEventListener('resize', function () {
             myChart.resize()
         });
+        myChart.clear();//把数据完全清除重新加载
         myChart.setOption({
             title: [
                 {
@@ -317,6 +320,7 @@ export default class LineChartMonthlyEchaets extends Component {
                 {
                     name: this.state.nameFroecast,
                     type: 'line',
+                    animationDuration: 0,
                     symbolSize: 5,   //拐点圆的大小
                     // color:['#fd0022'],  //折线条的颜色
                     data: this.state.forecastYear,
@@ -369,6 +373,7 @@ export default class LineChartMonthlyEchaets extends Component {
                     name: this.state.yearShow,
                     data: this.state.thisYear,
                     type: 'line',
+                    animationDuration: 0,
                     smooth: true,
                     // symbol: "none", //去掉折线点
                     symbolSize: 5, //折线点的大小
@@ -411,6 +416,7 @@ export default class LineChartMonthlyEchaets extends Component {
                     name: this.state.lastYearShow,
                     data: this.state.lastYear,
                     type: 'line',
+                    animationDuration: 0,
                     smooth: true,
                     symbol: "none", //去掉折线点
                     symbolSize: 5, //折线点的大小

@@ -691,11 +691,12 @@ class ChartStoreDaily {
     if (!jsArr.length) {
       return false
     }
-    // console.log(jsArr,"jsArr")
+
     const dataState = _.map(jsArr, (o) => {
       o.start_day = dLib.format(dLib.parse(o.start_day, 'YYYYMMDD'), 'MMM. DD YYYY')
       return o
     })
+
     return { tableData: dataState }
   }
 

@@ -23,16 +23,15 @@ export default class AboQMonths extends Component {
             </Fragment>
         )
     }
+    componentWillReceiveProps(nextProps) {
+        var { data } = nextProps
+        this.upDateShowData(data)
+    }
     componentDidMount() {
         var data = this.props.data;
-        // num_q_month_data: (12)[{ … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }]
-        // num_q_month_ly_data: (12)[{ … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }]
-        // ytd_consecutive_data: (12)[{ … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }]
-        // ytd_consecutive_ly_data: (12)[{ … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }]
-        // months_data: (12)[{ … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }]
-        // months_data_cons: (12)[{ … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }, { … }]
-        // maxYear: "PF 20"
-        // prevYear: "PF 19"
+        this.upDateShowData(data)
+    }
+    upDateShowData(data){
         var { num_q_month_data, num_q_month_ly_data, months_data, maxYear, prevYear } = data
         var num_q_month_data_show = []
         var num_q_month_ly_data_show = []
@@ -51,7 +50,6 @@ export default class AboQMonths extends Component {
         }, () => {
             this.aboQMonthsHandle()
         })
-        // console.log(data)
     }
     aboQMonthsHandle() {
         //页面自适应
@@ -98,7 +96,8 @@ export default class AboQMonths extends Component {
             },
             xAxis: {
                 type: 'category',
-                data: this.state.months_data_show,
+                // data: this.state.months_data_show,
+                data:['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
                 axisTick: {
                     show: false //隐藏X轴刻度
                 },

@@ -454,7 +454,6 @@ class ApiSerice {
     }
 
     async get_queryDailySalesLine2ByMonth(params,send,token) {
-        // console.log(send)
         const res = await this.apiCall(api.queryDailySalesLine2ByMonth, 'GET', token, params,send);
         this.handleCommonError(res);
         return res.body;
@@ -467,26 +466,64 @@ class ApiSerice {
     }
 
     async get_dailyRecTableByMonth(params,send,token) {
-        // console.log(send)
         const res = await this.apiCall(api.dailyRecTableByMonth, 'GET', token, params,send);
         this.handleCommonError(res);
         return res.body;
     }
 
     async get_dailySalEventsByMonth(params,send,token) {
-        // console.log(send)
         const res = await this.apiCall(api.dailySalEventsByMonth, 'GET', token, params,send);
         this.handleCommonError(res);
         return res.body;
     }
 
     async get_dailyCommentsByMonth(params,send,token) {
-        // console.log(send)
         const res = await this.apiCall(api.dailyCommentsByMonth, 'GET', token, params,send);
         this.handleCommonError(res);
         return res.body;
     }
+    //第三屏接口
+    async get_abo_qualification_data_by_month(params,send,token) {
+        const res = await this.apiCall(api.aboQualificationDataByMonth, 'GET', token, params,send);
+        this.handleCommonError(res);
+        return res.body;
+    }
 
+    async get_aboBonusByMonth(params,send,token) {
+        const res = await this.apiCall(api.aboBonusByMonth, 'GET', token, params,send);
+        this.handleCommonError(res);
+        return res.body;
+    }
+
+    async get_garTracking1ByMonth(params,send,token) {
+        const res = await this.apiCall(api.garTracking1ByMonth, 'GET', token, params,send);
+        this.handleCommonError(res);
+        return res.body;
+    }
+
+    async get_garTracking2ByMonth(params,send,token) {
+        const res = await this.apiCall(api.garTracking2ByMonth, 'GET', token, params,send);
+        this.handleCommonError(res);
+        return res.body;
+    }
+
+    async get_aboPinDataByMonth(params,send,token) {
+        const res = await this.apiCall(api.aboPinDataByMonth, 'GET', token, params,send);
+        this.handleCommonError(res);
+        return res.body;
+    }
+
+    async get_aboNonPinDataByMonth(params,send,token) {
+        const res = await this.apiCall(api.aboNonPinDataByMonth, 'GET', token, params,send);
+        this.handleCommonError(res);
+        return res.body;
+    }
+
+    async get_aboCsiKpiByMonth(params,send,token) {
+        const res = await this.apiCall(api.aboCsiKpiByMonth, 'GET', token, params,send);
+        this.handleCommonError(res);
+        return res.body;
+    }
 }
 
 export default new ApiSerice()

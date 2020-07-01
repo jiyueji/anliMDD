@@ -61,16 +61,25 @@ export default class AboTableGar extends Component {
             </Fragment>
         )
     }
+    componentWillReceiveProps(nextProps) {
+        var { data,maxMonth } = nextProps.data
+        this.upDateShowData(data,maxMonth)
+    }
     componentDidMount() {
         var data = this.props.data.data;
+        var maxMonth = this.props.data.maxMonth;
+        this.upDateShowData(data,maxMonth)
+    }
+    upDateShowData(data,maxMonthStr){
         var gar_account = 0
         var gar_new = 0
         var orig_account = 0
         var orig_new = 0
         var total_account = 0
         var total_new = 0
-        var maxMonthStr = data ? String(hlp.yearMonthToStr(data[0].update_month)) : ""
-        var rowsHtml = data.map((o) => {
+        // var maxMonthStr = data ? String(hlp.yearMonthToStr(data[0].update_month)) : ""
+        var maxMonthStr = maxMonthStr || ""
+        var rowsHtml = data && data.length > 0 ? data.map((o) => {
             gar_account += o.gar_account
             gar_new += o.gar_new
             orig_account += o.orig_account
@@ -137,7 +146,7 @@ export default class AboTableGar extends Component {
                 <td className="font-weight-bold text-center" style={{ border: "1px solid #e5e6e9" }}>{o.total_account ? o.total_account : ""}</td>
                 <td className="font-weight-bold text-center" style={{ border: "1px solid #e5e6e9" }}>{o.total_new ? o.total_new : ""}</td>
             </tr>
-        })
+        }) : ""
         this.setState({
             data,maxMonthStr, rowsHtml,gar_account,gar_new,orig_account,orig_new,total_account,total_new,
         })

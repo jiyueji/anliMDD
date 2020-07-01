@@ -125,9 +125,9 @@ export default class PicFourChange extends Component {
                                 {
                                     promptBoxShow.map((item, index) => {
                                         return <tr key={index} style={{}}>
-                                            <td style={{ height: "35px", border: "1px solid #e5e6e9"}}>{item.start_day}</td>
+                                            <td style={{ height: "30px", border: "1px solid #e5e6e9",fontSize:"12px",whiteSpace:"nowrap"}}>{item.start_day}</td>
                                             {/* <td style={{ height: "35px", border: "1px solid #e5e6e9"}}>{item.activity}</td> */}
-                                            <td style={{ height: "35px", border: "1px solid #e5e6e9"}}>{item.promotion_desc}</td>
+                                            <td style={{ height: "30px", border: "1px solid #e5e6e9",textAlign:"left"}}>{item.promotion_desc}</td>
                                         </tr>
                                     })
                                 }
@@ -348,10 +348,12 @@ export default class PicFourChange extends Component {
         // console.log(dataPromptBox, "dataPromptBox")
         dataPromptBox.tableData ? dataPromptBox.tableData.map((item, index) => {
             var itemMonthId = parseInt(String(item.n_month).slice(4, 6))
-            if (itemMonthId == data3MaxMonth) {
+            var itemyearId = parseInt(String(item.n_month).slice(0, 4))
+            if (itemMonthId == data3MaxMonth && (itemyearId == data3MaxYear || itemyearId == data3PrevYear)) {
                 promptBoxShow.push(item)
             }
         }) : ""
+        // console.log(promptBoxShow)
         // console.log(promptBoxShow, "promptBoxShow")
         //         {n_month: "201905", start_day: "May. 11 2019", end_day: "20190630", activity: "PROMOTION", promotion_desc: "May Artistry Promotion - 2nd wave"}
         //{n_month: "201905", start_day: "May. 06 2019", end_day: "20190630", activity: "PROMOTION", promotion_desc: "May Artistry Promotion"}

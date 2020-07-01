@@ -25,20 +25,18 @@ export default class AboPvPer extends Component {
             </Fragment>
         )
     }
+    componentWillReceiveProps(nextProps) {
+        var { data,dataLegend } = nextProps
+        this.upDateShowData(data,dataLegend)
+    }
     componentDidMount() {
         var data = this.props.data
         var dataLegend = this.props.dataLegend
+        this.upDateShowData(data,dataLegend)
+    }
+    upDateShowData(data,dataLegend){
         var { maxYear, prevYear } = dataLegend
         const maxMonthStr = String(hlp.yearMonthToStr(data.maxMonth))
-        // console.log(data)
-        // prevYear : Array(2)
-        // 0: { x: "acc_of_q", y: 77951 }
-        // 1: { x: "pv_per_q", y: 9166 }
-        // length: 2
-        // __proto__: Array(0)
-        // curYear: Array(2)
-        // 0: { x: "acc_of_q", y: 73239 }
-        // 1: { x: "pv_per_q", y: 9379 }
         var accOfQ = []
         var pvPerQ = []
         data.prevYear ? data.prevYear.map((item, index) => {
