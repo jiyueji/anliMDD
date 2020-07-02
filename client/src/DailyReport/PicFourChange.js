@@ -218,7 +218,7 @@ export default class PicFourChange extends Component {
                     bvData.splyData = Math.round((item.pct_mtd_sply || 0) * 100)
                 } else {
                     //饼图的三个数据中的第一个
-                    pieThreeDataTwo.value = Math.round(((item.mtd_sales || 0) / 1000000));
+                    pieThreeDataTwo.value = ((item.mtd_sales || 0) / 1000000).toFixed(1);
                     pieThreeDataTwo.name = item.agg_type == "Order BV Sales SR" ? "ABO" : item.agg_type == "Order BV Sales FOA" ? "FOA" : "PC";
                     pieThreeDataTwo.lmData = Math.round((item.pct_mtd_splm || 0) * 100);
                     pieThreeDataTwo.splyData = Math.round((item.pct_mtd_sply || 0) * 100);
@@ -291,13 +291,13 @@ export default class PicFourChange extends Component {
                 buyerCountsDate.lmData = Math.round((item.pct_mtd_splm || 0) * 100)
                 buyerCountsDate.splyData = Math.round((item.pct_mtd_sply || 0) * 100)
             } else if (item.type == "ABO" || item.type == "PC") {
-                pieThreeDataThree.value = Math.round(((item.num_population_mtd || 0) / 1000))
+                pieThreeDataThree.value = ((item.num_population_mtd || 0) / 1000).toFixed(1)
                 pieThreeDataThree.name = item.type == "ABO" ? "New ABO" : "New PC";
                 pieThreeDataThree.lmData = Math.round((item.pct_mtd_splm || 0) * 100);
                 pieThreeDataThree.splyData = Math.round((item.pct_mtd_sply || 0) * 100);
                 pieThreeDataArrThree.push(pieThreeDataThree)
             } else if (item.type == "ABO buyer count" || item.type == "PC buyer count" || item.type == "FOA buyer count") {
-                pieThreeDataFour.value = Math.round(((item.num_population_mtd || 0) / 1000))
+                pieThreeDataFour.value = ((item.num_population_mtd || 0) / 1000).toFixed(1)
                 pieThreeDataFour.name = item.type == "ABO buyer count" ? "ABO Buyer" : item.type == "PC buyer count" ? "PC Buyer" : "FOA Buyer";
                 pieThreeDataFour.lmData = Math.round((item.pct_mtd_splm || 0) * 100);
                 pieThreeDataFour.splyData = Math.round((item.pct_mtd_sply || 0) * 100);
@@ -314,6 +314,7 @@ export default class PicFourChange extends Component {
         pieThreeDataArrAll.push(pieThreeDataArrThree)
         pieThreeDataArrAll.push(pieThreeDataArrFour)
         pieThreeDataArr = pieThreeDataArrAll[0]
+        // console.log(pieThreeDataArrAll)
         // sales_data: (31)[{ … }]
         // sales_ly_data: (31)[{ … }]
         // maxYearStr: "2020"

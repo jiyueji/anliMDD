@@ -110,7 +110,7 @@ class ChartStoreGrowth {
       maxMonthStr = jsArr[0].max_month
     }
 
-    const maxCalendarYear = parseInt(jsArr.length && jsArr[0].max_calendar_year)
+    // const maxCalendarYear = parseInt(jsArr.length && jsArr[0].max_calendar_year)
 
     let queryObj = jslinq(jsArr)
 
@@ -188,7 +188,7 @@ class ChartStoreGrowth {
       months_data,
       isPerfYear: this.isPerfYear,
       maxYear,
-      maxCalendarYear,
+      maxCalendarYear:maxYear,
     }
   }
 

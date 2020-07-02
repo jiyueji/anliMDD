@@ -118,7 +118,7 @@ export default class LineChartMonthlyEchaets extends Component {
     dataUpdate() {
         var { allData, dataShowForClick, thisYearLength } = this.state
         // var allData = this.props.data;
-        console.log(allData)
+        // console.log(allData)
         var thisYear = [];
         var lastYear = [];
         var forecastYear = [];
