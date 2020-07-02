@@ -121,5 +121,6 @@ api.add_resource(resources.GarTracking2ByMonth, '/garTracking2ByMonth')
 api.add_resource(resources.AboPinDataByMonth, '/aboPinDataByMonth')
 api.add_resource(resources.AboNonPinDataByMonth, '/aboNonPinDataByMonth')
 api.add_resource(resources.AboCsiKpiByMonth, '/aboCsiKpiByMonth')
+api.add_resource(resources.QMonthPvByMonth, '/qMonthPvByMonth')
 if __name__ == '__main__':
       app.run(host='0.0.0.0', port=80)
