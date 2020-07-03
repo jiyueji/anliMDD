@@ -35,6 +35,7 @@ class ChartStoreAbo {
   @observable aboNonPinDataDataByMonth = []
   @observable aboCsiKpiDataByMonth = []
   @observable qMonthPvDataByMonth = []
+  @observable aboMigrationBotDataByMonth = []
 
   // abo leader
   @observable aboLeaderData1 = []
@@ -167,6 +168,22 @@ class ChartStoreAbo {
         this.isLoading = false
         this.isFailure = true
         this.qMonthPvDataByMonth = []
+      })
+    }
+  }
+
+  @action async fetchAboMigrationBotByMonth(params, send) {
+    try {
+      const data = await ApiService.get_aboMigrationBotByMonth(params, send)
+      runInAction(() => {
+        this.isLoading = false
+        this.aboMigrationBotDataByMonth = data ? JSON.parse(data) : []
+      })
+    } catch (e) {
+      runInAction(() => {
+        this.isLoading = false
+        this.isFailure = true
+        this.aboMigrationBotDataByMonth = []
       })
     }
   }
@@ -436,17 +453,17 @@ class ChartStoreAbo {
     }
 
     var DatePicker = 0
-    if (this.isAllDatePicker && this.isAllDatePicker.slice(4,6) < 9) {//时间判断改变数据
+    if (this.isAllDatePicker && this.isAllDatePicker.slice(4, 6) < 9) {//时间判断改变数据
       var maxPfYtd = this.isAllDatePicker.slice(2, 4)
-    }else if(this.isAllDatePicker && this.isAllDatePicker.slice(4,6) >= 9){
+    } else if (this.isAllDatePicker && this.isAllDatePicker.slice(4, 6) >= 9) {
       var maxPfYtd = Number(this.isAllDatePicker.slice(2, 4)) + 1
-      var DatePicker = this.isAllDatePicker.slice(4,6)
-    }else{
+      var DatePicker = this.isAllDatePicker.slice(4, 6)
+    } else {
       var maxPfYtd = jsArr.length && jsArr[jsArr.length - 1]['data_desc'].slice(2, 4)
     }
     var dataState = []
-    jsArr.map((item,index)=>{
-      if(item.data_desc.slice(2,4) == maxPfYtd){
+    jsArr.map((item, index) => {
+      if (item.data_desc.slice(2, 4) == maxPfYtd) {
         dataState.push(item)
       }
     })
@@ -558,7 +575,7 @@ class ChartStoreAbo {
       VCS_AMT: VCS_AMT,
       NOW_MAXDATE: maxYearStr,
       NOW_MAXDATEPF: maxYearStrPF,
-      DatePicker:DatePicker,
+      DatePicker: DatePicker,
     }
   }
 
@@ -592,15 +609,25 @@ class ChartStoreAbo {
       obj[param.key] = param.elements
       return obj;
     }, {});
-    dataState = jslinq(dataState[maxYear].concat())
+
+    //数据在perf_yr且月份＞8以后从九月开始显示
+    if (this.isPerfYear && this.isAllDatePicker && this.isAllDatePicker.slice(4, 6) > 8) {
+      dataState = jslinq(dataState[Number(maxYear) + 1].concat()) || []
+    } else {
+      dataState = jslinq(dataState[maxYear].concat()) || []
+    }
+    // dataState = jslinq(dataState[maxYear].concat())
     // dataState = dataState.groupBy(function(el){
     //   return el.month;
     // })
     // .toList()
-
     dataState = dataState.toList()
 
-
+    if (this.isAllDatePicker) {//按月份进行数据展示
+      dataState = _.filter(dataState, (o) => {
+        return o.n_month <= this.isAllDatePicker
+      })
+    }
     let renewal_rate_data = _.map(dataState, (o) => {
       return {
         x: MONTHS_MAP[o.month],
@@ -1320,7 +1347,9 @@ class ChartStoreAbo {
   }
 
   @computed get aboMigBot() {
-    const jsArr = toJS(this.aboMigBotData) || []
+    // const jsArr = toJS(this.aboMigBotData) || []
+    const jsArr = toJS(this.aboMigrationBotDataByMonth) || []
+    // console.log(jsArr,jsArr2,"jsArrjsArr2")
     if (!jsArr.length) {
       return false
     }

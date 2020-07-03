@@ -119,11 +119,17 @@ export default class GrowthTable extends Component {
             </Fragment>
         )
     }
+    componentWillReceiveProps(nextProps) {
+        var { data } = nextProps
+        this.dateUpdateHandle(data)
+    }
     componentDidMount() {
-        const allData = this.props.data || {}
-        const data = allData.tableData || []
+        const data = this.props.data || {}
         // console.log(allData, "第二页面的表格allData")
-
+        this.dateUpdateHandle(data)
+    }
+    dateUpdateHandle(allData){
+        const data = allData.tableData || []
         const maxMonthStr = String(hlp.yearMonthToStr(allData.maxMonth))
         const maxYear = String(allData.maxYear)
         const maxTargCalYear = String(allData.maxTargCalYear)
@@ -134,7 +140,6 @@ export default class GrowthTable extends Component {
             maxYear,
             maxTargCalYear,
         })
-
     }
     // 弹窗事件
     displayShowClose() {

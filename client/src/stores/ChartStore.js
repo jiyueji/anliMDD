@@ -17,6 +17,23 @@ class ChartStore {
   @observable performanceData3 = []
   @observable performanceData2Tooltip = []
   @observable performanceData2Com = []
+  @observable salesSecondComDataByMonth = []
+
+  @action async fetchSalesSecondComByMonth(params, send) {
+    try {
+      const data = await ApiService.get_salesSecondComByMonth(params, send)
+      runInAction(() => {
+        this.isLoading = false
+        this.salesSecondComDataByMonth = data ? JSON.parse(data) : []
+      })
+    } catch (e) {
+      runInAction(() => {
+        this.isLoading = false
+        this.isFailure = true
+        this.salesSecondComDataByMonth = []
+      })
+    }
+  }
 
   @action async fetchPerformanceData1(params) {
     try {

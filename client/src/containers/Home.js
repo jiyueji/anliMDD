@@ -77,7 +77,7 @@ import { withOktaAuth } from '@okta/okta-react';
                     document.getElementsByClassName('nav-tabs')[0].style.top = "0";
                     document.getElementsByClassName('nav-tabs')[0].style.zIndex = "1000";
                     document.getElementsByClassName('nav-tabs')[0].style.width = "100%";
-                } else if(document.getElementsByClassName('nav-tabs')[0]){
+                } else if (document.getElementsByClassName('nav-tabs')[0]) {
                     document.getElementsByClassName('nav-tabs')[0].style.position = "";
                     document.getElementsByClassName('nav-tabs')[0].style.top = "";
                 }
@@ -121,21 +121,24 @@ import { withOktaAuth } from '@okta/okta-react';
             this.props.chartStoreAbo.fetchAboGar1()
             this.props.chartStoreAbo.fetchAboPinPopData()
             //三屏新全数据接口
-            this.props.chartStoreAbo.fetchAboQualificationDataByMonth("",'20')//提示框
-            this.props.chartStoreAbo.fetchAboBonusByMonth("",'20')//提示框
-            this.props.chartStoreAbo.fetchGarTracking1ByMonth("",'20')//提示框
-            this.props.chartStoreAbo.fetchGarTracking2ByMonth("",'20')//提示框
-            this.props.chartStoreAbo.fetchAboPinDataByMonth("",'20')//提示框
-            this.props.chartStoreAbo.fetchAboNonPinDataByMonth("",'20')//提示框
-            this.props.chartStoreAbo.fetchAboCsiKpiByMonth("",'20')//提示框
-            this.props.chartStoreAbo.fetchQMonthPvByMonth("",'20')//提示框
-            
+            this.props.chartStoreAbo.fetchAboQualificationDataByMonth("", '20')//提示框
+            this.props.chartStoreAbo.fetchAboBonusByMonth("", '20')//提示框
+            this.props.chartStoreAbo.fetchGarTracking1ByMonth("", '20')//提示框
+            this.props.chartStoreAbo.fetchGarTracking2ByMonth("", '20')//提示框
+            this.props.chartStoreAbo.fetchAboPinDataByMonth("", '20')//提示框
+            this.props.chartStoreAbo.fetchAboNonPinDataByMonth("", '20')//提示框
+            this.props.chartStoreAbo.fetchAboCsiKpiByMonth("", '20')//提示框
+            this.props.chartStoreAbo.fetchQMonthPvByMonth("", '20')//提示框
+            this.props.chartStoreAbo.fetchAboMigrationBotByMonth("", '20')//提示框
+
 
             this.props.chartStoreGrowth.fetchGrowthSustData()
             this.props.chartStoreGrowth.fetchGrowthSalesSegData()
             this.props.chartStoreGrowth.fetchGrowthPopSegData()
             this.props.chartStoreGrowth.fetchGrowthBuyerData()
             this.props.chartStoreGrowth.fetchGrowthTableData()
+            //二屏新全数据接口
+            this.props.chartStoreGrowth.fetchGrowthTableByMonth("", '20')//提示框
 
 
             this.props.chartStoreDaily.fetchDailySalEventsData()

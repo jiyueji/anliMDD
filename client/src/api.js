@@ -77,6 +77,9 @@ const api = {
     aboNonPinDataByMonth:'/aboNonPinDataByMonth',
     aboCsiKpiByMonth:'/aboCsiKpiByMonth',
     qMonthPvByMonth:'/qMonthPvByMonth',
+    salesSecondComByMonth:'/salesSecondComByMonth',//一屏四图
+    growthTableByMonth:'/growthTableByMonth',//二屏表格
+    aboMigrationBotByMonth:'/aboMigrationBotByMonth',//三屏鱼骨
 }
 
 export default api
