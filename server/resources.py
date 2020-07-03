@@ -628,3 +628,27 @@ class QMonthPvByMonth(Resource):
 
         queryStr = "select * from qa_test.query_abo_23_pv_per_q where n_month like "+"'"+month+"%'"
         return performQuery(queryStr)
+
+class SalesSecondComByMonth(Resource):
+    def get(self):
+        data = parser3.parse_args()
+        month = data['month']
+
+        queryStr = "select * from qa_test.query_sales_50_monthly_sales_comments where n_month like "+"'"+month+"%'"
+        return performQuery(queryStr)
+
+class AboMigrationBotByMonth(Resource):
+    def get(self):
+        data = parser3.parse_args()
+        month = data['month']
+
+        queryStr = "select * from qa_test.query_abo_20_bns_migration_tree where n_month like "+"'"+month+"%'"
+        return performQuery(queryStr)
+
+class GrowthTableByMonth(Resource):
+    def get(self):
+        data = parser3.parse_args()
+        month = data['month']
+
+        queryStr = "select * from qa_test.query_agp_15_growth_summary where n_month_actual like "+"'"+month+"%'"
+        return performQuery(queryStr)
