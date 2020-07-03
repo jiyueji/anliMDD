@@ -34,6 +34,7 @@ class ChartStoreAbo {
   @observable aboPinDataDataByMonth = []
   @observable aboNonPinDataDataByMonth = []
   @observable aboCsiKpiDataByMonth = []
+  @observable qMonthPvDataByMonth = []
 
   // abo leader
   @observable aboLeaderData1 = []
@@ -153,7 +154,23 @@ class ChartStoreAbo {
       })
     }
   }
-  
+
+  @action async fetchQMonthPvByMonth(params, send) {
+    try {
+      const data = await ApiService.get_qMonthPvByMonth(params, send)
+      runInAction(() => {
+        this.isLoading = false
+        this.qMonthPvDataByMonth = data ? JSON.parse(data) : []
+      })
+    } catch (e) {
+      runInAction(() => {
+        this.isLoading = false
+        this.isFailure = true
+        this.qMonthPvDataByMonth = []
+      })
+    }
+  }
+
   @action async fetchAboCisKpiData(params) {
     try {
       const data = await ApiService.get_abo_cis_kpi_data(params)
@@ -411,15 +428,37 @@ class ChartStoreAbo {
   }
   //新建最后一个图表
   @computed get aboCisKpiDataHandle() {
-    const jsArr = toJS(this.aboCisKpiData) || []
-    // const jsArr2 = toJS(this.aboCsiKpiDataByMonth) || []
-    
+    // const jsArr = toJS(this.aboCisKpiData) || []
+    const jsArr = toJS(this.aboCsiKpiDataByMonth) || []
+
     if (!jsArr.length) {
       return false
     }
 
-    // console.log(jsArr,jsArr2,"jsArr,jsArr2")
-    let dataState = jsArr
+    var DatePicker = 0
+    if (this.isAllDatePicker && this.isAllDatePicker.slice(4,6) < 9) {//时间判断改变数据
+      var maxPfYtd = this.isAllDatePicker.slice(2, 4)
+    }else if(this.isAllDatePicker && this.isAllDatePicker.slice(4,6) >= 9){
+      var maxPfYtd = Number(this.isAllDatePicker.slice(2, 4)) + 1
+      var DatePicker = this.isAllDatePicker.slice(4,6)
+    }else{
+      var maxPfYtd = jsArr.length && jsArr[jsArr.length - 1]['data_desc'].slice(2, 4)
+    }
+    var dataState = []
+    jsArr.map((item,index)=>{
+      if(item.data_desc.slice(2,4) == maxPfYtd){
+        dataState.push(item)
+      }
+    })
+    if (this.isAllDatePicker) {//按月份进行数据展示
+      dataState = _.filter(dataState, (o) => {
+        return o.clnd_month <= this.isAllDatePicker
+      })
+    }
+
+
+
+    // let dataState = jsArr
 
     // if (dataState.length) {
     //   maxMonthStr = dataState[0].max_month
@@ -460,7 +499,8 @@ class ChartStoreAbo {
     dataState.sort((a, b) => {
       return a.data_period - b.data_period
     })
-    let NOW_MAXDATE = dataState[0].clnd_month
+
+    let NOW_MAXDATE = dataState && dataState.length > 0 ? dataState[0].clnd_month : ""
 
     dataState && dataState.length >= 0 ? dataState.map((o, index) => {
       var objData = {}
@@ -517,7 +557,8 @@ class ChartStoreAbo {
       FOA_ORDER_BV_1B: FOA_ORDER_BV_1B,
       VCS_AMT: VCS_AMT,
       NOW_MAXDATE: maxYearStr,
-      NOW_MAXDATEPF: maxYearStrPF
+      NOW_MAXDATEPF: maxYearStrPF,
+      DatePicker:DatePicker,
     }
   }
 
@@ -599,7 +640,7 @@ class ChartStoreAbo {
   @computed get aboPinBarData() {
     // const jsArr = toJS(this.aboPinData) || []//旧
     const jsArr = toJS(this.aboPinDataDataByMonth) || []//新接口
-    
+
     if (!jsArr.length) {
       return false
     }
@@ -619,9 +660,9 @@ class ChartStoreAbo {
     //   maxMonthStr = jsArr[0].max_month
     // }
     var dataState = []
-    if(maxMonthStr){//时间选择数据
-      jsArr.map((item,index)=>{
-        if(item.n_month == maxMonthStr){
+    if (maxMonthStr) {//时间选择数据
+      jsArr.map((item, index) => {
+        if (item.n_month == maxMonthStr) {
           dataState.push(item)
         }
       })
@@ -687,9 +728,9 @@ class ChartStoreAbo {
       var maxMonthStr = jsArr[0].max_month
     }
     var dataState = []
-    if(maxMonthStr){//时间选择数据
-      jsArr.map((item,index)=>{
-        if(item.n_month == maxMonthStr){
+    if (maxMonthStr) {//时间选择数据
+      jsArr.map((item, index) => {
+        if (item.n_month == maxMonthStr) {
           dataState.push(item)
         }
       })
@@ -772,40 +813,52 @@ class ChartStoreAbo {
   }
 
   @computed get aboQMonthPv() {
-    const jsArr = toJS(this.aboQMonthPvData) || [{}]
+    // const jsArr = toJS(this.aboQMonthPvData) || [{}]
+    const jsArr = toJS(this.qMonthPvDataByMonth) || [{}] //新接口
     if (!jsArr.length) {
       return false
     }
-    // console.log(jsArr)
-    let dataState = jsArr[0]
 
-    let maxMonthStr = dataState.max_month
+    if (this.isAllDatePicker && this.isAllDatePicker <= jsArr[0].max_month) {//时间选择新的接口
+      var maxMonthStr = this.isAllDatePicker
+    } else {
+      var maxMonthStr = jsArr[0].max_month
+    }
+    var dataState = []
+    jsArr.map((item, index) => {
+      if (item.n_month == maxMonthStr) {
+        dataState.push(item)
+      }
+    })
 
+
+    // let dataState = jsArr[0]
+    // let maxMonthStr = dataState.max_month
     const X_VALS = ['acc_of_q', 'pv_per_q']
 
     let prevYear = [
       {
         x: X_VALS[0],
-        y: dataState.ytd_num_q_ly
+        y: dataState[0].ytd_num_q_ly
       },
       {
         x: X_VALS[1],
-        y: dataState.pv_per_q_ly
+        y: dataState[0].pv_per_q_ly
       }
     ]
 
     let curYear = [
       {
         x: X_VALS[0],
-        y: dataState.ytd_num_q
+        y: dataState[0].ytd_num_q
       },
       {
         x: X_VALS[1],
-        y: dataState.pv_per_q
+        y: dataState[0].pv_per_q
       }
     ]
 
-    const maxYear = parseInt(dataState.perf_yr)
+    const maxYear = parseInt(dataState[0].perf_yr)
 
 
     return {
@@ -1126,7 +1179,10 @@ class ChartStoreAbo {
         dataState.push(item)
       }
     })
-    return dataState
+    return {
+      data: dataState,
+      maxYear,
+    }
   }
 
   @computed get aboGar1() {
@@ -1271,22 +1327,23 @@ class ChartStoreAbo {
     // console.log(jsArr,"jsArr10")
     // let dataState = jsArr
 
-    if (this.isAllDatePicker && this.isAllDatePicker <= jsArr[jsArr.length-1]['n_month_actual']) {//时间选择判断当前年份
+    if (this.isAllDatePicker && this.isAllDatePicker <= jsArr[jsArr.length - 1]['n_month_actual']) {//时间选择判断当前年份
       var actualMonth = this.isAllDatePicker
     } else {
-      var actualMonth = jsArr.length && jsArr[jsArr.length-1]['n_month_actual']
+      var actualMonth = jsArr.length && jsArr[jsArr.length - 1]['n_month_actual']
     }
 
     // const actualMonth = jsArr.length && jsArr[jsArr.length-1]['n_month_actual']
-    var futureMonth = jsArr.length && jsArr[jsArr.length-1]['future_n_month']
+    // var futureMonth = jsArr.length && jsArr[jsArr.length - 1]['future_n_month']
+    // console.log(jsArr,actualMonth,futureMonth)
 
     var dataState = []
-    jsArr.map((item,index)=>{
-      if(item.n_month_actual == actualMonth){
+    jsArr.map((item, index) => {
+      if (item.n_month_actual == actualMonth) {
         dataState.push(item)
       }
     })
-
+    var futureMonth = dataState.length && dataState[dataState.length - 1]['future_n_month']
     dataState = jslinq(dataState)
       .groupBy(function (el) {
         return el.start_bonus_dist;

@@ -49,7 +49,7 @@ export default class PicFourChange extends Component {
         }
     }
     render() {
-        var { allEvents, netData, bvData, recruitmentDate, buyerCountsDate, changeName,activityFlag,promptBoxShow } = this.state
+        var { allEvents, netData, bvData, recruitmentDate, buyerCountsDate, changeName,activityFlag,promptBoxShow,data3MaxYear } = this.state
         return (
             <Fragment>
                 <div style={{ height: '160px', width: '100%', display: 'flex', justifyContent: 'space-between' }}>
@@ -124,7 +124,7 @@ export default class PicFourChange extends Component {
                             <tbody>
                                 {
                                     promptBoxShow.map((item, index) => {
-                                        return <tr key={index} style={{}}>
+                                        return <tr key={index} style={{color:item.start_day.indexOf(data3MaxYear) > -1 ? "#5eaef2" : "",background:item.start_day.indexOf(data3MaxYear) > -1 ? "" : "#e0e1e2"}}>
                                             <td style={{ height: "30px", border: "1px solid #e5e6e9",fontSize:"12px",whiteSpace:"nowrap"}}>{item.start_day}</td>
                                             {/* <td style={{ height: "35px", border: "1px solid #e5e6e9"}}>{item.activity}</td> */}
                                             <td style={{ height: "30px", border: "1px solid #e5e6e9",textAlign:"left"}}>{item.promotion_desc}</td>
@@ -354,8 +354,15 @@ export default class PicFourChange extends Component {
                 promptBoxShow.push(item)
             }
         }) : ""
-        // console.log(promptBoxShow)
+
+
         // console.log(promptBoxShow, "promptBoxShow")
+        // promptBoxShow = promptBoxShow.sort((a, b)=> {
+        //     return a.promotion_desc - b.promotion_desc;
+        // });
+        // console.log(promptBoxShow, "promptBoxShow22222")
+
+
         //         {n_month: "201905", start_day: "May. 11 2019", end_day: "20190630", activity: "PROMOTION", promotion_desc: "May Artistry Promotion - 2nd wave"}
         //{n_month: "201905", start_day: "May. 06 2019", end_day: "20190630", activity: "PROMOTION", promotion_desc: "May Artistry Promotion"}
         //(12) ["12.9", "3.8", "3.6", "3.0", "5.4", "4.6", "4.1", "3.5", "3.7", "3.8", "3.2", "6.9"]

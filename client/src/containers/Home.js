@@ -128,6 +128,7 @@ import { withOktaAuth } from '@okta/okta-react';
             this.props.chartStoreAbo.fetchAboPinDataByMonth("",'20')//提示框
             this.props.chartStoreAbo.fetchAboNonPinDataByMonth("",'20')//提示框
             this.props.chartStoreAbo.fetchAboCsiKpiByMonth("",'20')//提示框
+            this.props.chartStoreAbo.fetchQMonthPvByMonth("",'20')//提示框
             
 
             this.props.chartStoreGrowth.fetchGrowthSustData()

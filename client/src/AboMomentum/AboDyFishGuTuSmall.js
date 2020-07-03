@@ -105,8 +105,18 @@ export default class AboDyFishGuTuSmall extends Component {
             </Fragment>
         )
     }
+    componentWillReceiveProps(nextProps) {
+        var allData = nextProps.data || {}
+        this.upDateShowData(allData)
+    }
     componentDidMount() {
         const allData = this.props.data || {}
+        this.upDateShowData(allData)
+    }
+    toPerc = (val) => {
+        return `${Math.round(val * 100)}%`
+    }
+    upDateShowData(allData) {
         const data = allData.tableData || {}
         let { actualMonth, futureMonth } = allData
         var objMonthShow = {}
@@ -123,12 +133,6 @@ export default class AboDyFishGuTuSmall extends Component {
         this.setState({
             actualMonth, futureMonth, futureMonthStr, NAMES_IDS, data,objMonthShow
         })
-    }
-    toPerc = (val) => {
-        return `${Math.round(val * 100)}%`
-    }
-    componentWillReceiveProps(nextProps) {
-
     }
 }
 {/* <div className="main-block">

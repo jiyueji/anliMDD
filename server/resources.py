@@ -616,9 +616,9 @@ class AboCsiKpiByMonth(Resource):
     def get(self):
         data = parser3.parse_args()
         month = data['month']
-<<<<<<< HEAD
 
-        queryStr = "select *  from qa_test.MD_ABO_21_CSI_KPI_M_F_V where n_month like "+"'"+month+"'"
+        # queryStr = "select *  from qa_test.MD_ABO_21_CSI_KPI_M_F_V where n_month like "+"'"+month+"'"
+        queryStr = "select *  from public.MD_ABO_21_CSI_KPI_M_F_V where clnd_month like "+"'"+month+"%'"
         return performQuery(queryStr)
 
 class QMonthPvByMonth(Resource):
@@ -626,9 +626,5 @@ class QMonthPvByMonth(Resource):
         data = parser3.parse_args()
         month = data['month']
 
-        queryStr = "select * from qa_test.query_abo_23_pv_per_q where n_month like "+"'"+month+"'"
-=======
-        
-        queryStr = "select *  from public.MD_ABO_21_CSI_KPI_M_F_V where clnd_month like "+"'"+month+"%'"
->>>>>>> 20422ba75be98c350c07b8747bb0d1f85816fd1c
+        queryStr = "select * from qa_test.query_abo_23_pv_per_q where n_month like "+"'"+month+"%'"
         return performQuery(queryStr)

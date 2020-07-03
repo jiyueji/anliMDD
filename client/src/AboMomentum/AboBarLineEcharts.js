@@ -87,19 +87,18 @@ export default class AboBarLineEcharts extends Component {
             }
         })
     }
+    componentWillReceiveProps(nextProps) {
+        var { data } = nextProps
+        this.upDateShowData(data)
+    }
     componentDidMount() {
         var data = this.props.data;
-        // YTD_DATA: (6) [{…}, {…}, {…}, {…}, {…}, {…}]
-        // CSI_AMT: (3) [16116842.54, 14326362.73, 27683221.06]
-        // CSI_COUNT: (3) [157979, 178688, 206086]
-        // QUALIF_CSI_SR: (3) [2101071, 2169547, 2211229]
-        // TOTAL_ORDER_BV: (3) [1670798360.23, 1168314763, 1329153428.14]
-        // FOA_ORDER_BV_1B: (3) [254937750.24, 190198111.02, 370292304.66]
-        // VCS_AMT: (3) [211141862.9, 172951167.6, 337765763.21]
-        // NOW_MAXDATE: "202003"
-        var { YTD_DATA, CSI_AMT, CSI_COUNT, QUALIF_CSI_SR, TOTAL_ORDER_BV, FOA_ORDER_BV_1B, VCS_AMT, NOW_MAXDATE, NOW_MAXDATEPF } = data
+        this.upDateShowData(data)
+    }
+    upDateShowData(data){
+        var { YTD_DATA, CSI_AMT, CSI_COUNT, QUALIF_CSI_SR, TOTAL_ORDER_BV, FOA_ORDER_BV_1B, VCS_AMT, NOW_MAXDATE, NOW_MAXDATEPF,DatePicker } = data
         var showXShow = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug',]
-        if (Number(NOW_MAXDATE) < 202009) {
+        if (DatePicker < 9) {
             showXShow = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug',]
         }
         var csi_per_earner_blueData = []
@@ -165,7 +164,6 @@ export default class AboBarLineEcharts extends Component {
             this.aboBvMixEchartsHandle1()
             this.aboBvMixEchartsHandle2()
         })
-
     }
     aboBarLineEchartsHandle() {
         //页面自适应

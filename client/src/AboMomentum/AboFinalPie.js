@@ -100,17 +100,18 @@ export default class AboFinalPie extends Component {
         )
     }
     componentWillReceiveProps(nextProps) {
-        var { data } = nextProps
-        this.upDateShowData(data)
+        var { data,maxYear } = nextProps.data
+        this.upDateShowData(data,maxYear)
     }
     componentDidMount() {
-        var data = this.props.data;
+        var {data,maxYear} = this.props.data;
         // var title = this.props.titleData && this.props.titleData['gar_title']
-        this.upDateShowData(data)
+        this.upDateShowData(data,maxYear)
     }
-    upDateShowData(data) {
+    upDateShowData(data,maxYear) {
         var chartData = data.length && data[0]
-        var maxMonthStr = chartData ? String(hlp.yearMonthToStr(chartData.update_month)) : ""
+        // var maxMonthStr = chartData ? String(hlp.yearMonthToStr(chartData.update_month)) : ""
+        var maxMonthStr = String(hlp.yearMonthToStr(maxYear)) || ""
 
         var pieAboFinalRightNumber = (chartData.num_tracking_old_faa / (chartData.num_tracking_new_faa / 160)) || 0
 

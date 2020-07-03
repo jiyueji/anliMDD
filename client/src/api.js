@@ -76,6 +76,7 @@ const api = {
     aboPinDataByMonth:'/aboPinDataByMonth',
     aboNonPinDataByMonth:'/aboNonPinDataByMonth',
     aboCsiKpiByMonth:'/aboCsiKpiByMonth',
+    qMonthPvByMonth:'/qMonthPvByMonth',
 }
 
 export default api

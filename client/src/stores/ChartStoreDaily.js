@@ -28,9 +28,9 @@ class ChartStoreDaily {
   @observable dailySalEventsByMonth = []
   @observable dailyCommentsByMonth = []
 
-  @action async fetchGetQueryDailyCommentsByMonth(params,send) {
+  @action async fetchGetQueryDailyCommentsByMonth(params, send) {
     try {
-      const data = await ApiService.get_dailyCommentsByMonth(params,send)
+      const data = await ApiService.get_dailyCommentsByMonth(params, send)
       runInAction(() => {
         this.isLoading = false
         this.dailyCommentsByMonth = data ? JSON.parse(data) : []
@@ -44,9 +44,9 @@ class ChartStoreDaily {
     }
   }
 
-  @action async fetchGetQueryDailySalEventsByMonth(params,send) {
+  @action async fetchGetQueryDailySalEventsByMonth(params, send) {
     try {
-      const data = await ApiService.get_dailySalEventsByMonth(params,send)
+      const data = await ApiService.get_dailySalEventsByMonth(params, send)
       runInAction(() => {
         this.isLoading = false
         this.dailySalEventsByMonth = data ? JSON.parse(data) : []
@@ -60,9 +60,9 @@ class ChartStoreDaily {
     }
   }
 
-  @action async fetchGetQueryDailyRecTableByMonth(params,send) {
+  @action async fetchGetQueryDailyRecTableByMonth(params, send) {
     try {
-      const data = await ApiService.get_dailyRecTableByMonth(params,send)
+      const data = await ApiService.get_dailyRecTableByMonth(params, send)
       runInAction(() => {
         this.isLoading = false
         this.dailyRecTableByMonth = data ? JSON.parse(data) : []
@@ -76,9 +76,9 @@ class ChartStoreDaily {
     }
   }
 
-  @action async fetchGetQueryDailySalesTableByMonth(params,send) {
+  @action async fetchGetQueryDailySalesTableByMonth(params, send) {
     try {
-      const data = await ApiService.get_dailySalesTableByMonth(params,send)
+      const data = await ApiService.get_dailySalesTableByMonth(params, send)
       runInAction(() => {
         this.isLoading = false
         this.dailySalesTableByMonth = data ? JSON.parse(data) : []
@@ -92,9 +92,9 @@ class ChartStoreDaily {
     }
   }
 
-  @action async fetchGetQueryQueryDailySalesLine2ByMonth(params,send) {
+  @action async fetchGetQueryQueryDailySalesLine2ByMonth(params, send) {
     try {
-      const data = await ApiService.get_queryDailySalesLine2ByMonth(params,send)
+      const data = await ApiService.get_queryDailySalesLine2ByMonth(params, send)
       runInAction(() => {
         this.isLoading = false
         this.queryDailySalesLine2ByMonth = data ? JSON.parse(data) : []
@@ -274,7 +274,7 @@ class ChartStoreDaily {
     if (dataState.length) {
       dataState.map((item, index) => {
         var maxMonthStrIf = item.n_month
-        maxMonthStr = this.isFiveDatePicker ? this.isFiveDatePicker.slice(0,6) : maxMonthStr > maxMonthStrIf ? maxMonthStr : maxMonthStrIf
+        maxMonthStr = this.isFiveDatePicker ? this.isFiveDatePicker.slice(0, 6) : maxMonthStr > maxMonthStrIf ? maxMonthStr : maxMonthStrIf
       })
       // maxMonthStr = dataState[0].n_month
       maxYear = parseInt(maxMonthStr.slice(0, 4))
@@ -397,7 +397,7 @@ class ChartStoreDaily {
         pageUpDate++
       }
     })
-    if(pageUpDate < 10){//给日期补0
+    if (pageUpDate < 10) {//给日期补0
       pageUpDate = "0" + pageUpDate
     }
     // var pageUpShowDate = hlp.yearMonthFiveTooltipToStr(maxMonth) + "." + pageUpDate + " " + maxYearStr
@@ -687,7 +687,7 @@ class ChartStoreDaily {
   @computed get dailySalesEvents() {
     // const jsArr = toJS(this.dailySalEventsData) || []
     const jsArr = toJS(this.dailySalEventsByMonth) || []  //新接口
-    
+
     if (!jsArr.length) {
       return false
     }
@@ -697,6 +697,16 @@ class ChartStoreDaily {
       return o
     })
 
+    // dataState.sort((a, b) => {
+    //   return b.n_month - a.n_month;
+    // });
+    // dataState.sort((a, b) => {
+    //   var c = isFinite(a.promotion_desc), // 如果 number 是有限数字（或可转换为有限数字），
+    // 那么返回 true。否则，如果 number 是 NaN（非数字），或者是正、负无穷大的数，则返回 false。  
+    //     d = isFinite(b.promotion_desc);
+    //   return (c != d && c - d) || b > a;
+    // })
+    // console.log(dataState)
     return { tableData: dataState }
   }
 

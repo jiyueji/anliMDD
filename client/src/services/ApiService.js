@@ -21,7 +21,7 @@ class ApiSerice {
      * @param {string|boolean} token  - authentication token
      * @param {object|null} params - params payload
      */
-    async apiCall(url, method = 'GET', token = false, params = null,send = null) {
+    async apiCall(url, method = 'GET', token = false, params = null, send = null) {
         let payload = {
             method,
             mode: 'cors',
@@ -56,7 +56,7 @@ class ApiSerice {
      * @param {bool} auth - check for unauth error or not
      */
     handleCommonError(response, auth = false) {
-        if(response.status === 401 && auth) {
+        if (response.status === 401 && auth) {
             StorageService.removeToken()
             window.location(api.login)
         }
@@ -64,7 +64,7 @@ class ApiSerice {
             throw new Error(response.status)
         }
         return;
-    }   
+    }
 
     async register(params) { //registration
         const reg = await this.apiCall(api.sign_up, 'POST', false, params);
@@ -72,7 +72,7 @@ class ApiSerice {
     }
 
     async login(params) { //login
-    // console.log('EXECUTE URL', api.login)
+        // console.log('EXECUTE URL', api.login)
         const res = await this.apiCall(api.login, 'POST', false, params);
         this.handleCommonError(res);
         return res.body;
@@ -152,7 +152,7 @@ class ApiSerice {
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_performance_data2_com(params, token) {
         const res = await this.apiCall(api.performance_data2_com, 'GET', token, params);
         this.handleCommonError(res);
@@ -188,7 +188,7 @@ class ApiSerice {
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_abo_newqual_data(params, token) {
         const res = await this.apiCall(api.abo_newqual_data, 'GET', token, params);
         this.handleCommonError(res);
@@ -200,7 +200,7 @@ class ApiSerice {
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_growth_sust_data(params, token) {
         const res = await this.apiCall(api.growth_sust_data, 'GET', token, params);
         this.handleCommonError(res);
@@ -218,7 +218,7 @@ class ApiSerice {
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_growth_buyer_data(params, token) {
         const res = await this.apiCall(api.growth_buyer_data, 'GET', token, params);
         this.handleCommonError(res);
@@ -230,7 +230,7 @@ class ApiSerice {
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_abo_bonus_data(params, token) {
         const res = await this.apiCall(api.abo_bonus_data, 'GET', token, params);
         this.handleCommonError(res);
@@ -242,7 +242,7 @@ class ApiSerice {
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_abo_gar1_data(params, token) {
         const res = await this.apiCall(api.abo_gar1_data, 'GET', token, params);
         this.handleCommonError(res);
@@ -266,7 +266,7 @@ class ApiSerice {
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_abo_pinpop_data(params, token) {
         const res = await this.apiCall(api.abo_pinpop_data, 'GET', token, params);
         this.handleCommonError(res);
@@ -284,7 +284,7 @@ class ApiSerice {
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_daily_tab_sal_data(params, token) {
         const res = await this.apiCall(api.daily_tab_sal_data, 'GET', token, params);
         this.handleCommonError(res);
@@ -296,13 +296,13 @@ class ApiSerice {
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_daily_com_data(params, token) {
         const res = await this.apiCall(api.daily_comments_data, 'GET', token, params);
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_daily_salevents_data(params, token) {
         const res = await this.apiCall(api.daily_sal_events_data, 'GET', token, params);
         this.handleCommonError(res);
@@ -314,37 +314,37 @@ class ApiSerice {
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_social_foaprod_data(params, token) {
         const res = await this.apiCall(api.social_foa_prod_data, 'GET', token, params);
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_social_pop_data(params, token) {
         const res = await this.apiCall(api.social_pop_data, 'GET', token, params);
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_social_conv_data(params, token) {
         const res = await this.apiCall(api.social_conv_data, 'GET', token, params);
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_social_ref_data(params, token) {
         const res = await this.apiCall(api.social_ref_data, 'GET', token, params);
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_key_driver_data(params, token) {
         const res = await this.apiCall(api.key_driver_data, 'GET', token, params);
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_social_busimp_data(params, token) {
         const res = await this.apiCall(api.social_bus_imp_data, 'GET', token, params);
         this.handleCommonError(res);
@@ -356,61 +356,61 @@ class ApiSerice {
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_social_busimpmon_data(params, token) {
         const res = await this.apiCall(api.social_bus_impmon_data, 'GET', token, params);
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_social_earnseg_data(params, token) {
         const res = await this.apiCall(api.social_earn_seg_data, 'GET', token, params);
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_social_earndur_data(params, token) {
         const res = await this.apiCall(api.social_earn_dur_data, 'GET', token, params);
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_social_3esal_data(params, token) {
         const res = await this.apiCall(api.social_3e_sal_data, 'GET', token, params);
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_social_earnattr_data(params, token) {
         const res = await this.apiCall(api.social_earn_attr_data, 'GET', token, params);
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_social_buyloy_data(params, token) {
         const res = await this.apiCall(api.social_buy_loy_data, 'GET', token, params);
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_social_buypen_data(params, token) {
         const res = await this.apiCall(api.social_buy_pen_data, 'GET', token, params);
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_social_prodfirst_data(params, token) {
         const res = await this.apiCall(api.social_prod_first_data, 'GET', token, params);
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_social_attrrate_data(params, token) {
         const res = await this.apiCall(api.social_attr_rate_data, 'GET', token, params);
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_social_rndpart_data(params, token) {
         const res = await this.apiCall(api.social_rnd_part_data, 'GET', token, params);
         this.handleCommonError(res);
@@ -434,13 +434,13 @@ class ApiSerice {
         this.handleCommonError(res);
         return res.body;
     }
-    
+
     async get_manual_inputs(params, token) {
         const res = await this.apiCall(api.manual_inputs, 'GET', token, params);
         this.handleCommonError(res);
         return res.body;
     }
-//二期开发内容
+    //二期开发内容
     async get_abo_cis_kpi_data(params, token) {
         const res = await this.apiCall(api.abo_cis_kpi_data, 'GET', token, params);
         this.handleCommonError(res);
@@ -453,74 +453,80 @@ class ApiSerice {
         return res.body;
     }
 
-    async get_queryDailySalesLine2ByMonth(params,send,token) {
-        const res = await this.apiCall(api.queryDailySalesLine2ByMonth, 'GET', token, params,send);
+    async get_queryDailySalesLine2ByMonth(params, send, token) {
+        const res = await this.apiCall(api.queryDailySalesLine2ByMonth, 'GET', token, params, send);
         this.handleCommonError(res);
         return res.body;
     }
 
-    async get_dailySalesTableByMonth(params,send,token) {
-        const res = await this.apiCall(api.dailySalesTableByMonth, 'GET', token, params,send);
+    async get_dailySalesTableByMonth(params, send, token) {
+        const res = await this.apiCall(api.dailySalesTableByMonth, 'GET', token, params, send);
         this.handleCommonError(res);
         return res.body;
     }
 
-    async get_dailyRecTableByMonth(params,send,token) {
-        const res = await this.apiCall(api.dailyRecTableByMonth, 'GET', token, params,send);
+    async get_dailyRecTableByMonth(params, send, token) {
+        const res = await this.apiCall(api.dailyRecTableByMonth, 'GET', token, params, send);
         this.handleCommonError(res);
         return res.body;
     }
 
-    async get_dailySalEventsByMonth(params,send,token) {
-        const res = await this.apiCall(api.dailySalEventsByMonth, 'GET', token, params,send);
+    async get_dailySalEventsByMonth(params, send, token) {
+        const res = await this.apiCall(api.dailySalEventsByMonth, 'GET', token, params, send);
         this.handleCommonError(res);
         return res.body;
     }
 
-    async get_dailyCommentsByMonth(params,send,token) {
-        const res = await this.apiCall(api.dailyCommentsByMonth, 'GET', token, params,send);
+    async get_dailyCommentsByMonth(params, send, token) {
+        const res = await this.apiCall(api.dailyCommentsByMonth, 'GET', token, params, send);
         this.handleCommonError(res);
         return res.body;
     }
     //第三屏接口
-    async get_abo_qualification_data_by_month(params,send,token) {
-        const res = await this.apiCall(api.aboQualificationDataByMonth, 'GET', token, params,send);
+    async get_abo_qualification_data_by_month(params, send, token) {
+        const res = await this.apiCall(api.aboQualificationDataByMonth, 'GET', token, params, send);
         this.handleCommonError(res);
         return res.body;
     }
 
-    async get_aboBonusByMonth(params,send,token) {
-        const res = await this.apiCall(api.aboBonusByMonth, 'GET', token, params,send);
+    async get_aboBonusByMonth(params, send, token) {
+        const res = await this.apiCall(api.aboBonusByMonth, 'GET', token, params, send);
         this.handleCommonError(res);
         return res.body;
     }
 
-    async get_garTracking1ByMonth(params,send,token) {
-        const res = await this.apiCall(api.garTracking1ByMonth, 'GET', token, params,send);
+    async get_garTracking1ByMonth(params, send, token) {
+        const res = await this.apiCall(api.garTracking1ByMonth, 'GET', token, params, send);
         this.handleCommonError(res);
         return res.body;
     }
 
-    async get_garTracking2ByMonth(params,send,token) {
-        const res = await this.apiCall(api.garTracking2ByMonth, 'GET', token, params,send);
+    async get_garTracking2ByMonth(params, send, token) {
+        const res = await this.apiCall(api.garTracking2ByMonth, 'GET', token, params, send);
         this.handleCommonError(res);
         return res.body;
     }
 
-    async get_aboPinDataByMonth(params,send,token) {
-        const res = await this.apiCall(api.aboPinDataByMonth, 'GET', token, params,send);
+    async get_aboPinDataByMonth(params, send, token) {
+        const res = await this.apiCall(api.aboPinDataByMonth, 'GET', token, params, send);
         this.handleCommonError(res);
         return res.body;
     }
 
-    async get_aboNonPinDataByMonth(params,send,token) {
-        const res = await this.apiCall(api.aboNonPinDataByMonth, 'GET', token, params,send);
+    async get_aboNonPinDataByMonth(params, send, token) {
+        const res = await this.apiCall(api.aboNonPinDataByMonth, 'GET', token, params, send);
         this.handleCommonError(res);
         return res.body;
     }
 
-    async get_aboCsiKpiByMonth(params,send,token) {
-        const res = await this.apiCall(api.aboCsiKpiByMonth, 'GET', token, params,send);
+    async get_aboCsiKpiByMonth(params, send, token) {
+        const res = await this.apiCall(api.aboCsiKpiByMonth, 'GET', token, params, send);
+        this.handleCommonError(res);
+        return res.body;
+    }
+
+    async get_qMonthPvByMonth(params, send, token) {
+        const res = await this.apiCall(api.qMonthPvByMonth, 'GET', token, params, send);
         this.handleCommonError(res);
         return res.body;
     }
