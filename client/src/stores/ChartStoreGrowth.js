@@ -16,6 +16,23 @@ class ChartStoreGrowth {
   @observable growthPopSegData = []
   @observable growthBuyerData = []
   @observable growthTableData = []
+  @observable growthTableDataByMonth = []
+
+  @action async fetchGrowthTableByMonth(params, send) {
+    try {
+      const data = await ApiService.get_growthTableByMonth(params, send)
+      runInAction(() => {
+        this.isLoading = false
+        this.growthTableDataByMonth = data ? JSON.parse(data) : []
+      })
+    } catch (e) {
+      runInAction(() => {
+        this.isLoading = false
+        this.isFailure = true
+        this.growthTableDataByMonth = []
+      })
+    }
+  }
 
   @action async fetchGrowthSustData(params) {
     try {
@@ -646,14 +663,27 @@ class ChartStoreGrowth {
   }
 
   @computed get growthTable() {
-    const jsArr = toJS(this.growthTableData) || []
+    // const jsArr = toJS(this.growthTableData) || []
+    const jsArr = toJS(this.growthTableDataByMonth) || []
+    
     if (!jsArr.length) {
       return false
     }
-    // console.log(jsArr)
-    let maxMonthStr = jsArr[0].max_month
-    let maxYear = jsArr[0].calendar_yr
-    const maxTargCalYear = jsArr[0].max_target_calendar_year
+
+    if(this.isAllDatePicker && this.isAllDatePicker <= jsArr[0].max_month){
+      var maxMonthStr = this.isAllDatePicker
+      var maxTargCalYear = this.isAllDatePicker.slice(0,4)
+    }else{
+      var maxMonthStr = jsArr[0].max_month
+      var maxTargCalYear = jsArr[0].max_target_calendar_year
+    }
+    var dataState = _.filter(jsArr, (o) => {
+      return o.calendar_yr == maxTargCalYear
+    })
+    // let maxMonthStr = jsArr[0].max_month
+
+    var maxYear = dataState[0].calendar_yr || ""
+    // const maxTargCalYear = jsArr[0].max_target_calendar_year
 
     const SEG_ORDER_MAP = {
       'Customer': 1,
@@ -676,7 +706,7 @@ class ChartStoreGrowth {
       'ABO (Purchasing Only)'
     ]
     // console.log(jsArr,"jsArr")
-    let dataState = _.map(jsArr, (o) => {
+    var dataState = _.map(dataState, (o) => {
       o.rank = SEG_ORDER_MAP[o.segment_desc]
       if (SUBTITLES.indexOf(o.segment_desc) !== -1) {
         o.isSubtitle = true

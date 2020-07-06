@@ -530,6 +530,24 @@ class ApiSerice {
         this.handleCommonError(res);
         return res.body;
     }
+
+    async get_salesSecondComByMonth(params, send, token) {
+        const res = await this.apiCall(api.salesSecondComByMonth, 'GET', token, params, send);
+        this.handleCommonError(res);
+        return res.body;
+    }
+
+    async get_growthTableByMonth(params, send, token) {
+        const res = await this.apiCall(api.growthTableByMonth, 'GET', token, params, send);
+        this.handleCommonError(res);
+        return res.body;
+    }
+
+    async get_aboMigrationBotByMonth(params, send, token) {
+        const res = await this.apiCall(api.aboMigrationBotByMonth, 'GET', token, params, send);
+        this.handleCommonError(res);
+        return res.body;
+    }
 }
 
 export default new ApiSerice()

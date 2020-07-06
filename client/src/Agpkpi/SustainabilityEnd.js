@@ -185,6 +185,7 @@ export default class Sustainability extends Component {
                     // data: monthShow,
                     max: "20",
                     min: "0",
+                    // boundaryGap: [0, '150%'],
                     axisLabel: {
                         show: true,
                         textStyle: {
