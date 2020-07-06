@@ -642,7 +642,7 @@ class AboMigrationBotByMonth(Resource):
         data = parser3.parse_args()
         month = data['month']
 
-        queryStr = "select * from qa_test.query_abo_20_bns_migration_tree where n_month like "+"'"+month+"%'"
+        queryStr = "select * from qa_test.query_abo_20_bns_migration_tree where n_month_actual like "+"'"+month+"%'"
         return performQuery(queryStr)
 
 class GrowthTableByMonth(Resource):
@@ -650,5 +650,5 @@ class GrowthTableByMonth(Resource):
         data = parser3.parse_args()
         month = data['month']
 
-        queryStr = "select * from qa_test.query_agp_15_growth_summary where n_month_actual like "+"'"+month+"%'"
+        queryStr = "select * from qa_test.query_agp_15_growth_summary where calendar_yr like "+"'"+month+"%'"
         return performQuery(queryStr)
