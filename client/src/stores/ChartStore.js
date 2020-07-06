@@ -1027,13 +1027,22 @@ class ChartStore {
 
   @computed get performance2Com() {
     const jsArr = toJS(this.performanceData2Com) || []
+    const jsArr2 = toJS(this.salesSecondComDataByMonth) || []
     if (!jsArr.length) {
       return false
     }
-    // console.log(jsArr,"jsArr")
-    let dataState = jsArr
+    // console.log(jsArr,jsArr2,"jsArrjsArr2")
+    // let dataState = jsArr
+    // const maxMonth = parseInt(dataState.length && dataState[0].n_month)
 
-    const maxMonth = parseInt(dataState.length && dataState[0].n_month)
+    if(this.isAllDatePicker && this.isAllDatePicker <= jsArr[0].n_month){//时间选择月份
+      var maxMonth = this.isAllDatePicker
+    }else{
+      var maxMonth = parseInt(jsArr.length && jsArr[0].n_month)
+    }
+    var dataState = _.filter(jsArr2, (o) => {//筛选数据
+      return o.n_month == maxMonth
+    })
 
     dataState = _.sortBy(dataState, (o) => parseInt(o.order_row));
 

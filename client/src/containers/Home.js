@@ -81,7 +81,7 @@ import { withOktaAuth } from '@okta/okta-react';
                     document.getElementsByClassName('nav-tabs')[0].style.position = "";
                     document.getElementsByClassName('nav-tabs')[0].style.top = "";
                 }
-                let offsetTop = document.getElementById('topTatilShow').offsetTop;
+                let offsetTop = document.getElementById('topTatilShow').offsetTop || 0;
                 if (scrollTop > offsetTop) {
                     document.getElementById('topTatilShow').style.position = "fixed";
                     document.getElementById('topTatilShow').style.top = "44px";
@@ -100,8 +100,8 @@ import { withOktaAuth } from '@okta/okta-react';
             this.props.chartStore.fetchPerformanceData2Com()
             this.props.chartStore.fetchPerformanceData2();
             this.props.chartStore.fetchPerformanceData3();
-
-
+            // 一屏备注框新接口
+            this.props.chartStore.fetchSalesSecondComByMonth("", '20')//提示框
 
             this.props.chartStoreAbo.fetchAboCisKpiData();
             this.props.chartStoreAbo.fetchAboRenewalData();
