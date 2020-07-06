@@ -652,3 +652,11 @@ class GrowthTableByMonth(Resource):
 
         queryStr = "select * from qa_test.query_agp_15_growth_summary where calendar_yr like "+"'"+month+"%'"
         return performQuery(queryStr)
+
+class AboRenewalRateByMonth(Resource):
+    def get(self):
+        data = parser3.parse_args()
+        month = data['month']
+
+        queryStr = "select * from qa_test.query_abo_4_firstyr_renewal where n_month like "+"'"+month+"%'"
+        return performQuery(queryStr)
