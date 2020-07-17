@@ -24,6 +24,12 @@ parser2.add_argument('username', help = 'This field cannot be blank', required =
 parser3 = reqparse.RequestParser()
 parser3.add_argument('month', help = 'This field cannot be blank', required = True)
 
+parser4 = reqparse.RequestParser()
+parser4.add_argument('id', help = 'This field cannot be blank', required = True)
+parser4.add_argument('parentid', help = 'This field cannot be blank', required = True)
+parser4.add_argument('n_month', help = 'This field cannot be blank', required = True)
+parser4.add_argument('remarks', help = 'This field cannot be blank', required = True)
+
 def performQuery(queryStr):
   try:
     con=psycopg2.connect(dbname= DATABASE, host=HOST, port= PORT, user= USER, password= PASSWORD)
@@ -39,6 +45,36 @@ def performQuery(queryStr):
       con.close()
       print("PostgreSQL connection is closed")
 
+def remarksCount(queryStr):
+  try:
+    con=psycopg2.connect(dbname= DATABASE, host=HOST, port= PORT, user= USER, password= PASSWORD)
+    cur = con.cursor(cursor_factory=RealDictCursor)
+    results = cur.execute(queryStr)
+    return json.dumps(cur.fetchall()) #json.dumps(cur.fetchall(), indent=2)
+  except (Exception, psycopg2.Error) as error :
+    print ("Error while fetching data from AWS Redshift", error)
+  finally:
+    #closing database connection.
+    if(con):
+      cur.close()
+      con.close()
+      print("PostgreSQL connection is closed")
+
+def remarksUpdate(queryStr):
+  try:
+    con=psycopg2.connect(dbname= DATABASE, host=HOST, port= PORT, user= USER, password= PASSWORD)
+    cur = con.cursor(cursor_factory=RealDictCursor)
+    results = cur.execute(queryStr)
+    con.commit()
+    return json.dumps(cur.fetchall()) #json.dumps(cur.fetchall(), indent=2)
+  except (Exception, psycopg2.Error) as error :
+    print ("Error while fetching data from AWS Redshift", error)
+  finally:
+    #closing database connection.
+    if(con):
+      cur.close()
+      con.close()
+      print("PostgreSQL connection is closed")
 
 
 class UserRegistration(Resource):
@@ -660,3 +696,35 @@ class AboRenewalRateByMonth(Resource):
 
         queryStr = "select * from qa_test.query_abo_4_firstyr_renewal where n_month like "+"'"+month+"%'"
         return performQuery(queryStr)
+
+class RemarksMonth(Resource):
+    def get(self):
+        data = parser4.parse_args()
+        id = data['id']
+        parentid = data['parentid']
+        n_month = data['n_month']
+
+        queryStr = "select * from remarks where calendar_yr where id='" +id+ "' and parentid ='"+parentid + "' and n_month = '" +n_month+ "'"
+        return performQuery(queryStr)
+
+#更新备注
+class UpdateRemarks(Resource):
+    def get(self):
+        data = parser4.parse_args()
+        id = data['id']
+        parentid = data['parentid']
+        n_month = data['n_month']
+        remarks = data['remarks']
+        #queryStr2 = "if exists(select 1 from remarks where id='" +id+ "' and parentid ='"+parentid + "' and n_month = '" +n_month+ "')"+"update remarks set remarks ='" +remarks+ "' where id='" +id+ "' and parentid ='"+parentid + "' and n_month = '" +n_month+ "' else "+"insert into remarks (id,parentid,n_month,remarks) values ('" +id+"','"+parentid+"','"+n_month+"','"+remarks+"')"
+        queryStr2 = "select count(1) from remarks where id='" +id+ "' and parentid ='"+parentid + "' and n_month = '" +n_month+ "'"
+        count = []
+        count = json.loads(remarksCount(queryStr2))
+        resultCount = count[0]
+        remarksCountResult = resultCount.get("count")
+        if(remarksCountResult>0):
+            queryStr3 = "update remarks set remarks ='" +remarks+ "' where id='" +id+ "' and parentid ='"+parentid + "' and n_month = '" +n_month + "'"
+            remarksUpdate(queryStr3)
+        else:
+            queryStr4 = "insert into remarks (id,parentid,n_month,remarks) values ('" +id+"','"+parentid+"','"+n_month+"','"+remarks+"')"
+            print(queryStr4)
+            remarksUpdate(queryStr4)
