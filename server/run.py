@@ -127,5 +127,6 @@ api.add_resource(resources.AboMigrationBotByMonth, '/aboMigrationBotByMonth')
 api.add_resource(resources.GrowthTableByMonth, '/growthTableByMonth')
 api.add_resource(resources.AboRenewalRateByMonth, '/aboRenewalRateByMonth')
 api.add_resource(resources.UpdateRemarks, '/updateRemarks')
+api.add_resource(resources.RemarksMonth, '/remarksMonth')
 if __name__ == '__main__':
       app.run(host='0.0.0.0', port=80)
