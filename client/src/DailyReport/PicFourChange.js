@@ -127,7 +127,7 @@ export default class PicFourChange extends Component {
                                         return <tr key={index} style={{color:item.start_day.indexOf(data3MaxYear) > -1 ? "#5eaef2" : "",background:item.start_day.indexOf(data3MaxYear) > -1 ? "" : "#e0e1e2"}}>
                                             <td style={{ height: "30px", border: "1px solid #e5e6e9",fontSize:"12px",whiteSpace:"nowrap"}}>{item.start_day}</td>
                                             {/* <td style={{ height: "35px", border: "1px solid #e5e6e9"}}>{item.activity}</td> */}
-                                            <td style={{ height: "30px", border: "1px solid #e5e6e9",textAlign:"left"}}>{item.promotion_desc}</td>
+                                            <td style={{ height: "30px", border: "1px solid #e5e6e9",textAlign:"left",paddingLeft:"5px"}}>{item.promotion_desc}</td>
                                         </tr>
                                     })
                                 }

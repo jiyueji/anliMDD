@@ -14,7 +14,7 @@
 // import chartStoreSocial from './stores/ChartStoreSocial'
 // import App from './App'
 // import Home from './containers/Home'
-// import AAA from './containers/AAA'
+// import Modify from './containers/Modify'
 // import LoginContainer from './containers/LoginContainer'
 // import UserListContainer from './containers/UserListContainer'
 // import RegisterContainer from './containers/RegisterContainer'
@@ -36,7 +36,7 @@
 
 // ReactDOM.render(
 //     <Provider {...stores}>
-//         {/* <App>
+//         <App>
 //             <Router history={history}>
 //                 <Switch>
 //                     <Route exact path="/" component={Home} />
@@ -45,23 +45,23 @@
 //                     <Route path={routes.users} component={UserListContainer} />
 //                 </Switch>
 //             </Router>
-//         </App> */}
-//         <Router history={history}>
+//         </App>
+//         {/* <Router history={history}>
 //             <Switch>
-//                 <Route path="/aaa" component={AAA} />
+//                 <Route path="/modify" component={Modify} />
 //                 <Route path="/bbb" component={Home} />
 //                 <App>
 //                     <Router history={history}>
 //                         <Switch>
 //                             <Route exact path="/" component={Home} />
-//                             {/* <Route path={routes.login} component={LoginContainer} />
+//                             <Route path={routes.login} component={LoginContainer} />
 //                             <Route path={routes.sign_up} component={RegisterContainer} />
-//                             <Route path={routes.users} component={UserListContainer} /> */}
+//                             <Route path={routes.users} component={UserListContainer} />
 //                         </Switch>
 //                     </Router>
 //                 </App>
 //             </Switch>
-//         </Router>
+//         </Router> */}
 //     </Provider>,
 //     document.getElementById('root')
 // );
@@ -76,7 +76,9 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './containers/Home'
+import Modify from './containers/Modify'
 import Protected from './containers/Protected';
+import Aaa from './ModifyKpi/Aaa';
 import App from './App'
 import authStore from './stores/AuthStore'
 import userStore from './stores/UserStore'
@@ -112,6 +114,8 @@ ReactDOM.render(
                     clientId='0oae6e0fxQfXsVdde4x6'
                     redirectUri={'http://localhost:3000/implicit/callback'}>
                     <Route path='/' exact component={Home} />
+                    <Route path='/modify' exact component={Modify} />
+                    <Route path='/modify/1' component={Aaa} />
                     <SecureRoute path='/protected' component={Protected} />
                     <Route path='/implicit/callback' component={LoginCallback} />
                 </Security>

@@ -122,9 +122,15 @@ class ChartStoreGrowth {
     // console.log(jsArr,"jsArr")
     const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'
 
-    let maxMonthStr
-    if (jsArr.length) {
-      maxMonthStr = jsArr[0].max_month
+    // let maxMonthStr
+    // if (jsArr.length) {
+    //   maxMonthStr = jsArr[0].max_month
+    // }
+
+    if (jsArr.length && this.isAllDatePicker && this.isAllDatePicker <= jsArr[0].max_month) {//时间选择判断当前月份
+      var maxMonthStr = this.isAllDatePicker
+    }else{
+      var maxMonthStr = jsArr[0].max_month
     }
 
     // const maxCalendarYear = parseInt(jsArr.length && jsArr[0].max_calendar_year)
@@ -194,7 +200,7 @@ class ChartStoreGrowth {
         info: MONTHS_MAP[o.month]
       }
     })
-
+    // console.log(dataState,"dataState")
     return {
       high_ppv_pct_of_sales_actual_data,
       eom_pct_of_sales_actual_data,
@@ -214,6 +220,7 @@ class ChartStoreGrowth {
     if (!jsArr.length) {
       return false
     }
+    // console.log(jsArr,"jsArr")
     const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'
     let maxMonthStr
     if (jsArr.length) {
@@ -665,11 +672,11 @@ class ChartStoreGrowth {
   @computed get growthTable() {
     // const jsArr = toJS(this.growthTableData) || []
     const jsArr = toJS(this.growthTableDataByMonth) || []
-    
+    // console.log(jsArr,"jsArr")
     if (!jsArr.length) {
       return false
     }
-
+    // console.log(jsArr,"jsArr")
     if(this.isAllDatePicker && this.isAllDatePicker <= jsArr[0].max_month){
       var maxMonthStr = this.isAllDatePicker
       var maxTargCalYear = this.isAllDatePicker.slice(0,4)
@@ -682,7 +689,7 @@ class ChartStoreGrowth {
     })
     // let maxMonthStr = jsArr[0].max_month
 
-    var maxYear = dataState[0].calendar_yr || ""
+    var maxYear = dataState[0] ? dataState[0].calendar_yr : ""
     // const maxTargCalYear = jsArr[0].max_target_calendar_year
 
     const SEG_ORDER_MAP = {
@@ -720,13 +727,13 @@ class ChartStoreGrowth {
 
       return o
     })
-    // console.log(dataState,"dataState")
+
     dataState = _.sortBy(dataState, 'rank')
+    // console.log(dataState,"dataStatedataState")
 
-
-    const minTargetSalPct = dataState[0]['min_target_sales_pct'],
-      maxTargetSalPct = dataState[0]['max_target_sales_pct'],
-      monthAvg1 = dataState[0]['pct_actual_sales'],
+    const minTargetSalPct = maxTargCalYear >= 2020 ? dataState[0]['min_target_sales_pct'] ? dataState[0]['min_target_sales_pct'] : null : null,
+      maxTargetSalPct = dataState[0] && dataState[0]['max_target_sales_pct'],
+      monthAvg1 = dataState[0] && dataState[0]['pct_actual_sales'],
       monthAvg2 = dataState[1] && dataState[1]['pct_actual_sales'],
       monthAvg2Rows = monthAvg1 + monthAvg2
 

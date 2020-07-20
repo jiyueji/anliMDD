@@ -24,6 +24,7 @@ const DonutChart = observer((props) => {
     percentVal2 = props.data['percentVal2']
     totalSales = props.data['totalSales']
     title = props.data['title']
+    // console.log(props.data,"props.data")
   }
 
   if(props.dataFalg){

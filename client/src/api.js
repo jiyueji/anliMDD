@@ -80,6 +80,7 @@ const api = {
     salesSecondComByMonth:'/salesSecondComByMonth',//一屏四图
     growthTableByMonth:'/growthTableByMonth',//二屏表格
     aboMigrationBotByMonth:'/aboMigrationBotByMonth',//三屏鱼骨
+    aboRenewalRateByMonth:'/aboRenewalRateByMonth',//三屏二图
 }
 
 export default api

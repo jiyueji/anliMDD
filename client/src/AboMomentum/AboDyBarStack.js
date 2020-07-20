@@ -41,22 +41,42 @@ export default class AboDyBarStack extends Component {
     }
     upDateShowData() {
         var data = this.props.data || {}
+        var { monthShowAbo } = this.state
         //         new_abo_data: (2) [{…}, {…}]
         // renew_abo_data: (2) [{…}, {…}]
         // churn_abo_data: (2) [{…}, {…}]
         // months_data: (2) [{…}, {…}]
         var newAboData = []
-        data.new_abo_data ? data.new_abo_data.map((item, index) => {
-            newAboData.push(item.y)
-        }) : ""
         var enewAboData = []
-        data.renew_abo_data ? data.renew_abo_data.map((item, index) => {
-            enewAboData.push((item.y) * 3)
-        }) : ""
         var churnAboData = []
-        data.churn_abo_data ? data.churn_abo_data.map((item, index) => {
-            churnAboData.push(item.y)
-        }) : ""
+        for(var i = 0 ; i < monthShowAbo.length ; i ++){
+            if(data.new_abo_data && data.new_abo_data[0] && data.new_abo_data[0].x == monthShowAbo[i]){
+                data.new_abo_data ? data.new_abo_data.map((item, index) => {
+                    newAboData.push(item.y)
+                }) : ""
+                data.renew_abo_data ? data.renew_abo_data.map((item, index) => {
+                    enewAboData.push((item.y) * 3)
+                }) : ""
+                data.churn_abo_data ? data.churn_abo_data.map((item, index) => {
+                    churnAboData.push(item.y)
+                }) : ""
+                break
+            }
+            newAboData.push("")
+            enewAboData.push("")
+            churnAboData.push("")
+        }
+        // data.new_abo_data ? data.new_abo_data.map((item, index) => {
+        //     newAboData.push(item.y)
+        // }) : ""
+        // data.renew_abo_data ? data.renew_abo_data.map((item, index) => {
+        //     enewAboData.push((item.y) * 3)
+        // }) : ""
+        // data.churn_abo_data ? data.churn_abo_data.map((item, index) => {
+        //     churnAboData.push(item.y)
+        // }) : ""
+
+        // console.log(newAboData,"newAboData")
         this.setState({
             newAboData, enewAboData, churnAboData
         }, () => {
@@ -136,7 +156,7 @@ export default class AboDyBarStack extends Component {
                         }
                         monthUp = item.axisValue
                     })
-                    if(newRecruitedABOData && existingABOData){
+                    if (newRecruitedABOData && existingABOData) {
                         aboDataAddNumber = (Number(existingABOData) + Number(newRecruitedABOData)).toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
                         var thisAboDataAddNumber = 'ABO force size:' + aboDataAddNumber + "k";
                     }

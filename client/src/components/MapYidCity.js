@@ -172,7 +172,7 @@ export default class MapYidCity extends Component {
         }
         var garyNumberData = (data) => {
             var res = [];
-            var fastNumber = Math.round((data[0].actual_sales_sum || 0) / 1000000)
+            var fastNumber = Math.round((data[0] && data[0].actual_sales_sum || 0) / 1000000)
             for (var i = 0; i < data.length; i++) {
                 var thisData = Math.round((data[i].actual_sales_sum || 0) / 1000000)
                 thisData > fastNumber ? fastNumber = thisData : null
@@ -192,6 +192,7 @@ export default class MapYidCity extends Component {
             return res;
         }
         var dataShowNumberSply = (data) => {
+            // console.log(data)
             var res = [];
             for (var i = 0; i < data.length; i++) {
                 var numberSo = data[i].sales_vs_sply.replace(/%/g, '')

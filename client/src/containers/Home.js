@@ -69,9 +69,9 @@ import { withOktaAuth } from '@okta/okta-react';
         componentDidMount() {
             // 实现吸顶
             window.addEventListener("scroll", () => {
-                let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
                 // console.log(document.getElementById('topTatilShow'))
-                let offsetTopNav = document.getElementsByClassName('nav-tabs')[0] ? document.getElementsByClassName('nav-tabs')[0].offsetTop : 0;
+                var offsetTopNav = document.getElementsByClassName('nav-tabs')[0] ? document.getElementsByClassName('nav-tabs')[0].offsetTop : 0;
                 if (scrollTop > offsetTopNav && document.getElementsByClassName('nav-tabs')[0]) {
                     document.getElementsByClassName('nav-tabs')[0].style.position = "fixed";
                     document.getElementsByClassName('nav-tabs')[0].style.top = "0";
@@ -81,11 +81,11 @@ import { withOktaAuth } from '@okta/okta-react';
                     document.getElementsByClassName('nav-tabs')[0].style.position = "";
                     document.getElementsByClassName('nav-tabs')[0].style.top = "";
                 }
-                let offsetTop = document.getElementById('topTatilShow').offsetTop || 0;
-                if (scrollTop > offsetTop) {
+                var offsetTop = document.getElementById('topTatilShow') ? document.getElementById('topTatilShow').offsetTop : 0;
+                if (scrollTop > offsetTop && document.getElementById('topTatilShow')) {
                     document.getElementById('topTatilShow').style.position = "fixed";
                     document.getElementById('topTatilShow').style.top = "44px";
-                } else {
+                } else if(document.getElementById('topTatilShow')) {
                     document.getElementById('topTatilShow').style.position = "absolute";
                     document.getElementById('topTatilShow').style.top = "110px";
                 }
@@ -121,6 +121,7 @@ import { withOktaAuth } from '@okta/okta-react';
             this.props.chartStoreAbo.fetchAboGar1()
             this.props.chartStoreAbo.fetchAboPinPopData()
             //三屏新全数据接口
+            this.props.chartStoreAbo.fetchAboRenewalRateByMonth("", '20')//二图
             this.props.chartStoreAbo.fetchAboQualificationDataByMonth("", '20')//提示框
             this.props.chartStoreAbo.fetchAboBonusByMonth("", '20')//提示框
             this.props.chartStoreAbo.fetchGarTracking1ByMonth("", '20')//提示框
@@ -247,15 +248,23 @@ import { withOktaAuth } from '@okta/okta-react';
         }
         //限制日期选择
         disabledDate = (current) => {
-            return current < moment(new Date('2018/01')) || current > moment().endOf('day')
+            if(this.selectedTab === "AGP KPI"){//第二屏
+                return current < moment(new Date('2015/01')) || current > moment().endOf('day')
+            }else if(this.selectedTab === "Customer Dynamics"){//第四屏
+                return current < moment(new Date('2018/09')) || current > moment().endOf('day')
+            }else if(this.selectedTab === "Daily Report"){//第五屏
+                return current < moment(new Date('2018/01')) || current > moment().endOf('day')
+            }
+            return current < moment(new Date('2015/09')) || current > moment().endOf('day')
         }
         //前四屏日期范围发生变化的回调
         clickDateChangeAll = (date, dateString) => {
             this.isAllDatePicker = moment(date).format('YYYYMM')
-            this.props.chartStoreSocial.isAllDatePicker = moment(date).format('YYYYMM')//第四
-            this.props.chartStoreAbo.isAllDatePicker = moment(date).format('YYYYMM')//第三
-            this.props.chartStoreGrowth.isAllDatePicker = moment(date).format('YYYYMM')//第二
-            this.props.chartStore.isAllDatePicker = moment(date).format('YYYYMM')//第一
+            // console.log(this.isAllDatePicker)
+            this.props.chartStoreSocial.isAllDatePicker = this.isAllDatePicker//第四
+            this.props.chartStoreAbo.isAllDatePicker = this.isAllDatePicker//第三
+            this.props.chartStoreGrowth.isAllDatePicker = this.isAllDatePicker//第二
+            this.props.chartStore.isAllDatePicker = this.isAllDatePicker//第一
         }
         // onClickEditDashboard() {
         //     this.dashboardRef.onClickEditDashboard()
@@ -315,6 +324,7 @@ import { withOktaAuth } from '@okta/okta-react';
             const monthFormat = 'YYYY/MM';
             const dateFormat = 'YYYY/MM';
             const dateFormatFive = this.props.chartStoreDaily.queryDailySalesLineHandle.dateChangeOld;
+            const dateFormatAll = this.props.chartStore.donutTotalSalesLastMonth.dateChangeData;
             const { MonthPicker } = DatePicker;
             // console.log('AUTH STORE IN RENDER', authStore, authStore.isAuthenticated)
 
@@ -336,7 +346,7 @@ import { withOktaAuth } from '@okta/okta-react';
             //     </div>
             // }
             var { thisWindowWidth, thisPageTitle } = this.state
-            if (this.props.authState.isPending) return <div>Loading...</div>;
+            // if (this.props.authState.isPending) return <div>Loading...</div>;
             return this.props.authState.isAuthenticated ?
                 <div className="dashboard-wrap">
                     {authStore.isAuthenticated &&
@@ -362,7 +372,7 @@ import { withOktaAuth } from '@okta/okta-react';
                 </div> */}
                                 <div className="page-title bigTatie" id="topTatilShow">
                                     <h1 className="main-title" style={{ lineHeight: "inherit" }}>{this.selectedTab} <span style={{ fontSize: "12px", color: "#417bff" }}>({thisPageTitle})</span></h1>
-                                    <button onClick={this.logout}>Logout</button>
+                                    {/* <button onClick={this.logout}>Logout</button> */}
                                     {
                                         this.selectedTab === "AGP KPI" ? "" : this.selectedTab === "Daily Report" ? <div style={{ marginRight: "11%", lineHeight: "30px" }}>{dateFormatFive}</div> : <div className='custom-control custom-switch perf-switch-wrap' style={{ marginRight: "11%" }}>
                                             <label className='perf-lbl' htmlFor='perfYearSwitcher'>
@@ -382,7 +392,7 @@ import { withOktaAuth } from '@okta/okta-react';
                                         </div>
                                     }
                                     {
-                                        this.selectedTab === "Daily Report" ? <DatePicker picker="month" defaultValue={moment(dateFormatFive, dateFormat)} format={dateFormat} allowClear={false} inputReadOnly={true} showToday={true} onChange={this.clickDateChange.bind(this)} disabledDate={this.disabledDate.bind(this)} /> : <MonthPicker defaultValue={moment('2020/06', monthFormat)} format={monthFormat} picker="month" allowClear={false} inputReadOnly={true} showToday={true} onChange={this.clickDateChangeAll.bind(this)} disabledDate={this.disabledDate.bind(this)} />
+                                        this.selectedTab === "Daily Report" ? <DatePicker picker="month" defaultValue={moment(dateFormatFive, dateFormat)} format={dateFormat} allowClear={false} inputReadOnly={true} showToday={true} onChange={this.clickDateChange.bind(this)} disabledDate={this.disabledDate.bind(this)} /> : <MonthPicker defaultValue={moment(dateFormatAll, monthFormat)} format={monthFormat} picker="month" allowClear={false} inputReadOnly={true} showToday={true} onChange={this.clickDateChangeAll.bind(this)} disabledDate={this.disabledDate.bind(this)} />
                                     }
                                 </div>
                                 <div className="main-navigation">

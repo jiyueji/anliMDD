@@ -48,7 +48,9 @@ export default class Sustainability extends Component {
                             </div>
                         </div>
                         <div className="remarkTarget" style={{ position: 'absolute', right: '10%', top: targetFont, display: 'none' }}>
-                            <div style={{ color: 'rgb(244,159,68)', fontSize: '16px', fontWeight: '600' }}>{maxCalendarYear} Target: {targetLine}%</div>
+                            {
+                                targetLine && targetLine > 0 ? <div style={{ color: 'rgb(244,159,68)', fontSize: '16px', fontWeight: '600' }}>{maxCalendarYear} Target: {targetLine}%</div> : ""
+                            }
                         </div>
                     </div>
                 </div>
@@ -95,11 +97,11 @@ export default class Sustainability extends Component {
 
         var ytd = chartData.last_ytd_highppv_pct || 0
         var ytdShowFont = (ytd * 100).toFixed(1)
-        var ballYtd = Math.round((((1 - ((ytd * 100) / 20)) * 100))) + 1 + "%"
+        var ballYtd = Math.round((((1 - ((ytd * 100) / 40)) * 100))) + 1 + "%"
         ytd = Math.round(((1 - ((ytd * 100) / 20)) * 100)) + "%"
 
         var targetLine = chartData.last_target_high_ppv_pct || 0
-        var targetFont = ((((1 - ((targetLine * 100) / 20)) * 100))).toFixed(1) - 4 + "%"
+        var targetFont = ((((1 - ((targetLine * 100) / 40)) * 100))).toFixed(1) - 4 + "%"
         targetLine = (targetLine * 100).toFixed(1)
         // console.log(targetLine)
 
@@ -176,7 +178,7 @@ export default class Sustainability extends Component {
                 {
                     type: 'value',
                     // data: monthShow,
-                    max: "20",
+                    max: "40",
                     min: "0",
                     // boundaryGap: [0, '150%'],
                     axisLabel: {

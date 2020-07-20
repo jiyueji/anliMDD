@@ -10,7 +10,7 @@ import './styles/style.css'
 import './styles/table.css'
 
 import { Router, Switch, Route } from 'react-router'
-import AAA from './containers/AAA'
+import Modify from './containers/Modify'
 import HeaderLoad from './containers/HeaderLoad'
 
 @inject('authStore') @observer
@@ -47,10 +47,9 @@ class App extends Component {
                 {/* Header为登录的页面 */}
                 <Header current_user={authStore.currentUser} logout={this.logoutHandler} />
                 {/* HeaderLoad为loading页面 */}
-                {/* <HeaderLoad /> */}
-                {
+                {/* {
                     authStore.isAuthenticated ? "" : <HeaderLoad />
-                }
+                } */}
                 {this.props.children}
             </main>
             // <Router>

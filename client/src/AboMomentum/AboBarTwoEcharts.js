@@ -225,7 +225,7 @@ export default class AboBarTwoEcharts extends Component {
                     var number;
                     if (len <= 3) { number = b; }
                     var r = len % 3;
-                    r > 0 ? number = b.slice(0, r) + "," + b.slice(r, len).match(/\d{3}/g).join(",") : number = b.slice(r, len).match(/\d{3}/g).join(",");
+                    number = b ? r > 0 ? b.slice(0, r) + "," + b.slice(r, len).match(/\d{3}/g).join(",") : b.slice(r, len).match(/\d{3}/g).join(",") : "";
                     return '<div style="color:#ffa441">' + 'Median income:' + number + '</div>'
                 }
             },

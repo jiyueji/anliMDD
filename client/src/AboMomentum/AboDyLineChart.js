@@ -42,16 +42,27 @@ export default class AboDyBarStack extends Component {
     }
     upDateShowData() {
         var data = this.props.data || {}
+        var { monthShowAboLine } = this.state
         // console.log(data)
         // renewal_rate_data: (2) [{…}, {…}]
         // renewal_rate_prediction_data: (11) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
         // scatter_data: (12) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
         // isPerfYear: false
         var renewalRateData = []
-        data.renewal_rate_data.map((item, index) => {
-            renewalRateData.push((item.y * 100).toFixed(1))
-        })
         var renewalRatePredictionData = []
+        for(var i = 0 ; i < monthShowAboLine.length ; i ++){
+            if(data.renewal_rate_data[0] && data.renewal_rate_data[0].x == monthShowAboLine[i]){
+                data.renewal_rate_data.map((item, index) => {
+                    renewalRateData.push((item.y * 100).toFixed(1))
+                })
+                break
+            }
+            renewalRateData.push("")
+        }
+
+        // data.renewal_rate_data.map((item, index) => {
+        //     renewalRateData.push((item.y * 100).toFixed(1))
+        // })
         data.renewal_rate_prediction_data.map((item, index) => {
             renewalRatePredictionData.push((item.y * 100).toFixed(1))
         })

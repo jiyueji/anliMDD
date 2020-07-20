@@ -548,6 +548,12 @@ class ApiSerice {
         this.handleCommonError(res);
         return res.body;
     }
+
+    async get_aboRenewalRateByMonth(params, send, token) {
+        const res = await this.apiCall(api.aboRenewalRateByMonth, 'GET', token, params, send);
+        this.handleCommonError(res);
+        return res.body;
+    }
 }
 
 export default new ApiSerice()

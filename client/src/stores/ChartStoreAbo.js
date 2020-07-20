@@ -36,6 +36,7 @@ class ChartStoreAbo {
   @observable aboCsiKpiDataByMonth = []
   @observable qMonthPvDataByMonth = []
   @observable aboMigrationBotDataByMonth = []
+  @observable aboRenewalRateDataByMonth = []
 
   // abo leader
   @observable aboLeaderData1 = []
@@ -43,6 +44,22 @@ class ChartStoreAbo {
   @observable aboGarData2 = []
   @observable aboBonusData = []
   @observable aboPinPopData = []
+
+  @action async fetchAboRenewalRateByMonth(params, send) {
+    try {
+      const data = await ApiService.get_aboRenewalRateByMonth(params, send)
+      runInAction(() => {
+        this.isLoading = false
+        this.aboRenewalRateDataByMonth = data ? JSON.parse(data) : []
+      })
+    } catch (e) {
+      runInAction(() => {
+        this.isLoading = false
+        this.isFailure = true
+        this.aboRenewalRateDataByMonth = []
+      })
+    }
+  }
 
   @action async fetchAboQualificationDataByMonth(params, send) {
     try {
@@ -565,6 +582,7 @@ class ChartStoreAbo {
     }) : ""
     var maxYearStr = NOW_MAXDATE.toString()
     var maxYearStrPF = hlp.yearToPfPref2(maxYearStr)
+    // console.log(dataState,"dataState")
     return {
       YTD_DATA: YTD_DATA,
       CSI_AMT: CSI_AMT,
@@ -576,11 +594,14 @@ class ChartStoreAbo {
       NOW_MAXDATE: maxYearStr,
       NOW_MAXDATEPF: maxYearStrPF,
       DatePicker: DatePicker,
+      dataState:dataState,
     }
   }
 
   @computed get aboRenewalRate() {
-    const jsArr = toJS(this.aboRenewalData) || []
+    // const jsArr = toJS(this.aboRenewalData) || []
+    const jsArr = toJS(this.aboRenewalRateDataByMonth) || []
+
     if (!jsArr.length) {
       return false
     }
@@ -588,10 +609,12 @@ class ChartStoreAbo {
     const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'
 
     const MAX_YEAR_PROP = this.isPerfYear ? 'max_perf_yr' : 'max_calendar_yr'
-    if (this.isAllDatePicker) {//时间选择判断当前年份
+    if (this.isAllDatePicker && this.isAllDatePicker <= jsArr[0].max_n_month) {//时间选择判断当前年份
       var maxYear = this.isAllDatePicker.slice(0, 4)
+      var maxDate = this.isAllDatePicker
     } else {
       var maxYear = parseInt(jsArr.length && jsArr[0][MAX_YEAR_PROP])
+      var maxDate = parseInt(jsArr.length && jsArr[0].max_n_month)
     }
     // const maxYear = parseInt(jsArr.length && jsArr[0][MAX_YEAR_PROP])
     let dataState = jslinq(jsArr)
@@ -623,15 +646,15 @@ class ChartStoreAbo {
     // .toList()
     dataState = dataState.toList()
 
-    if (this.isAllDatePicker) {//按月份进行数据展示
-      dataState = _.filter(dataState, (o) => {
-        return o.n_month <= this.isAllDatePicker
-      })
-    }
+    // if (this.isAllDatePicker) {//按月份进行数据展示
+    //   dataState = _.filter(dataState, (o) => {
+    //     return o.n_month <= this.isAllDatePicker
+    //   })
+    // }
     let renewal_rate_data = _.map(dataState, (o) => {
       return {
         x: MONTHS_MAP[o.month],
-        y: o.renewal_rate
+        y: o.n_month <= maxDate ? o.renewal_rate : null
       }
     })
 
@@ -642,7 +665,7 @@ class ChartStoreAbo {
     let renewal_rate_prediction_data = _.map(dataState, (o) => {
       return {
         x: MONTHS_MAP[o.month],
-        y: o.renewal_rate_prediction
+        y: o.n_month > maxDate ? o.renewal_rate_prediction : null
       }
     })
 
@@ -681,6 +704,9 @@ class ChartStoreAbo {
     } else {
       var maxYear = parseInt(jsArr.length && jsArr[0].max_month.slice(0, 4))
       var maxMonthStr = jsArr[0].max_month
+    }
+    if (this.isAllDatePicker && this.isAllDatePicker.slice(4, 6) > 8) {
+      maxYear = Number(maxYear) + 1
     }
     // let maxMonthStr
     // if (jsArr.length) {
@@ -866,26 +892,26 @@ class ChartStoreAbo {
     let prevYear = [
       {
         x: X_VALS[0],
-        y: dataState[0].ytd_num_q_ly
+        y: dataState[0] && dataState[0].ytd_num_q_ly
       },
       {
         x: X_VALS[1],
-        y: dataState[0].pv_per_q_ly
+        y: dataState[0] && dataState[0].pv_per_q_ly
       }
     ]
 
     let curYear = [
       {
         x: X_VALS[0],
-        y: dataState[0].ytd_num_q
+        y: dataState[0] && dataState[0].ytd_num_q
       },
       {
         x: X_VALS[1],
-        y: dataState[0].pv_per_q
+        y: dataState[0] && dataState[0].pv_per_q
       }
     ]
 
-    const maxYear = parseInt(dataState[0].perf_yr)
+    const maxYear = parseInt(dataState[0] && dataState[0].perf_yr)
 
 
     return {
@@ -935,6 +961,7 @@ class ChartStoreAbo {
         return o.n_month <= this.isAllDatePicker
       })
     }
+    // console.log(dataState,"dataState")
     let new_abo_data = _.map(dataState, (o) => {
       return {
         x: MONTHS_MAP[o.month],
@@ -1011,6 +1038,7 @@ class ChartStoreAbo {
     //数据在perf_yr且月份＞8以后从九月开始显示
     if (this.isAllDatePicker && this.isAllDatePicker.slice(4, 6) > 8) {
       dataState = dataState[Number(maxYear) + 1] || []
+      maxYear = Number(maxYear) + 1
     } else {
       dataState = dataState[maxYear] || []
     }

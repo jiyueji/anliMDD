@@ -78,7 +78,7 @@ class AboDynamicsContainer extends React.PureComponent {
           </div>
 
           <label className="tab-cont-title">
-            Q Months (by performance year) <span style={{fontSize:"13px"}}>excluding manual Q</span>
+            Q Months (by performance year) <span style={{ fontSize: "13px" }}>excluding manual Q</span>
           </label>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div style={{ width: '33%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
@@ -94,18 +94,24 @@ class AboDynamicsContainer extends React.PureComponent {
               <AboRate data={chartStoreAbo.aboQualification} />
             </div>
           </div>
-          <label className="tab-cont-title">
-            FAA & GAR
-        </label>
+          {
+            (chartStoreAbo.aboBonus.data && chartStoreAbo.aboBonus.data.length > 0) || (chartStoreAbo.aboGar1.data && chartStoreAbo.aboBonus.data.length > 0) ? <label className="tab-cont-title">
+              FAA & GAR
+        </label> : ""
+          }
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div style={{ width: '33%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
-              {/* 第一个圆重叠图 */}
-              <AboFinalPie data={chartStoreAbo.aboBonus} titleData={chartStoreDaily.manualInputs} />
-            </div>
-            <div style={{ width: '66%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
-              {/* 右边的表格 */}
-              <AboTableGar1 data={chartStoreAbo.aboGar1} />
-            </div>
+            {
+              chartStoreAbo.aboBonus.data && chartStoreAbo.aboBonus.data.length > 0 ? <div style={{ width: '33%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
+                {/* 第一个圆重叠图 */}
+                <AboFinalPie data={chartStoreAbo.aboBonus} titleData={chartStoreDaily.manualInputs} />
+              </div> : ""
+            }
+            {
+              chartStoreAbo.aboGar1.data && chartStoreAbo.aboBonus.data.length > 0 ? <div style={{ width: '66%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
+                {/* 右边的表格 */}
+                <AboTableGar1 data={chartStoreAbo.aboGar1} />
+              </div> : ""
+            }
           </div>
           <label className="tab-cont-title">
             Income
@@ -115,18 +121,20 @@ class AboDynamicsContainer extends React.PureComponent {
               {/* 第一个有中位线的柱状图 */}
               <AboBarTwoEcharts data={chartStoreAbo.aboPinBarData} datas={chartStoreAbo.aboNonPinBarData} />
             </div>
-            <div style={{ width: '49%', height: '420px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
+            {
+              chartStoreAbo.aboCisKpiDataHandle.dataState && chartStoreAbo.aboCisKpiDataHandle.dataState.length > 0 ? <div style={{ width: '49%', height: '420px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
               {/* 第二个柱状图加折线 */}
               <AboBarLineEcharts data={chartStoreAbo.aboCisKpiDataHandle} />
-            </div>
+            </div> : ""
+            }
           </div>
           <label className="tab-cont-title">
             Migration
         </label>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             {/* <div style={{ width: '50%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}> */}
-              {/* 第一个鱼骨图 */}
-              {/* <AboDyFishGuTuBig data={chartStoreAbo.aboMigTop} data2={chartStoreAbo.aboMigBot} dataPin={chartStoreAbo.aboPinPop} />
+            {/* 第一个鱼骨图 */}
+            {/* <AboDyFishGuTuBig data={chartStoreAbo.aboMigTop} data2={chartStoreAbo.aboMigBot} dataPin={chartStoreAbo.aboPinPop} />
             </div> */}
             <div style={{ width: '49%', height: '400px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
               {/* 第二个鱼骨图 */}
