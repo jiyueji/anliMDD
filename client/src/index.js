@@ -12,6 +12,7 @@
 // import chartStoreGrowth from './stores/ChartStoreGrowth'
 // import chartStoreDaily from './stores/ChartStoreDaily'
 // import chartStoreSocial from './stores/ChartStoreSocial'
+// import chartRemarks from './stores/chartRemarks'
 // import App from './App'
 // import Home from './containers/Home'
 // import Modify from './containers/Modify'
@@ -31,7 +32,8 @@
 //     chartStoreAbo,
 //     chartStoreGrowth,
 //     chartStoreDaily,
-//     chartStoreSocial
+//     chartStoreSocial,
+//     chartRemarks
 // };
 
 // ReactDOM.render(
@@ -40,6 +42,7 @@
 //             <Router history={history}>
 //                 <Switch>
 //                     <Route exact path="/" component={Home} />
+//                     <Route path='/modify' exact component={Modify} />
 //                     <Route path={routes.login} component={LoginContainer} />
 //                     <Route path={routes.sign_up} component={RegisterContainer} />
 //                     <Route path={routes.users} component={UserListContainer} />
@@ -49,7 +52,6 @@
 //         {/* <Router history={history}>
 //             <Switch>
 //                 <Route path="/modify" component={Modify} />
-//                 <Route path="/bbb" component={Home} />
 //                 <App>
 //                     <Router history={history}>
 //                         <Switch>
@@ -78,7 +80,6 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './containers/Home'
 import Modify from './containers/Modify'
 import Protected from './containers/Protected';
-import Aaa from './ModifyKpi/Aaa';
 import App from './App'
 import authStore from './stores/AuthStore'
 import userStore from './stores/UserStore'
@@ -89,6 +90,7 @@ import chartStoreAbo from './stores/ChartStoreAbo'
 import chartStoreGrowth from './stores/ChartStoreGrowth'
 import chartStoreDaily from './stores/ChartStoreDaily'
 import chartStoreSocial from './stores/ChartStoreSocial'
+import chartRemarks from './stores/chartRemarks'
 import { Provider } from 'mobx-react'
 import history from './services/history'
 import * as serviceWorker from './registerServiceWorker';
@@ -103,7 +105,8 @@ const stores = {
     chartStoreAbo,
     chartStoreGrowth,
     chartStoreDaily,
-    chartStoreSocial
+    chartStoreSocial,
+    chartRemarks
 };
 
 ReactDOM.render(
@@ -115,7 +118,6 @@ ReactDOM.render(
                     redirectUri={'http://localhost:3000/implicit/callback'}>
                     <Route path='/' exact component={Home} />
                     <Route path='/modify' exact component={Modify} />
-                    <Route path='/modify/1' component={Aaa} />
                     <SecureRoute path='/protected' component={Protected} />
                     <Route path='/implicit/callback' component={LoginCallback} />
                 </Security>

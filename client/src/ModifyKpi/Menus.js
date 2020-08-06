@@ -25,8 +25,8 @@ export default class Menus extends Component {
 
     handleClick = e => {
         // console.log('click ', e);
-        var id = e.keyPath[0] || "1"
-        var keys = e.keyPath[1] || "sub1"
+        var id = e.keyPath[1] || "sub1"
+        var keys = e.keyPath[0] || "1"
         this.props.parameter(id,keys)
     };
 

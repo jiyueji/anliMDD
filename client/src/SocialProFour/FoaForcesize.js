@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import * as hlp from '../components/Helper'
 import echarts from 'echarts';
+import TitleModify from "../components/TitleModify.js"
 
 export default class FoaForcesize extends Component {
     constructor() {
@@ -9,15 +10,20 @@ export default class FoaForcesize extends Component {
             numExistingFoaData: [],
             // maxYShow:"",
             // isPerfYearAbo:false,
-            monthShowAbo: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            monthShowAbo: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            modifyDateModify:""
         }
     }
     render() {
+        var {modifyDateModify} = this.state
         return (
             <Fragment>
-                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Forcesize</div>
-                <div style={{ width: "100%", height: "420px", display: 'flex' }}>
-                    <div id="foaForcesizeEcharts" style={{ width: "100%", height: "420px" }}></div>
+                <div className="modifyAllTitle">
+                    <TitleModify titleName={'FOA Forcesize'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub4"} keys={"FOA_Forcesize"} modifyDate={modifyDateModify} />
+                </div>
+                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Forcesize</div> */}
+                <div className="allContent">
+                    <div id="foaForcesizeEcharts" className="allContentEcharts"></div>
                 </div>
             </Fragment>
         )
@@ -43,8 +49,9 @@ export default class FoaForcesize extends Component {
     upDateShowDataFoaForcesize() {
         var data = this.props.data || {}
         // console.log(data,"1")
+        var modifyDateModify = data.maxMonthStr || ""
         var { num_existing_foa } = data
-        var {monthShowAbo} = this.state
+        var { monthShowAbo } = this.state
         var numExistingFoaData = []
         num_existing_foa && num_existing_foa.length >= 0 ? num_existing_foa.map((item, index) => {
             numExistingFoaData.push(((item.y - 250000) / 1000000).toFixed(1))
@@ -60,7 +67,7 @@ export default class FoaForcesize extends Component {
             }
         }
         this.setState({
-            numExistingFoaData,
+            numExistingFoaData,modifyDateModify
         }, () => {
             this.foaForcesizeEcharts()
         })
@@ -76,7 +83,7 @@ export default class FoaForcesize extends Component {
         });
         foaForcesizeEcharts.setOption({
             grid: {
-                top: '18%',
+                top: '10%',
                 left: '1%',
                 right: '2%',
                 bottom: '15%',

@@ -352,7 +352,7 @@ class ChartStoreSocial {
     if (dataState.length) {
       // maxYear = dataState[0][`max_${YEAR_TYPE}`]
       maxYear = this.isAllDatePicker ? this.isAllDatePicker.slice(0, 4) : dataState[0][`max_${YEAR_TYPE}`]
-      maxMonthStr = dataState[0].max_n_month
+      maxMonthStr = this.isAllDatePicker ? this.isAllDatePicker : dataState[0].max_n_month
       maxMonth = parseInt(maxMonthStr.slice(4, 6))
     }
 
@@ -432,6 +432,7 @@ class ChartStoreSocial {
       pct_foa_data,
       pct_foa_ly_data,
       maxYear,
+      maxMonthStr,
       isPerfYear: this.isPerfYear,
       // months_data: months_data,
     }
@@ -602,7 +603,7 @@ class ChartStoreSocial {
     const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'
     if (dataState.length) {
       maxYear = this.isAllDatePicker ? this.isAllDatePicker.slice(0, 4) : dataState[0][`max_${YEAR_TYPE}`]
-      maxMonthStr = dataState[0].max_n_month
+      maxMonthStr = this.isAllDatePicker ? this.isAllDatePicker : dataState[0].max_n_month
       maxMonth = parseInt(maxMonthStr.slice(4, 6))
     }
     dataState = _.filter(dataState, (o) => {//按PF和CY进行数据展示
@@ -717,6 +718,7 @@ class ChartStoreSocial {
       num_foa_with_bv,
       num_new_foa,
       maxYear,
+      maxMonthStr,
       isPerfYear: this.isPerfYear,
     }
   }
@@ -736,7 +738,7 @@ class ChartStoreSocial {
     if (dataState.length) {
       // maxYear = dataState[0][`max_${YEAR_TYPE}`]
       maxYear = this.isAllDatePicker ? this.isAllDatePicker.slice(0, 4) : dataState[0][`max_${YEAR_TYPE}`]
-      maxMonthStr = dataState[0].max_n_month
+      maxMonthStr = this.isAllDatePicker ? this.isAllDatePicker : dataState[0].max_n_month
       maxMonth = parseInt(maxMonthStr.slice(4, 6))
     }
 
@@ -801,7 +803,8 @@ class ChartStoreSocial {
       total_foa_data_ly,
       pct_foa_data,
       isPerfYear: this.isPerfYear,
-      maxYear
+      maxYear,
+      maxMonthStr
       // months_data: months_data,
     }
   }
@@ -821,7 +824,7 @@ class ChartStoreSocial {
     if (dataState.length) {
       // maxYear = dataState[0][`max_${YEAR_TYPE}`]
       maxYear = this.isAllDatePicker ? this.isAllDatePicker.slice(0, 4) : dataState[0][`max_${YEAR_TYPE}`]
-      maxMonthStr = dataState[0].max_n_month
+      maxMonthStr = this.isAllDatePicker ? this.isAllDatePicker : dataState[0].max_n_month
       maxMonth = parseInt(maxMonthStr.slice(4, 6))
     }
 
@@ -871,7 +874,8 @@ class ChartStoreSocial {
       foa_ref_link_data,
       foa_suc_ref_data,
       isPerfYear: this.isPerfYear,
-      maxYear
+      maxYear,
+      maxMonthStr,
       // months_data: months_data,
     }
   }

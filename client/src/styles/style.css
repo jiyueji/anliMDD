@@ -819,7 +819,7 @@ label.bot-chart-com-sm {
     width: 150px;
     z-index: 1;
     left:15%;
-    top: 10px;
+    top: 15px;
     justify-content: space-around;
     background: #f7f8fa;
     border-radius: 5px;
@@ -929,11 +929,12 @@ label.bot-chart-com-sm {
 .echartsFCWaterfall{
     /* border: 1px solid #d8d8d8; */
     border-radius: 5px;
-    /* padding: 10px 25px 25px 25px; */
+    padding: 10px 10px;
     margin-top: 20px;
     width:100%;
     height:400px;
-    display:flex;
+    /* display:flex; */
+    background: rgb(255, 255, 255);
     position: relative;
 }
 .fcWaterFallTitle{
@@ -1307,12 +1308,102 @@ label.bot-chart-com-sm {
         height: 32px;
         background: rgba(255, 255, 255, 0.2);
         margin: 16px;
-      }
+    }
       
-      .site-layout-sub-header-background {
+    .site-layout-sub-header-background {
         background: #fff;
-      }
+    }
       
-      .site-layout-background {
+    .site-layout-background {
         background: #fff;
-      }
+    }
+    .ModifyTextButton{
+        /* width: 50px;
+        height: 20px; */
+        text-align: center;
+        /* background: skyblue; */
+        line-height: 20px;
+        font-size: 14px;
+        position: absolute;
+        bottom: 35px;
+        right: 35px;
+    }
+    .modifyTitleCss{
+        /* position: absolute;
+        z-index: 1;
+        top: 15px;
+        left: 10px; */
+        font-size:16px;
+        font-weight: 600;
+        color:#333;
+    }
+    .modifyFlagCss{
+        position: absolute;
+        top: 48px;
+        left:0;
+        width: 100%;
+        background: rgba(0,0,0,0.8);
+        color: #ffffff;
+        z-index: 2;
+        padding: 2%;
+    }
+    .modifyFlagCss .modifyFlagClose{
+        position: absolute;
+        right: 4%;
+        top: 10px;
+        background: #ffffff;
+        color: #333;
+        width: 15px;
+        height: 15px;
+        text-align: center;
+        font-size: 13px;
+        line-height: 15px;
+        font-weight: 600;
+        margin:0;
+        cursor: pointer;
+    }
+    .modifyAllTitle{/* 通用的标题外面的div */
+        height: 58px;
+        width: 100%;
+        -ms-flex-align: center;
+        align-items: center;
+        padding: 0 10px;
+        display: flex;
+    }
+    .allContent{/* 每一个echarts外面的 */
+        width: 100%;
+        height: 362px;
+        display: flex;
+    }
+    .allContentEcharts{/* 每一个echarts里面的 */
+        width: 100%;
+        height: 362px;
+    }
+    .SocialLeftCss{/* 每一个左边的标准布局 */
+        width: 50%;
+        height: 420px;
+        background: #ffffff;
+        border-radius: 10px;
+        position: relative;
+    }
+    .SocialRightCss{/* 每一个右边的标准布局 */
+        width: 49%;
+        height: 420px;
+        background: #ffffff;
+        border-radius: 10px;
+        position: relative;
+    }
+    .threeMiddenCss{/* 第三屏每一个小图的标准布局 */
+        width: 33%;
+        height: 400px;
+        background: #ffffff;
+        border-radius: 10px;
+        position: relative
+    }
+    .modifyAllTitleFour{/* 第四屏最后两个图的标题 */
+        position: absolute;
+        top: -25px;
+        /* left: 10%; */
+        padding-left: 10%;
+        width: 100%;
+    }

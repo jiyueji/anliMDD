@@ -1,19 +1,25 @@
 import React, { Component, Fragment } from 'react'
 import * as hlp from '../components/Helper'
 import echarts from 'echarts';
+import TitleModify from "../components/TitleModify.js"
 
 export default class FoaReferral extends Component {
     constructor() {
         super();
         this.state = {
-            ofNewFoaData:[],
-            ofWhoFoaData:[],
-            monthShowAbo: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            ofNewFoaData: [],
+            ofWhoFoaData: [],
+            monthShowAbo: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            modifyDateModify:""
         }
     }
     render() {
+        var {modifyDateModify} = this.state
         return (
             <Fragment>
+                <div className="modifyAllTitleFour">
+                    <TitleModify titleName={''} titlePerfYearFlag={false} titlePerfYear={false} id={"sub4"} keys={"Referral"} modifyDate={modifyDateModify} />
+                </div>
                 {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Foa Repeat Buyer</div> */}
                 <div style={{ width: "100%", height: "420px", display: 'flex' }}>
                     <div id="foaReferralEcharts" style={{ width: "100%", height: "420px" }}></div>
@@ -42,29 +48,30 @@ export default class FoaReferral extends Component {
         var data = this.props.data || {}
         //         foa_ref_link_data: (3) [{…}, {…}, {…}]
         // foa_suc_ref_data: (3) [{…}, {…}, {…}]
-        var {foa_ref_link_data,foa_suc_ref_data} = data
-        var {monthShowAbo} = this.state
+        var modifyDateModify = data.maxMonthStr || ""
+        var { foa_ref_link_data, foa_suc_ref_data } = data
+        var { monthShowAbo } = this.state
         var ofNewFoaData = []
         var ofWhoFoaData = []
-        foa_ref_link_data && foa_ref_link_data.length >= 0 ? foa_ref_link_data.map((item,index)=>{
+        foa_ref_link_data && foa_ref_link_data.length >= 0 ? foa_ref_link_data.map((item, index) => {
             ofNewFoaData.push(Math.round(item.y / 1000))
         }) : ""
-        foa_suc_ref_data && foa_suc_ref_data.length >= 0 ? foa_suc_ref_data.map((item,index)=>{
+        foa_suc_ref_data && foa_suc_ref_data.length >= 0 ? foa_suc_ref_data.map((item, index) => {
             ofWhoFoaData.push(Math.round(item.y / 1000))
         }) : ""
         //判断当前月份是否有数据
-        for(var i = 0 ; i < 12 ; i ++ ){
-            if(foa_ref_link_data && foa_ref_link_data.length > 0 && monthShowAbo){
-                if(foa_ref_link_data[0].x == monthShowAbo[i]){
+        for (var i = 0; i < 12; i++) {
+            if (foa_ref_link_data && foa_ref_link_data.length > 0 && monthShowAbo) {
+                if (foa_ref_link_data[0].x == monthShowAbo[i]) {
                     break
-                }else{
+                } else {
                     ofNewFoaData.unshift("")
                     ofWhoFoaData.unshift("")
                 }
             }
         }
         this.setState({
-            ofNewFoaData,ofWhoFoaData
+            ofNewFoaData, ofWhoFoaData,modifyDateModify
         }, () => {
             this.foaReferralEcharts()
         })

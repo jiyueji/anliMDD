@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import * as hlp from '../components/Helper'
 import echarts from 'echarts';
+import TitleModify from "../components/TitleModify.js"
 
 export default class FoaSalesLineBar extends Component {
     constructor() {
@@ -10,15 +11,20 @@ export default class FoaSalesLineBar extends Component {
             foaSalesOfAcclData: [],
             // maxYShow:"",
             // isPerfYearAbo:false,
-            monthShowAbo: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            monthShowAbo: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            modifyDateModify:""
         }
     }
     render() {
+        var {modifyDateModify} = this.state
         return (
             <Fragment>
-                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Sales($)</div>
-                <div style={{ width: "100%", height: "420px", }}>
-                    <div id="foaBarEcharts" style={{ width: "100%", height: "420px" }}></div>
+                <div className="modifyAllTitle">
+                    <TitleModify titleName={'FOA Sales($)'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub4"} keys={"FOA_Sales"} modifyDate={modifyDateModify} />
+                </div>
+                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Sales($)</div> */}
+                <div  className="allContent">
+                    <div id="foaBarEcharts" className="allContentEcharts"></div>
                 </div>
             </Fragment>
         )
@@ -43,6 +49,7 @@ export default class FoaSalesLineBar extends Component {
     }
     upDateShowDataFoa() {
         var data = this.props.data || {}
+        var modifyDateModify = data.maxMonthStr || ""
         var { total_foa_sales, total_pct_data } = data
         var { monthShowAbo } = this.state
         var foaSalesData = [];
@@ -80,7 +87,7 @@ export default class FoaSalesLineBar extends Component {
         // }
         // maxYShow = formatInt(maxYShow, String(maxYShow).length - 1)
         this.setState({
-            foaSalesData, foaSalesOfAcclData,
+            foaSalesData, foaSalesOfAcclData,modifyDateModify
             // maxYShow,
         }, () => {
             this.foaBarEcharts()
@@ -97,7 +104,7 @@ export default class FoaSalesLineBar extends Component {
         });
         foaBarEcharts.setOption({
             grid: {
-                top: '18%',
+                top: '10%',
                 left: '1%',
                 right: '2%',
                 bottom: '15%',

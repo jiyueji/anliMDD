@@ -3,30 +3,35 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
 import * as hlp from '../components/Helper'
 import echarts from 'echarts';
+import TitleModify from "../components/TitleModify.js"
 
 export default class AboTableGar extends Component {
     constructor() {
         super();
         this.state = {
             data: [],
-            maxMonthStr:"",
+            maxMonthStr: "",
             rowsHtml: "",
-            gar_account:0,
-            gar_new:0,
-            orig_account:0,
-            orig_new:0,
-            total_account:0,
-            total_new:0,
+            gar_account: 0,
+            gar_new: 0,
+            orig_account: 0,
+            orig_new: 0,
+            total_account: 0,
+            total_new: 0,
+            modifyDateModify:""
         }
     }
     render() {
-        var { data,maxMonthStr, rowsHtml,gar_account,gar_new,orig_account,orig_new,total_account,total_new } = this.state
+        var { data, maxMonthStr, rowsHtml, gar_account, gar_new, orig_account, orig_new, total_account, total_new,modifyDateModify } = this.state
         return (
             <Fragment>
-                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>GAR by PIN</div>
-                <div style={{ position: "absolute", right: ' 5%', top: '4%', fontSize: '12px', color: "#666" }}>As of {maxMonthStr}</div>
+                <div className="modifyAllTitle">
+                    <TitleModify titleName={'GAR by PIN'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub3"} keys={"GAR_by_PIN"} modifyDate={modifyDateModify} />
+                </div>
+                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>GAR by PIN</div> */}
+                <div style={{ position: "absolute", right: ' 5%', top: '6%', fontSize: '12px', color: "#666" }}>As of {maxMonthStr}</div>
                 {/* 表格 */}
-                <div style={{ marginLeft: '1%', marginRight: '1%', border: "10px solid #5198ee", width: "98%", height: "330px", marginTop: "55px" }}>
+                <div style={{ marginLeft: '1%', marginRight: '1%', border: "10px solid #5198ee", width: "98%", height: "330px" }}>
                     <table width="100%" height="100%" border="0" border-collapse="collapse" cellSpacing="0" cellPadding="0" style={{ textAlign: "center", fontSize: "12px", wordBreak: 'break-all' }}>
                         <thead>
                             <tr>
@@ -46,7 +51,7 @@ export default class AboTableGar extends Component {
                         </thead>
                         <tbody>
                             {rowsHtml ? rowsHtml : <tr></tr>}
-                            <tr style={{background:'gainsboro'}}>
+                            <tr style={{ background: 'gainsboro' }}>
                                 <td style={{ width: "180px", border: "1px solid #e5e6e9", fontWeight: "700", textAlign: " center", paddingLeft: "4px", lineHeight: "22px" }}>Total EDC & UP</td>
                                 <td className="font-weight-bold text-center" style={{ border: "1px solid #e5e6e9" }}>{(gar_account || 0)}</td>
                                 <td className="font-weight-bold text-center" style={{ border: "1px solid #e5e6e9" }}>{(gar_new || 0)}</td>
@@ -62,15 +67,15 @@ export default class AboTableGar extends Component {
         )
     }
     componentWillReceiveProps(nextProps) {
-        var { data,maxMonth } = nextProps.data
-        this.upDateShowData(data,maxMonth)
+        var { data, maxMonth } = nextProps.data
+        this.upDateShowData(data, maxMonth)
     }
     componentDidMount() {
         var data = this.props.data.data;
         var maxMonth = this.props.data.maxMonth;
-        this.upDateShowData(data,maxMonth)
+        this.upDateShowData(data, maxMonth)
     }
-    upDateShowData(data,maxMonthStr){
+    upDateShowData(data, maxMonthStr) {
         var gar_account = 0
         var gar_new = 0
         var orig_account = 0
@@ -78,6 +83,7 @@ export default class AboTableGar extends Component {
         var total_account = 0
         var total_new = 0
         // var maxMonthStr = data ? String(hlp.yearMonthToStr(data[0].update_month)) : ""
+        var modifyDateModify = data ? maxMonthStr : ""
         var maxMonthStr = data ? String(hlp.yearMonthToStr(maxMonthStr)) : ""
         // var maxMonthStr = maxMonthStr || ""
         var rowsHtml = data && data.length > 0 ? data.map((o) => {
@@ -149,7 +155,7 @@ export default class AboTableGar extends Component {
             </tr>
         }) : ""
         this.setState({
-            data,maxMonthStr, rowsHtml,gar_account,gar_new,orig_account,orig_new,total_account,total_new,
+            data, maxMonthStr, rowsHtml, gar_account, gar_new, orig_account, orig_new, total_account, total_new,modifyDateModify,
         })
     }
 }

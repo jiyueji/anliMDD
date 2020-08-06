@@ -116,23 +116,37 @@ export default class LineChartMonthlyEchaets extends Component {
         })
     }
     dataUpdate() {
-        var { allData, dataShowForClick, thisYearLength } = this.state
+        var { allData, dataShowForClick, thisYearLength,monthShow } = this.state
         // var allData = this.props.data;
         // console.log(allData)
         var thisYear = [];
         var lastYear = [];
         var forecastYear = [];
         var tooltipData = allData.tooltip_data_map
-        if (allData && allData.actual_sales_data.length > 0) {
-            allData.actual_sales_data.map((item, index) => {
-                thisYear.push(item.y)
-            })
+        for(var i = 0 ; i < monthShow.length ; i ++){
+            if(allData && allData.actual_sales_data[0] && allData.actual_sales_data[0].x == monthShow[i]){
+                allData.actual_sales_data ? allData.actual_sales_data.map((item, index) => {
+                    thisYear.push(item.y)
+                }) : ""
+                allData.actual_sales_ly_data ? allData.actual_sales_ly_data.map((item, index) => {
+                    lastYear.push(item.y)
+                }) : ""
+                break
+            }
+            thisYear.push("")
+            lastYear.push("")
         }
-        if (allData && allData.actual_sales_ly_data.length > 0) {
-            allData.actual_sales_ly_data.map((item, index) => {
-                lastYear.push(item.y)
-            })
-        }
+        // console.log(thisYear,"thisYear")
+        // if (allData && allData.actual_sales_data.length > 0) {
+        //     allData.actual_sales_data.map((item, index) => {
+        //         thisYear.push(item.y)
+        //     })
+        // }
+        // if (allData && allData.actual_sales_ly_data.length > 0) {
+        //     allData.actual_sales_ly_data.map((item, index) => {
+        //         lastYear.push(item.y)
+        //     })
+        // }
         // if (dataShowForClick) {
         if (allData && allData.revenue_forecast_usd_data.length > 0) {
             allData.revenue_forecast_usd_data.map((item, index) => {
@@ -148,7 +162,7 @@ export default class LineChartMonthlyEchaets extends Component {
         var lastYearShow = (yearShow - 1).toString()   //去年
         yearShow = yearShow.toString()//转换成字符串可以显示在图例里，数字不可以
         var nameFroecast = yearShow + ' Target'
-        thisYear.length = thisYearLength
+        dataShowForClick ? "" : thisYear[0] ? thisYear.length = thisYearLength : ""
         this.setState({
             thisYear, lastYear, forecastYear, tooltipData, yearShow, lastYearShow, nameFroecast
         }, () => {

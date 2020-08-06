@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import * as hlp from '../components/Helper'
 import echarts from 'echarts';
+import TitleModify from "../components/TitleModify.js"
 
 export default class AboDyBarStack extends Component {
     constructor() {
@@ -10,14 +11,19 @@ export default class AboDyBarStack extends Component {
             newAboData: [],
             enewAboData: [],
             churnAboData: [],
+            modifyDateModify:""
         }
     }
     render() {
+        var {modifyDateModify} = this.state
         return (
             <Fragment>
-                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>ABO force movement</div>
-                <div style={{ width: "100%", height: "420px", display: 'flex' }}>
-                    <div id="aboBarEcharts" style={{ width: "100%", height: "420px" }}></div>
+                <div className="modifyAllTitle">
+                    <TitleModify titleName={'ABO force movement'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub3"} keys={"ABO_force_movement"} modifyDate={modifyDateModify}/>
+                </div>
+                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>ABO force movement</div> */}
+                <div style={{ width: "100%", height: "362px", display: 'flex' }}>
+                    <div id="aboBarEcharts" style={{ width: "100%", height: "362px" }}></div>
                 </div>
             </Fragment>
         )
@@ -77,8 +83,9 @@ export default class AboDyBarStack extends Component {
         // }) : ""
 
         // console.log(newAboData,"newAboData")
+        var modifyDateModify = data.maxMonthStr || ""
         this.setState({
-            newAboData, enewAboData, churnAboData
+            newAboData, enewAboData, churnAboData,modifyDateModify
         }, () => {
             this.aboDyBarEcharts()
         })
@@ -92,9 +99,11 @@ export default class AboDyBarStack extends Component {
         window.addEventListener('resize', function () {
             aboBarEcharts.resize()
         });
+        aboBarEcharts.clear()
         aboBarEcharts.setOption({
+            animationDuration: 0,
             grid: {
-                top: '18%',
+                top: '10%',
                 left: '1%',
                 right: '2%',
                 bottom: '15%',

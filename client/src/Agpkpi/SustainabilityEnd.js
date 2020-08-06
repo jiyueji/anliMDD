@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import echarts from 'echarts';
+import TitleModify from "../components/TitleModify.js"
 require('./styleAll.css')
 
 export default class Sustainability extends Component {
@@ -16,6 +17,7 @@ export default class Sustainability extends Component {
             targetFont: 0,
             sustainDataNumber: 0,
             kpiflagShow2:false,
+            modifyDateModify:""
         }
     }
     //     <div className="remark1" style={{ position: 'absolute', left: '267px', top: '198px', display: 'none' }}>
@@ -25,12 +27,13 @@ export default class Sustainability extends Component {
     //     <div style={{ color: 'rgb(244,159,68)', fontSize: 'small', fontWeight: '600' }}>Target: 17.0%</div>
     // </div>
     render() {
-        var { maxCalendarYear, ytdShowFont, ballYtd, ytd, targetLine, targetFont, sustainDataNumber,kpiflagShow2 } = this.state
+        var { maxCalendarYear, ytdShowFont, ballYtd, ytd, targetLine, targetFont, sustainDataNumber,kpiflagShow2,modifyDateModify } = this.state
         return (
             <Fragment>
                 <div style={{ position: 'relative' }}>
                     <div className="sustainabilityTitleAll">
-                        <div className="sustainabilityTitle">End of Month % of Sales</div>
+                        <TitleModify titleName={'End of Month % of Sales'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub2"} keys={"End_of_Month_%_of_Sales"} modifyDate={modifyDateModify}/>
+                        {/* <div className="sustainabilityTitle">End of Month % of Sales</div> */}
                         <div className="kpitanShow" onClick={this.kpiflagShowhandle2.bind(this)}></div>
                     </div>
                     {
@@ -50,7 +53,7 @@ export default class Sustainability extends Component {
                                 <div style={{ color: '#3a7796', fontSize: '16px' }}>YTD Actual: {ytdShowFont}%</div>
                             </div>
                         </div>
-                        <div className="remarkTarget1" style={{ position: 'absolute', right: '10%', top: targetFont, display: 'none' }}>
+                        <div className="remarkTarget1" style={{ position: 'absolute', right: '10%', top: targetFont, display: 'none',zIndex:"1" }}>
                             {
                                 targetLine && targetLine > 0 ? <div style={{ color: 'rgb(244,159,68)', fontSize: '16px', fontWeight: '600' }}>{maxCalendarYear} Target: {targetLine}%</div> : ""
                             }
@@ -113,12 +116,12 @@ export default class Sustainability extends Component {
 
         var sustainDataNumber = sustainData.length || 0
         if (sustainDataNumber >= 9) {
-            remark[0].style.marginLeft = "-115px"
+            remark[0].style.marginLeft = "-125px"
         } else {
             remark[0].style.marginLeft = "0"
         }
         sustainDataNumber = ((sustainDataNumber - 1) / 11) * 100 + "%"
-
+        var modifyDateModify = chartData.maxMonthStr || ""
         this.setState({
             maxCalendarYear,
             chartData,
@@ -129,6 +132,7 @@ export default class Sustainability extends Component {
             targetLine,
             targetFont,
             sustainDataNumber,
+            modifyDateModify,
         }, () => {
             this.echartsStart()
         })

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import * as hlp from '../components/Helper'
 import echarts from 'echarts';
+import TitleModify from "../components/TitleModify.js"
 
 export default class AboBarLineEcharts extends Component {
     constructor() {
@@ -19,36 +20,40 @@ export default class AboBarLineEcharts extends Component {
             vcs_sales_bv_ShowNow: [],
             foa_sales_bv_ShowNow: [],
             NOW_MAXDATEPF: "",
+            modifyDateModify:""
         }
     }
     render() {
-        var { clickShow, object_ytd_data } = this.state
+        var { clickShow, object_ytd_data,modifyDateModify } = this.state
         return (
             <Fragment>
-                <div style={{ position: "absolute", left: ' 3%', top: '4%', fontSize: '14px', fontWeight: '600' }}>CSI</div>
+                <div className="modifyAllTitle">
+                    <TitleModify titleName={'CSI'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub3"} keys={"CSI"} modifyDate={modifyDateModify} />
+                </div>
+                {/* <div style={{ position: "absolute", left: ' 3%', top: '4%', fontSize: '14px', fontWeight: '600' }}>CSI</div> */}
                 <div className="salesButt" onClick={this.AboBarLineEchartshandleClick.bind(this)}>
                     <span className="salesButt-ytd">Sales BV Mix</span>
                     <span className="salesButt-Monthly">Income</span>
                 </div>
                 {
                     clickShow ? <div style={{ position: "absolute", width: "100%", }}>
-                        <div style={{ width: "100%", height: "120px", display: 'flex',marginTop:"20px" }}>
+                        <div style={{ width: "100%", height: "109px", display: 'flex'}}>
                             {/* <div style={{ position: "absolute", top: "20%", left: "25%", fontSize: "16px", fontWeight: "600" }}>YTD Mthly Avg.<br></br>Sales BV Mix</div> */}
-                            <div id="aboBvMixEcharts" style={{ width: "100%", height: "120px" }}></div>
+                            <div id="aboBvMixEcharts" style={{ width: "100%", height: "109px" }}></div>
                             {/* <div style={{ position: "absolute", top: "5%", right: "7%", fontSize: "12px", lineHeight: "20px", textAlign: "right" }}>
                                 <div>Note: FOA / Total :{object_ytd_data.foa_sales_bv_ShowNowOne}%</div>
                                 <div>VCS / Total :{object_ytd_data.vcs_sales_bv_ShowNowOne}%</div>
                             </div> */}
                         </div>
-                        <div style={{ position: "absolute", left: ' 3%', top: '30%', fontSize: '12px', color: "#333" }}>Monthly Sales BV ($)</div>
-                        <div style={{ width: "100%", height: "280px", display: 'flex' }}>
-                            <div id="aboBvMixEcharts2" style={{ width: "100%", height: "280px" }}></div>
+                        <div style={{ position: "absolute", left: ' 3%', top: '27%', fontSize: '12px', color: "#333" }}>Monthly Sales BV ($)</div>
+                        <div style={{ width: "100%", height: "253px", display: 'flex' }}>
+                            <div id="aboBvMixEcharts2" style={{ width: "100%", height: "253px" }}></div>
                         </div>
                     </div> : <div style={{ position: "absolute", width: "100%", }}>
                             <div style={{ position: "absolute", left: ' 3%', top: '12%', fontSize: '14px', color: "#333" }}>Mthly Trend</div>
-                            <div style={{ width: "100%", height: "400px", display: 'flex' }}>
-                                <div id="aboBarLineEcharts" style={{ width: "80%", height: "400px" }}></div>
-                                <div id="aboBarLineEcharts2" style={{ width: "20%", height: "400px" }}></div>
+                            <div style={{ width: "100%", height: "362px", display: 'flex' }}>
+                                <div id="aboBarLineEcharts" style={{ width: "80%", height: "362px" }}></div>
+                                <div id="aboBarLineEcharts2" style={{ width: "20%", height: "362px" }}></div>
                             </div>
                         </div>
                 }
@@ -95,8 +100,8 @@ export default class AboBarLineEcharts extends Component {
         var data = this.props.data;
         this.upDateShowData(data)
     }
-    upDateShowData(data){
-        var { YTD_DATA, CSI_AMT, CSI_COUNT, QUALIF_CSI_SR, TOTAL_ORDER_BV, FOA_ORDER_BV_1B, VCS_AMT, NOW_MAXDATE, NOW_MAXDATEPF,DatePicker } = data
+    upDateShowData(data) {
+        var { YTD_DATA, CSI_AMT, CSI_COUNT, QUALIF_CSI_SR, TOTAL_ORDER_BV, FOA_ORDER_BV_1B, VCS_AMT, NOW_MAXDATE, NOW_MAXDATEPF, DatePicker } = data
         var showXShow = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug',]
         if (DatePicker < 9) {
             showXShow = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug',]
@@ -157,9 +162,9 @@ export default class AboBarLineEcharts extends Component {
 
         // }
         // maxYShow = formatInt(maxYShow, String(maxYShow).length - 1)
-
+        var modifyDateModify = NOW_MAXDATE
         this.setState({
-            csi_per_earner_blueData,csi_earner_redData, vcs_sales_bv_data, foa_sales_bv_data, total_sales_bv_data, object_ytd_data, vcs_sales_bv_ShowNow, foa_sales_bv_ShowNow, NOW_MAXDATEPF, showXShow
+            csi_per_earner_blueData, csi_earner_redData, vcs_sales_bv_data, foa_sales_bv_data, total_sales_bv_data, object_ytd_data, vcs_sales_bv_ShowNow, foa_sales_bv_ShowNow, NOW_MAXDATEPF, showXShow,modifyDateModify
         }, () => {
             this.aboBvMixEchartsHandle1()
             this.aboBvMixEchartsHandle2()
@@ -174,7 +179,9 @@ export default class AboBarLineEcharts extends Component {
         window.addEventListener('resize', function () {
             aboBarLineEcharts.resize()
         });
+        aboBarLineEcharts.clear()
         aboBarLineEcharts.setOption({
+            animationDuration: 0,
             grid: {
                 top: '25%',
                 left: '4%',
@@ -252,7 +259,7 @@ export default class AboBarLineEcharts extends Component {
                     axisLine: {//隐藏X轴
                         show: false
                     },
-                    boundaryGap: ['250%',0],
+                    boundaryGap: ['250%', 0],
                     // min: -200,
                     // max: 100,
                     nameGap: 10,
@@ -445,7 +452,7 @@ export default class AboBarLineEcharts extends Component {
                     axisLine: {//隐藏X轴
                         show: false,
                     },
-                    boundaryGap: ['250%',0],
+                    boundaryGap: ['250%', 0],
                     // min: -200,
                     // max: 100,
                     nameGap: 10,
@@ -737,7 +744,7 @@ export default class AboBarLineEcharts extends Component {
                 {
                     name: '访问来源',
                     type: 'pie',
-                    hoverAnimation:false,
+                    hoverAnimation: false,
                     width: "20%",
                     left: "center",
                     top: "30%",
@@ -764,7 +771,7 @@ export default class AboBarLineEcharts extends Component {
                 {
                     name: '访问来源',
                     type: 'pie',
-                    hoverAnimation:false,
+                    hoverAnimation: false,
                     width: "20%",
                     left: "center",
                     top: "30%",
@@ -790,7 +797,7 @@ export default class AboBarLineEcharts extends Component {
                 {
                     name: '访问来源',
                     type: 'pie',
-                    hoverAnimation:false,
+                    hoverAnimation: false,
                     width: "20%",
                     left: "center",
                     top: "30%",

@@ -212,6 +212,7 @@ class ChartStoreGrowth {
       isPerfYear: this.isPerfYear,
       maxYear,
       maxCalendarYear:maxYear,
+      maxMonthStr:maxMonthStr,
     }
   }
 
@@ -670,9 +671,9 @@ class ChartStoreGrowth {
   }
 
   @computed get growthTable() {
-    // const jsArr = toJS(this.growthTableData) || []
+    const jsArr2 = toJS(this.growthTableData) || []
     const jsArr = toJS(this.growthTableDataByMonth) || []
-    // console.log(jsArr,"jsArr")
+    // console.log(jsArr2,jsArr,"jsArr")
     if (!jsArr.length) {
       return false
     }
@@ -688,8 +689,12 @@ class ChartStoreGrowth {
       return o.calendar_yr == maxTargCalYear
     })
     // let maxMonthStr = jsArr[0].max_month
-
-    var maxYear = dataState[0] ? dataState[0].calendar_yr : ""
+    if (this.isAllDatePicker) {//时间选择判断当前年份
+      var maxYear = this.isAllDatePicker.slice(0, 4)
+    } else {
+      var maxYear = dataState[0] ? dataState[0].max_target_calendar_year : ""
+    }
+    // var maxYear = dataState[0] ? dataState[0].max_target_calendar_year : ""
     // const maxTargCalYear = jsArr[0].max_target_calendar_year
 
     const SEG_ORDER_MAP = {
@@ -712,7 +717,11 @@ class ChartStoreGrowth {
       'Customer',
       'ABO (Purchasing Only)'
     ]
-    // console.log(jsArr,"jsArr")
+
+    dataState = _.filter(dataState, (o) => {
+      return o.n_month == maxMonthStr
+    })
+    // console.log(dataState,"dataState")
     var dataState = _.map(dataState, (o) => {
       o.rank = SEG_ORDER_MAP[o.segment_desc]
       if (SUBTITLES.indexOf(o.segment_desc) !== -1) {

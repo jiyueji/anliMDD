@@ -1,19 +1,25 @@
 import React, { Component, Fragment } from 'react'
 import * as hlp from '../components/Helper'
 import echarts from 'echarts';
+import TitleModify from "../components/TitleModify.js"
 
 export default class FoaConvertedToAbo extends Component {
     constructor() {
         super();
         this.state = {
-            foaConvertedToAboPcData:[],
-            convertionDowmData:[],
-            monthShowAbo: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            foaConvertedToAboPcData: [],
+            convertionDowmData: [],
+            monthShowAbo: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            modifyDateModify: ""
         }
     }
     render() {
+        var { modifyDateModify } = this.state
         return (
             <Fragment>
+                <div className="modifyAllTitleFour" style={{ paddingLeft: "33%" }}>
+                    <TitleModify titleName={''} titlePerfYearFlag={false} titlePerfYear={false} id={"sub4"} keys={"FOA_Converted_to_ABO/PC"} modifyDate={modifyDateModify} />
+                </div>
                 <div style={{ position: "absolute", left: ' 0%', top: '-6%', fontSize: '18px', fontWeight: '600', color: '#333' }}>FOA Converted to ABO/PC</div>
                 <div style={{ width: "100%", height: "420px", display: 'flex' }}>
                     <div id="foaConvertedToAboEcharts" style={{ width: "100%", height: "420px" }}></div>
@@ -40,29 +46,30 @@ export default class FoaConvertedToAbo extends Component {
     }
     upDateShowDataFoaConvertedToAbo() {
         var data = this.props.data || {}
-        var {total_foa_data,pct_foa_data} = data
-        var {monthShowAbo} = this.state
+        var modifyDateModify = data.maxMonthStr || ""
+        var { total_foa_data, pct_foa_data } = data
+        var { monthShowAbo } = this.state
         var foaConvertedToAboPcData = []
         var convertionDowmData = []
-        total_foa_data && total_foa_data.length >= 0 ? total_foa_data.map((item,index)=>{
+        total_foa_data && total_foa_data.length >= 0 ? total_foa_data.map((item, index) => {
             foaConvertedToAboPcData.push(Math.round(item.y / 1000))
         }) : ""
-        pct_foa_data && pct_foa_data.length >= 0 ? pct_foa_data.map((item,index)=>{
+        pct_foa_data && pct_foa_data.length >= 0 ? pct_foa_data.map((item, index) => {
             convertionDowmData.push(item.y)
         }) : ""
         //判断当前月份是否有数据
-        for(var i = 0 ; i < 12 ; i ++ ){
-            if(total_foa_data && total_foa_data.length > 0 && monthShowAbo){
-                if(total_foa_data[0].x == monthShowAbo[i]){
+        for (var i = 0; i < 12; i++) {
+            if (total_foa_data && total_foa_data.length > 0 && monthShowAbo) {
+                if (total_foa_data[0].x == monthShowAbo[i]) {
                     break
-                }else{
+                } else {
                     foaConvertedToAboPcData.unshift("")
                     convertionDowmData.unshift("")
                 }
             }
         }
         this.setState({
-            foaConvertedToAboPcData,convertionDowmData
+            foaConvertedToAboPcData, convertionDowmData,modifyDateModify
         }, () => {
             this.foaConvertedToAboEcharts()
         })
@@ -154,7 +161,7 @@ export default class FoaConvertedToAbo extends Component {
                     axisLine: {//隐藏X轴
                         show: false
                     },
-                    boundaryGap: ['250%',0],
+                    boundaryGap: ['250%', 0],
                     // min: -200,
                     // max: 100,
                     nameGap: 10,

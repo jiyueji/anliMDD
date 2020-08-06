@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import * as hlp from '../components/Helper'
 import echarts from 'echarts';
+import TitleModify from "../components/TitleModify.js"
 
 export default class AboQMonths extends Component {
     constructor() {
@@ -11,14 +12,19 @@ export default class AboQMonths extends Component {
             months_data_show: [],
             maxYear: "",
             prevYear: "",
+            modifyDateModify:"",
         }
     }
     render() {
+        var {modifyDateModify} = this.state
         return (
             <Fragment>
-                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Monthly Q Months</div>
-                <div style={{ width: "100%", height: "420px", display: 'flex' }}>
-                    <div id="aboQMonthsEcharts" style={{ width: "100%", height: "400px" }}></div>
+                <div className="modifyAllTitle">
+                    <TitleModify titleName={'Monthly Q Months'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub3"} keys={"Monthly_Q_Months"} modifyDate={modifyDateModify} />
+                </div>
+                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Monthly Q Months</div> */}
+                <div style={{ width: "100%", height: "342px", display: 'flex' }}>
+                    <div id="aboQMonthsEcharts" style={{ width: "100%", height: "342px" }}></div>
                 </div>
             </Fragment>
         )
@@ -31,7 +37,7 @@ export default class AboQMonths extends Component {
         var data = this.props.data;
         this.upDateShowData(data)
     }
-    upDateShowData(data){
+    upDateShowData(data) {
         var { num_q_month_data, num_q_month_ly_data, months_data, maxYear, prevYear } = data
         var num_q_month_data_show = []
         var num_q_month_ly_data_show = []
@@ -45,8 +51,9 @@ export default class AboQMonths extends Component {
         months_data ? months_data.map((item, index) => {
             months_data_show.push(item.x)
         }) : ""
+        var modifyDateModify = data.maxMonthStr || ""
         this.setState({
-            num_q_month_data_show, num_q_month_ly_data_show, months_data_show, maxYear, prevYear
+            num_q_month_data_show, num_q_month_ly_data_show, months_data_show, maxYear, prevYear,modifyDateModify
         }, () => {
             this.aboQMonthsHandle()
         })
@@ -60,7 +67,9 @@ export default class AboQMonths extends Component {
         window.addEventListener('resize', function () {
             aboQMonthsEcharts.resize()
         });
+        aboQMonthsEcharts.clear()
         aboQMonthsEcharts.setOption({
+            animationDuration: 0,
             tooltip: {//鼠标移入
                 trigger: 'axis',
                 confine: true,
@@ -88,7 +97,7 @@ export default class AboQMonths extends Component {
                 }
             },
             grid: {
-                top: '18%',
+                top: '10%',
                 left: '4%',
                 right: '4%',
                 bottom: '15%',
@@ -97,7 +106,7 @@ export default class AboQMonths extends Component {
             xAxis: {
                 type: 'category',
                 // data: this.state.months_data_show,
-                data:['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+                data: ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
                 axisTick: {
                     show: false //隐藏X轴刻度
                 },

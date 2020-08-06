@@ -3,6 +3,7 @@ import * as hlp from '../components/Helper'
 import echarts from 'echarts';
 import tuliGreen from "../styles/assets/tuliGreen.png"
 import tuliforecast from "../styles/assets/tuliforecast.png"
+import TitleModify from "../components/TitleModify.js"
 
 export default class AboDyBarStack extends Component {
     constructor() {
@@ -11,14 +12,19 @@ export default class AboDyBarStack extends Component {
             monthShowAboLine: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             renewalRateData: [],
             renewalRatePredictionData: [],
+            modifyDateModify:""
         }
     }
     render() {
+        var {modifyDateModify} = this.state
         return (
             <Fragment>
-                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>First year ABO renewal rate</div>
-                <div style={{ width: "100%", height: "420px", display: 'flex' }}>
-                    <div id="aboLineEcharts" style={{ width: "100%", height: "420px" }}></div>
+                <div className="modifyAllTitle">
+                    <TitleModify titleName={'First year ABO renewal rate'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub3"} keys={"First_year_ABO_renewal_rate"} modifyDate={modifyDateModify} />
+                </div>
+                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>First year ABO renewal rate</div> */}
+                <div style={{ width: "100%", height: "362px", display: 'flex' }}>
+                    <div id="aboLineEcharts" style={{ width: "100%", height: "362px" }}></div>
                 </div>
             </Fragment>
         )
@@ -50,8 +56,8 @@ export default class AboDyBarStack extends Component {
         // isPerfYear: false
         var renewalRateData = []
         var renewalRatePredictionData = []
-        for(var i = 0 ; i < monthShowAboLine.length ; i ++){
-            if(data.renewal_rate_data[0] && data.renewal_rate_data[0].x == monthShowAboLine[i]){
+        for (var i = 0; i < monthShowAboLine.length; i++) {
+            if (data.renewal_rate_data[0] && data.renewal_rate_data[0].x == monthShowAboLine[i]) {
                 data.renewal_rate_data.map((item, index) => {
                     renewalRateData.push((item.y * 100).toFixed(1))
                 })
@@ -69,8 +75,9 @@ export default class AboDyBarStack extends Component {
         for (var i = 0; renewalRatePredictionData.length < 12; i++) {
             renewalRatePredictionData.unshift("")
         }
+        var modifyDateModify = data.maxMonthStr || ""
         this.setState({
-            renewalRateData, renewalRatePredictionData
+            renewalRateData, renewalRatePredictionData,modifyDateModify
         }, () => {
             this.aboDyBarEcharts()
         })
@@ -84,9 +91,11 @@ export default class AboDyBarStack extends Component {
         window.addEventListener('resize', function () {
             aboLineEcharts.resize()
         });
+        aboLineEcharts.clear()
         aboLineEcharts.setOption({
+            animationDuration: 0,
             grid: {
-                top: '18%',
+                top: '10%',
                 left: '4%',
                 right: '4%',
                 bottom: '15%',
@@ -129,7 +138,7 @@ export default class AboDyBarStack extends Component {
                             return params / 1 + "%"
                         }
                     },
-                    max:80,
+                    max: 80,
                     axisLine: {//隐藏X轴
                         show: false
                     },
@@ -180,10 +189,10 @@ export default class AboDyBarStack extends Component {
                         show: true,
                         position: 'top',
                         // position: ['-10', '-20'],
-                        formatter:(params)=> {
+                        formatter: (params) => {
                             // console.log(this.state.renewalRateData.length - 1)
                             // console.log(params.dataIndex)
-                            if(params.dataIndex == this.state.renewalRateData.length - 1){
+                            if (params.dataIndex == this.state.renewalRateData.length - 1) {
                                 return ""
                             }
                             return params.data + "%"

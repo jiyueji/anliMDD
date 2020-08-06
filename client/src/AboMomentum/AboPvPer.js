@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import * as hlp from '../components/Helper'
 import echarts from 'echarts';
+import TitleModify from "../components/TitleModify.js"
 
 export default class AboPvPer extends Component {
     constructor() {
@@ -11,32 +12,37 @@ export default class AboPvPer extends Component {
             maxMonthStr: "",
             accOfQ: [],
             pvPerQ: [],
+            modifyDateModify:"",
         }
     }
     render() {
-        var { maxMonthStr } = this.state
+        var { maxMonthStr,modifyDateModify } = this.state
         return (
             <Fragment>
-                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>YTD Q Month & PV per Q Month</div>
-                <div style={{ position: "absolute", right: ' 5%', top: '4%', fontSize: '12px', color: "#666" }}>As of {maxMonthStr}</div>
-                <div style={{ width: "100%", height: "420px", display: 'flex' }}>
-                <div id="aboPvPerEcharts" style={{ width: "100%", height: "400px" }}></div>
+                <div className="modifyAllTitle">
+                    <TitleModify titleName={'YTD Q Month & PV per Q Month'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub3"} keys={"YTD_Q_Month_&_PV_per_Q_Month"} modifyDate={modifyDateModify} />
+                </div>
+                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>YTD Q Month & PV per Q Month</div> */}
+                <div style={{ position: "absolute", right: ' 5%', top: '6%', fontSize: '12px', color: "#666" }}>As of {maxMonthStr}</div>
+                <div style={{ width: "100%", height: "342px", display: 'flex' }}>
+                    <div id="aboPvPerEcharts" style={{ width: "100%", height: "342px" }}></div>
                 </div>
             </Fragment>
         )
     }
     componentWillReceiveProps(nextProps) {
-        var { data,dataLegend } = nextProps
-        this.upDateShowData(data,dataLegend)
+        var { data, dataLegend } = nextProps
+        this.upDateShowData(data, dataLegend)
     }
     componentDidMount() {
         var data = this.props.data
         var dataLegend = this.props.dataLegend
-        this.upDateShowData(data,dataLegend)
+        this.upDateShowData(data, dataLegend)
     }
-    upDateShowData(data,dataLegend){
+    upDateShowData(data, dataLegend) {
         var { maxYear, prevYear } = dataLegend
         const maxMonthStr = String(hlp.yearMonthToStr(data.maxMonth))
+        var modifyDateModify = data.maxMonth || ""
         var accOfQ = []
         var pvPerQ = []
         data.prevYear ? data.prevYear.map((item, index) => {
@@ -46,7 +52,7 @@ export default class AboPvPer extends Component {
             accOfQ.push(item.y)
         }) : ""
         this.setState({
-            maxYear, prevYear, maxMonthStr, accOfQ, pvPerQ,
+            maxYear, prevYear, maxMonthStr, accOfQ, pvPerQ,modifyDateModify
         }, () => {
             this.aboPvPerEchartsHandle()
         })
@@ -60,9 +66,11 @@ export default class AboPvPer extends Component {
         window.addEventListener('resize', function () {
             aboPvPerEcharts.resize()
         });
+        aboPvPerEcharts.clear()
         aboPvPerEcharts.setOption({
+            animationDuration: 0,
             grid: {
-                top: '18%',
+                top: '10%',
                 left: '4%',
                 right: '4%',
                 bottom: '15%',

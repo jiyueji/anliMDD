@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import * as hlp from '../components/Helper'
 import echarts from 'echarts';
+import TitleModify from "../components/TitleModify.js"
 
 export default class AboRate extends Component {
     constructor() {
@@ -13,14 +14,19 @@ export default class AboRate extends Component {
             prevYear: "",
             num_consecutive_q_show: [],
             num_consecutive_q_ly_show: [],
+            modifyDateModify:""
         }
     }
     render() {
+        var {modifyDateModify} = this.state
         return (
             <Fragment>
-                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Consecutive qualification rate</div>
-                <div style={{ width: "100%", height: "420px", display: 'flex' }}>
-                    <div id="aboRateEcharts" style={{ width: "100%", height: "400px" }}></div>
+                <div className="modifyAllTitle">
+                    <TitleModify titleName={'Consecutive qualification rate'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub3"} keys={"Consecutive_qualification_rate"} modifyDate={modifyDateModify} />
+                </div>
+                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Consecutive qualification rate</div> */}
+                <div style={{ width: "100%", height: "342px", display: 'flex' }}>
+                    <div id="aboRateEcharts" style={{ width: "100%", height: "342px" }}></div>
                 </div>
             </Fragment>
         )
@@ -70,12 +76,13 @@ export default class AboRate extends Component {
         ytd_consecutive_ly_data_show = ytd_consecutive_ly_data_show.reverse()
         num_consecutive_q_show = num_consecutive_q_show.reverse()
         num_consecutive_q_ly_show = num_consecutive_q_ly_show.reverse()
-        var num_consecutive_q_show_formatter = num_consecutive_q_show.map((item,index)=>{
+        var num_consecutive_q_show_formatter = num_consecutive_q_show.map((item, index) => {
             return item ? 0 : item
         })
+        var modifyDateModify = data.maxMonthStr || ""
         this.setState({
             // num_q_month_data_show, num_q_month_ly_data_show,
-            months_data_show, maxYear, prevYear, ytd_consecutive_data_show, ytd_consecutive_ly_data_show, num_consecutive_q_show, num_consecutive_q_ly_show,num_consecutive_q_show_formatter
+            months_data_show, maxYear, prevYear, ytd_consecutive_data_show, ytd_consecutive_ly_data_show, num_consecutive_q_show, num_consecutive_q_ly_show, num_consecutive_q_show_formatter,modifyDateModify
         }, () => {
             this.aboRateEchartsHandle()
         })
@@ -89,9 +96,11 @@ export default class AboRate extends Component {
         window.addEventListener('resize', function () {
             aboRateEcharts.resize()
         });
+        aboRateEcharts.clear()
         aboRateEcharts.setOption({
+            animationDuration: 0,
             grid: {
-                top: '18%',
+                top: '10%',
                 left: '4%',
                 right: '4%',
                 bottom: '15%',
@@ -159,7 +168,7 @@ export default class AboRate extends Component {
                         }
                     },
                     // data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    data:this.state.num_consecutive_q_show_formatter,
+                    data: this.state.num_consecutive_q_show_formatter,
                 },
                 {
                     name: this.state.prevYear,

@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import * as hlp from '../components/Helper'
 import tuliYellowXuXian from "../styles/assets/tuliYellowXuXian.jpg"
 import echarts from 'echarts';
+import TitleModify from "../components/TitleModify.js"
 
 export default class AboBarTwoEcharts extends Component {
     constructor() {
@@ -21,17 +22,21 @@ export default class AboBarTwoEcharts extends Component {
             abo19: [],
             abo20: [],
             totalEarn: {},
+            modifyDateModify:""
         }
     }
     render() {
-        var { maxMonthStr, totalEarn } = this.state
+        var { maxMonthStr, totalEarn,modifyDateModify } = this.state
         return (
             <Fragment>
-                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Monthly Income by PIN level</div>
-                <div style={{ position: "absolute", right: ' 5%', top: '4%', fontSize: '12px', color: "#666" }}>As of {maxMonthStr}</div>
-                <div style={{ width: "100%", height: "400px", display: "flex", flexWrap: "wrap" }}>
-                    <div id="aboBarTwoEcharts" style={{ width: "100%", height: "200px", borderBottom: "1px solid #e9e9eb" }}></div>
-                    <div id="aboBarTwoEcharts2" style={{ width: "100%", height: "200px" }}></div>
+                <div className="modifyAllTitle">
+                    <TitleModify titleName={'Monthly Income by PIN level'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub3"} keys={"Monthly_Income_by_PIN_level"} modifyDate={modifyDateModify} />
+                </div>
+                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Monthly Income by PIN level</div> */}
+                <div style={{ position: "absolute", right: ' 5%', top: '6%', fontSize: '12px', color: "#666" }}>As of {maxMonthStr}</div>
+                <div style={{ width: "100%", height: "362px", display: "flex", flexWrap: "wrap" }}>
+                    <div id="aboBarTwoEcharts" style={{ width: "100%", height: "181px", borderBottom: "1px solid #e9e9eb" }}></div>
+                    <div id="aboBarTwoEcharts2" style={{ width: "100%", height: "181px" }}></div>
                 </div>
                 <ul className="AboDownUlEch">
                     <li>% Earner of Total</li>
@@ -50,8 +55,8 @@ export default class AboBarTwoEcharts extends Component {
         )
     }
     componentWillReceiveProps(nextProps) {
-        var { data,datas } = nextProps
-        this.upDateShowData(data,datas)
+        var { data, datas } = nextProps
+        this.upDateShowData(data, datas)
     }
     componentDidMount() {
         var data = this.props.data;
@@ -65,9 +70,9 @@ export default class AboBarTwoEcharts extends Component {
         //         0: {x: "SP", y: 692.259310344828, labelTooltip: "Avg income: 692"}
         // 1: {x: "GP", y: 1051.38068965517, labelTooltip: "Avg income: 1051"}
         // 2: {x: "DD", y: 1937.77379310345, labelTooltip: "Avg income: 1938"}
-        this.upDateShowData(data,datas)
+        this.upDateShowData(data, datas)
     }
-    upDateShowData(data,datas){
+    upDateShowData(data, datas) {
         data.prevYear.sort(function (a, b) {
             var order = ["DD", "GP", "SP"];
             return order.indexOf(a.x) - order.indexOf(b.x);
@@ -188,8 +193,9 @@ export default class AboBarTwoEcharts extends Component {
         // abo20.sort(compare)
         // avgNoPinPbLyShowNowYear.sort(compare)
         // abo19.sort(compare)
+        var modifyDateModify = data.maxMonth
         this.setState({
-            maxMonthStr, curLegendYear, prevLegendYear, prevYearShowLastYear, curYearShowNowYear, middle19, middle20, avgNoPinPbShowNowYear, avgNoPinPbLyShowNowYear, abo19, abo20, upShowX, downShowX, totalEarn
+            maxMonthStr, curLegendYear, prevLegendYear, prevYearShowLastYear, curYearShowNowYear, middle19, middle20, avgNoPinPbShowNowYear, avgNoPinPbLyShowNowYear, abo19, abo20, upShowX, downShowX, totalEarn,modifyDateModify
         }, () => {
             this.aboBarTwoEchartsHandle()
             this.aboBarTwoEchartsHandle2()
@@ -204,7 +210,9 @@ export default class AboBarTwoEcharts extends Component {
         window.addEventListener('resize', function () {
             aboBarTwoEcharts.resize()
         });
+        aboBarTwoEcharts.clear()
         aboBarTwoEcharts.setOption({
+            animationDuration: 0,
             tooltip: {
                 // trigger: 'axis',
                 // confine: false,
@@ -472,7 +480,9 @@ export default class AboBarTwoEcharts extends Component {
         window.addEventListener('resize', function () {
             aboBarTwoEcharts2.resize()
         });
+        aboBarTwoEcharts2.clear()
         aboBarTwoEcharts2.setOption({
+            animationDuration: 0,
             tooltip: {
                 // axisPointer: { // 坐标轴指示器，坐标轴触发有效
                 //     type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'

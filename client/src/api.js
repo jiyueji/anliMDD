@@ -81,6 +81,8 @@ const api = {
     growthTableByMonth:'/growthTableByMonth',//二屏表格
     aboMigrationBotByMonth:'/aboMigrationBotByMonth',//三屏鱼骨
     aboRenewalRateByMonth:'/aboRenewalRateByMonth',//三屏二图
+    updateRemarks:'/updateRemarks',//更新备注
+    remarksMonth:'/remarksMonth',//读取备注
 }
 
 export default api

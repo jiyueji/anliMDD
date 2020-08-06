@@ -252,6 +252,7 @@ class ChartStore {
     if (!jsArr.length) {
       return false
     }
+    // console.log(jsArr,"jsArr")
     // always calendar year
     const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'// this.isPerfYear ? 'perf_yr' : 'calendar_yr'
 
@@ -288,7 +289,12 @@ class ChartStore {
       return obj;
     }, {});
 
-    queryObj = jslinq(dataState[maxYear] ? dataState[maxYear].concat() : [])
+    if (this.isPerfYear && this.isAllDatePicker && this.isAllDatePicker.slice(4, 6) > 8) {
+      queryObj = jslinq(dataState[Number(maxYear) + 1] ? dataState[Number(maxYear) + 1].concat() : [])
+    } else {
+      queryObj = jslinq(dataState[maxYear] ? dataState[maxYear].concat() : [])
+    }
+    // queryObj = jslinq(dataState[maxYear] ? dataState[maxYear].concat() : [])
 
     dataState = queryObj.groupBy(function (el) {
       return el.city_cluster;
@@ -350,6 +356,7 @@ class ChartStore {
         maxYear: maxYear
       }
     })
+
     return {
       data: dataState,
       maxMonth: maxMonthStr,
@@ -469,13 +476,16 @@ class ChartStore {
     //   .max((el) => {
     //     return parseInt(el['key']);
     //   });
+
     if (this.isAllDatePicker) {//时间选择
       var maxYear = this.isAllDatePicker.slice(0, 4)
+      // var maxNMonth = this.isAllDatePicker
     } else {
       var maxYear = MAXYEARSHOW ? MAXYEARSHOW : jslinq(dataState)
-      .max((el) => {
-        return parseInt(el['key']);
-      });
+        .max((el) => {
+          return parseInt(el['key']);
+        });
+      // var maxNMonth = dataState && dataState[0] && dataState[0].elements[0].max_n_month
     }
     dataState = _.reduce(dataState, (obj, param) => {
       obj[param.key] = param.elements
@@ -495,6 +505,11 @@ class ChartStore {
     } else {
       dataState = dataState[maxYear].concat() || []
     }
+    // console.log(dataState,maxNMonth,"dataState")
+    // dataState = _.filter(dataState, (o) => {
+    //   return o.n_month <= maxNMonth
+    // })
+    // console.log(dataState,"dataState222")
     //原版
     // dataState = jslinq( dataState[maxYear].concat() )
     // dataState = dataState.groupBy(function(el){
@@ -842,7 +857,7 @@ class ChartStore {
     if (!jsArr.length) {
       return false
     }
-    // console.log(jsArr,"jsArr")
+    // console.log(jsArr, "jsArr")
     let queryObj = jslinq(jsArr)
     // always calendar year
     const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'// this.isPerfYear ? 'perf_yr' : 'calendar_yr'
@@ -884,7 +899,13 @@ class ChartStore {
       return obj;
     }, {});
 
-    const rawDataState = dataState[maxYear] ? dataState[maxYear].concat() : []
+    //数据在perf_yr且月份＞8以后从九月开始显示
+    if (this.isPerfYear && this.isAllDatePicker && this.isAllDatePicker.slice(4, 6) > 8) {
+      var rawDataState = dataState[Number(maxYear) + 1] ? dataState[Number(maxYear) + 1].concat() : []
+    } else {
+      var rawDataState = dataState[maxYear] ? dataState[maxYear].concat() : []
+    }
+    // const rawDataState = dataState[maxYear] ? dataState[maxYear].concat() : []
     dataState = jslinq(rawDataState)
     // console.log(rawDataState,"rawDataState")
     if (this.isAllDatePicker) {//根据时间判断数据
@@ -920,9 +941,9 @@ class ChartStore {
     // const yearTargetSales = dataState.sum(function (el) {
     //   return el.target_sales_for_compare || 0;
     // });
-    // console.log(yearActualSales,"yearActualSales")
-    const actualToTargetRatioPerc = Math.round((yearActualSales / yearTargetSales) * 1000) / 10
-    const splyVal = Math.round((yearActualSales / yearActualSalesLY) * 1000) / 10
+    // console.log(yearActualSales, yearTargetSales, yearActualSalesLY, "yearActualSales")
+    const actualToTargetRatioPerc = yearTargetSales && yearTargetSales !== 0 ? Math.round((yearActualSales / yearTargetSales) * 1000) / 10 : 0
+    const splyVal = yearActualSalesLY && yearActualSalesLY !== 0 ? Math.round((yearActualSales / yearActualSalesLY) * 1000) / 10 : 0
 
     const monthNum = maxMonth
     const monthName = MONTHS_MAP_F[monthNum]
@@ -1030,8 +1051,8 @@ class ChartStore {
       return el.target_sales_for_compare || 0;
     });
 
-    const actualToTargetRatioPerc = Math.round((monthActualSales / monthTargetSales) * 1000) / 10
-    const splyVal = Math.round((monthActualSales / monthActualSalesLY) * 1000) / 10
+    const actualToTargetRatioPerc = monthTargetSales && monthTargetSales !== 0 ? Math.round((monthActualSales / monthTargetSales) * 1000) / 10 : 0
+    const splyVal = monthActualSalesLY && monthActualSalesLY !== 0 ? Math.round((monthActualSales / monthActualSalesLY) * 1000) / 10 : 0
     var dateChangeData = maxYear + "/" + maxMonth
 
     return {

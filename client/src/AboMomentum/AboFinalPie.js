@@ -3,6 +3,7 @@ import * as hlp from '../components/Helper'
 import echarts from 'echarts';
 import faaArrow from "../styles/assets/faaArrow.png"
 import faaBrackets from "../styles/assets/faaBrackets.png"
+import TitleModify from "../components/TitleModify.js"
 
 export default class AboFinalPie extends Component {
     constructor() {
@@ -12,15 +13,19 @@ export default class AboFinalPie extends Component {
             maxMonthStr: "",
             chartData: {},
             pieAboFinalRightNumber: 0,
+            modifyDateModify:""
         }
     }
     render() {
-        var { title, maxMonthStr, chartData, pieAboFinalRightNumber } = this.state
+        var { title, maxMonthStr, chartData, pieAboFinalRightNumber,modifyDateModify } = this.state
         return (
             <Fragment>
-                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FAA</div>
-                <div style={{ position: "absolute", right: ' 5%', top: '4%', fontSize: '12px', color: "#666" }}>As of {maxMonthStr}</div>
-                <div style={{ width: "100%", height: "350px", marginTop: "50px" }}>
+                <div className="modifyAllTitle">
+                    <TitleModify titleName={'FAA'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub3"} keys={"FAA"} modifyDate={modifyDateModify} />
+                </div>
+                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FAA</div> */}
+                <div style={{ position: "absolute", right: ' 5%', top: '6%', fontSize: '12px', color: "#666" }}>As of {maxMonthStr}</div>
+                <div style={{ width: "100%", height: "342px" }}>
                     <div style={{ width: "100%", display: 'flex', justifyContent: 'space-between', textAlign: "center", fontSize: "14px", lineHeight: "32px" }}>
                         <div style={{ width: "100%" }}>
                             <div style={{ fontWeight: "600" }}>Total FAA Bonus</div>
@@ -100,18 +105,19 @@ export default class AboFinalPie extends Component {
         )
     }
     componentWillReceiveProps(nextProps) {
-        var { data,maxYear } = nextProps.data
-        this.upDateShowData(data,maxYear)
+        var { data, maxYear } = nextProps.data
+        this.upDateShowData(data, maxYear)
     }
     componentDidMount() {
-        var {data,maxYear} = this.props.data;
+        var { data, maxYear } = this.props.data;
         // var title = this.props.titleData && this.props.titleData['gar_title']
-        this.upDateShowData(data,maxYear)
+        this.upDateShowData(data, maxYear)
     }
-    upDateShowData(data,maxYear) {
+    upDateShowData(data, maxYear) {
         var chartData = data.length && data[0]
         // var maxMonthStr = chartData ? String(hlp.yearMonthToStr(chartData.update_month)) : ""
         var maxMonthStr = String(hlp.yearMonthToStr(maxYear)) || ""
+        var modifyDateModify = maxYear
 
         var pieAboFinalRightNumber = (chartData.num_tracking_old_faa / (chartData.num_tracking_new_faa / 160)) || 0
 
@@ -124,7 +130,7 @@ export default class AboFinalPie extends Component {
 
         this.setState({
             // title,
-            chartData, maxMonthStr, pieAboFinalRightNumber
+            chartData, maxMonthStr, pieAboFinalRightNumber,modifyDateModify
         })
 
 

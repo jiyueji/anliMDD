@@ -30,6 +30,11 @@ parser4.add_argument('parentid', help = 'This field cannot be blank', required =
 parser4.add_argument('n_month', help = 'This field cannot be blank', required = True)
 parser4.add_argument('remarks', help = 'This field cannot be blank', required = True)
 
+parser5 = reqparse.RequestParser()
+parser5.add_argument('id', help = 'This field cannot be blank', required = True)
+parser5.add_argument('parentid', help = 'This field cannot be blank', required = True)
+parser5.add_argument('n_month', help = 'This field cannot be blank', required = True)
+
 def performQuery(queryStr):
   try:
     con=psycopg2.connect(dbname= DATABASE, host=HOST, port= PORT, user= USER, password= PASSWORD)
@@ -699,12 +704,12 @@ class AboRenewalRateByMonth(Resource):
 
 class RemarksMonth(Resource):
     def get(self):
-        data = parser4.parse_args()
+        data = parser5.parse_args()
         id = data['id']
         parentid = data['parentid']
         n_month = data['n_month']
 
-        queryStr = "select * from remarks where calendar_yr where id='" +id+ "' and parentid ='"+parentid + "' and n_month = '" +n_month+ "'"
+        queryStr = "select * from remarks where id='" +id+ "' and parentid ='"+parentid + "' and n_month = '" +n_month+ "'"
         return performQuery(queryStr)
 
 #更新备注

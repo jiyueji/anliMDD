@@ -682,7 +682,8 @@ class ChartStoreAbo {
       renewal_rate_data: renewal_rate_data,
       renewal_rate_prediction_data: renewal_rate_prediction_data,
       scatter_data: scatter_data,
-      isPerfYear: this.isPerfYear
+      isPerfYear: this.isPerfYear,
+      maxMonthStr:maxDate,
     }
   }
 
@@ -928,6 +929,7 @@ class ChartStoreAbo {
     if (!jsArr.length) {
       return false
     }
+    // console.log(jsArr)
     const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'
     let queryObj = jslinq(jsArr)
     let dataState = queryObj
@@ -938,11 +940,13 @@ class ChartStoreAbo {
 
     if (this.isAllDatePicker) {//时间选择判断当前年份
       var maxYear = this.isAllDatePicker.slice(0, 4)
+      var maxMonthStr = this.isAllDatePicker
     } else {
       var maxYear = jslinq(dataState)
         .max((el) => {
           return parseInt(el['key']);
         });
+      var maxMonthStr = jsArr[0].max_n_month
     }
     dataState = _.reduce(dataState, (obj, param) => {
       obj[param.key] = param.elements
@@ -1002,6 +1006,7 @@ class ChartStoreAbo {
       churn_abo_data: churn_abo_data,
       months_data: months_data,
       isPerfYear: this.isPerfYear,
+      maxMonthStr:maxMonthStr,
     }
   }
 
@@ -1027,8 +1032,10 @@ class ChartStoreAbo {
 
     if (this.isAllDatePicker) {//时间选择判断当前年份
       var maxYear = this.isAllDatePicker.slice(0, 4)
+      var maxMonthStr = this.isAllDatePicker
     } else {
       var maxYear = dataState[0].elements[0][`max_perf_yr`]
+      var maxMonthStr = jsArr[0].max_n_month
     }
     dataState = _.reduce(dataState, (obj, param) => {
       obj[param.key] = param.elements
@@ -1176,7 +1183,8 @@ class ChartStoreAbo {
       num_consecutive_q_ly: num_consecutive_q_ly,
       maxYear: maxYearStr,
       prevYear: prevYearStr,
-      isAllDatePicker: this.isAllDatePicker
+      isAllDatePicker: this.isAllDatePicker,
+      maxMonthStr:maxMonthStr,
     }
   }
 
@@ -1249,7 +1257,7 @@ class ChartStoreAbo {
     if (!jsArr.length || !jsArr2.length) {
       return false
     }
-
+    // console.log(jsArr,"jsArr")
     // let maxMonthStr = jsArr[0].latest_month
 
     if (this.isAllDatePicker && this.isAllDatePicker <= jsArr[0].latest_month) {//时间选择判断当前年份

@@ -1,7 +1,7 @@
 //GrowthContainer第二屏
 import React, { Component, Fragment } from 'react'
 import * as hlp from '../components/Helper'
-
+import TitleModify from "../components/TitleModify.js"
 
 export default class GrowthTable extends Component {
     constructor() {
@@ -13,16 +13,18 @@ export default class GrowthTable extends Component {
             maxYear: '',
             maxTargCalYear: '',
             displayFlag: false,
+            modifyDateModify:""
         }
     }
     render() {
-        var { allData, data, maxMonthStr, maxYear, maxTargCalYear, displayFlag } = this.state
+        var { allData, data, maxMonthStr, maxYear, maxTargCalYear, displayFlag,modifyDateModify } = this.state
         return (
             <Fragment>
                 <div style={{ position: "relative" }}>
                     <div style={{ paddingLeft: '1%', paddingRight: '1%' }}>
                         <div style={{ height: '58px', display: 'flex', alignItems: 'center' }}>
-                            <h3 style={{ fontSize: "14px", lineHeight: '58px', margin: '0', fontWeight: '700' }}>Shape of the Business (By Calendar Year)</h3>
+                            <TitleModify titleName={'Shape of the Business'} titlePerfYearFlag={true} titlePerfYear={false} id={"sub2"} keys={"Shape_of_the_Business"} modifyDate={modifyDateModify}/>
+                            {/* <h3 style={{ fontSize: "14px", lineHeight: '58px', margin: '0', fontWeight: '700' }}>Shape of the Business (By Calendar Year)</h3> */}
                             <div className="kpitanShow" onClick={this.displayShowClose.bind(this)}></div>
                             {/* <div style={{ fontSize: "12px", lineHeight: '58px' }}>As of {maxMonthStr}</div> */}
                         </div>
@@ -98,7 +100,7 @@ export default class GrowthTable extends Component {
                                             <td style={{ height: "35px", border: "1px solid #e5e6e9" }}>{hlp.numberWithCommas(Math.round((item.total_buyer_population / 1000)))}k ({Math.round(item.pct_total_buyer_population * 100)}%)</td>
                                             <td style={{ height: "35px", border: "1px solid #e5e6e9",}}>${Math.round(item.productivity)}</td>
                                             <td style={{ height: "35px", border: "1px solid #e5e6e9", fontWeight: "700" }}>${`${hlp.toShortMil(item.actual_sales)}m`}</td>
-                                            <td style={{height: "35px", border: "1px solid #e5e6e9", color: item.yoy_sales[0] == "+" ? "#16b6aa" : "#ff0000" }}>{item.yoy_sales}</td>
+                                            <td style={{height: "35px", border: "1px solid #e5e6e9", color: item.yoy_sales && item.yoy_sales[0] == "+" ? "#16b6aa" : "#ff0000" }}>{item.yoy_sales}</td>
                                             <td style={{ height: "35px", border: "1px solid #e5e6e9", fontWeight: "700" }}><span style={{ color: index <= 1 ? "#5198ee" : "" }}>{Math.round(item.pct_actual_sales * 100)}{Math.round(item.pct_actual_sales * 100) >= 10 ? "" : "  "}%</span></td>
                                             <td style={{height: "35px", border: "1px solid #e5e6e9",}}><span style={{ color: "#16b6aa" }}>{item.isTotal ? '' : `${item.yoy_pct_sales}`}</span></td>
                                         </tr> : <tr key={index}></tr>
@@ -132,6 +134,7 @@ export default class GrowthTable extends Component {
     }
     dateUpdateHandle(allData){
         const data = allData.tableData || []
+        var modifyDateModify = allData.maxMonth
         const maxMonthStr = String(hlp.yearMonthToStr(allData.maxMonth))
         const maxYear = String(allData.maxYear)
         const maxTargCalYear = String(allData.maxTargCalYear)
@@ -142,6 +145,7 @@ export default class GrowthTable extends Component {
             maxMonthStr,
             maxYear,
             maxTargCalYear,
+            modifyDateModify,
         })
     }
     // 弹窗事件

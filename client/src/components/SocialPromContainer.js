@@ -64,11 +64,11 @@ class SocialPromContainer extends React.PureComponent {
             FOA
           </label>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div style={{ width: '50%', height: '420px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
+            <div className="SocialLeftCss">
               {/* 柱状加折线 */}
               <FoaSalesLineBar data={chartStoreSocial.socialFoaSales} />
             </div>
-            <div style={{ width: '49%', height: '420px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
+            <div className="SocialRightCss">
               {/* 弯曲柱状 */}
               <FoaForcesize data={chartStoreSocial.socialFoaSales} />
             </div>
@@ -77,11 +77,11 @@ class SocialPromContainer extends React.PureComponent {
             Buyer & Repeat Buyer
           </label>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div style={{ width: '50%', height: '420px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
+            <div className="SocialLeftCss">
               {/* 两个柱状重叠加折线 */}
               <FoaBuyerProductivity datas={chartStoreSocial.socialFoaProd} data={chartStoreSocial.socialFoaSales}/>
             </div>
-            <div style={{ width: '49%', height: '420px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
+            <div className="SocialRightCss">
               {/* 弯曲柱状加折线 */}
               <FoaRepeat data={chartStoreSocial.socialRepBuy} />
             </div>
@@ -90,11 +90,11 @@ class SocialPromContainer extends React.PureComponent {
             Referral
           </label>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div style={{ width: '50%', height: '420px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
+            <div className="SocialLeftCss">
               {/* 两个柱状图 */}
               <FoaReferral data={chartStoreSocial.socialReferral} />
             </div>
-            <div style={{ width: '49%', height: '420px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
+            <div className="SocialRightCss">
               {/* 最后一个弯曲柱状加折线 */}
               <FoaConvertedToAbo data={chartStoreSocial.socialConversion} />
             </div>

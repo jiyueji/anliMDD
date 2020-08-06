@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import * as hlp from '../components/Helper'
 import echarts from 'echarts';
 import foaRedkuang from "../styles/assets/foaRedkuang.jpg"
+import TitleModify from "../components/TitleModify.js"
 
 export default class FoaBuyerProductivity extends Component {
     constructor() {
@@ -12,14 +13,19 @@ export default class FoaBuyerProductivity extends Component {
             productivityData: [],
             monthShowAbo: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             // maxYShow:"",
+            modifyDateModify:""
         }
     }
     render() {
+        var {modifyDateModify} = this.state
         return (
             <Fragment>
-                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Buyer & Productivity</div>
-                <div style={{ width: "100%", height: "420px", display: 'flex' }}>
-                    <div id="foaBuyerProductivityEcharts" style={{ width: "100%", height: "420px" }}></div>
+                <div className="modifyAllTitle">
+                    <TitleModify titleName={'FOA Buyer & Productivity'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub4"} keys={"FOA_Buyer_&_Productivity"} modifyDate={modifyDateModify} />
+                </div>
+                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Buyer & Productivity</div> */}
+                <div className="allContent">
+                    <div id="foaBuyerProductivityEcharts" className="allContentEcharts"></div>
                 </div>
             </Fragment>
         )
@@ -46,6 +52,7 @@ export default class FoaBuyerProductivity extends Component {
         var datas = this.props.datas || {}
         var data = this.props.data || {}
         // console.log(data,"111")
+        var modifyDateModify = data.maxMonthStr || ""
         var { num_foa_with_bv, num_new_foa } = data
         var { avg_bv_data } = datas
         var { monthShowAbo } = this.state
@@ -89,7 +96,7 @@ export default class FoaBuyerProductivity extends Component {
         // }
         // maxYShow = formatInt(maxYShow, String(maxYShow).length - 1)
         this.setState({
-            numFoaWithBvData, numNewFoaData, productivityData,
+            numFoaWithBvData, numNewFoaData, productivityData,modifyDateModify
         }, () => {
             this.foaBuyerProductivityEcharts()
         })
@@ -105,7 +112,7 @@ export default class FoaBuyerProductivity extends Component {
         });
         foaBuyerProductivityEcharts.setOption({
             grid: {
-                top: '18%',
+                top: '10%',
                 left: '1%',
                 right: '2%',
                 bottom: '15%',

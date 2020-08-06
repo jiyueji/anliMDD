@@ -418,6 +418,7 @@ export default class PicFourChange extends Component {
                 }
             }
         })
+        
         this.setState({
             data,
             data2,
@@ -590,6 +591,7 @@ export default class PicFourChange extends Component {
                 }
             }
         })
+
         this.setState({
             data3XShow,
             data3ThisYear,

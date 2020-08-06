@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import * as hlp from '../components/Helper'
 import echarts from 'echarts';
+import TitleModify from "../components/TitleModify.js"
 
 export default class FoaRepeat extends Component {
     constructor() {
@@ -8,15 +9,20 @@ export default class FoaRepeat extends Component {
         this.state = {
             repeatBuyerCountData: [],
             repeatBuyerData: [],
-            monthShowAbo: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            monthShowAbo: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            modifyDateModify:""
         }
     }
     render() {
+        var {modifyDateModify} = this.state
         return (
             <Fragment>
-                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Repeat Buyer</div>
-                <div style={{ width: "100%", height: "420px", display: 'flex' }}>
-                    <div id="foaRepeatEcharts" style={{ width: "100%", height: "420px" }}></div>
+                <div className="modifyAllTitle">
+                    <TitleModify titleName={'FOA Repeat Buyer'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub4"} keys={"FOA_Repeat_Buyer"} modifyDate={modifyDateModify} />
+                </div>
+                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Repeat Buyer</div> */}
+                <div className="allContent">
+                    <div id="foaRepeatEcharts" className="allContentEcharts"></div>
                 </div>
             </Fragment>
         )
@@ -41,6 +47,7 @@ export default class FoaRepeat extends Component {
     upDateShowDataFoaRepeat() {
         var data = this.props.data || {}
         // console.log(data, "show")
+        var modifyDateModify = data.maxMonthStr || ""
         var { num_foa_data, pct_foa_data } = data
         var { monthShowAbo } = this.state
         var repeatBuyerCountData = [];
@@ -63,7 +70,7 @@ export default class FoaRepeat extends Component {
             }
         }
         this.setState({
-            repeatBuyerCountData, repeatBuyerData
+            repeatBuyerCountData, repeatBuyerData,modifyDateModify
         }, () => {
             this.foaRepeatEcharts()
         })
@@ -79,7 +86,7 @@ export default class FoaRepeat extends Component {
         });
         foaRepeatEcharts.setOption({
             grid: {
-                top: '18%',
+                top: '10%',
                 left: '1%',
                 right: '2%',
                 bottom: '15%',

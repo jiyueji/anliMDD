@@ -9,6 +9,8 @@ import 'echarts/lib/chart/pie';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
 
+import TitleModify from "./TitleModify.js"
+
 export default class EchartsFCWaterfall extends Component {
     constructor(props) {
         super(props);
@@ -23,17 +25,19 @@ export default class EchartsFCWaterfall extends Component {
             totalSales: [],
             showAllData: [],
             falgDataTwo: false,
+            modifyDateModify:"",//目前系统的时间
         }
     }
     render() {
-        var { maxMonthStr } = this.state
+        var { maxMonthStr,modifyDateModify } = this.state
         return (
             <Fragment>
-                <div className="fcWaterFallTitle">YTD Sales by FC <span>(by performance year)</span></div>
+                {/* <div className="fcWaterFallTitle">YTD Sales by FC <span>(by performance year)</span></div> */}
+                <TitleModify titleName={'YTD Sales by FC'} titlePerfYearFlag={true} titlePerfYear={false} id={"sub1"} keys={"YTD_Salse_by_FC"} modifyDate={modifyDateModify}/>
                 <div style={{ position: "absolute", top: 15, right: 60, zIndex: 1, color: "#666", fontSize: 12 }}>As of {maxMonthStr}</div>
                 {/* <div style={{ background: "yellow", position: "absolute", top: 5, right: 100, zIndex: 1 }} onClick={this.handleChange2.bind(this)}>还原</div> */}
                 <div id="main"
-                    style={{ width: "100%", height: "400px", background: "#ffffff", marginBottom: "36px", position: "relative" }}
+                    style={{ width: "96%", height: "400px", background: "#ffffff", marginBottom: "36px", position: "relative" }}
                 ></div>
                 <div className="mapSortLastData" onClick={this.mapSortLastDataHandler.bind(this)}></div>
             </Fragment>
@@ -123,16 +127,18 @@ export default class EchartsFCWaterfall extends Component {
         // var { data,datas } = nextProps
         var data = nextProps.data.data || []
         var datas = nextProps.datas.data || []
+        var modifyDateModify = nextProps.data.maxMonth
         var maxMonthStr = String(hlp.yearMonthToStr(nextProps.data.maxMonth))
-        this.updateHandle(data,datas,maxMonthStr);
+        this.updateHandle(data,datas,maxMonthStr,modifyDateModify);
     }
     componentDidMount() {
         var data = this.props.data.data || []
         var datas = this.props.datas.data || []
+        var modifyDateModify = this.props.data.maxMonth
         var maxMonthStr = String(hlp.yearMonthToStr(this.props.data.maxMonth))
-        this.updateHandle(data,datas,maxMonthStr);
+        this.updateHandle(data,datas,maxMonthStr,modifyDateModify);
     }
-    updateHandle(data,datas,maxMonthStr){
+    updateHandle(data,datas,maxMonthStr,modifyDateModify){
         var echX = [];
         var echY = [];
         var totalSales = [];
@@ -170,6 +176,7 @@ export default class EchartsFCWaterfall extends Component {
             }
             return ""
         })
+        var modifyDateModify = modifyDateModify
         this.setState({
             data,
             datas,
@@ -180,13 +187,14 @@ export default class EchartsFCWaterfall extends Component {
             maxMonthStr,
             echYAdd,
             echYJian,
+            modifyDateModify,
         }, () => {
             this.handleEcharts()
         })
     }
     handleEcharts() {
         var myChartFCEchartsWidth = document.getElementById('main')
-        myChartFCEchartsWidth.style.width = (window.innerWidth * 0.98) + "px"
+        myChartFCEchartsWidth.style.width = (window.innerWidth * 0.96) + "px"
         var myChartFC = echarts.init(document.getElementById('main'));
         window.addEventListener('resize', function () {
             myChartFC.resize()
@@ -292,7 +300,7 @@ export default class EchartsFCWaterfall extends Component {
                 label: {
                     normal: {
                         show: true,
-                        rotate: 0,  // 旋转角度
+                        rotate: this.state.echYAdd.length > 38 ? -45 : 0,  // 旋转角度
                         position: 'top', // 相对位置
                         formatter: (value) => {
                             var val = ((value.data || 0) / 1000000).toFixed(1)
@@ -325,7 +333,7 @@ export default class EchartsFCWaterfall extends Component {
                 label: {
                     normal: {
                         show: true,
-                        rotate: 0,  // 旋转角度
+                        rotate: this.state.echYAdd.length > 38 ? -30 : 0,  // 旋转角度
                         // lineHeight: 30,
                         position: 'bottom', // 相对位置
                         fontSize: 10,
@@ -358,7 +366,7 @@ export default class EchartsFCWaterfall extends Component {
                 label: {
                     normal: {
                         show: true,
-                        rotate: 0,  // 旋转角度
+                        rotate: this.state.echYAdd.length > 38 ? -30 : 0,  // 旋转角度
                         // lineHeight: 30,
                         position: 'bottom', // 相对位置
                         fontSize: 10,

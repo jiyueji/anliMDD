@@ -7,6 +7,7 @@ import oneMapGreenCircular from "../styles/assets/oneMapGreenCircular.png"
 import oneMapRedCircular from "../styles/assets/oneMapRedCircular.png"
 import oneMapUp from "../styles/assets/oneMapUp.png"
 import oneMapDown from "../styles/assets/oneMapDown.png"
+import TitleModify from "./TitleModify.js"
 
 
 export default class EchartsMapCity extends Component {
@@ -37,13 +38,15 @@ export default class EchartsMapCity extends Component {
             cityClusterAll: [],
             maxMinCity: [],
             bigSmallShow: 0,
+            modifyDateModify:"",//目前系统的时间
         }
     }
     render() {
-        var { isPerfYear } = this.state
+        var { isPerfYear,modifyDateModify } = this.state
         return (
             <Fragment>
-                <div className="mapTitle">YTD sales by city cluster <span style={{ fontSize: "12px" }}>{isPerfYear ? '(By Performance Year)' : '(By Calendar Year)'}</span></div>
+                {/* <div className="mapTitle">YTD sales by city cluster <span style={{ fontSize: "12px" }}>{isPerfYear ? '(By Performance Year)' : '(By Calendar Year)'}</span></div> */}
+                <TitleModify titleName={'YTD sales by city cluster'} titlePerfYearFlag={true} titlePerfYear={isPerfYear} id={"sub1"} keys={"YTD_salesby_city_cluster"} modifyDate={modifyDateModify}/>
                 <div style={{display:"flex"}}>
                     <div id="map" className="centerItem"></div>
                 </div>
@@ -109,8 +112,9 @@ export default class EchartsMapCity extends Component {
             }
         }
         // console.log(maxMinCity)
+        var modifyDateModify = data.maxMonth || ""
         this.setState({
-            cityClusterAll, maxMinCity, bigSmallShow, isPerfYear
+            cityClusterAll, maxMinCity, bigSmallShow, isPerfYear,modifyDateModify
         }, () => {
             this.echartsShows(); //执行echarts地图展示
         })

@@ -34,6 +34,7 @@
     height: 58px;
     width: 100%;
     align-items:center;
+    padding: 0 10px;
   }
   .sustainabilityTitle{
     font-size:14px;
@@ -49,6 +50,7 @@
     height: 7px;
     line-height: 7px;
     display: flex;
+    z-index: 1;
   }
   .redball{
     display:none;
@@ -101,6 +103,7 @@
   height: 7px;
   line-height: 7px;
   display: flex;
+  z-index: 1;
 }
 /* .redball-flicker1:before {
   background-color: red;
