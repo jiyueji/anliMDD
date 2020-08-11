@@ -32,7 +32,8 @@ export default class TitleModifyTextShow extends React.PureComponent {
                 {
                     modifyFlag ? <div className="modifyFlagCss">
                         <div className="modifyFlagClose" onClick={this.modifyFlagHandle.bind(this,false)}>X</div>
-                        <div>{remarksText}</div>
+                        {/* <div>{remarksText}</div> */}
+                        <div dangerouslySetInnerHTML={{__html:remarksText}}></div>
                         {/* {chartRemarksText} */}
                     </div> : ""
                 }
