@@ -43,6 +43,7 @@ export default class FoaReferral extends Component {
         //         foa_ref_link_data: (3) [{…}, {…}, {…}]
         // foa_suc_ref_data: (3) [{…}, {…}, {…}]
         var {foa_ref_link_data,foa_suc_ref_data} = data
+        var {monthShowAbo} = this.state
         var ofNewFoaData = []
         var ofWhoFoaData = []
         foa_ref_link_data && foa_ref_link_data.length >= 0 ? foa_ref_link_data.map((item,index)=>{
@@ -51,6 +52,17 @@ export default class FoaReferral extends Component {
         foa_suc_ref_data && foa_suc_ref_data.length >= 0 ? foa_suc_ref_data.map((item,index)=>{
             ofWhoFoaData.push(Math.round(item.y / 1000))
         }) : ""
+        //判断当前月份是否有数据
+        for(var i = 0 ; i < 12 ; i ++ ){
+            if(foa_ref_link_data && foa_ref_link_data.length > 0 && monthShowAbo){
+                if(foa_ref_link_data[0].x == monthShowAbo[i]){
+                    break
+                }else{
+                    ofNewFoaData.unshift("")
+                    ofWhoFoaData.unshift("")
+                }
+            }
+        }
         this.setState({
             ofNewFoaData,ofWhoFoaData
         }, () => {

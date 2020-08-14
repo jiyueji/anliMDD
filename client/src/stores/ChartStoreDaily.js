@@ -255,7 +255,6 @@ class ChartStoreDaily {
 
   @computed get queryDailySalesLineHandle() {
 
-    // const jsArr = toJS(this.dailySalesData) || []
     const jsArr = toJS(this.queryDailySalesLine2ByMonth) || [] //新接口
     // const jsArr = toJS(this.queryDailySalesLine) || []//旧的
     const jsArr2 = toJS(this.dailySalEventsData) || []
@@ -685,8 +684,7 @@ class ChartStoreDaily {
 
   @computed get dailySalesEvents() {
     // const jsArr = toJS(this.dailySalEventsData) || []
-    // const jsArr = this.isFiveDatePicker ? toJS(this.dailySalEventsByMonth) || [] : toJS(this.dailySalEventsData) || []
-    const jsArr = toJS(this.dailySalEventsByMonth) || []
+    const jsArr = toJS(this.dailySalEventsByMonth) || []  //新接口
     
     if (!jsArr.length) {
       return false
@@ -723,11 +721,10 @@ class ChartStoreDaily {
     }
 
     let dataState = jsArr
-
     const maxDateRaw = dataState.length && dataState[0].date || 0
     const maxMonth = parseInt(maxDateRaw)
     const maxDate = dLib.parse(maxDateRaw, 'YYYYMMDD')
-    const maxDateStr = dLib.format(maxDate, 'MMM.D YYYY')
+    const maxDateStr = dLib.format(maxDate, 'MMM.DD YYYY')
 
     dataState = _.sortBy(dataState, (o) => parseInt(o.order_row));
     dataState = _.map(dataState, 'comment_row')

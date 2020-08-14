@@ -39,13 +39,12 @@ const Header = inject('authStore')(observer((props) => {
     //         })    
     //     }
     // });
-    
 
     return <header className="header">
         <div className="container-fluid">
 
             <Row>
-                <Col md={{ span: 4}}>
+                <Col md={{ span: 4 }}>
                     <div className="anliBinnerLogo"></div>
                     <div id="branding">
                         <a href="#">
@@ -55,21 +54,21 @@ const Header = inject('authStore')(observer((props) => {
 
                 </Col>
                 <Col md={{ span: 5, offset: 3 }}>
-                    {!authStore.isAuthenticated && <LoginForm handler={handleLogin}/>}
+                    {!authStore.isAuthenticated && <LoginForm handler={handleLogin} />}
                     {!authStore.isAuthenticated && <a href="/sign_up">Not registered? Sign up!</a>}
-                    
 
-                    { authStore.isAuthenticated &&
+
+                    {authStore.isAuthenticated &&
                         <nav>
-                        <ul>
-                            <li className="current">
-                                {/* <a href="#">User {props.authStore.currentUser}</a>                                 */}
-                            </li>
-                            <li>
-                                {/* <a href="#" onClick={(e) => { e.preventDefault(); props.logout(); }}>Log Out</a>                                 */}
-                            </li>
-                        </ul>
-                        </nav>                    
+                            <ul>
+                                <li className="current">
+                                    {/* <a href="#">User {props.authStore.currentUser}</a>                                 */}
+                                </li>
+                                <li>
+                                    {/* <a href="#" onClick={(e) => { e.preventDefault(); props.logout(); }}>Log Out</a>                                 */}
+                                </li>
+                            </ul>
+                        </nav>
                     }
 
 
@@ -91,17 +90,17 @@ const Header = inject('authStore')(observer((props) => {
 
             <Row>
                 <Col>
-                    { authStore.isAuthenticated &&
-                    <section id="showcase">
-                        <div className="container-fluid">
-                            <p className="welcome-back">
-                                {/* Welcome back <b>{props.current_user},</b> everything is looking <b>great!</b>  */}
-                            </p>
-                            {/* <p>
+                    {authStore.isAuthenticated &&
+                        <section id="showcase">
+                            <div className="container-fluid">
+                                <p className="welcome-back">
+                                    {/* Welcome back <b>{props.current_user},</b> everything is looking <b>great!</b>  */}
+                                </p>
+                                {/* <p>
                                 Your overall outlook is healthy with New ABOs especially strong. Total Buyers is a little weaker
                             </p> */}
-                        </div>
-                    </section>
+                            </div>
+                        </section>
                     }
                 </Col>
             </Row>

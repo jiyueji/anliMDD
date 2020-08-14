@@ -6,18 +6,18 @@ export default class FoaSalesLineBar extends Component {
     constructor() {
         super();
         this.state = {
-            foaSalesData:[],
-            foaSalesOfAcclData:[],
+            foaSalesData: [],
+            foaSalesOfAcclData: [],
             // maxYShow:"",
             // isPerfYearAbo:false,
-            monthShowAbo:['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            monthShowAbo: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         }
     }
     render() {
         return (
             <Fragment>
                 <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Sales($)</div>
-                <div style={{ width: "100%", height: "420px",}}>
+                <div style={{ width: "100%", height: "420px", }}>
                     <div id="foaBarEcharts" style={{ width: "100%", height: "420px" }}></div>
                 </div>
             </Fragment>
@@ -43,15 +43,27 @@ export default class FoaSalesLineBar extends Component {
     }
     upDateShowDataFoa() {
         var data = this.props.data || {}
-        var {total_foa_sales,total_pct_data} = data
+        var { total_foa_sales, total_pct_data } = data
+        var { monthShowAbo } = this.state
         var foaSalesData = [];
         var foaSalesOfAcclData = [];
-        total_foa_sales && total_foa_sales.length >= 0 ? total_foa_sales.map((item,index)=>{
+        total_foa_sales && total_foa_sales.length >= 0 ? total_foa_sales.map((item, index) => {
             foaSalesData.push(Math.round(item.y / 1000000))
         }) : ""
-        total_pct_data && total_pct_data.length >= 0 ? total_pct_data.map((item,index)=>{
+        total_pct_data && total_pct_data.length >= 0 ? total_pct_data.map((item, index) => {
             foaSalesOfAcclData.push(item.y)
         }) : ""
+        //判断当前月份是否有数据
+        for (var i = 0; i < 12; i++) {
+            if (total_foa_sales && total_foa_sales.length > 0 && monthShowAbo) {
+                if (total_foa_sales[0].x == monthShowAbo[i]) {
+                    break
+                } else {
+                    foaSalesData.unshift("")
+                    foaSalesOfAcclData.unshift("")
+                }
+            }
+        }
         // var maxYShow = foaSalesData[0];
         // for (var i = 1; i < foaSalesData.length; i++) {
         //     var cur = foaSalesData[i];
@@ -68,7 +80,7 @@ export default class FoaSalesLineBar extends Component {
         // }
         // maxYShow = formatInt(maxYShow, String(maxYShow).length - 1)
         this.setState({
-            foaSalesData,foaSalesOfAcclData,
+            foaSalesData, foaSalesOfAcclData,
             // maxYShow,
         }, () => {
             this.foaBarEcharts()
@@ -163,7 +175,7 @@ export default class FoaSalesLineBar extends Component {
                     },
                     // min: -400,
                     // max: 100,
-                    boundaryGap: ['250%',0],
+                    boundaryGap: ['250%', 0],
                     nameGap: 10,
                     axisTick: {
                         show: false //隐藏X轴刻度
@@ -224,11 +236,11 @@ export default class FoaSalesLineBar extends Component {
                             color: '#5299f1',
                         }
                     },
-                    data:this.state.foaSalesData,
+                    data: this.state.foaSalesData,
                 },
                 {
                     name: 'FOA Sales % of ACCL',
-                    data:this.state.foaSalesOfAcclData,
+                    data: this.state.foaSalesOfAcclData,
                     type: 'line',
                     yAxisIndex: 1,
                     smooth: true,

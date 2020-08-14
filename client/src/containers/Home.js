@@ -41,13 +41,16 @@ class Home extends Component {
     @observable selectedTab = 'Sales Performance'
     @observable isPerfYear = true
     @observable isFiveDatePicker = ""
-    @observable isMonthDatePicker = ""
+    // @observable isMonthDatePicker = ""
+    @observable isAllDatePicker = ""
 
     constructor(props) {
         super(props)
         this.state = {
             thisWindowWidth: false,
-            thisPageTitle: "Update on 9th of each month"
+            thisPageTitle: "Update on 9th of each month",
+            nowDateMonth:"",
+            nowDateDay:"",
         }
         //        this.onClickEditDashboard = this.onClickEditDashboard.bind(this)
     }
@@ -125,9 +128,10 @@ class Home extends Component {
         this.props.chartStoreDaily.fetchGetQueryDailySalesLine()
 
         this.props.chartStoreDaily.fetchGetQueryQueryDailySalesLine2ByMonth("", '20')//第五屏折线图的所有数据
+        this.props.chartStoreDaily.fetchGetQueryDailySalEventsByMonth("", '20')//提示框
+
         // this.props.chartStoreDaily.fetchGetQueryDailySalesTableByMonth("",this.isFiveDatePicker)//前两个图的
         // this.props.chartStoreDaily.fetchGetQueryDailyRecTableByMonth("",'20')//后两个图的
-        this.props.chartStoreDaily.fetchGetQueryDailySalEventsByMonth("", '20')//提示框
         // this.props.chartStoreDaily.fetchGetQueryDailyCommentsByMonth("",'20')//下面的文本框
 
         this.props.chartStoreSocial.fetchSocialRepBuyData()
@@ -198,8 +202,8 @@ class Home extends Component {
                 nowDateMonth,
                 nowDateDay,
             })
-        }else{
-            var {nowDateMonth,nowDateDay} = this.state
+        } else {
+            var { nowDateMonth, nowDateDay } = this.state
         }
         //dateString是目前选择的年加月
         var antdChangeDateMonth = dateString.slice(5, 7)//目前选择的月
@@ -216,7 +220,12 @@ class Home extends Component {
     //限制日期选择
     disabledDate = (current) => {
         return current < moment(new Date('2018/01')) || current > moment().endOf('day')
-      }
+    }
+    //前四屏日期范围发生变化的回调
+    clickDateChangeAll = (date, dateString) => {
+        this.isAllDatePicker = moment(date).format('YYYYMM')
+        this.props.chartStoreSocial.isAllDatePicker = moment(date).format('YYYYMM')
+    }
     // onClickEditDashboard() {
     //     this.dashboardRef.onClickEditDashboard()
     // }
@@ -339,7 +348,7 @@ class Home extends Component {
                                 </div>
                             }
                             {
-                                this.selectedTab === "Daily Report" ? <DatePicker picker="month" defaultValue={moment(dateFormatFive, dateFormat)} format={dateFormat} allowClear={false} inputReadOnly={true} showToday={true} onChange={this.clickDateChange.bind(this)} disabledDate={this.disabledDate.bind(this)}/> : <MonthPicker defaultValue={moment('2020/06', monthFormat)} format={monthFormat} picker="month" />
+                                this.selectedTab === "Daily Report" ? <DatePicker picker="month" defaultValue={moment(dateFormatFive, dateFormat)} format={dateFormat} allowClear={false} inputReadOnly={true} showToday={true} onChange={this.clickDateChange.bind(this)} disabledDate={this.disabledDate.bind(this)} /> : <MonthPicker defaultValue={moment('2020/06', monthFormat)} format={monthFormat} picker="month" allowClear={false} inputReadOnly={true} showToday={true} onChange={this.clickDateChangeAll.bind(this)} disabledDate={this.disabledDate.bind(this)} />
                             }
                         </div>
                         <div className="main-navigation">
