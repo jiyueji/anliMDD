@@ -36,7 +36,7 @@ class ApiSerice {
         return { status, body };
     }
 
-    async remarksHandle(url, method = 'GET', token = false, params = null, id = null,parentid = null,n_month = null,remarks = null){
+    async remarksHandle(url, method = 'GET', token = false, params = null,parentid = null, id = null,n_month = null,remarks = null){
         let payload = {
             method,
             mode:"cors",
@@ -45,7 +45,7 @@ class ApiSerice {
         if (params) {
             payload.body = JSON.stringify(params);
         }
-        const res = remarks ? await fetch(`${this.api_url}${url}?id=${id}&parentid=${parentid}&n_month=${n_month}&remarks=${remarks}`) : await fetch(`${this.api_url}${url}?id=${id}&parentid=${parentid}&n_month=${n_month}`)
+        const res = remarks ? await fetch(`${this.api_url}${url}?parentid=${parentid}&id=${id}&n_month=${n_month}&remarks=${remarks}`) : await fetch(`${this.api_url}${url}?id=${id}&parentid=${parentid}&n_month=${n_month}`)
         const status = res.status;
         const body = await res.json();
         return { status, body };
@@ -570,15 +570,15 @@ class ApiSerice {
         return res.body;
     }
 
-    async get_updateRemarks(params,id,parentid,n_month,remarks, token) {
-        const res = await this.remarksHandle(api.updateRemarks, 'GET', token, params,id,parentid,n_month,remarks);
+    async get_updateRemarks(params,parentid,id,n_month,remarks, token) {
+        const res = await this.remarksHandle(api.updateRemarks, 'GET', token, params,parentid,id,n_month,remarks);
         // this.handleCommonError(res);
         console.log(res,"res")
         return res.body;
     }
 
-    async get_remarksMonth(params, id,parentid,n_month,token) {
-        const res = await this.remarksHandle(api.remarksMonth, 'GET', token, params,id,parentid,n_month);
+    async get_remarksMonth(params, parentid,id,n_month,token) {
+        const res = await this.remarksHandle(api.remarksMonth, 'GET', token, params,parentid,id,n_month);
         // this.handleCommonError(res);
         return res.body;
     }

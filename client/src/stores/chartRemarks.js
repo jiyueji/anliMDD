@@ -14,10 +14,10 @@ class chartRemarks {
   @observable remarksMonthDate = []
   @observable updateRemarksDate = []
 
-  @action async fetchRemarksMonth(params, id, parentid, n_month) {
+  @action async fetchRemarksMonth(params,parentid, id,n_month) {
     try {
       this.modifyLoading = true
-      const data = await ApiService.get_remarksMonth(params, id, parentid, n_month)
+      const data = await ApiService.get_remarksMonth(params, parentid,id,  n_month)
       runInAction(() => {
         this.isLoading = false
         this.modifyLoading = false
@@ -33,10 +33,10 @@ class chartRemarks {
     }
   }
 
-  @action async fetchUpdateRemarks(params, id, parentid, n_month, remarks) {
+  @action async fetchUpdateRemarks(params,parentid, id,  n_month, remarks) {
     try {
       this.modifyLoading = true
-      const data = await ApiService.get_updateRemarks(params, id, parentid, n_month, remarks)
+      const data = await ApiService.get_updateRemarks(params,parentid, id,  n_month, remarks)
       runInAction(() => {
         this.isLoading = false
         this.modifyLoading = false

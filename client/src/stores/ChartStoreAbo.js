@@ -654,7 +654,7 @@ class ChartStoreAbo {
     let renewal_rate_data = _.map(dataState, (o) => {
       return {
         x: MONTHS_MAP[o.month],
-        y: o.n_month <= maxDate ? o.renewal_rate : null
+        y: o.n_month <= '201908' ? o.renewal_rate : o.n_month <= maxDate ? o.renewal_rate : null
       }
     })
 
@@ -665,14 +665,14 @@ class ChartStoreAbo {
     let renewal_rate_prediction_data = _.map(dataState, (o) => {
       return {
         x: MONTHS_MAP[o.month],
-        y: o.n_month > maxDate ? o.renewal_rate_prediction : null
+        y: o.n_month > '201908' ? o.n_month > maxDate ? o.renewal_rate_prediction : null : null
       }
     })
 
     renewal_rate_prediction_data = _.filter(renewal_rate_prediction_data, (o) => {
       return o.y !== null
     })
-
+    // console.log(renewal_rate_data,renewal_rate_prediction_data)
     let scatter_data = renewal_rate_data.concat(renewal_rate_prediction_data)
     if (renewal_rate_data.length && renewal_rate_prediction_data.length) {
       renewal_rate_prediction_data.unshift(renewal_rate_data[renewal_rate_data.length - 1])

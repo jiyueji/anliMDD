@@ -22,6 +22,7 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import TableViewComments from "./TableViewComments";
+import TableViewCommentsOne from "./TableViewCommentsOne";
 import EchartsFCWaterfall from "./EchartsFCWaterfall";
 
 
@@ -70,7 +71,8 @@ class SalesPerformanceContainer extends React.PureComponent {
     var contrastData = this.props.chartStore.donutTotalSalesYear
     var contrastDate = contrastData ? contrastData.contrastDate : ""
     var contrastAllData = this.props.chartStore.performance2Com
-    var contrastmaxMonthStr = String( hlp.yearMonthToStr( contrastAllData.maxMonth ) )
+    var contrastmaxMonthStr = String(hlp.yearMonthToStr(contrastAllData.maxMonth))
+    // console.log(chartStore.totalSalesLineMonth.maxMonth,contrastmaxMonthStr,contrastAllData)
     return (
 
       // <div className="container-fluid">
@@ -106,12 +108,12 @@ class SalesPerformanceContainer extends React.PureComponent {
           <Row>
             <Col>
               <div className="block-wrapper salesOverview-left">
-                <DonutChart data={chartStore.donutTotalSalesYear} isMonth={false} dataFalg={chartStore.totalSalesLineMonth}/>
+                <DonutChart data={chartStore.donutTotalSalesYear} isMonth={false} dataFalg={chartStore.totalSalesLineMonth} />
               </div>
             </Col>
             <Col>
               <div className="block-wrapper salesOverview-right">
-                <DonutChart data={chartStore.donutTotalSalesLastMonth} isMonth={true} dataFalg={chartStore.totalSalesLineMonth}/>
+                <DonutChart data={chartStore.donutTotalSalesLastMonth} isMonth={true} dataFalg={chartStore.totalSalesLineMonth} />
               </div>
             </Col>
           </Row>
@@ -135,16 +137,17 @@ class SalesPerformanceContainer extends React.PureComponent {
               </div>
             </Col>
           </Row> */}
-          <div style={{ display: 'flex', justifyContent: 'space-between',padding:'0 0.5%'}}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 0.5%' }}>
             <div className="sb-wrap sb-wrapFirst" style={{ width: '48.5%', height: '300px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
               {/* 多功能折线图 */}
-              <LineChartMonthlyEchaets data={chartStore.totalSalesLineMonth} datas={chartStore.totalSalesLineYear}/>
+              <LineChartMonthlyEchaets data={chartStore.totalSalesLineMonth} datas={chartStore.totalSalesLineYear} />
             </div>
             <div className="sb-wrap" style={{ width: '48.5%', height: '300px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
               {/* text */}
-              {
+              {/* {
                 contrastDate == contrastmaxMonthStr ? <TableViewComments data={chartStore.performance2Com}/> : ""
-              }
+              } */}
+              <TableViewCommentsOne modifyDate={chartStore.totalSalesLineMonth.maxMonth}/>
             </div>
           </div>
           {/* <Row>
@@ -171,7 +174,7 @@ class SalesPerformanceContainer extends React.PureComponent {
         </div> */}
         <div className="echartsMapCityAndYidCity">
           <div className="echartsMapCityCss">
-            <EchartsMapCity data={chartStore.totalSalesCityCluster} bigSmall={chartStore.donutTotalSalesYear}/>
+            <EchartsMapCity data={chartStore.totalSalesCityCluster} bigSmall={chartStore.donutTotalSalesYear} />
           </div>
           {/* <div className="echartsMapCityCssOpacity" style={{paddingRight: '34%',display:'none'}}>
             <EchartsMapCity data={chartStore.totalSalesCityCluster} />
@@ -189,7 +192,7 @@ class SalesPerformanceContainer extends React.PureComponent {
 
 
         <div className="echartsFCWaterfall">
-          <EchartsFCWaterfall data={chartStore.waterfallChartData}  datas={chartStore.totalSales}/>
+          <EchartsFCWaterfall data={chartStore.waterfallChartData} datas={chartStore.totalSales} />
         </div>
 
 

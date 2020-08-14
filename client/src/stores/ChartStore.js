@@ -674,9 +674,12 @@ class ChartStore {
 
     if (this.isAllDatePicker) {//时间选择
       var maxYear = this.isAllDatePicker.slice(0, 4)
+      var maxMonth = this.isAllDatePicker
     } else {
       var maxYear = dataState.length && dataState[0].elements.length && dataState[0].elements[0][`max_${YEAR_TYPE}`]
+      var maxMonth = jsArr.length && jsArr[0].max_n_month
     }
+    // console.log(maxMonth)
     // const maxYear = dataState.length && dataState[0].elements.length && dataState[0].elements[0][`max_${YEAR_TYPE}`]
 
     // const maxCalendarYear = dataState.length && dataState[0].elements.length && dataState[0].elements[0][ 'max_calendar_yr' ]
@@ -849,6 +852,7 @@ class ChartStore {
       // months_data,
       isPerfYear: this.isPerfYear,
       maxYear: maxYear,
+      maxMonth:maxMonth,
     }
   }
 

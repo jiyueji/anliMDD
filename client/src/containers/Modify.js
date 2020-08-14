@@ -16,14 +16,14 @@ class Modify extends Component {
     super(props)
     this.state = {
       dataArr: [
-        { id: "sub1", name: "Sales Performance", item: [{ keys: "YTD_salesby_city_cluster", title: "YTD salesby city cluster" }, { keys: "YTD_Salse_by_FC", title: "YTD Salse by FC" }] },
+        { id: "sub1", name: "Sales Performance", item: [{ keys: "sales_remarks", title: "sales remarks" },{ keys: "YTD_salesby_city_cluster", title: "YTD salesby city cluster" }, { keys: "YTD_Salse_by_FC", title: "YTD Salse by FC" }] },
         { id: "sub2", name: "AGP KPI", item: [{ keys: "Shape_of_the_Business", title: "Shape of the Business" }, { keys: "Segment_Trend", title: "Segment Trend" }, { keys: "High_PPV_%_of_Sales", title: "High PPV % of Sales" }, { keys: "End_of_Month_%_of_Sales", title: "End of Month % of Sales" }] },
         { id: "sub3", name: "ABO Momentum & Goal Tracking", item: [{ keys: "ABO_force_movement", title: "ABO force movement" }, { keys: "First_year_ABO_renewal_rate", title: "First year ABO renewal rate" }, { keys: "Monthly_Q_Months", title: "Monthly Q Months" }, { keys: "YTD_Q_Month_&_PV_per_Q_Month", title: "YTD Q Month & PV per Q Month" }, { keys: "Consecutive_qualification_rate", title: "Consecutive qualification rate" }, { keys: "FAA", title: "FAA" }, { keys: "GAR_by_PIN", title: "GAR by PIN" }, { keys: "Monthly_Income_by_PIN_level", title: "Monthly Income by PIN level" }, { keys: "CSI", title: "CSI" }, { keys: "Prediction_of_Bonus_Migration_for_Next_3_months", title: "Prediction of Bonus Migration for Next 3 months" }] },
         { id: "sub4", name: "Customer Dynamics", item: [{ keys: "FOA_Sales", title: "FOA Sales" }, { keys: "FOA_Forcesize", title: "FOA Forcesize" }, { keys: "FOA_Buyer_&_Productivity", title: "FOA Buyer & Productivity" }, { keys: "FOA_Repeat_Buyer", title: "FOA Repeat Buyer" }, { keys: "Referral", title: "Referral" }, { keys: "FOA_Converted_to_ABO/PC", title: "FOA Converted to ABO/PC" }] },
         { id: "sub5", name: "Daily Report", item: [{ keys: "Daily_Report", title: "Daily Report" },] },
       ],
       id: "sub1",
-      keys: "YTD_salesby_city_cluster",
+      keys: "sales_remarks",
       remarksMonthDate: "",
       modifyDate: "",
     }

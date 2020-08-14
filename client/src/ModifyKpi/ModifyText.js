@@ -6,7 +6,7 @@ export default class ModifyText extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            editorContent: '<div>1122221</div>',//富文本编辑器
+            editorContent: '',//富文本编辑器
             oldRemarks: "",
             oldParentid: "",
             oldNmonth: "",

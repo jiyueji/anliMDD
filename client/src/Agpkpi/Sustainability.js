@@ -79,17 +79,17 @@ export default class Sustainability extends Component {
         // 延迟加载
         var redball = document.getElementsByClassName("redball")
         setTimeout(() => {
-            redball[0].style.display = "block"
+            redball && redball[0] ? redball[0].style.display = "block" : ""
         }, 2000);
         // 延迟加载
         var remark = document.getElementsByClassName("remark")
         setTimeout(() => {
-            remark[0].style.display = "block"
+            remark && remark[0] ? remark[0].style.display = "block" : ""
         }, 2000);
         // 延迟加载
         var remarkTarget = document.getElementsByClassName("remarkTarget")
         setTimeout(() => {
-            remarkTarget[0] ? remarkTarget[0].style.display = "block" : ""
+            remarkTarget && remarkTarget[0] ? remarkTarget[0].style.display = "block" : ""
         }, 1000);
 
         var maxCalendarYear = chartData.maxCalendarYear
