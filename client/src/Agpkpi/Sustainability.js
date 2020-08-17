@@ -29,8 +29,8 @@ export default class Sustainability extends Component {
             <Fragment>
                 <div style={{ position: 'relative' }}>
                     <div className="sustainabilityTitleAll">
-                        <TitleModify titleName={'High PPV % of Sales'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub2"} keys={"High_PPV_%_of_Sales"} modifyDate={modifyDateModify}/>
-                        {/* <div className="sustainabilityTitle">High PPV % of Sales</div> */}
+                        {/* <TitleModify titleName={'High PPV % of Sales'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub2"} keys={"High_PPV_%_of_Sales"} modifyDate={modifyDateModify}/> */}
+                        <div className="sustainabilityTitle">High PPV % of Sales</div>
                         <div className="kpitanShow" onClick={this.kpiflagShowhandle1.bind(this)}></div>
                     </div>
                     {

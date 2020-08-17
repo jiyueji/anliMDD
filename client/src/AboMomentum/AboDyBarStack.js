@@ -18,12 +18,12 @@ export default class AboDyBarStack extends Component {
         var {modifyDateModify} = this.state
         return (
             <Fragment>
-                <div className="modifyAllTitle">
+                {/* <div className="modifyAllTitle">
                     <TitleModify titleName={'ABO force movement'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub3"} keys={"ABO_force_movement"} modifyDate={modifyDateModify}/>
-                </div>
-                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>ABO force movement</div> */}
-                <div style={{ width: "100%", height: "362px", display: 'flex' }}>
-                    <div id="aboBarEcharts" style={{ width: "100%", height: "362px" }}></div>
+                </div> */}
+                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>ABO force movement</div>
+                <div style={{ width: "100%", height: "420px", display: 'flex' }}>
+                    <div id="aboBarEcharts" style={{ width: "100%", height: "420px" }}></div>
                 </div>
             </Fragment>
         )
@@ -103,7 +103,7 @@ export default class AboDyBarStack extends Component {
         aboBarEcharts.setOption({
             animationDuration: 0,
             grid: {
-                top: '10%',
+                top: '20%',
                 left: '1%',
                 right: '2%',
                 bottom: '15%',

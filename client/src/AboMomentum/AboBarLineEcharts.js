@@ -27,33 +27,33 @@ export default class AboBarLineEcharts extends Component {
         var { clickShow, object_ytd_data,modifyDateModify } = this.state
         return (
             <Fragment>
-                <div className="modifyAllTitle">
+                {/* <div className="modifyAllTitle">
                     <TitleModify titleName={'CSI'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub3"} keys={"CSI"} modifyDate={modifyDateModify} />
-                </div>
-                {/* <div style={{ position: "absolute", left: ' 3%', top: '4%', fontSize: '14px', fontWeight: '600' }}>CSI</div> */}
+                </div> */}
+                <div style={{ position: "absolute", left: ' 3%', top: '4%', fontSize: '14px', fontWeight: '600' }}>CSI</div>
                 <div className="salesButt" onClick={this.AboBarLineEchartshandleClick.bind(this)}>
                     <span className="salesButt-ytd">Sales BV Mix</span>
                     <span className="salesButt-Monthly">Income</span>
                 </div>
                 {
                     clickShow ? <div style={{ position: "absolute", width: "100%", }}>
-                        <div style={{ width: "100%", height: "109px", display: 'flex'}}>
+                        <div style={{ width: "100%", height: "120px", display: 'flex'}}>
                             {/* <div style={{ position: "absolute", top: "20%", left: "25%", fontSize: "16px", fontWeight: "600" }}>YTD Mthly Avg.<br></br>Sales BV Mix</div> */}
-                            <div id="aboBvMixEcharts" style={{ width: "100%", height: "109px" }}></div>
+                            <div id="aboBvMixEcharts" style={{ width: "100%", height: "120px" }}></div>
                             {/* <div style={{ position: "absolute", top: "5%", right: "7%", fontSize: "12px", lineHeight: "20px", textAlign: "right" }}>
                                 <div>Note: FOA / Total :{object_ytd_data.foa_sales_bv_ShowNowOne}%</div>
                                 <div>VCS / Total :{object_ytd_data.vcs_sales_bv_ShowNowOne}%</div>
                             </div> */}
                         </div>
                         <div style={{ position: "absolute", left: ' 3%', top: '27%', fontSize: '12px', color: "#333" }}>Monthly Sales BV ($)</div>
-                        <div style={{ width: "100%", height: "253px", display: 'flex' }}>
-                            <div id="aboBvMixEcharts2" style={{ width: "100%", height: "253px" }}></div>
+                        <div style={{ width: "100%", height: "280px", display: 'flex' }}>
+                            <div id="aboBvMixEcharts2" style={{ width: "100%", height: "280px" }}></div>
                         </div>
                     </div> : <div style={{ position: "absolute", width: "100%", }}>
                             <div style={{ position: "absolute", left: ' 3%', top: '12%', fontSize: '14px', color: "#333" }}>Mthly Trend</div>
-                            <div style={{ width: "100%", height: "362px", display: 'flex' }}>
-                                <div id="aboBarLineEcharts" style={{ width: "80%", height: "362px" }}></div>
-                                <div id="aboBarLineEcharts2" style={{ width: "20%", height: "362px" }}></div>
+                            <div style={{ width: "100%", height: "400px", display: 'flex' }}>
+                                <div id="aboBarLineEcharts" style={{ width: "80%", height: "400px" }}></div>
+                                <div id="aboBarLineEcharts2" style={{ width: "20%", height: "400px" }}></div>
                             </div>
                         </div>
                 }

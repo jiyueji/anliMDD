@@ -29,14 +29,14 @@ export default class AboBarTwoEcharts extends Component {
         var { maxMonthStr, totalEarn,modifyDateModify } = this.state
         return (
             <Fragment>
-                <div className="modifyAllTitle">
+                {/* <div className="modifyAllTitle">
                     <TitleModify titleName={'Monthly Income by PIN level'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub3"} keys={"Monthly_Income_by_PIN_level"} modifyDate={modifyDateModify} />
-                </div>
-                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Monthly Income by PIN level</div> */}
+                </div> */}
+                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Monthly Income by PIN level</div>
                 <div style={{ position: "absolute", right: ' 5%', top: '6%', fontSize: '12px', color: "#666" }}>As of {maxMonthStr}</div>
-                <div style={{ width: "100%", height: "362px", display: "flex", flexWrap: "wrap" }}>
-                    <div id="aboBarTwoEcharts" style={{ width: "100%", height: "181px", borderBottom: "1px solid #e9e9eb" }}></div>
-                    <div id="aboBarTwoEcharts2" style={{ width: "100%", height: "181px" }}></div>
+                <div style={{ width: "100%", height: "400px", display: "flex", flexWrap: "wrap" }}>
+                    <div id="aboBarTwoEcharts" style={{ width: "100%", height: "200px", borderBottom: "1px solid #e9e9eb" }}></div>
+                    <div id="aboBarTwoEcharts2" style={{ width: "100%", height: "200px" }}></div>
                 </div>
                 <ul className="AboDownUlEch">
                     <li>% Earner of Total</li>
@@ -241,7 +241,7 @@ export default class AboBarTwoEcharts extends Component {
                 left: '1%',
                 right: '4%',
                 bottom: '5%',
-                top: '20%',
+                top: '30%',
                 containLabel: true
             },
             xAxis: [{

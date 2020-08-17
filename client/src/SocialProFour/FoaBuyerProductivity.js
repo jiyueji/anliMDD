@@ -20,10 +20,10 @@ export default class FoaBuyerProductivity extends Component {
         var {modifyDateModify} = this.state
         return (
             <Fragment>
-                <div className="modifyAllTitle">
+                {/* <div className="modifyAllTitle">
                     <TitleModify titleName={'FOA Buyer & Productivity'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub4"} keys={"FOA_Buyer_&_Productivity"} modifyDate={modifyDateModify} />
-                </div>
-                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Buyer & Productivity</div> */}
+                </div> */}
+                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Buyer & Productivity</div>
                 <div className="allContent">
                     <div id="foaBuyerProductivityEcharts" className="allContentEcharts"></div>
                 </div>
@@ -112,7 +112,7 @@ export default class FoaBuyerProductivity extends Component {
         });
         foaBuyerProductivityEcharts.setOption({
             grid: {
-                top: '10%',
+                top: '20%',
                 left: '1%',
                 right: '2%',
                 bottom: '15%',

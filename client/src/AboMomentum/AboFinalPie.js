@@ -20,12 +20,12 @@ export default class AboFinalPie extends Component {
         var { title, maxMonthStr, chartData, pieAboFinalRightNumber,modifyDateModify } = this.state
         return (
             <Fragment>
-                <div className="modifyAllTitle">
+                {/* <div className="modifyAllTitle">
                     <TitleModify titleName={'FAA'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub3"} keys={"FAA"} modifyDate={modifyDateModify} />
-                </div>
-                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FAA</div> */}
+                </div> */}
+                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FAA</div>
                 <div style={{ position: "absolute", right: ' 5%', top: '6%', fontSize: '12px', color: "#666" }}>As of {maxMonthStr}</div>
-                <div style={{ width: "100%", height: "342px" }}>
+                <div style={{ width: "100%", height: "350px",marginTop: "50px" }}>
                     <div style={{ width: "100%", display: 'flex', justifyContent: 'space-between', textAlign: "center", fontSize: "14px", lineHeight: "32px" }}>
                         <div style={{ width: "100%" }}>
                             <div style={{ fontWeight: "600" }}>Total FAA Bonus</div>

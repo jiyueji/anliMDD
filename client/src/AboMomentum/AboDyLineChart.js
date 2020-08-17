@@ -19,12 +19,12 @@ export default class AboDyBarStack extends Component {
         var {modifyDateModify} = this.state
         return (
             <Fragment>
-                <div className="modifyAllTitle">
+                {/* <div className="modifyAllTitle">
                     <TitleModify titleName={'First year ABO renewal rate'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub3"} keys={"First_year_ABO_renewal_rate"} modifyDate={modifyDateModify} />
-                </div>
-                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>First year ABO renewal rate</div> */}
-                <div style={{ width: "100%", height: "362px", display: 'flex' }}>
-                    <div id="aboLineEcharts" style={{ width: "100%", height: "362px" }}></div>
+                </div> */}
+                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>First year ABO renewal rate</div>
+                <div style={{ width: "100%", height: "420px", display: 'flex' }}>
+                    <div id="aboLineEcharts" style={{ width: "100%", height: "420px" }}></div>
                 </div>
             </Fragment>
         )
@@ -95,7 +95,7 @@ export default class AboDyBarStack extends Component {
         aboLineEcharts.setOption({
             animationDuration: 0,
             grid: {
-                top: '10%',
+                top: '20%',
                 left: '4%',
                 right: '4%',
                 bottom: '15%',

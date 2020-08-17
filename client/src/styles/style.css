@@ -1372,12 +1372,14 @@ label.bot-chart-com-sm {
     }
     .allContent{/* 每一个echarts外面的 */
         width: 100%;
-        height: 362px;
+        /* height: 362px; */
+        height: 420px;
         display: flex;
     }
     .allContentEcharts{/* 每一个echarts里面的 */
         width: 100%;
-        height: 362px;
+        /* height: 362px; */
+        height: 420px;
     }
     .SocialLeftCss{/* 每一个左边的标准布局 */
         width: 50%;

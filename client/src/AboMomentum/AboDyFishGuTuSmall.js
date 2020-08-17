@@ -22,10 +22,10 @@ export default class AboDyFishGuTuSmall extends Component {
         var { actualMonth, futureMonth, futureMonthStr, NAMES_IDS, data, objMonthShow,modifyDateModify } = this.state
         return (
             <Fragment>
-                <div className="modifyAllTitle">
+                {/* <div className="modifyAllTitle">
                     <TitleModify titleName={'Prediction of Bonus Migration for Next 3 months'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub3"} keys={"Prediction_of_Bonus_Migration_for_Next_3_months"} modifyDate={modifyDateModify} />
-                </div>
-                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Prediction of Bonus Migration for Next 3 months</div> */}
+                </div> */}
+                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Prediction of Bonus Migration for Next 3 months</div>
                 <div style={{ position: "absolute", right: ' 5%', top: '6%', fontSize: '12px', color: "#666" }}>As of {actualMonth}</div>
                 {
                     !data['Bonus0-9'] ? <div></div> :

@@ -17,10 +17,10 @@ export default class FoaRepeat extends Component {
         var {modifyDateModify} = this.state
         return (
             <Fragment>
-                <div className="modifyAllTitle">
+                {/* <div className="modifyAllTitle">
                     <TitleModify titleName={'FOA Repeat Buyer'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub4"} keys={"FOA_Repeat_Buyer"} modifyDate={modifyDateModify} />
-                </div>
-                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Repeat Buyer</div> */}
+                </div> */}
+                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Repeat Buyer</div>
                 <div className="allContent">
                     <div id="foaRepeatEcharts" className="allContentEcharts"></div>
                 </div>
@@ -86,7 +86,7 @@ export default class FoaRepeat extends Component {
         });
         foaRepeatEcharts.setOption({
             grid: {
-                top: '10%',
+                top: '20%',
                 left: '1%',
                 right: '2%',
                 bottom: '15%',

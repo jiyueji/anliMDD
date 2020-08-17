@@ -32,8 +32,8 @@ export default class Sustainability extends Component {
             <Fragment>
                 <div style={{ position: 'relative' }}>
                     <div className="sustainabilityTitleAll">
-                        <TitleModify titleName={'End of Month % of Sales'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub2"} keys={"End_of_Month_%_of_Sales"} modifyDate={modifyDateModify}/>
-                        {/* <div className="sustainabilityTitle">End of Month % of Sales</div> */}
+                        {/* <TitleModify titleName={'End of Month % of Sales'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub2"} keys={"End_of_Month_%_of_Sales"} modifyDate={modifyDateModify}/> */}
+                        <div className="sustainabilityTitle">End of Month % of Sales</div>
                         <div className="kpitanShow" onClick={this.kpiflagShowhandle2.bind(this)}></div>
                     </div>
                     {

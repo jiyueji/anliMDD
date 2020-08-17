@@ -17,9 +17,9 @@ export default class FoaReferral extends Component {
         var {modifyDateModify} = this.state
         return (
             <Fragment>
-                <div className="modifyAllTitleFour">
+                {/* <div className="modifyAllTitleFour">
                     <TitleModify titleName={''} titlePerfYearFlag={false} titlePerfYear={false} id={"sub4"} keys={"Referral"} modifyDate={modifyDateModify} />
-                </div>
+                </div> */}
                 {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Foa Repeat Buyer</div> */}
                 <div style={{ width: "100%", height: "420px", display: 'flex' }}>
                     <div id="foaReferralEcharts" style={{ width: "100%", height: "420px" }}></div>

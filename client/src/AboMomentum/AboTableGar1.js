@@ -25,13 +25,13 @@ export default class AboTableGar extends Component {
         var { data, maxMonthStr, rowsHtml, gar_account, gar_new, orig_account, orig_new, total_account, total_new,modifyDateModify } = this.state
         return (
             <Fragment>
-                <div className="modifyAllTitle">
+                {/* <div className="modifyAllTitle">
                     <TitleModify titleName={'GAR by PIN'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub3"} keys={"GAR_by_PIN"} modifyDate={modifyDateModify} />
-                </div>
-                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>GAR by PIN</div> */}
+                </div> */}
+                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>GAR by PIN</div>
                 <div style={{ position: "absolute", right: ' 5%', top: '6%', fontSize: '12px', color: "#666" }}>As of {maxMonthStr}</div>
                 {/* 表格 */}
-                <div style={{ marginLeft: '1%', marginRight: '1%', border: "10px solid #5198ee", width: "98%", height: "330px" }}>
+                <div style={{ marginLeft: '1%', marginRight: '1%', border: "10px solid #5198ee", width: "98%", height: "330px",marginTop: '55px'}}>
                     <table width="100%" height="100%" border="0" border-collapse="collapse" cellSpacing="0" cellPadding="0" style={{ textAlign: "center", fontSize: "12px", wordBreak: 'break-all' }}>
                         <thead>
                             <tr>

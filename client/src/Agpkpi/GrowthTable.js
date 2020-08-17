@@ -23,8 +23,8 @@ export default class GrowthTable extends Component {
                 <div style={{ position: "relative" }}>
                     <div style={{ paddingLeft: '1%', paddingRight: '1%' }}>
                         <div style={{ height: '58px', display: 'flex', alignItems: 'center' }}>
-                            <TitleModify titleName={'Shape of the Business'} titlePerfYearFlag={true} titlePerfYear={false} id={"sub2"} keys={"Shape_of_the_Business"} modifyDate={modifyDateModify}/>
-                            {/* <h3 style={{ fontSize: "14px", lineHeight: '58px', margin: '0', fontWeight: '700' }}>Shape of the Business (By Calendar Year)</h3> */}
+                            {/* <TitleModify titleName={'Shape of the Business'} titlePerfYearFlag={true} titlePerfYear={false} id={"sub2"} keys={"Shape_of_the_Business"} modifyDate={modifyDateModify}/> */}
+                            <h3 style={{ fontSize: "14px", lineHeight: '58px', margin: '0', fontWeight: '700' }}>Shape of the Business (By Calendar Year)</h3>
                             <div className="kpitanShow" onClick={this.displayShowClose.bind(this)}></div>
                             {/* <div style={{ fontSize: "12px", lineHeight: '58px' }}>As of {maxMonthStr}</div> */}
                         </div>

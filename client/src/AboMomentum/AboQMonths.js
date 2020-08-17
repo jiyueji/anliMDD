@@ -19,12 +19,12 @@ export default class AboQMonths extends Component {
         var {modifyDateModify} = this.state
         return (
             <Fragment>
-                <div className="modifyAllTitle">
+                {/* <div className="modifyAllTitle">
                     <TitleModify titleName={'Monthly Q Months'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub3"} keys={"Monthly_Q_Months"} modifyDate={modifyDateModify} />
-                </div>
-                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Monthly Q Months</div> */}
-                <div style={{ width: "100%", height: "342px", display: 'flex' }}>
-                    <div id="aboQMonthsEcharts" style={{ width: "100%", height: "342px" }}></div>
+                </div> */}
+                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Monthly Q Months</div>
+                <div style={{ width: "100%", height: "400px", display: 'flex' }}>
+                    <div id="aboQMonthsEcharts" style={{ width: "100%", height: "400px" }}></div>
                 </div>
             </Fragment>
         )
@@ -97,7 +97,7 @@ export default class AboQMonths extends Component {
                 }
             },
             grid: {
-                top: '10%',
+                top: '20%',
                 left: '4%',
                 right: '4%',
                 bottom: '15%',

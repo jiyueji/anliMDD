@@ -19,10 +19,10 @@ export default class FoaSalesLineBar extends Component {
         var {modifyDateModify} = this.state
         return (
             <Fragment>
-                <div className="modifyAllTitle">
+                {/* <div className="modifyAllTitle">
                     <TitleModify titleName={'FOA Sales($)'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub4"} keys={"FOA_Sales"} modifyDate={modifyDateModify} />
-                </div>
-                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Sales($)</div> */}
+                </div> */}
+                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Sales($)</div>
                 <div  className="allContent">
                     <div id="foaBarEcharts" className="allContentEcharts"></div>
                 </div>
@@ -104,7 +104,7 @@ export default class FoaSalesLineBar extends Component {
         });
         foaBarEcharts.setOption({
             grid: {
-                top: '10%',
+                top: '20%',
                 left: '1%',
                 right: '2%',
                 bottom: '15%',

@@ -17,9 +17,9 @@ export default class FoaConvertedToAbo extends Component {
         var { modifyDateModify } = this.state
         return (
             <Fragment>
-                <div className="modifyAllTitleFour" style={{ paddingLeft: "33%" }}>
+                {/* <div className="modifyAllTitleFour" style={{ paddingLeft: "33%" }}>
                     <TitleModify titleName={''} titlePerfYearFlag={false} titlePerfYear={false} id={"sub4"} keys={"FOA_Converted_to_ABO/PC"} modifyDate={modifyDateModify} />
-                </div>
+                </div> */}
                 <div style={{ position: "absolute", left: ' 0%', top: '-6%', fontSize: '18px', fontWeight: '600', color: '#333' }}>FOA Converted to ABO/PC</div>
                 <div style={{ width: "100%", height: "420px", display: 'flex' }}>
                     <div id="foaConvertedToAboEcharts" style={{ width: "100%", height: "420px" }}></div>

@@ -18,10 +18,10 @@ export default class FoaForcesize extends Component {
         var {modifyDateModify} = this.state
         return (
             <Fragment>
-                <div className="modifyAllTitle">
+                {/* <div className="modifyAllTitle">
                     <TitleModify titleName={'FOA Forcesize'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub4"} keys={"FOA_Forcesize"} modifyDate={modifyDateModify} />
-                </div>
-                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Forcesize</div> */}
+                </div> */}
+                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Forcesize</div>
                 <div className="allContent">
                     <div id="foaForcesizeEcharts" className="allContentEcharts"></div>
                 </div>
@@ -83,7 +83,7 @@ export default class FoaForcesize extends Component {
         });
         foaForcesizeEcharts.setOption({
             grid: {
-                top: '10%',
+                top: '20%',
                 left: '1%',
                 right: '2%',
                 bottom: '15%',

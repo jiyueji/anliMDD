@@ -45,8 +45,8 @@ export default class EchartsMapCity extends Component {
         var { isPerfYear,modifyDateModify } = this.state
         return (
             <Fragment>
-                {/* <div className="mapTitle">YTD sales by city cluster <span style={{ fontSize: "12px" }}>{isPerfYear ? '(By Performance Year)' : '(By Calendar Year)'}</span></div> */}
-                <TitleModify titleName={'YTD sales by city cluster'} titlePerfYearFlag={true} titlePerfYear={isPerfYear} id={"sub1"} keys={"YTD_salesby_city_cluster"} modifyDate={modifyDateModify}/>
+                <div className="mapTitle">YTD sales by city cluster <span style={{ fontSize: "12px" }}>{isPerfYear ? '(By Performance Year)' : '(By Calendar Year)'}</span></div>
+                {/* <TitleModify titleName={'YTD sales by city cluster'} titlePerfYearFlag={true} titlePerfYear={isPerfYear} id={"sub1"} keys={"YTD_salesby_city_cluster"} modifyDate={modifyDateModify}/> */}
                 <div style={{display:"flex"}}>
                     <div id="map" className="centerItem"></div>
                 </div>

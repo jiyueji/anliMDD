@@ -144,10 +144,10 @@ class SalesPerformanceContainer extends React.PureComponent {
             </div>
             <div className="sb-wrap" style={{ width: '48.5%', height: '300px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
               {/* text */}
-              {/* {
+              {
                 contrastDate == contrastmaxMonthStr ? <TableViewComments data={chartStore.performance2Com}/> : ""
-              } */}
-              <TableViewCommentsOne modifyDate={chartStore.totalSalesLineMonth.maxMonth}/>
+              }
+              {/* <TableViewCommentsOne modifyDate={chartStore.totalSalesLineMonth.maxMonth}/> */}
             </div>
           </div>
           {/* <Row>

@@ -54,6 +54,39 @@ const Header = inject('authStore')(observer((props) => {
 
                 </Col>
                 {/* 下面注释代码为原登录组件 */}
+                <Col md={{ span: 5, offset: 3 }}>
+                    {!authStore.isAuthenticated && <LoginForm handler={handleLogin} />}
+                    {!authStore.isAuthenticated && <a href="/sign_up">Not registered? Sign up!</a>}
+
+
+                    {authStore.isAuthenticated &&
+                        <nav>
+                            <ul>
+                                <li className="current">
+                                    {/* <a href="#">User {props.authStore.currentUser}</a> */}
+                                </li>
+                                <li>
+                                    {/* <a href="#" onClick={(e) => { e.preventDefault(); props.logout(); }}>Log Out</a> */}
+                                </li>
+                            </ul>
+                        </nav>
+                    }
+
+
+                    {/* { 
+    props.authStore.currentUser &&  <nav>
+    <ul>
+        <li className="current">
+            <a href="#">Account Settings {props.authStore.currentUser}</a>                                
+        </li>
+        <li>
+            <a href="#" onClick={(e) => { e.preventDefault(); props.logout(); }}>Log Out</a>                                
+        </li>
+    </ul>
+    </nav>                    
+} */}
+
+                </Col>
             </Row>
 
             <Row>
@@ -97,36 +130,3 @@ export default Header
 
 
 
-// <Col md={{ span: 5, offset: 3 }}>
-// {!authStore.isAuthenticated && <LoginForm handler={handleLogin} />}
-// {!authStore.isAuthenticated && <a href="/sign_up">Not registered? Sign up!</a>}
-
-
-// {authStore.isAuthenticated &&
-//     <nav>
-//         <ul>
-//             <li className="current">
-//                 {/* <a href="#">User {props.authStore.currentUser}</a> */}
-//             </li>
-//             <li>
-//                 {/* <a href="#" onClick={(e) => { e.preventDefault(); props.logout(); }}>Log Out</a> */}
-//             </li>
-//         </ul>
-//     </nav>
-// }
-
-
-// {/* { 
-//     props.authStore.currentUser &&  <nav>
-//     <ul>
-//         <li className="current">
-//             <a href="#">Account Settings {props.authStore.currentUser}</a>                                
-//         </li>
-//         <li>
-//             <a href="#" onClick={(e) => { e.preventDefault(); props.logout(); }}>Log Out</a>                                
-//         </li>
-//     </ul>
-//     </nav>                    
-// } */}
-
-// </Col>
