@@ -255,7 +255,7 @@ class Home extends Component {
             }else if(this.selectedTab === "Daily Report"){//第五屏
                 return current < moment(new Date('2018/01')) || current > moment().endOf('day')
             }
-            return current < moment(new Date('2015/09')) || current > moment().endOf('day')
+            return current < moment(new Date('2016/09')) || current > moment().endOf('day')
         }
         //前四屏日期范围发生变化的回调
         clickDateChangeAll = (date, dateString) => {
