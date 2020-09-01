@@ -19,6 +19,7 @@ import Tabs from 'react-bootstrap/Tabs'
 import TableViewComments from "./TableViewComments";
 import LineChartDailyRec from "./LineChartDailyRec";
 import TableViewDailySalEvents from "./TableViewDailySalEvents";
+import TableViewCommentsFive from "./TableViewCommentsFive";
 
 
 @inject('chartStoreDaily','chartStore') @observer
@@ -105,9 +106,10 @@ class DailyReportContainer extends React.PureComponent {
 
         <div className="page-block">
           <div className="sb-wrap" style={{ marginBottom: "0", height: "auto" }}>
-            {
+            {/* {
               contrastDate == contrastmaxMonthStr ? <TableViewComments data={chartStoreDaily.dailyComments} isMaxDate={true} /> : ""
-            }
+            } */}
+            <TableViewCommentsFive modifyDate={chartStoreDaily.dailyTableSales.maxMonth}/>
           </div>
         </div>
 

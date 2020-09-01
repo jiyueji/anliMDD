@@ -624,12 +624,13 @@ class ChartStoreDaily {
       maxDMin1 = getSubtitleDate(maxDMin1)
       maxDMin2 = getSubtitleDate(maxDMin2)
     }
-
+    // console.log(maxDateStr,"maxDateStr")
     return {
       tableData: dataState,
       maxDateTitle: maxDateTitle,
       maxDMin1,
-      maxDMin2
+      maxDMin2,
+      maxMonth:maxDateStr,
     }
   }
 

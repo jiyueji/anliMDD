@@ -37,7 +37,7 @@ export default class ModifyText extends Component {
 
                     </div>
                 </div>
-                <Button type="primary" style={{ position: "absolute",zIndex:"101" }} className="ModifyTextButton" onClick={this.onClickHandle.bind(this)}>modify</Button>
+                <Button type="primary" style={{ position: "absolute", zIndex: "101" }} className="ModifyTextButton" onClick={this.onClickHandle.bind(this)}>modify</Button>
                 {/* <div className="ModifyTextButton">修改</div> */}
             </Fragment>
 
@@ -95,7 +95,14 @@ export default class ModifyText extends Component {
         // var editorElem_body = document.getElementsByClassName("editorElem-body")[0]
         // console.log(editorElem_body)
         // editorElem_body.innerHTML = remarks
-        this.editor.txt.html(remarks)//html 初始化内容remarks,
+        var remarksStr = remarks
+        if (remarks) {
+            // 对base64转编码
+            var remarksDecode = atob(remarks);
+            // 编码转字符串
+            var remarksStr = decodeURI(remarksDecode);
+        }
+        this.editor.txt.html(remarksStr)//html 初始化内容remarks,
         this.setState({
             // editorContent:remarks,
             id,
@@ -113,8 +120,12 @@ export default class ModifyText extends Component {
     // }
     onClickHandle(e) {//点击按钮时发生
         var { id, parentid, n_month, editorContent } = this.state
-        // console.log(editorContent,"editorContent")
-        this.props.updateHandle(id, parentid, n_month, editorContent)
+        //字符串转base64
+        var editorContentEncode = encodeURI(editorContent);
+        // 对编码的字符串转化base64
+        var editorContentBase64 = btoa(editorContentEncode);
+        // console.log(editorContentBase64, "editorContentBase64")
+        this.props.updateHandle(id, parentid, n_month, editorContentBase64)
     }
 }
 

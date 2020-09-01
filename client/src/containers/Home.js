@@ -326,6 +326,7 @@ import { withOktaAuth } from '@okta/okta-react';
             const dateFormatFive = this.props.chartStoreDaily.queryDailySalesLineHandle.dateChangeOld;
             const dateFormatAll = this.props.chartStore.donutTotalSalesLastMonth.dateChangeData;
             const { MonthPicker } = DatePicker;
+            // console.log(dateFormatFive,dateFormatAll,"dateFormatAll")
             // console.log('AUTH STORE IN RENDER', authStore, authStore.isAuthenticated)
 
             // TODO: temporary add auto login

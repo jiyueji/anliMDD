@@ -1,8 +1,10 @@
 // import React, { Component } from 'react'
 // import ReactDOM from 'react-dom';
 // import { Provider } from 'mobx-react'
-// import { Router, Switch, Route } from 'react-router'
-// import history from './services/history'
+// // import { Router, Switch, Route } from 'react-router'
+// import { HashRouter as Router,Switch, Route } from 'react-router-dom';
+// import { createBrowserHistory, createHashHistory } from 'history';
+// // import history from './services/history'
 // import authStore from './stores/AuthStore'
 // import userStore from './stores/UserStore'
 // import searchStore from './stores/SearchStore'
@@ -23,6 +25,7 @@
 // import * as serviceWorker from './registerServiceWorker';
 // import { SecureRoute, Security, LoginCallback } from '@okta/okta-react';
 
+// const history = createHashHistory() // hash模式
 // const stores = {
 //     authStore,
 //     userStore,
@@ -38,20 +41,20 @@
 
 // ReactDOM.render(
 //     <Provider {...stores}>
-//         <App>
+//         {/* <App>
 //             <Router history={history}>
 //                 <Switch>
-//                     <Route exact path="/" component={Home} />
 //                     <Route path='/modify' exact component={Modify} />
+//                     <Route exact path="/" component={Home} />
 //                     <Route path={routes.login} component={LoginContainer} />
 //                     <Route path={routes.sign_up} component={RegisterContainer} />
 //                     <Route path={routes.users} component={UserListContainer} />
 //                 </Switch>
 //             </Router>
-//         </App>
-//         {/* <Router history={history}>
+//         </App> */}
+//         <Router history={history}>
 //             <Switch>
-//                 <Route path="/modify" component={Modify} />
+//                 <Route path='/modify' exact component={Modify} />
 //                 <App>
 //                     <Router history={history}>
 //                         <Switch>
@@ -63,7 +66,7 @@
 //                     </Router>
 //                 </App>
 //             </Switch>
-//         </Router> */}
+//         </Router>
 //     </Provider>,
 //     document.getElementById('root')
 // );
@@ -77,6 +80,9 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import history from './services/history'
+// import { HashRouter as Router,Switch, Route } from 'react-router-dom';
+// import { createBrowserHistory, createHashHistory } from 'history';
 import Home from './containers/Home'
 import Modify from './containers/Modify'
 import Protected from './containers/Protected';
@@ -92,10 +98,10 @@ import chartStoreDaily from './stores/ChartStoreDaily'
 import chartStoreSocial from './stores/ChartStoreSocial'
 import chartRemarks from './stores/chartRemarks'
 import { Provider } from 'mobx-react'
-import history from './services/history'
 import * as serviceWorker from './registerServiceWorker';
 import { SecureRoute, Security, LoginCallback } from '@okta/okta-react';
 
+// const history = createHashHistory() // hash模式
 const stores = {
     authStore,
     userStore,

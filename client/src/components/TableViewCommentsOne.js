@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { observer, inject } from 'mobx-react'
 import ApiService from '../services/ApiService'
 // 
-export default class TableViewComments extends Component {
+export default class TableViewCommentsOne extends Component {
   constructor() {
     super();
     this.state = {
@@ -35,7 +35,15 @@ export default class TableViewComments extends Component {
     // console.log(modifyDate,"modifyDate")
     var dataText = await ApiService.get_remarksMonth("", "sub1", "sales_remarks", modifyDate)
     dataText = dataText ? JSON.parse(dataText) : []
-    var remarksText = dataText[0] && dataText[0].remarks
+    var remarksTextBase64 = dataText[0] && dataText[0].remarks
+    if (remarksTextBase64) {
+      // 对base64转编码
+      var remarksTextDecode = atob(remarksTextBase64);
+      // 编码转字符串
+      var remarksText = decodeURI(remarksTextDecode);
+    }else{
+      var remarksText = ""
+    }
     this.setState({
       remarksText
     })

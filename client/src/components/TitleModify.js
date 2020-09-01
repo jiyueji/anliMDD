@@ -26,7 +26,15 @@ class TitleModify extends Component {
         var {id, keys, modifyDate} = this.props
         var dataText = await ApiService.get_remarksMonth("", id, keys, modifyDate)
         dataText = dataText ? JSON.parse(dataText) : []
-        var remarksText = dataText[0] && dataText[0].remarks
+        var remarksTextBase64 = dataText[0] && dataText[0].remarks
+        if (remarksTextBase64) {
+            // 对base64转编码
+            var remarksTextDecode = atob(remarksTextBase64);
+            // 编码转字符串
+            var remarksText = decodeURI(remarksTextDecode);
+          }else{
+            var remarksText = ""
+          }
         this.setState({
             remarksText
         })
