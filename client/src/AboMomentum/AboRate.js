@@ -21,12 +21,12 @@ export default class AboRate extends Component {
         var {modifyDateModify} = this.state
         return (
             <Fragment>
-                <div className="modifyAllTitle">
+                {/* <div className="modifyAllTitle">
                     <TitleModify titleName={'Consecutive qualification rate'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub3"} keys={"Consecutive_qualification_rate"} modifyDate={modifyDateModify} />
-                </div>
-                {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Consecutive qualification rate</div> */}
-                <div style={{ width: "100%", height: "342px", display: 'flex' }}>
-                    <div id="aboRateEcharts" style={{ width: "100%", height: "342px" }}></div>
+                </div> */}
+                <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Consecutive qualification rate</div>
+                <div style={{ width: "100%", height: "400px", display: 'flex' }}>
+                    <div id="aboRateEcharts" style={{ width: "100%", height: "400px" }}></div>
                 </div>
             </Fragment>
         )
@@ -100,7 +100,7 @@ export default class AboRate extends Component {
         aboRateEcharts.setOption({
             animationDuration: 0,
             grid: {
-                top: '10%',
+                top: '20%',
                 left: '4%',
                 right: '4%',
                 bottom: '15%',

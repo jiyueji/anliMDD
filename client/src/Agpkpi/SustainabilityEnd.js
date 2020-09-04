@@ -17,7 +17,8 @@ export default class Sustainability extends Component {
             targetFont: 0,
             sustainDataNumber: 0,
             kpiflagShow2:false,
-            modifyDateModify:""
+            modifyDateModify:"",
+            maxY:20,//动态Y轴
         }
     }
     //     <div className="remark1" style={{ position: 'absolute', left: '267px', top: '198px', display: 'none' }}>
@@ -32,8 +33,8 @@ export default class Sustainability extends Component {
             <Fragment>
                 <div style={{ position: 'relative' }}>
                     <div className="sustainabilityTitleAll">
-                        <TitleModify titleName={'End of Month % of Sales'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub2"} keys={"End_of_Month_%_of_Sales"} modifyDate={modifyDateModify}/>
-                        {/* <div className="sustainabilityTitle">End of Month % of Sales</div> */}
+                        {/* <TitleModify titleName={'End of Month % of Sales'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub2"} keys={"End_of_Month_%_of_Sales"} modifyDate={modifyDateModify}/> */}
+                        <div className="sustainabilityTitle">End of Month % of Sales</div>
                         <div className="kpitanShow" onClick={this.kpiflagShowhandle2.bind(this)}></div>
                     </div>
                     {
@@ -104,13 +105,21 @@ export default class Sustainability extends Component {
             sustainData.push(Math.round(item.y * 100))
         }) : ""
 
+        var maxY = 20;
+        var dataMaxNumber = Math.max.apply(null,sustainData)
+        if(dataMaxNumber && dataMaxNumber >= 20 && dataMaxNumber < 30){
+            maxY = 30;
+        }else if(dataMaxNumber && dataMaxNumber >= 30){
+            maxY = 40;
+        }
+
         var ytd = chartData.last_ytd_end_of_month_pct || 0
         var ytdShowFont = (ytd * 100).toFixed(1)
-        var ballYtd = Math.round((((1 - ((ytd * 100) / 40)) * 100))) + 1 + "%"
+        var ballYtd = Math.round((((1 - ((ytd * 100) / maxY)) * 100))) + 1 + "%"
         ytd = Math.round(((1 - ((ytd * 100) / 20)) * 100)) + "%"
 
         var targetLine = chartData.last_target_eom_pct || 0
-        var targetFont = ((((1 - ((targetLine * 100) / 40)) * 100))).toFixed(1) - 4 + "%"
+        var targetFont = ((((1 - ((targetLine * 100) / maxY)) * 100))).toFixed(1) - 4 + "%"
         targetLine = (targetLine * 100).toFixed(1)
         // console.log(targetLine)
 
@@ -133,6 +142,7 @@ export default class Sustainability extends Component {
             targetFont,
             sustainDataNumber,
             modifyDateModify,
+            maxY,//动态Y轴
         }, () => {
             this.echartsStart()
         })
@@ -189,7 +199,7 @@ export default class Sustainability extends Component {
                 {
                     type: 'value',
                     // data: monthShow,
-                    max: "40",
+                    max: this.state.maxY,//动态Y轴,
                     min: "0",
                     // boundaryGap: [0, '150%'],
                     axisLabel: {

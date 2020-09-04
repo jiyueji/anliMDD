@@ -54,15 +54,33 @@ export default class ModifyText extends Component {
         var elemMenu = this.refs.editorElemMenu;
         var elemBody = this.refs.editorElemBody;
         var editor = new E(elemMenu, elemBody)
-        // 使用 onchange 函数监听内容的变化，并实时更新到 state 中
-        editor.customConfig.onchange = html => {
+        editor.customConfig.pasteTextHandle = function (content) {// 自定义处理粘贴的文本内容
+            // content 即粘贴过来的内容（html 或 纯文本），可进行自定义处理然后返回
+            if (content == '' && !content) return ''
+            let str = content;
+            //处理的标签里的多余代码
+            str = str.replace(/<xml>[\s\S]*?<\/xml>/ig, '');
+            str = str.replace('/(\\n|\\r| class=(")?Mso[a-zA-Z]+(")?)/g', '');
+            let reg = new RegExp('<!--(.*?)-->', 'g')
+            str = str.replace(reg, '');
+            //str = str.replace(/<style>[\s\S]*?<\/style>/ig, '')
+            //str = str.replace(/<\/?[^>]*>/g, '')
+            // str = str.replace(/[ | ]*\n/g, '\n')
+            // str = str.replace(/&nbsp;/ig, '')
+            // console.log('富文本的content', JSON.parse(JSON.stringify(content)))
+            // console.log('****str修改后的content str', str)
+            return str
+        }
+        editor.customConfig.pasteFilterStyle = false// 关闭粘贴内容中的样式
+        editor.customConfig.onchange = html => {        // 使用 onchange 函数监听内容的变化，并实时更新到 state 中
             // console.log(this.state.editorContent,"this.state.editorContent")
-            // console.log(editor.txt.html(),"editor.txt.html()")
+            // console.log(editor.txt.html(), "editor.txt.html()")
             this.setState({
                 editorContent: editor.txt.html()
             })
         }
         editor.customConfig.zIndex = 100
+
         editor.customConfig.menus = [
             'head',  // 标题
             'bold',  // 粗体
@@ -96,6 +114,7 @@ export default class ModifyText extends Component {
         // console.log(editorElem_body)
         // editorElem_body.innerHTML = remarks
         var remarksStr = remarks
+        // console.log(remarks,"remarks")
         if (remarks) {
             // 对base64转编码
             var remarksDecode = atob(remarks);
