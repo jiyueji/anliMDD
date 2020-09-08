@@ -1,13 +1,14 @@
 import React, { Component, Fragment } from 'react'
 import echarts from 'echarts';
 import TitleModify from "../components/TitleModify.js"
-// import * as hlp from './Helper'
+import * as hlp from '../components/Helper'
 require('./styleAll.css')
 
 export default class Sustainability extends Component {
     constructor() {
         super();
         this.state = {
+            maxMonthStr:"",
             maxCalendarYear: "",
             chartData: {},
             sustainData: [],
@@ -25,7 +26,7 @@ export default class Sustainability extends Component {
     // style={{ top: ballYtd }}
     // style={{ position: 'absolute', left: '267px', top: ytd, display: 'none' }}
     render() {
-        var { maxCalendarYear, ytdShowFont, ballYtd, ytd, targetLine, targetFont, sustainDataNumber, kpiflagShow1 ,modifyDateModify} = this.state
+        var { maxCalendarYear, ytdShowFont, ballYtd, ytd, targetLine, targetFont, sustainDataNumber, kpiflagShow1 ,modifyDateModify,maxMonthStr} = this.state
         return (
             <Fragment>
                 <div style={{ position: 'relative' }}>
@@ -33,6 +34,7 @@ export default class Sustainability extends Component {
                         {/* <TitleModify titleName={'High PPV % of Sales'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub2"} keys={"High_PPV_%_of_Sales"} modifyDate={modifyDateModify}/> */}
                         <div className="sustainabilityTitle">High PPV % of Sales</div>
                         <div className="kpitanShow" onClick={this.kpiflagShowhandle1.bind(this)}></div>
+                        <div style={{ position: "absolute", right: ' 5%', top: '5%', fontSize: '12px', color: "#666" }}>As of {maxMonthStr}</div>
                     </div>
                     {
                         kpiflagShow1 ? <div className="kpiAgpDisplayFlag">
@@ -123,6 +125,7 @@ export default class Sustainability extends Component {
         }
         sustainDataNumber = ((sustainDataNumber - 1) / 11) * 100 + "%"
         var modifyDateModify = chartData.maxMonthStr || ""
+        var maxMonthStr = String(hlp.yearMonthToStr(chartData.maxMonthStr))
         this.setState({
             maxCalendarYear,
             chartData,
@@ -135,6 +138,7 @@ export default class Sustainability extends Component {
             sustainDataNumber,
             modifyDateModify,
             maxY,//动态Y轴
+            maxMonthStr,
         }, () => {
             this.echartsStart()
         })

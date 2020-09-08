@@ -192,7 +192,7 @@ class Home extends Component {
             if (this.props.chartStore && this.props.chartStoreAbo) {
                 this.props.chartStore.isPerfYear = !this.props.chartStore.isPerfYear
                 this.props.chartStoreAbo.isPerfYear = !this.props.chartStoreAbo.isPerfYear
-                this.props.chartStoreGrowth.isPerfYear = !this.props.chartStoreGrowth.isPerfYear
+                // this.props.chartStoreGrowth.isPerfYear = !this.props.chartStoreGrowth.isPerfYear
                 this.props.chartStoreDaily.isPerfYear = !this.props.chartStoreDaily.isPerfYear
                 this.props.chartStoreSocial.isPerfYear = !this.props.chartStoreSocial.isPerfYear
             }
