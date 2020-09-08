@@ -113,6 +113,7 @@ export default class EchartsMapCity extends Component {
         }
         // console.log(maxMinCity)
         var modifyDateModify = data.maxMonth || ""
+        // console.log(modifyDateModify,"modifyDateModify")
         this.setState({
             cityClusterAll, maxMinCity, bigSmallShow, isPerfYear,modifyDateModify
         }, () => {

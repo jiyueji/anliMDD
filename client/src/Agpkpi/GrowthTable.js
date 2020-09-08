@@ -26,6 +26,7 @@ export default class GrowthTable extends Component {
                             <TitleModify titleName={'Shape of the Business'} titlePerfYearFlag={true} titlePerfYear={false} id={"sub2"} keys={"Shape_of_the_Business"} modifyDate={modifyDateModify}/>
                             {/* <h3 style={{ fontSize: "14px", lineHeight: '58px', margin: '0', fontWeight: '700' }}>Shape of the Business (By Calendar Year)</h3> */}
                             <div className="kpitanShow" onClick={this.displayShowClose.bind(this)}></div>
+                            <div style={{ position: "absolute", right: ' 5%', top: '5%', fontSize: '12px', color: "#666" }}>As of {maxMonthStr}</div>
                             {/* <div style={{ fontSize: "12px", lineHeight: '58px' }}>As of {maxMonthStr}</div> */}
                         </div>
                         <div style={{ color: "#5b9ae9", fontWeight: '700' }}>

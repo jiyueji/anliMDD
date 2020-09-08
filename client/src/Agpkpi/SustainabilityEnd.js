@@ -1,12 +1,14 @@
 import React, { Component, Fragment } from 'react'
 import echarts from 'echarts';
 import TitleModify from "../components/TitleModify.js"
+import * as hlp from '../components/Helper'
 require('./styleAll.css')
 
 export default class Sustainability extends Component {
     constructor() {
         super();
         this.state = {
+            maxMonthStr:"",
             maxCalendarYear: "",
             chartData: {},
             sustainData: [],
@@ -28,14 +30,15 @@ export default class Sustainability extends Component {
     //     <div style={{ color: 'rgb(244,159,68)', fontSize: 'small', fontWeight: '600' }}>Target: 17.0%</div>
     // </div>
     render() {
-        var { maxCalendarYear, ytdShowFont, ballYtd, ytd, targetLine, targetFont, sustainDataNumber,kpiflagShow2,modifyDateModify } = this.state
+        var { maxCalendarYear, ytdShowFont, ballYtd, ytd, targetLine, targetFont, sustainDataNumber,kpiflagShow2,modifyDateModify,maxMonthStr } = this.state
         return (
             <Fragment>
                 <div style={{ position: 'relative' }}>
                     <div className="sustainabilityTitleAll">
-                        {/* <TitleModify titleName={'End of Month % of Sales'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub2"} keys={"End_of_Month_%_of_Sales"} modifyDate={modifyDateModify}/> */}
-                        <div className="sustainabilityTitle">End of Month % of Sales</div>
+                        <TitleModify titleName={'End of Month % of Sales'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub2"} keys={"End_of_Month_%_of_Sales"} modifyDate={modifyDateModify}/>
+                        {/* <div className="sustainabilityTitle">End of Month % of Sales</div> */}
                         <div className="kpitanShow" onClick={this.kpiflagShowhandle2.bind(this)}></div>
+                        <div style={{ position: "absolute", right: ' 5%', top: '6%', fontSize: '12px', color: "#666" }}>As of {maxMonthStr}</div>
                     </div>
                     {
                         kpiflagShow2 ? <div className="kpiAgpDisplayFlag">
@@ -131,6 +134,7 @@ export default class Sustainability extends Component {
         }
         sustainDataNumber = ((sustainDataNumber - 1) / 11) * 100 + "%"
         var modifyDateModify = chartData.maxMonthStr || ""
+        var maxMonthStr = String(hlp.yearMonthToStr(chartData.maxMonthStr))
         this.setState({
             maxCalendarYear,
             chartData,
@@ -143,6 +147,7 @@ export default class Sustainability extends Component {
             sustainDataNumber,
             modifyDateModify,
             maxY,//动态Y轴
+            maxMonthStr,
         }, () => {
             this.echartsStart()
         })

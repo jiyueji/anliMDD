@@ -9,19 +9,37 @@ class TitleModify extends Component {
         super();
         this.state = {
             modifyFlag: false,
-            remarksText:""
+            remarksText:"",
+            remarksTextFlag:false,
         }
     }
     render() {
         var { titleName, titlePerfYear,id, keys, modifyDate,titlePerfYearFlag } = this.props
-        var {modifyFlag,remarksText} = this.state
+        var {modifyFlag,remarksText,remarksTextFlag} = this.state
         return (
             <Fragment>
-                <TitleModifyTextShow titleName={titleName} titlePerfYear={titlePerfYear} getRemarksHandle={this.getRemarksHandle.bind(this)} remarksText={remarksText} titlePerfYearFlag={titlePerfYearFlag}/>
+                <TitleModifyTextShow titleName={titleName} titlePerfYear={titlePerfYear} getRemarksHandle={this.getRemarksHandle.bind(this)} remarksText={remarksText} remarksTextFlag={remarksTextFlag} titlePerfYearFlag={titlePerfYearFlag}/>
             </Fragment>
         )
     }
-
+    async componentWillReceiveProps(nextProps) {
+        var {id, keys,modifyDate} = nextProps
+        // console.log(id, keys,modifyDate,"modifyDate")
+        var dataTextF = await ApiService.get_remarksMonth("", id, keys, modifyDate)
+        if(dataTextF && dataTextF.length > 5){
+            var remarksTextFlag = true
+        }else{
+            var remarksTextFlag = false
+        }
+        // console.log(dataTextF,remarksTextFlag,"dataTextF")
+        this.setState({
+            remarksTextFlag,
+        })
+    }
+    // componentDidMount(){
+    //     var {id, keys,modifyDate} = this.props
+    //     console.log(id, keys,modifyDate,"modifyDate")
+    // }
     async getRemarksHandle(){
         var {id, keys, modifyDate} = this.props
         var dataText = await ApiService.get_remarksMonth("", id, keys, modifyDate)

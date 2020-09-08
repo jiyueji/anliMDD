@@ -10,7 +10,7 @@ export default class TitleModifyTextShow extends React.PureComponent {
         }
     }
     render() {
-        var { titleName, titlePerfYear,remarksText,titlePerfYearFlag} = this.props
+        var { titleName, titlePerfYear,remarksText,titlePerfYearFlag,remarksTextFlag} = this.props
         var {modifyFlag} = this.state
         // const chartRemarksText = this.props.chartRemarks.remarksMonthGet.remarks//拿到的数据
         return (
@@ -23,10 +23,11 @@ export default class TitleModifyTextShow extends React.PureComponent {
                             {titlePerfYear ? '(By Performance Year)' : '(By Calendar Year)'}
                         </span> : ""
                     }
-                    {/* <span style={{ fontSize: "12px" }}>
-                        {titlePerfYear ? '(By Performance Year)' : '(By Calendar Year)'}
-                    </span> */}
-                    <i className="fa fa-list-alt" style={{ marginLeft: "8px" }} onClick={this.modifyFlagHandle.bind(this,true)}></i>
+                    {
+                        remarksTextFlag ? 
+                        <i className="fa fa-list-alt" style={{ color:"yellow",marginLeft: "8px" }} onClick={this.modifyFlagHandle.bind(this,true)}></i> : 
+                        <i className="fa fa-list-alt" style={{ marginLeft: "8px" }} onClick={this.modifyFlagHandle.bind(this,true)}></i>
+                    }
                 </div>
                 {/* 弹框内容 */}
                 {

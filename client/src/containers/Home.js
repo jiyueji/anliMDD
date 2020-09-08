@@ -192,7 +192,7 @@ import { withOktaAuth } from '@okta/okta-react';
             if (this.props.chartStore && this.props.chartStoreAbo) {
                 this.props.chartStore.isPerfYear = !this.props.chartStore.isPerfYear
                 this.props.chartStoreAbo.isPerfYear = !this.props.chartStoreAbo.isPerfYear
-                this.props.chartStoreGrowth.isPerfYear = !this.props.chartStoreGrowth.isPerfYear
+                // this.props.chartStoreGrowth.isPerfYear = !this.props.chartStoreGrowth.isPerfYear
                 this.props.chartStoreDaily.isPerfYear = !this.props.chartStoreDaily.isPerfYear
                 this.props.chartStoreSocial.isPerfYear = !this.props.chartStoreSocial.isPerfYear
             }
@@ -378,7 +378,7 @@ import { withOktaAuth } from '@okta/okta-react';
                                         this.selectedTab === "AGP KPI" ? "" : this.selectedTab === "Daily Report" ? <div style={{ marginRight: "11%", lineHeight: "30px" }}>{dateFormatFive}</div> : <div className='custom-control custom-switch perf-switch-wrap' style={{ marginRight: "11%" }}>
                                             <label className='perf-lbl' htmlFor='perfYearSwitcher'>
                                                 Performance Year
-                        </label>
+                                            </label>
                                             <input
                                                 type='checkbox'
                                                 className='custom-control-input'
@@ -389,7 +389,7 @@ import { withOktaAuth } from '@okta/okta-react';
                                             />
                                             <label className='custom-control-label' htmlFor='perfYearSwitcher'>
                                                 Calendar Year
-                        </label>
+                                            </label>
                                         </div>
                                     }
                                     {
