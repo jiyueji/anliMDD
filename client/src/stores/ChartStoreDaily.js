@@ -4,6 +4,7 @@ import * as jslinq from 'jslinq'
 import _ from 'lodash'
 import * as hlp from '../components/Helper'
 import dLib from 'date-and-time'
+import { Result } from 'antd'
 
 const MONTHS_MAP = { 1: 'Jan', 2: 'Feb', 3: 'Mar', 4: 'Apr', 5: 'May', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Dec' }
 const MONTHS_MAP_F = { 1: 'January', 2: 'February', 3: 'March', 4: 'April', 5: 'May', 6: 'June', 7: 'July', 8: 'August', 9: 'September', 10: 'October', 11: 'November', 12: 'December' }
@@ -582,16 +583,26 @@ class ChartStoreDaily {
       // months_data: months_data,
     }
   }
-
+  async getFiveOneTwoDate(oldDateShow){
+    var dataGet = await ApiService.get_dailySalesTableByMonth("", oldDateShow)
+    var jsArr = dataGet ? JSON.parse(dataGet) : []
+    return jsArr
+  }
   @computed get dailyTableSales() {
     // const jsArr = toJS(this.dailyTableSalData) || 0
-    // const jsArr = this.isFiveDatePicker ? toJS(this.dailySalesTableByMonth) || 0 : toJS(this.dailyTableSalData) || 0
-    const jsArr = toJS(this.dailySalesTableByMonth) || 0
+    var jsArr = this.isFiveDatePicker ? toJS(this.dailySalesTableByMonth) || 0 : toJS(this.dailyTableSalData) || 0
+    // if(!this.isFiveDatePicker){
+    //   var jsArrOld = toJS(this.dailyTableSalData) || 0
+    //   var oldDateShow = jsArrOld[0].n_date
+    //   // this.fetchGetQueryDailySalesTableByMonth("", oldDateShow)
+    // }
+    // const jsArr = toJS(this.dailySalesTableByMonth) || 0
+    // const jsArr = toJS(this.dailySalesTableByMonth) || 0
     // const jsArr2 = toJS(this.dailyTableSalData) || 0
     if (!jsArr.length) {
       return false
     }
-    // console.log(jsArr,"1111")
+    var oldDateShow = jsArr[0].n_date
     // console.log(jsArr2,"22222")
     const ROWS_ORDER_MAP = {
       'Net Sales': 1,
@@ -631,6 +642,8 @@ class ChartStoreDaily {
       maxDMin1,
       maxDMin2,
       maxMonth:maxDateStr,
+      oldDateShow,
+      isFiveDatePicker:this.isFiveDatePicker,
     }
   }
 
@@ -640,7 +653,7 @@ class ChartStoreDaily {
     if (!jsArr.length) {
       return false
     }
-
+    var oldDateShow2 = jsArr[0].n_date
     const ROWS_ORDER_MAP = {
       'Recruitment': 1,
       'ABO': 2,
@@ -681,7 +694,8 @@ class ChartStoreDaily {
       tableData: dataState,
       maxDateTitle: maxDateTitle,
       maxDMin1,
-      maxDMin2
+      maxDMin2,
+      oldDateShow2,
     }
   }
 

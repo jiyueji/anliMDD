@@ -154,13 +154,12 @@ import { withOktaAuth } from '@okta/okta-react';
             this.props.chartStoreDaily.fetchGetQueryQueryDailySalesLine2ByMonth("", '20')//第五屏折线图的所有数据
             this.props.chartStoreDaily.fetchGetQueryDailySalEventsByMonth("", '20')//提示框
 
-            var time = (new Date).getTime() - 24 * 60 * 60 * 1000;
-            var yesterday = new Date(time);
-            var month = yesterday.getMonth();
-            var day = yesterday.getDate();
-            yesterday = yesterday.getFullYear() + (yesterday.getMonth() > 9 ? (yesterday.getMonth() + 1) : "0" + (yesterday.getMonth() + 1)) + (yesterday.getDate() > 9 ? (yesterday.getDate()) : "0" + (yesterday.getDate()));
-
-            this.props.chartStoreDaily.fetchGetQueryDailySalesTableByMonth("", yesterday)//前两个图的
+            // var time = (new Date).getTime() - 24 * 60 * 60 * 1000;
+            // var yesterday = new Date(time);
+            // var month = yesterday.getMonth();
+            // var day = yesterday.getDate();
+            // yesterday = yesterday.getFullYear() + (yesterday.getMonth() > 9 ? (yesterday.getMonth() + 1) : "0" + (yesterday.getMonth() + 1)) + (yesterday.getDate() > 9 ? (yesterday.getDate()) : "0" + (yesterday.getDate()));
+            // this.props.chartStoreDaily.fetchGetQueryDailySalesTableByMonth("", yesterday)//前两个图的
             // this.props.chartStoreDaily.fetchGetQueryDailyRecTableByMonth("",'20')//后两个图的
             // this.props.chartStoreDaily.fetchGetQueryDailyCommentsByMonth("",'20')//下面的文本框
 

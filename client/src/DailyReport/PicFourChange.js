@@ -4,6 +4,9 @@ import handPics from "../styles/assets/fiveHands.png"
 import tuliLine from "../styles/assets/tuliLine.jpg"
 import tulibackground from "../styles/assets/tulibackground.png"
 import echarts from 'echarts';
+import ApiService from '../services/ApiService'
+import dLib from 'date-and-time'
+import _ from 'lodash'
 import * as hlp from '../components/Helper'
 
 export default class PicFourChange extends Component {
@@ -13,7 +16,7 @@ export default class PicFourChange extends Component {
             allEvents: "Net Sales",//下面的可以变化的标题
             allEventsArr: ["Net Sales", "Order BV Sales", "Recruitment", "Buyer Counts"],
             idxIndexShow: 0,
-            activityFlag:true,//如果是第一个图就显示提示框的开关
+            activityFlag: true,//如果是第一个图就显示提示框的开关
 
             data: {},
             data2: {},
@@ -49,7 +52,7 @@ export default class PicFourChange extends Component {
         }
     }
     render() {
-        var { allEvents, netData, bvData, recruitmentDate, buyerCountsDate, changeName,activityFlag,promptBoxShow,data3MaxYear } = this.state
+        var { allEvents, netData, bvData, recruitmentDate, buyerCountsDate, changeName, activityFlag, promptBoxShow, data3MaxYear } = this.state
         return (
             <Fragment>
                 <div style={{ height: '160px', width: '100%', display: 'flex', justifyContent: 'space-between' }}>
@@ -111,28 +114,28 @@ export default class PicFourChange extends Component {
                             activityFlag ? <div>123123</div> : <div id="pieAngleEcharts" style={{ width: "100%", height: '320px' }}></div>
                         }
                     </div> */}
-                    <div style={{ width: '25%', height: "100%", display: "flex",overflow:"auto" }}>
+                    <div style={{ width: '25%', height: "100%", display: "flex", overflow: "auto" }}>
                         {
                             activityFlag ? <table width="100%" border="0" border-collapse="collapse" cellSpacing="0" cellPadding="0" style={{ textAlign: "center", fontSize: "12px", wordBreak: 'break-all' }}>
-                            <thead>
-                                <tr>
-                                    <th style={{ height: "35px", border: "1px solid #e5e6e9" }}>Start Day</th>
-                                    {/* <th style={{ height: "35px", border: "1px solid #e5e6e9" }}>Activity</th> */}
-                                    <th style={{ height: "35px", border: "1px solid #e5e6e9" }}>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    promptBoxShow.map((item, index) => {
-                                        return <tr key={index} style={{color:item.start_day.indexOf(data3MaxYear) > -1 ? "#5eaef2" : "",background:item.start_day.indexOf(data3MaxYear) > -1 ? "" : "#e0e1e2"}}>
-                                            <td style={{ height: "30px", border: "1px solid #e5e6e9",fontSize:"12px",whiteSpace:"nowrap"}}>{item.start_day}</td>
-                                            {/* <td style={{ height: "35px", border: "1px solid #e5e6e9"}}>{item.activity}</td> */}
-                                            <td style={{ height: "30px", border: "1px solid #e5e6e9",textAlign:"left",paddingLeft:"5px"}}>{item.promotion_desc}</td>
-                                        </tr>
-                                    })
-                                }
-                            </tbody>
-                        </table> : <div id="pieAngleEcharts" style={{ width: "100%", height: '320px' }}></div>
+                                <thead>
+                                    <tr>
+                                        <th style={{ height: "35px", border: "1px solid #e5e6e9" }}>Start Day</th>
+                                        {/* <th style={{ height: "35px", border: "1px solid #e5e6e9" }}>Activity</th> */}
+                                        <th style={{ height: "35px", border: "1px solid #e5e6e9" }}>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        promptBoxShow.map((item, index) => {
+                                            return <tr key={index} style={{ color: item.start_day.indexOf(data3MaxYear) > -1 ? "#5eaef2" : "", background: item.start_day.indexOf(data3MaxYear) > -1 ? "" : "#e0e1e2" }}>
+                                                <td style={{ height: "30px", border: "1px solid #e5e6e9", fontSize: "12px", whiteSpace: "nowrap" }}>{item.start_day}</td>
+                                                {/* <td style={{ height: "35px", border: "1px solid #e5e6e9"}}>{item.activity}</td> */}
+                                                <td style={{ height: "30px", border: "1px solid #e5e6e9", textAlign: "left", paddingLeft: "5px" }}>{item.promotion_desc}</td>
+                                            </tr>
+                                        })
+                                    }
+                                </tbody>
+                            </table> : <div id="pieAngleEcharts" style={{ width: "100%", height: '320px' }}></div>
                         }
                     </div>
                 </div>
@@ -142,20 +145,71 @@ export default class PicFourChange extends Component {
     }
     componentWillReceiveProps(nextProps) {
         var { data, data2, data3, dataOneLine, dataPromptBox } = nextProps
-        this.dateUpdateShowHandle(data, data2, data3, dataOneLine, dataPromptBox)
+        if (data.isFiveDatePicker) {
+            this.dateUpdateShowHandle(data, data2, data3, dataOneLine, dataPromptBox)
+        } else if (data && !data.isFiveDatePicker) {
+            this.getDataHandle(data, data2, data3, dataOneLine, dataPromptBox)
+        }
     }
     componentDidMount() {
-        // var { data, data2,data3,dataOneLine,dataPromptBox } = this.props
-        var data = this.props.data || {}
-        var data2 = this.props.data2 || {}
-        var data3 = this.props.data3 || {}
-        var dataOneLine = this.props.dataOneLine || {}
-        var dataPromptBox = this.props.dataPromptBox || {}
-        this.dateUpdateShowHandle(data, data2, data3, dataOneLine, dataPromptBox)
+        // var data = this.props.data || {}
+        // var data2 = this.props.data2 || {}
+        // var data3 = this.props.data3 || {}
+        // var dataOneLine = this.props.dataOneLine || {}
+        // var dataPromptBox = this.props.dataPromptBox || {}
+        // this.dateUpdateShowHandle(data, data2, data3, dataOneLine, dataPromptBox)
+    }
+    async getDataHandle(data, data2, data3, dataOneLine, dataPromptBox) {
+        // console.log(modifyDate,"modifyDate")
+        var oldDateShow = data.oldDateShow || ""
+        var oldDateShow2 = data2.oldDateShow2 || ""
+        var oldDateNew = oldDateShow && oldDateShow2 ? oldDateShow <= oldDateShow2 ? oldDateShow : oldDateShow2 : ""
+        
+        var dataGet = await ApiService.get_dailySalesTableByMonth("", oldDateNew)
+        dataGet = dataGet ? JSON.parse(dataGet) : []
+        if (!dataGet.length) {
+            return false
+        }
+        var ROWS_ORDER_MAP = {
+            'Net Sales': 1,
+            'ACCL': 2,
+            '3E': 3,
+            'ECOM': 4,
+            'Order BV Sales': 5
+        }
+        var dataState = _.sortBy(dataGet, (o) => {
+            return ROWS_ORDER_MAP[o.agg_type]
+        })
+        var dataGetObj = {
+            tableData: dataState,
+        }
+
+        var dataGet2 = await ApiService.get_dailyRecTableByMonth("", oldDateNew)
+        dataGet2 = dataGet2 ? JSON.parse(dataGet2) : []
+        if (!dataGet2.length) {
+            return false
+        }
+        var ROWS_ORDER_MAP2 = {
+            'Recruitment': 1,
+            'ABO': 2,
+            'PC': 3,
+            'FOA': 4,
+            'Buyer Counts': 5,
+            'ABO buyer count': 6,
+            'PC buyer count': 7,
+            'FOA buyer count': 8
+        }
+        var dataState2 = _.sortBy(dataGet2, (o) => {
+            return ROWS_ORDER_MAP2[o.type]
+        })
+        var dataGetObj2 = {
+            tableData: dataState2,
+        }
+        this.dateUpdateShowHandle(dataGetObj, dataGetObj2, data3, dataOneLine, dataPromptBox)
     }
     dateUpdateShowHandle(data, data2, data3, dataOneLine, dataPromptBox) {
         // console.log(data, "data")
-        var {allEvents,allEventsArr} = this.state
+        var { allEvents, allEventsArr } = this.state
         var changeName = []
         var netData = {}
         var bvData = {}
@@ -201,6 +255,7 @@ export default class PicFourChange extends Component {
                         oneForecastData = items.y
                     }
                 }) : ""
+                // console.log(item.mtd_sales,"item.mtd_sales")
                 netData.targetCompletionDta = Math.round(((item.mtd_sales / oneForecastData) * 100))
                 netData.monthData = Math.round(((item.mtd_sales || 0) / 1000000))
                 netData.monthData = netData.monthData.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,')
@@ -418,7 +473,7 @@ export default class PicFourChange extends Component {
                 }
             }
         })
-        
+
         this.setState({
             data,
             data2,
@@ -449,7 +504,7 @@ export default class PicFourChange extends Component {
             thisYearDataTwinkle,
             // pieThreeShowData,//玫瑰图加了数据的
             promptBoxShow,
-            activityFlag:true,
+            activityFlag: true,
             allEvents,
         }, () => {
             this.echartsShowLine();
@@ -458,7 +513,7 @@ export default class PicFourChange extends Component {
     }
     //点击图片下面切换数据
     picChangeDateHandle(idx, e) {
-        var { data, data2, changeNameArrShow, changeName, allEvents, allEventsArr, pieThreeDataArr, pieThreeDataArrAll, pieThreeLegend,activityFlag } = this.state
+        var { data, data2, changeNameArrShow, changeName, allEvents, allEventsArr, pieThreeDataArr, pieThreeDataArrAll, pieThreeLegend, activityFlag } = this.state
 
         allEvents = allEventsArr[idx]
         // if(e.target.childNodes[1].innerHTML){
@@ -501,15 +556,15 @@ export default class PicFourChange extends Component {
             item.name !== "New FOA Buyer" ? pieThreeLegend.push(item.name) : ""
         }) : ""
         this.setState({
-            changeName, allEvents, idxIndexShow, pieThreeDataArr, pieThreeLegend,activityFlag
+            changeName, allEvents, idxIndexShow, pieThreeDataArr, pieThreeLegend, activityFlag
         }, () => {
-            var { elmUpDateBlue,activityFlag } = this.state
+            var { elmUpDateBlue, activityFlag } = this.state
             if (elmUpDateBlue) {
                 elmUpDateBlue.classList.remove("picFourChangeNavActive");
                 document.getElementById("upDateBlueShow").classList.add("picFourChangeNavActive");
             }
             this.changeClickDataHandle(0);
-            if(!activityFlag){
+            if (!activityFlag) {
                 this.pieAngleHandle();
             }
         })

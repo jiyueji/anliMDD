@@ -806,7 +806,7 @@ class ChartStore {
     })
 
     revenue_forecast_usd_data = _.filter(revenue_forecast_usd_data, o => o.y !== null)
-
+    // console.log(revenue_forecast_usd_data,"revenue_forecast_usd_data")
     //预测值添加一个实际值作为预测值开始的日期数据；
     // if (revenue_forecast_usd_data.length && actual_sales_data.length) {
     //   revenue_forecast_usd_data.unshift( actual_sales_data[ actual_sales_data.length-1 ] )
