@@ -585,14 +585,15 @@ class ChartStoreDaily {
 
   @computed get dailyTableSales() {
     // const jsArr = toJS(this.dailyTableSalData) || 0
-    // const jsArr = this.isFiveDatePicker ? toJS(this.dailySalesTableByMonth) || 0 : toJS(this.dailyTableSalData) || 0
-    const jsArr = toJS(this.dailySalesTableByMonth) || 0
+    const jsArr = this.isFiveDatePicker ? toJS(this.dailySalesTableByMonth) || 0 : toJS(this.dailyTableSalData) || 0
+    // const jsArr = toJS(this.dailySalesTableByMonth) || 0
     // const jsArr2 = toJS(this.dailyTableSalData) || 0
     if (!jsArr.length) {
       return false
     }
     // console.log(jsArr,"1111")
     // console.log(jsArr2,"22222")
+    var oldDateShow = jsArr[0].n_date
     const ROWS_ORDER_MAP = {
       'Net Sales': 1,
       'ACCL': 2,
@@ -629,7 +630,9 @@ class ChartStoreDaily {
       tableData: dataState,
       maxDateTitle: maxDateTitle,
       maxDMin1,
-      maxDMin2
+      maxDMin2,
+      oldDateShow,
+      isFiveDatePicker:this.isFiveDatePicker,
     }
   }
 
@@ -639,7 +642,7 @@ class ChartStoreDaily {
     if (!jsArr.length) {
       return false
     }
-
+    var oldDateShow2 = jsArr[0].n_date
     const ROWS_ORDER_MAP = {
       'Recruitment': 1,
       'ABO': 2,
@@ -680,14 +683,15 @@ class ChartStoreDaily {
       tableData: dataState,
       maxDateTitle: maxDateTitle,
       maxDMin1,
-      maxDMin2
+      maxDMin2,
+      oldDateShow2,
     }
   }
 
   @computed get dailySalesEvents() {
     // const jsArr = toJS(this.dailySalEventsData) || []
     const jsArr = toJS(this.dailySalEventsByMonth) || []  //新接口
-
+    // console.log(jsArr,"jsArr")
     if (!jsArr.length) {
       return false
     }
@@ -696,7 +700,7 @@ class ChartStoreDaily {
       o.start_day = dLib.format(dLib.parse(o.start_day, 'YYYYMMDD'), 'MMM. DD YYYY')
       return o
     })
-
+    // console.log(dataState,"dataState")
     // dataState.sort((a, b) => {
     //   return b.n_month - a.n_month;
     // });

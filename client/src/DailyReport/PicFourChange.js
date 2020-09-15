@@ -4,6 +4,9 @@ import handPics from "../styles/assets/fiveHands.png"
 import tuliLine from "../styles/assets/tuliLine.jpg"
 import tulibackground from "../styles/assets/tulibackground.png"
 import echarts from 'echarts';
+import ApiService from '../services/ApiService'
+import dLib from 'date-and-time'
+import _ from 'lodash'
 import * as hlp from '../components/Helper'
 
 export default class PicFourChange extends Component {
@@ -142,16 +145,67 @@ export default class PicFourChange extends Component {
     }
     componentWillReceiveProps(nextProps) {
         var { data, data2, data3, dataOneLine, dataPromptBox } = nextProps
-        this.dateUpdateShowHandle(data, data2, data3, dataOneLine, dataPromptBox)
+        if (data.isFiveDatePicker) {
+            this.dateUpdateShowHandle(data, data2, data3, dataOneLine, dataPromptBox)
+        } else if (data && !data.isFiveDatePicker) {
+            this.getDataHandle(data, data2, data3, dataOneLine, dataPromptBox)
+        }
     }
     componentDidMount() {
-        // var { data, data2,data3,dataOneLine,dataPromptBox } = this.props
         var data = this.props.data || {}
         var data2 = this.props.data2 || {}
         var data3 = this.props.data3 || {}
         var dataOneLine = this.props.dataOneLine || {}
         var dataPromptBox = this.props.dataPromptBox || {}
         this.dateUpdateShowHandle(data, data2, data3, dataOneLine, dataPromptBox)
+    }
+    async getDataHandle(data, data2, data3, dataOneLine, dataPromptBox) {
+        // console.log(modifyDate,"modifyDate")
+        var oldDateShow = data.oldDateShow || ""
+        var oldDateShow2 = data2.oldDateShow2 || ""
+        var oldDateNew = oldDateShow && oldDateShow2 ? oldDateShow <= oldDateShow2 ? oldDateShow : oldDateShow2 : ""
+        
+        var dataGet = await ApiService.get_dailySalesTableByMonth("", oldDateNew)
+        dataGet = dataGet ? JSON.parse(dataGet) : []
+        if (!dataGet.length) {
+            return false
+        }
+        var ROWS_ORDER_MAP = {
+            'Net Sales': 1,
+            'ACCL': 2,
+            '3E': 3,
+            'ECOM': 4,
+            'Order BV Sales': 5
+        }
+        var dataState = _.sortBy(dataGet, (o) => {
+            return ROWS_ORDER_MAP[o.agg_type]
+        })
+        var dataGetObj = {
+            tableData: dataState,
+        }
+
+        var dataGet2 = await ApiService.get_dailyRecTableByMonth("", oldDateNew)
+        dataGet2 = dataGet2 ? JSON.parse(dataGet2) : []
+        if (!dataGet2.length) {
+            return false
+        }
+        var ROWS_ORDER_MAP2 = {
+            'Recruitment': 1,
+            'ABO': 2,
+            'PC': 3,
+            'FOA': 4,
+            'Buyer Counts': 5,
+            'ABO buyer count': 6,
+            'PC buyer count': 7,
+            'FOA buyer count': 8
+        }
+        var dataState2 = _.sortBy(dataGet2, (o) => {
+            return ROWS_ORDER_MAP2[o.type]
+        })
+        var dataGetObj2 = {
+            tableData: dataState2,
+        }
+        this.dateUpdateShowHandle(dataGetObj, dataGetObj2, data3, dataOneLine, dataPromptBox)
     }
     dateUpdateShowHandle(data, data2, data3, dataOneLine, dataPromptBox) {
         // console.log(data, "data")
@@ -359,6 +413,7 @@ export default class PicFourChange extends Component {
         // console.log(promptBoxShow, "promptBoxShow")
         // promptBoxShow = promptBoxShow.sort((a, b)=> {
         //     return a.promotion_desc - b.promotion_desc;
+        //     return a.sku_type - b.sku_type;
         // });
         // console.log(promptBoxShow, "promptBoxShow22222")
 
