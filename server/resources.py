@@ -594,7 +594,7 @@ class DailySalEventsByMonth(Resource):
         data = parser3.parse_args()
         month = data['month']
 
-        queryStr = "select * from qa_test.query_daily_48_promotions where " + "n_month like '" +month + "%'"
+        queryStr = "select * from qa_test.query_daily_48_promotions where " + "n_month like '" +month + "%'" + " order by start_day desc,promotion_desc"
         return performQuery(queryStr)
 
 class DailyCommentsByMonth(Resource):
