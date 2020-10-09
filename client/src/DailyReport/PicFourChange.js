@@ -116,7 +116,7 @@ export default class PicFourChange extends Component {
                     </div> */}
                     <div style={{ width: '25%', height: "100%", display: "flex", overflow: "auto" }}>
                         {
-                            activityFlag ? <table width="100%" border="0" border-collapse="collapse" cellSpacing="0" cellPadding="0" style={{ textAlign: "center", fontSize: "12px", wordBreak: 'break-all' }}>
+                            activityFlag ? <table width="100%" border="0" border-collapse="collapse" cellSpacing="0" cellPadding="0" className="picFourChangeTable">
                                 <thead>
                                     <tr>
                                         <th style={{ height: "35px", border: "1px solid #e5e6e9" }}>Start Day</th>

@@ -1435,6 +1435,16 @@ label.bot-chart-com-sm {
         border-bottom: 0;
         border-right: 0;
     }
+    /* 第五屏的表格的样式 */
+    .picFourChangeTable{
+        text-align: center;
+        font-size: 12px;
+        word-break: break-all;
+    }
+    .picFourChangeTable td,
+    .picFourChangeTable th {
+        padding: 0;
+    }
   /* blockquote 样式 */
   /* blockquote {
     display: block;

@@ -499,7 +499,7 @@ export default class AboBarTwoEcharts extends Component {
             grid: {
                 left: '6.5%',
                 right: '35%',
-                bottom: '20%',
+                bottom: '23%',
                 top: '15%',
                 containLabel: true
             },
@@ -521,7 +521,8 @@ export default class AboBarTwoEcharts extends Component {
             xAxis: [{
                 type: 'category',
                 // data: this.state.downShowX,
-                data: ["Bronze (15%)", 'New ABO'],
+                // data: ["Bronze (15%)", 'New ABO'],
+                data: ["15%er", 'New ABO'],
                 axisLine: {
                     show: false,
                     lineStyle: {
