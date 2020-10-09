@@ -189,7 +189,7 @@ export default class FoaConvertedToAbo extends Component {
                 // data: ['Actual Renewal Rate', 'Prediction Renewal Rate'],
                 data: [
                     { name: 'FOA Converted to ABO/PC Count', icon: 'rect' },
-                    { name: 'Convertion %', icon: "line" }
+                    { name: 'Conversion %', icon: "line" }
                 ],
             },
             series: [
@@ -227,7 +227,7 @@ export default class FoaConvertedToAbo extends Component {
                     data: this.state.foaConvertedToAboPcData,
                 },
                 {
-                    name: 'Convertion %',
+                    name: 'Conversion %',
                     data: this.state.convertionDowmData,
                     type: 'line',
                     yAxisIndex: 1,
