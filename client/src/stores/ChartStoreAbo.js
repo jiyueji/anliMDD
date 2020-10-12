@@ -477,6 +477,7 @@ class ChartStoreAbo {
       var DatePicker = this.isAllDatePicker.slice(4, 6)
     } else {
       var maxPfYtd = jsArr.length && jsArr[jsArr.length - 1]['data_desc'].slice(2, 4)
+      var DatePicker = jsArr.length && jsArr[jsArr.length - 1]['clnd_month'].slice(4, 6)
     }
     var dataState = []
     jsArr.map((item, index) => {
@@ -582,7 +583,12 @@ class ChartStoreAbo {
     }) : ""
     var maxYearStr = NOW_MAXDATE.toString()
     var maxYearStrPF = hlp.yearToPfPref2(maxYearStr)
-    // console.log(dataState,"dataState")
+    if (maxYearStr && maxYearStr.slice(4, 6) > 8) {
+      var maxYear = maxYearStr.slice(0,4)
+      maxYear = Number(maxYear) + 1
+      var maxYearStrPF = hlp.yearToPfPref2(maxYear)
+    }
+
     return {
       YTD_DATA: YTD_DATA,
       CSI_AMT: CSI_AMT,
@@ -695,7 +701,6 @@ class ChartStoreAbo {
     if (!jsArr.length) {
       return false
     }
-
     // let dataState = jsArr
     // const maxYear = parseInt(dataState.length && dataState[0].perf_yr)
 
@@ -706,7 +711,7 @@ class ChartStoreAbo {
       var maxYear = parseInt(jsArr.length && jsArr[0].max_month.slice(0, 4))
       var maxMonthStr = jsArr[0].max_month
     }
-    if (this.isAllDatePicker && this.isAllDatePicker.slice(4, 6) > 8) {
+    if (maxMonthStr && maxMonthStr.slice(4, 6) > 8) {
       maxYear = Number(maxYear) + 1
     }
     // let maxMonthStr

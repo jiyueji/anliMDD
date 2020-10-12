@@ -10,31 +10,31 @@ export default class TitleModifyTextShow extends React.PureComponent {
         }
     }
     render() {
-        var { titleName, titlePerfYear,remarksText,titlePerfYearFlag,remarksTextFlag} = this.props
-        var {modifyFlag} = this.state
+        var { titleName, titlePerfYear, remarksText, titlePerfYearFlag, remarksTextFlag } = this.props
+        var { modifyFlag } = this.state
         // const chartRemarksText = this.props.chartRemarks.remarksMonthGet.remarks//拿到的数据
         return (
             <Fragment>
                 <div className="modifyTitleCss">
                     {titleName}
                     {
-                        titlePerfYearFlag ? 
-                        <span style={{ fontSize: "12px" }}>
-                            {titlePerfYear ? '(By Performance Year)' : '(By Calendar Year)'}
-                        </span> : ""
+                        titlePerfYearFlag ?
+                            <span style={{ fontSize: "12px" }}>
+                                {titlePerfYear ? '(By Performance Year)' : '(By Calendar Year)'}
+                            </span> : ""
                     }
                     {
-                        remarksTextFlag ? 
-                        <i className="fa fa-list-alt" style={{ color:"yellow",marginLeft: "8px" }} onClick={this.modifyFlagHandle.bind(this,true)}></i> : 
-                        <i className="fa fa-list-alt" style={{ marginLeft: "8px" }} onClick={this.modifyFlagHandle.bind(this,true)}></i>
+                        remarksTextFlag ?
+                            <i className="fa fa-clipboard" id="remarksIcon" style={{  marginLeft: "8px" }} onClick={this.modifyFlagHandle.bind(this, true)}></i> :
+                            <i className="fa fa-clipboard" style={{ color: "rgba(0,0,0,0.2)", marginLeft: "8px" }} onClick={this.modifyFlagHandle.bind(this, true)}></i>
                     }
                 </div>
                 {/* 弹框内容 */}
                 {
                     modifyFlag ? <div className="modifyFlagCss">
-                        <div className="modifyFlagClose" onClick={this.modifyFlagHandle.bind(this,false)}>X</div>
+                        <div className="modifyFlagClose" onClick={this.modifyFlagHandle.bind(this, false)}>X</div>
                         {/* <div>{remarksText}</div> */}
-                        <div dangerouslySetInnerHTML={{__html:remarksText}}></div>
+                        <div dangerouslySetInnerHTML={{ __html: remarksText }}></div>
                         {/* {chartRemarksText} */}
                     </div> : ""
                 }
@@ -48,5 +48,8 @@ export default class TitleModifyTextShow extends React.PureComponent {
         this.setState({
             modifyFlag
         })
+    }
+    componentDidMount() {
+
     }
 }
