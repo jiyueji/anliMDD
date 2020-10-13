@@ -54,6 +54,7 @@ class Home extends Component {
                 thisPageTitle: "Update on 9th of each month",
                 nowDateMonth: "",
                 nowDateDay: "",
+                nowDateYear:"",
             }
             //        this.onClickEditDashboard = this.onClickEditDashboard.bind(this)
         }
@@ -228,20 +229,22 @@ class Home extends Component {
             if (!this.isFiveDatePicker) {//当刚进入系统的时候获取目前数据的实际月份和日
                 var nowDateMonth = this.props.chartStoreDaily.queryDailySalesLineHandle.dateChangeOld.slice(5, 7)
                 var nowDateDay = this.props.chartStoreDaily.queryDailySalesLineHandle.dateChangeOld.slice(8, 10)
+                var nowDateYear = this.props.chartStoreDaily.queryDailySalesLineHandle.dateChangeOld.slice(0, 4)
                 this.setState({
                     nowDateMonth,
                     nowDateDay,
+                    nowDateYear,
                 })
             } else {
-                var { nowDateMonth, nowDateDay } = this.state
+                var { nowDateMonth, nowDateDay,nowDateYear } = this.state
             }
             //dateString是目前选择的年加月
             var antdChangeDateMonth = dateString.slice(5, 7)//目前选择的月
             var antdChangeDateYear = dateString.slice(0, 4)//目前选择的年
             var getThisMonthDay = new Date(antdChangeDateYear, antdChangeDateMonth, 0).getDate()//根据选择年月算月有多少天
-            this.isFiveDatePicker = antdChangeDateMonth == nowDateMonth ? moment(date).format('YYYYMM') + nowDateDay : moment(date).format('YYYYMM') + getThisMonthDay
+            this.isFiveDatePicker = antdChangeDateYear == nowDateYear && antdChangeDateMonth == nowDateMonth ? moment(date).format('YYYYMM') + nowDateDay : moment(date).format('YYYYMM') + getThisMonthDay
             //如果没有进行日期选择那么就用最之前的日期进行传值，选择后默认为选择月+最后一天
-            this.props.chartStoreDaily.isFiveDatePicker = antdChangeDateMonth == nowDateMonth ? moment(date).format('YYYYMM') + nowDateDay : moment(date).format('YYYYMM') + getThisMonthDay
+            this.props.chartStoreDaily.isFiveDatePicker = antdChangeDateYear == nowDateYear && antdChangeDateMonth == nowDateMonth ? moment(date).format('YYYYMM') + nowDateDay : moment(date).format('YYYYMM') + getThisMonthDay
             this.props.chartStoreDaily.fetchGetQueryDailySalesTableByMonth("", this.isFiveDatePicker)//
             this.props.chartStoreDaily.fetchGetQueryDailyRecTableByMonth("", this.isFiveDatePicker)//后两个图的
             this.props.chartStoreDaily.fetchGetQueryDailyCommentsByMonth("", this.isFiveDatePicker)

@@ -477,6 +477,7 @@ class ChartStoreAbo {
       var DatePicker = this.isAllDatePicker.slice(4, 6)
     } else {
       var maxPfYtd = jsArr.length && jsArr[jsArr.length - 1]['data_desc'].slice(2, 4)
+      var DatePicker = jsArr.length && jsArr[jsArr.length - 1]['clnd_month'].slice(4, 6)
     }
     var dataState = []
     jsArr.map((item, index) => {
@@ -582,6 +583,11 @@ class ChartStoreAbo {
     }) : ""
     var maxYearStr = NOW_MAXDATE.toString()
     var maxYearStrPF = hlp.yearToPfPref2(maxYearStr)
+    if (maxYearStr && maxYearStr.slice(4, 6) > 8) {
+      var maxYear = maxYearStr.slice(0, 4)
+      maxYear = Number(maxYear) + 1
+      var maxYearStrPF = hlp.yearToPfPref2(maxYear)
+    }
     // console.log(dataState,"dataState")
     return {
       YTD_DATA: YTD_DATA,
@@ -594,7 +600,7 @@ class ChartStoreAbo {
       NOW_MAXDATE: maxYearStr,
       NOW_MAXDATEPF: maxYearStrPF,
       DatePicker: DatePicker,
-      dataState:dataState,
+      dataState: dataState,
     }
   }
 
@@ -683,7 +689,7 @@ class ChartStoreAbo {
       renewal_rate_prediction_data: renewal_rate_prediction_data,
       scatter_data: scatter_data,
       isPerfYear: this.isPerfYear,
-      maxMonthStr:maxDate,
+      maxMonthStr: maxDate,
     }
   }
 
@@ -706,7 +712,7 @@ class ChartStoreAbo {
       var maxYear = parseInt(jsArr.length && jsArr[0].max_month.slice(0, 4))
       var maxMonthStr = jsArr[0].max_month
     }
-    if (this.isAllDatePicker && this.isAllDatePicker.slice(4, 6) > 8) {
+    if (maxMonthStr && maxMonthStr.slice(4, 6) > 8) {
       maxYear = Number(maxYear) + 1
     }
     // let maxMonthStr
@@ -1006,7 +1012,7 @@ class ChartStoreAbo {
       churn_abo_data: churn_abo_data,
       months_data: months_data,
       isPerfYear: this.isPerfYear,
-      maxMonthStr:maxMonthStr,
+      maxMonthStr: maxMonthStr,
     }
   }
 
@@ -1184,7 +1190,7 @@ class ChartStoreAbo {
       maxYear: maxYearStr,
       prevYear: prevYearStr,
       isAllDatePicker: this.isAllDatePicker,
-      maxMonthStr:maxMonthStr,
+      maxMonthStr: maxMonthStr,
     }
   }
 
