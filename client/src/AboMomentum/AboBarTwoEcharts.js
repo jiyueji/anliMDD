@@ -42,11 +42,11 @@ export default class AboBarTwoEcharts extends Component {
                     <li>% Earner of Total</li>
                     <li>
                         <div>
-                            {totalEarn.thisEarn}%
+                            {totalEarn.lastEarn}%
                             <p></p>
                         </div>
                         <div>
-                            {totalEarn.lastEarn}%
+                            {totalEarn.thisEarn}%
                             <p></p>
                         </div>
                     </li>
@@ -499,7 +499,7 @@ export default class AboBarTwoEcharts extends Component {
             grid: {
                 left: '6.5%',
                 right: '35%',
-                bottom: '23%',
+                bottom: '30%',
                 top: '15%',
                 containLabel: true
             },
