@@ -142,7 +142,7 @@ class SalesPerformanceContainer extends React.PureComponent {
               {/* 多功能折线图 */}
               <LineChartMonthlyEchaets data={chartStore.totalSalesLineMonth} datas={chartStore.totalSalesLineYear} />
             </div>
-            <div className="sb-wrap" style={{ width: '48.5%', height: '300px', background: '#ffffff', borderRadius: "10px", position: "relative" }}>
+            <div className="sb-wrap" style={{ width: '48.5%', height: '300px', background: '#ffffff', borderRadius: "10px", position: "relative",fontSize:"12px",lineHeight:"16px"  }}>
               {/* text */}
               {/* {
                 contrastDate == contrastmaxMonthStr ? <TableViewComments data={chartStore.performance2Com}/> : ""

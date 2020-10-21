@@ -105,7 +105,7 @@ class DailyReportContainer extends React.PureComponent {
         </div> */}
 
         <div className="page-block">
-          <div className="sb-wrap" style={{ marginBottom: "0", height: "auto" }}>
+          <div className="sb-wrap" style={{ marginBottom: "0", height: "auto",fontSize:"12px",lineHeight:"16px" }}>
             {/* {
               contrastDate == contrastmaxMonthStr ? <TableViewComments data={chartStoreDaily.dailyComments} isMaxDate={true} /> : ""
             } */}

@@ -37,7 +37,7 @@ import { withOktaAuth } from '@okta/okta-react';
  * Home page extra component
  */
 @inject('authStore', 'chartStore', 'chartStoreAbo', 'chartStoreGrowth', 'chartStoreDaily', 'chartStoreSocial') @observer
-class Home extends Component {
+export default withOktaAuth(class Home extends Component {
 
         @observable selectedTab = 'Sales Performance'
         @observable isPerfYear = true
@@ -350,7 +350,8 @@ class Home extends Component {
             // }
             var { thisWindowWidth, thisPageTitle } = this.state
             // if (this.props.authState.isPending) return <div>Loading...</div>;
-            return <div className="dashboard-wrap">
+            return this.props.authState.isAuthenticated ?
+            <div className="dashboard-wrap">
                     {authStore.isAuthenticated &&
                         <React.Fragment>
                             <div className="container-fluid">
@@ -438,11 +439,12 @@ class Home extends Component {
                             </div>
                         </React.Fragment>
                     }
-                </div>
+                </div> :
+                <button onClick={this.login}>Login</button>;
         }
-    }
+    })
 
-export default Home
+// export default Home
 
 // import React, { Component } from 'react';
 // import { withOktaAuth } from '@okta/okta-react';

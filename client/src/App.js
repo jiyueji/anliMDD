@@ -20,12 +20,12 @@ class App extends Component {
     //     await this.props.authStore.fetchProfile()
     // }
 
-    // async componentDidMount() {
-    //     await this.props.authStore.login({
-    //         username: 'user',
-    //         password: 'password'
-    //     })
-    // }
+    async componentDidMount() {
+        await this.props.authStore.login({
+            username: 'user',
+            password: 'password'
+        })
+    }
 
     logoutHandler = async () => {
         await this.props.authStore.logout()
