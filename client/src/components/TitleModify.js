@@ -26,8 +26,11 @@ class TitleModify extends Component {
         var {id, keys,modifyDate} = nextProps
         // console.log(id, keys,modifyDate,"modifyDate")
         var dataTextF = await ApiService.get_remarksMonth("", id, keys, modifyDate)
+        // console.log(dataTextF,"dataTextF")
         if(dataTextF && dataTextF.length > 5){
-            var remarksTextFlag = true
+            dataTextF = dataTextF ? JSON.parse(dataTextF) : []
+            var remarksTextShow = dataTextF[0] && dataTextF[0].remarks
+            var remarksTextFlag = remarksTextShow ? true : false
         }else{
             var remarksTextFlag = false
         }
