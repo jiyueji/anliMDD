@@ -142,7 +142,7 @@ class Modify extends Component {
     var modifyDate = date.getFullYear() + modifyDateGetMonth
     //第五
     date.setTime(date.getTime()-24*60*60*1000);
-    var modifyDateGetMonthFive = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : toString((date.getMonth() + 1))
+    var modifyDateGetMonthFive = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1
     var modifyDateFive = (date.getFullYear() + "/" + modifyDateGetMonthFive + "/" + date.getDate()).replace(/\//g,'')
     this.setState({
       modifyDate,modifyDateFive
