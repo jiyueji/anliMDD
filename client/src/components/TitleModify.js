@@ -30,6 +30,15 @@ class TitleModify extends Component {
         if(dataTextF && dataTextF.length > 5){
             dataTextF = dataTextF ? JSON.parse(dataTextF) : []
             var remarksTextShow = dataTextF[0] && dataTextF[0].remarks
+            // if (remarksTextShow) {
+            //     // 对base64转编码
+            //     var remarksTextShowDecode = atob(remarksTextShow);
+            //     // 编码转字符串
+            //     var remarksTextShowText = decodeURI(remarksTextShowDecode);
+            //   }else{
+            //     var remarksTextShowText = ""
+            //   }
+            // console.log(remarksTextShowText,"remarksTextShowText")
             var remarksTextFlag = remarksTextShow ? true : false
         }else{
             var remarksTextFlag = false

@@ -10,6 +10,7 @@ class ApiSerice {
     constructor() {
         // this.api_url = 'http://52.82.35.187:5000'; //'http://52.82.35.187:5000'
         this.api_url = 'http://localhost:80';
+        // this.api_url = 'http://10.123.7.21:5000';
         // this.api_url = "http://52.82.15.213:5000";//新配置环境QA
         // this.api_url = 'http://52.83.75.191:5000';//老版本保存
     }
@@ -45,7 +46,8 @@ class ApiSerice {
         if (params) {
             payload.body = JSON.stringify(params);
         }
-        const res = remarks ? await fetch(`${this.api_url}${url}?parentid=${parentid}&id=${id}&n_month=${n_month}&remarks=${remarks}`) : await fetch(`${this.api_url}${url}?id=${id}&parentid=${parentid}&n_month=${n_month}`)
+        // const res = remarks ? await fetch(`${this.api_url}${url}?parentid=${parentid}&id=${id}&n_month=${n_month}&remarks=${remarks}`) : await fetch(`${this.api_url}${url}?parentid=${parentid}&id=${id}&n_month=${n_month}`)
+        const res = await fetch(`${this.api_url}${url}?parentid=${parentid}&id=${id}&n_month=${n_month}&remarks=${remarks}`)
         const status = res.status;
         const body = await res.json();
         return { status, body };
