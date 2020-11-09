@@ -12,18 +12,38 @@ export default class FoaSalesLineBar extends Component {
             // maxYShow:"",
             // isPerfYearAbo:false,
             monthShowAbo: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            modifyDateModify:""
+            modifyDateModify: "",
+            dataTable: {},
         }
     }
     render() {
-        var {modifyDateModify} = this.state
+        var { modifyDateModify, dataTable } = this.state
         return (
             <Fragment>
                 <div className="modifyAllTitle">
                     <TitleModify titleName={'FOA Sales($)'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub4"} keys={"FOA_Sales"} modifyDate={modifyDateModify} />
                 </div>
                 {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Sales($)</div> */}
-                <div  className="allContent">
+                <table width="30%" border="0" border-collapse="collapse" cellSpacing="0" cellPadding="0" className="FourTopTable">
+                    <tbody>
+                        <tr style={{ fontWeight: '600' }}>
+                            <td>YTD {dataTable.maxMonth}</td>
+                            <td>SPLY</td>
+                            <td>Growth</td>
+                        </tr>
+                        <tr>
+                            <td>{dataTable.total_foa_sales || ""}{dataTable.total_foa_sales ? "m" : ""}</td>
+                            <td>{dataTable.total_foa_sales_ly || ""}{dataTable.total_foa_sales_ly ? "m" : ""}</td>
+                            <td style={{ color: dataTable.total_foa_sales_growth && dataTable.total_foa_sales_growth > 0 ? "#16b6aa" : "#ff0000" }}>{dataTable.total_foa_sales_growth ? dataTable.total_foa_sales_growth > 0 ? "+" : "" : ""}{dataTable.total_foa_sales_growth || ""}{dataTable.total_foa_sales_growth ? "%" : ""}</td>
+                        </tr>
+                        <tr>
+                            <td>{dataTable.total_foa_sales_pct || ""}{dataTable.total_foa_sales_pct ? "%" : ""}</td>
+                            <td>{dataTable.total_foa_sales_pct_ly || ""}{dataTable.total_foa_sales_pct_ly ? "%" : ""}</td>
+                            <td style={{ color: dataTable.total_foa_sales_pct_growth && dataTable.total_foa_sales_pct_growth > 0 ? "#16b6aa" : "#ff0000" }}>{dataTable.total_foa_sales_pct_growth ? dataTable.total_foa_sales_pct_growth > 0 ? "+" : "" : ""}{dataTable.total_foa_sales_pct_growth || ""}{dataTable.total_foa_sales_pct_growth ? "pt" : ""}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div className="allContent">
                     <div id="foaBarEcharts" className="allContentEcharts"></div>
                 </div>
             </Fragment>
@@ -49,6 +69,7 @@ export default class FoaSalesLineBar extends Component {
     }
     upDateShowDataFoa() {
         var data = this.props.data || {}
+        var dataTable = this.props.dataTable
         var modifyDateModify = data.maxMonthStr || ""
         var { total_foa_sales, total_pct_data } = data
         var { monthShowAbo } = this.state
@@ -87,7 +108,7 @@ export default class FoaSalesLineBar extends Component {
         // }
         // maxYShow = formatInt(maxYShow, String(maxYShow).length - 1)
         this.setState({
-            foaSalesData, foaSalesOfAcclData,modifyDateModify
+            foaSalesData, foaSalesOfAcclData, modifyDateModify, dataTable
             // maxYShow,
         }, () => {
             this.foaBarEcharts()
@@ -104,7 +125,7 @@ export default class FoaSalesLineBar extends Component {
         });
         foaBarEcharts.setOption({
             grid: {
-                top: '10%',
+                top: '28%',
                 left: '1%',
                 right: '2%',
                 bottom: '15%',
@@ -199,8 +220,10 @@ export default class FoaSalesLineBar extends Component {
             color: ["#27caad"],
             legend: {
                 type: "plain",
-                left: 'center',
-                bottom: 16,
+                orient: 'vertical',//纵向布局
+                left: '20%',
+                top: '0',
+                // bottom: 16,
                 // icon: 'rect',
                 itemWidth: 10,
                 itemHeight: 10,

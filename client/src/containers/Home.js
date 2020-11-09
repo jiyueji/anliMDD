@@ -184,6 +184,12 @@ export default withOktaAuth(class Home extends Component {
             this.props.chartStoreSocial.fetchSocialRndPartData()
             this.props.chartStoreSocial.fetchSocialPartDistData()
             this.props.chartStoreSocial.fetchSocialSopSalData()
+
+            this.props.chartStoreSocial.fetchSocialFoaProdDataNew()//第四屏新加数据表格内容
+            this.props.chartStoreSocial.fetchSocialPopDataNew()
+            this.props.chartStoreSocial.fetchSocialRepBuyDataNew()
+            this.props.chartStoreSocial.fetchSocialRefDataNew()
+            this.props.chartStoreSocial.fetchSocialConvDataNew()
         }
 
         handleSwitchChange = nr => () => {

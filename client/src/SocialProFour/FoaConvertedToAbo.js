@@ -10,17 +10,37 @@ export default class FoaConvertedToAbo extends Component {
             foaConvertedToAboPcData: [],
             convertionDowmData: [],
             monthShowAbo: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            modifyDateModify: ""
+            modifyDateModify: "",
+            dataTable: ""
         }
     }
     render() {
-        var { modifyDateModify } = this.state
+        var { modifyDateModify, dataTable } = this.state
         return (
             <Fragment>
                 <div className="modifyAllTitleFour" style={{ paddingLeft: "33%" }}>
                     <TitleModify titleName={''} titlePerfYearFlag={false} titlePerfYear={false} id={"sub4"} keys={"FOA_Converted_to_ABO/PC"} modifyDate={modifyDateModify} />
                 </div>
                 <div style={{ position: "absolute", left: ' 0%', top: '-6%', fontSize: '18px', fontWeight: '600', color: '#333' }}>FOA Converted to ABO/PC</div>
+                <table width="30%" border="0" border-collapse="collapse" cellSpacing="0" cellPadding="0" className="FourTopTable">
+                    <tbody>
+                        <tr style={{ fontWeight: '600' }}>
+                            <td>YTD {dataTable.maxMonth}</td>
+                            <td>SPLY</td>
+                            <td>Growth</td>
+                        </tr>
+                        <tr>
+                            <td>{dataTable.total_foa_conversion || ""}{dataTable.total_foa_conversion ? "m" : ""}</td>
+                            <td>{dataTable.total_foa_conversion_ly || ""}{dataTable.total_foa_conversion_ly ? "m" : ""}</td>
+                            <td style={{ color: dataTable.total_foa_conversion_growth && dataTable.total_foa_conversion_growth > 0 ? "#16b6aa" : "#ff0000" }}>{dataTable.total_foa_conversion_growth ? dataTable.total_foa_conversion_growth > 0 ? "+" : "" : ""}{dataTable.total_foa_conversion_growth || ""}{dataTable.total_foa_conversion_growth ? "%" : ""}</td>
+                        </tr>
+                        <tr>
+                            <td>{dataTable.pct_foa_conversion || ""}{dataTable.pct_foa_conversion ? "%" : ""}</td>
+                            <td>{dataTable.pct_foa_conversion_ly || ""}{dataTable.pct_foa_conversion_ly ? "%" : ""}</td>
+                            <td style={{ color: dataTable.pct_foa_conversion_growth && dataTable.pct_foa_conversion_growth > 0 ? "#16b6aa" : "#ff0000" }}>{dataTable.pct_foa_conversion_growth ? dataTable.pct_foa_conversion_growth > 0 ? "+" : "" : ""}{dataTable.pct_foa_conversion_growth || ""}{dataTable.pct_foa_conversion_growth ? "pt" : ""}</td>
+                        </tr>
+                    </tbody>
+                </table>
                 <div style={{ width: "100%", height: "420px", display: 'flex' }}>
                     <div id="foaConvertedToAboEcharts" style={{ width: "100%", height: "420px" }}></div>
                 </div>
@@ -46,6 +66,7 @@ export default class FoaConvertedToAbo extends Component {
     }
     upDateShowDataFoaConvertedToAbo() {
         var data = this.props.data || {}
+        var dataTable = this.props.dataTable || {}
         var modifyDateModify = data.maxMonthStr || ""
         var { total_foa_data, pct_foa_data } = data
         var { monthShowAbo } = this.state
@@ -69,7 +90,7 @@ export default class FoaConvertedToAbo extends Component {
             }
         }
         this.setState({
-            foaConvertedToAboPcData, convertionDowmData,modifyDateModify
+            foaConvertedToAboPcData, convertionDowmData, modifyDateModify, dataTable
         }, () => {
             this.foaConvertedToAboEcharts()
         })
@@ -85,7 +106,7 @@ export default class FoaConvertedToAbo extends Component {
         });
         foaConvertedToAboEcharts.setOption({
             grid: {
-                top: '18%',
+                top: '36%',//18
                 left: '1%',
                 right: '2%',
                 bottom: '15%',
@@ -180,8 +201,11 @@ export default class FoaConvertedToAbo extends Component {
             color: ["#25d1b7"],
             legend: {
                 type: "plain",
-                left: 'center',
-                bottom: 16,
+                orient: 'vertical',//纵向布局
+                left: '6%',
+                top: '14%',
+                // left: 'center',
+                // bottom: 16,
                 // icon: 'rect',
                 itemWidth: 10,
                 itemHeight: 10,

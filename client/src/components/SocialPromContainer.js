@@ -66,7 +66,7 @@ class SocialPromContainer extends React.PureComponent {
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div className="SocialLeftCss">
               {/* 柱状加折线 */}
-              <FoaSalesLineBar data={chartStoreSocial.socialFoaSales} />
+              <FoaSalesLineBar data={chartStoreSocial.socialFoaSales} dataTable={chartStoreSocial.socialPopNew}/>
             </div>
             <div className="SocialRightCss">
               {/* 弯曲柱状 */}
@@ -79,11 +79,11 @@ class SocialPromContainer extends React.PureComponent {
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div className="SocialLeftCss">
               {/* 两个柱状重叠加折线 */}
-              <FoaBuyerProductivity datas={chartStoreSocial.socialFoaProd} data={chartStoreSocial.socialFoaSales}/>
+              <FoaBuyerProductivity datas={chartStoreSocial.socialFoaProd} data={chartStoreSocial.socialFoaSales} dataTable={chartStoreSocial.socialFoaProdNew}/>
             </div>
             <div className="SocialRightCss">
               {/* 弯曲柱状加折线 */}
-              <FoaRepeat data={chartStoreSocial.socialRepBuy} />
+              <FoaRepeat data={chartStoreSocial.socialRepBuy} dataTable={chartStoreSocial.socialRepBuyNew}/>
             </div>
           </div>
           <label className="tab-cont-title">
@@ -92,11 +92,11 @@ class SocialPromContainer extends React.PureComponent {
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div className="SocialLeftCss">
               {/* 两个柱状图 */}
-              <FoaReferral data={chartStoreSocial.socialReferral} />
+              <FoaReferral data={chartStoreSocial.socialReferral} dataTable={chartStoreSocial.socialRefNew}/>
             </div>
             <div className="SocialRightCss">
               {/* 最后一个弯曲柱状加折线 */}
-              <FoaConvertedToAbo data={chartStoreSocial.socialConversion} />
+              <FoaConvertedToAbo data={chartStoreSocial.socialConversion} dataTable={chartStoreSocial.socialConvNew}/>
             </div>
           </div>
         </div >

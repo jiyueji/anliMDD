@@ -11,17 +11,37 @@ export default class FoaForcesize extends Component {
             // maxYShow:"",
             // isPerfYearAbo:false,
             monthShowAbo: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            modifyDateModify:""
+            modifyDateModify:"",
+            forcesize_cp:"",//今年的最后一个数据
+            forcesize_cp_ly:"",//去年的最后一个数据
+            forcesize_cp_growth:"",//今年的最后一个数据/去年的最后一个数据 - 1
+            forcesize_cp_month:"",//最后一个月Sep
+            maxMonthShow:"",
         }
     }
     render() {
-        var {modifyDateModify} = this.state
+        var {modifyDateModify,forcesize_cp,forcesize_cp_ly,forcesize_cp_growth,maxMonthShow} = this.state
         return (
             <Fragment>
                 <div className="modifyAllTitle">
                     <TitleModify titleName={'FOA Forcesize'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub4"} keys={"FOA_Forcesize"} modifyDate={modifyDateModify} />
                 </div>
                 {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Forcesize</div> */}
+                <div style={{ fontSize: "13px", position: "absolute", left: '32%', top: "13%", fontWeight:"600"}}>Forcesize</div>
+                <table width="30%" border="0" border-collapse="collapse" cellSpacing="0" cellPadding="0" className="FourTopTable">
+                <tbody>
+                    <tr style={{ fontWeight: '600' }}>
+                        <td>{maxMonthShow}</td>
+                        <td>SPLY</td>
+                        <td>Growth</td>
+                    </tr>
+                    <tr>
+                        <td>{forcesize_cp || ""}{forcesize_cp ? "m" : ""}</td>
+                        <td>{forcesize_cp_ly || ""}{forcesize_cp_ly ? "m" : ""}</td>
+                        <td style={{ color: forcesize_cp_growth && forcesize_cp_growth > 0 ? "#16b6aa" : "#ff0000" }}>{forcesize_cp_growth ? forcesize_cp_growth > 0 ? "+" : "" : ""}{forcesize_cp_growth || ""}{forcesize_cp_growth ? "%" : ""}</td>
+                    </tr>
+                </tbody>
+            </table>
                 <div className="allContent">
                     <div id="foaForcesizeEcharts" className="allContentEcharts"></div>
                 </div>
@@ -48,10 +68,10 @@ export default class FoaForcesize extends Component {
     }
     upDateShowDataFoaForcesize() {
         var data = this.props.data || {}
-        // console.log(data,"1")
         var modifyDateModify = data.maxMonthStr || ""
-        var { num_existing_foa } = data
+        var { num_existing_foa,forcesize_cp_ly } = data
         var { monthShowAbo } = this.state
+        var maxMonthShow = data.maxMonth || ""
         var numExistingFoaData = []
         num_existing_foa && num_existing_foa.length >= 0 ? num_existing_foa.map((item, index) => {
             numExistingFoaData.push(((item.y - 250000) / 1000000).toFixed(1))
@@ -66,8 +86,11 @@ export default class FoaForcesize extends Component {
                 }
             }
         }
+        var forcesize_cp_month = num_existing_foa && num_existing_foa.length >= 0 ? monthShowAbo[num_existing_foa.length] : ""
+        var forcesize_cp = numExistingFoaData && numExistingFoaData.length > 0 ? numExistingFoaData[numExistingFoaData.length-1] : ""
+        var forcesize_cp_growth = forcesize_cp && forcesize_cp_ly && forcesize_cp_ly !== 0 ? Math.round((forcesize_cp / forcesize_cp_ly) - 1) : ""
         this.setState({
-            numExistingFoaData,modifyDateModify
+            numExistingFoaData,modifyDateModify,forcesize_cp,forcesize_cp_ly,forcesize_cp_growth,forcesize_cp_month,maxMonthShow
         }, () => {
             this.foaForcesizeEcharts()
         })
@@ -83,7 +106,7 @@ export default class FoaForcesize extends Component {
         });
         foaForcesizeEcharts.setOption({
             grid: {
-                top: '10%',
+                top: '28%',
                 left: '1%',
                 right: '2%',
                 bottom: '15%',

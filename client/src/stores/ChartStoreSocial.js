@@ -33,6 +33,94 @@ class ChartStoreSocial {
   @observable socialPartDistData = []
   @observable socialSopSalData = []
 
+  @observable socialFoaProdDataNew = []//第四屏新加数据表格内容
+  @observable socialPopDataNew = []
+  @observable socialRepBuyDataNew = []
+  @observable socialRefDataNew = []
+  @observable socialConvDataNew = []
+
+  //第四屏新加数据表格内容
+  @action async fetchSocialFoaProdDataNew(params) {
+    try {
+      const data = await ApiService.get_social_foaprod_data_new(params)
+      runInAction(() => {
+        this.isLoading = false
+        this.socialFoaProdDataNew = data ? JSON.parse(data) : []
+      })
+    } catch (e) {
+      runInAction(() => {
+        this.isLoading = false
+        this.isFailure = true
+        this.socialFoaProdDataNew = []
+      })
+    }
+  }
+
+  @action async fetchSocialPopDataNew(params) {
+    try {
+      const data = await ApiService.get_social_pop_data_new(params)
+      runInAction(() => {
+        this.isLoading = false
+        this.socialPopDataNew = data ? JSON.parse(data) : []
+      })
+    } catch (e) {
+      runInAction(() => {
+        this.isLoading = false
+        this.isFailure = true
+        this.socialPopDataNew = []
+      })
+    }
+  }
+
+  @action async fetchSocialRepBuyDataNew(params) {
+    try {
+      const data = await ApiService.get_social_rep_buy_data_new(params)
+      runInAction(() => {
+        this.isLoading = false
+        this.socialRepBuyDataNew = data ? JSON.parse(data) : []
+      })
+    } catch (e) {
+      runInAction(() => {
+        this.isLoading = false
+        this.isFailure = true
+        this.socialRepBuyDataNew = []
+      })
+    }
+  }
+
+  @action async fetchSocialRefDataNew(params) {
+    try {
+      const data = await ApiService.get_social_ref_data_new(params)
+      runInAction(() => {
+        this.isLoading = false
+        this.socialRefDataNew = data ? JSON.parse(data) : []
+      })
+    } catch (e) {
+      runInAction(() => {
+        this.isLoading = false
+        this.isFailure = true
+        this.socialRefDataNew = []
+      })
+    }
+  }
+
+  @action async fetchSocialConvDataNew(params) {
+    try {
+      const data = await ApiService.get_social_conv_data_new(params)
+      runInAction(() => {
+        this.isLoading = false
+        this.socialConvDataNew = data ? JSON.parse(data) : []
+      })
+    } catch (e) {
+      runInAction(() => {
+        this.isLoading = false
+        this.isFailure = true
+        this.socialConvDataNew = []
+      })
+    }
+  }
+
+  //1
   @action async fetchSocialRepBuyData(params) {
     try {
       const data = await ApiService.get_social_repbuy_data(params)
@@ -597,7 +685,6 @@ class ChartStoreSocial {
     }
 
     let dataState = jsArr
-
     let maxYear, maxMonth, maxMonthStr
 
     const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'
@@ -606,6 +693,12 @@ class ChartStoreSocial {
       maxMonthStr = this.isAllDatePicker ? this.isAllDatePicker : dataState[0].max_n_month
       maxMonth = parseInt(maxMonthStr.slice(4, 6))
     }
+    var dataTable = _.filter(dataState, (o) => {//得到去年同期的数据
+      return o.n_month == maxMonthStr - 100
+    })
+    //去年的最后的一个数据
+    var forcesize_cp_ly = dataTable && dataTable[0] && ((dataTable[0].num_existing_foa - 250000) / 1000000).toFixed(1)
+
     dataState = _.filter(dataState, (o) => {//按PF和CY进行数据展示
       //数据在perf_yr且月份＞8以后从九月开始显示
       if (this.isPerfYear && this.isAllDatePicker && this.isAllDatePicker.slice(4, 6) > 8) {
@@ -720,6 +813,8 @@ class ChartStoreSocial {
       maxYear,
       maxMonthStr,
       isPerfYear: this.isPerfYear,
+      forcesize_cp_ly,//去年的最后一个数据
+      maxMonth:MONTHS_MAP[maxMonth],
     }
   }
 
@@ -1716,7 +1811,254 @@ class ChartStoreSocial {
     }
   }
 
+  //第四屏新加数据表格内容
+  @computed get socialFoaProdNew() {//第四屏第三图
+    const jsArr = toJS(this.socialFoaProdDataNew) || 0
+    if (!jsArr.length) {
+      return false
+    }
+    let dataState = jsArr
 
+    const jsArr2 = toJS(this.socialPopDataNew) || 0
+    if (!jsArr2.length) {
+      return false
+    }
+    let dataState2 = jsArr2
+    let maxYear, maxMonth, maxMonthStr
+
+    const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'
+    if (dataState.length) {
+      maxYear = this.isAllDatePicker ? this.isAllDatePicker.slice(0, 4) : dataState[0][`max_${YEAR_TYPE}`]
+      maxMonthStr = this.isAllDatePicker ? this.isAllDatePicker : dataState[0].max_n_month
+      maxMonth = parseInt(maxMonthStr.slice(4, 6))
+    }
+    dataState = _.filter(dataState, (o) => {//按月份进行数据展示
+      return o.n_month == maxMonthStr
+    })
+    dataState2 = _.filter(dataState2, (o) => {//按月份进行数据展示
+      return o.n_month == maxMonthStr
+    })
+    if (YEAR_TYPE == "calendar_yr") {
+      var avg_bv_per_person = dataState && dataState[0] && dataState[0].avg_bv_per_person_cy
+      var avg_bv_per_person_ly = dataState && dataState[0] && dataState[0].avg_bv_per_person_cy_ly
+      var num_foa_with_bv = dataState2 && dataState2[0] && dataState2[0].num_foa_with_bv_cy
+      var num_foa_with_bv_ly = dataState2 && dataState2[0] && dataState2[0].num_foa_with_bv_cy_ly
+      var num_new_foa = dataState2 && dataState2[0] && dataState2[0].num_new_foa_cy
+      var num_new_foa_ly = dataState2 && dataState2[0] && dataState2[0].num_new_foa_cy_ly
+    } else {
+      var avg_bv_per_person = dataState && dataState[0] && dataState[0].avg_bv_per_person_pf
+      var avg_bv_per_person_ly = dataState && dataState[0] && dataState[0].avg_bv_per_person_pf_ly
+      var num_foa_with_bv = dataState2 && dataState2[0] && dataState2[0].num_foa_with_bv_pf
+      var num_foa_with_bv_ly = dataState2 && dataState2[0] && dataState2[0].num_foa_with_bv_pf_ly
+      var num_new_foa = dataState2 && dataState2[0] && dataState2[0].num_new_foa_pf
+      var num_new_foa_ly = dataState2 && dataState2[0] && dataState2[0].num_new_foa_pf_ly
+    }
+    avg_bv_per_person = avg_bv_per_person ? Math.round(avg_bv_per_person) : ""
+    avg_bv_per_person_ly = avg_bv_per_person_ly ? Math.round(avg_bv_per_person_ly) : ""
+    num_foa_with_bv = num_foa_with_bv ? Math.round(num_foa_with_bv / 1000) : ""
+    num_foa_with_bv_ly = num_foa_with_bv_ly ? Math.round(num_foa_with_bv_ly / 1000) : ""
+    num_new_foa = num_new_foa ? Math.round(num_new_foa / 1000) : ""
+    num_new_foa_ly = num_new_foa_ly ? Math.round(num_new_foa_ly / 1000) : ""
+    
+    var avg_bv_per_person_growth = avg_bv_per_person && avg_bv_per_person_ly && avg_bv_per_person_ly !== 0 ? Math.round((avg_bv_per_person / avg_bv_per_person_ly) - 1) : ""
+    var num_foa_with_bv_growth = num_foa_with_bv && num_foa_with_bv_ly && num_foa_with_bv_ly !== 0 ? Math.round((num_foa_with_bv / num_foa_with_bv_ly) - 1) : ""
+    // var num_new_foa_growth = num_new_foa && num_new_foa_ly && num_new_foa_ly !== 0 ? Math.round((num_new_foa / num_new_foa_ly) - 1) : ""
+    var num_new_foa_growth = num_new_foa && num_new_foa_ly ? Math.round(num_new_foa - num_new_foa_ly) : ""
+    return {
+      avg_bv_per_person,
+      avg_bv_per_person_ly,
+      num_foa_with_bv,
+      num_foa_with_bv_ly,
+      num_new_foa,
+      num_new_foa_ly,
+      avg_bv_per_person_growth,
+      num_foa_with_bv_growth,
+      num_new_foa_growth,
+      maxMonth:MONTHS_MAP[maxMonth],
+    }
+  }
+
+  @computed get socialPopNew() {//第四屏第一图
+    const jsArr = toJS(this.socialPopDataNew) || 0
+    if (!jsArr.length) {
+      return false
+    }
+    let dataState = jsArr
+    let maxYear, maxMonth, maxMonthStr
+
+    const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'
+    if (dataState.length) {
+      maxYear = this.isAllDatePicker ? this.isAllDatePicker.slice(0, 4) : dataState[0][`max_${YEAR_TYPE}`]
+      maxMonthStr = this.isAllDatePicker ? this.isAllDatePicker : dataState[0].max_n_month
+      maxMonth = parseInt(maxMonthStr.slice(4, 6))
+    }
+    dataState = _.filter(dataState, (o) => {//按月份进行数据展示
+      return o.n_month == maxMonthStr
+    })
+    if (YEAR_TYPE == "calendar_yr") {
+      var total_foa_sales = dataState && dataState[0] && dataState[0].total_foa_sales_cy
+      var total_foa_sales_ly = dataState && dataState[0] && dataState[0].total_foa_sales_cy_ly
+      var total_foa_sales_pct = dataState && dataState[0] && dataState[0].total_foa_sales_pct_cy
+      var total_foa_sales_pct_ly = dataState && dataState[0] && dataState[0].total_foa_sales_pct_cy_ly
+    } else {
+      var total_foa_sales = dataState && dataState[0] && dataState[0].total_foa_sales_pf
+      var total_foa_sales_ly = dataState && dataState[0] && dataState[0].total_foa_sales_pf_ly
+      var total_foa_sales_pct = dataState && dataState[0] && dataState[0].total_foa_sales_pct_pf
+      var total_foa_sales_pct_ly = dataState && dataState[0] && dataState[0].total_foa_sales_pct_pf_ly
+    }
+    total_foa_sales = total_foa_sales ? Math.round(total_foa_sales / 1000000) : ""
+    total_foa_sales_ly = total_foa_sales_ly ? Math.round(total_foa_sales_ly / 1000000) : ""
+    total_foa_sales_pct = total_foa_sales_pct ? Math.round(total_foa_sales_pct * 100) : ""
+    total_foa_sales_pct_ly = total_foa_sales_pct_ly ? Math.round(total_foa_sales_pct_ly * 100) : ""
+    var total_foa_sales_growth = total_foa_sales && total_foa_sales_ly && total_foa_sales_ly !== 0 ? Math.round((total_foa_sales / total_foa_sales_ly) - 1) : ""
+    var total_foa_sales_pct_growth = total_foa_sales_pct && total_foa_sales_pct_ly ? Math.round(total_foa_sales_pct - total_foa_sales_pct_ly) : ""
+    return {
+      total_foa_sales,
+      total_foa_sales_ly,
+      total_foa_sales_pct,
+      total_foa_sales_pct_ly,
+      total_foa_sales_growth,
+      total_foa_sales_pct_growth,
+      maxMonth:MONTHS_MAP[maxMonth],
+    }
+  }
+
+  @computed get socialRepBuyNew() {//第四屏第四图
+    const jsArr = toJS(this.socialRepBuyDataNew) || 0
+    if (!jsArr.length) {
+      return false
+    }
+    let dataState = jsArr
+    let maxYear, maxMonth, maxMonthStr
+
+    const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'
+    if (dataState.length) {
+      maxYear = this.isAllDatePicker ? this.isAllDatePicker.slice(0, 4) : dataState[0][`max_${YEAR_TYPE}`]
+      maxMonthStr = this.isAllDatePicker ? this.isAllDatePicker : dataState[0].max_n_month
+      maxMonth = parseInt(maxMonthStr.slice(4, 6))
+    }
+    dataState = _.filter(dataState, (o) => {//按月份进行数据展示
+      return o.n_month == maxMonthStr
+    })
+    if (YEAR_TYPE == "calendar_yr") {
+      var num_foa_repeated_buyers = dataState && dataState[0] && dataState[0].num_foa_repeated_buyers_cy
+      var num_foa_repeated_buyers_ly = dataState && dataState[0] && dataState[0].num_foa_repeated_buyers_cy_ly
+      var pct_foa_repeated_buyer = dataState && dataState[0] && dataState[0].pct_foa_repeated_buyer_cy
+      var pct_foa_repeated_buyer_ly = dataState && dataState[0] && dataState[0].pct_foa_repeated_buyer_cy_ly
+    } else {
+      var num_foa_repeated_buyers = dataState && dataState[0] && dataState[0].num_foa_repeated_buyers_pf
+      var num_foa_repeated_buyers_ly = dataState && dataState[0] && dataState[0].num_foa_repeated_buyers_pf_ly
+      var pct_foa_repeated_buyer = dataState && dataState[0] && dataState[0].pct_foa_repeated_buyer_pf
+      var pct_foa_repeated_buyer_ly = dataState && dataState[0] && dataState[0].pct_foa_repeated_buyer_pf_ly
+    }
+    num_foa_repeated_buyers = num_foa_repeated_buyers ? Math.round(num_foa_repeated_buyers / 1000) : ""
+    num_foa_repeated_buyers_ly = num_foa_repeated_buyers_ly ? Math.round(num_foa_repeated_buyers_ly / 1000) : ""
+    pct_foa_repeated_buyer = pct_foa_repeated_buyer ? Math.round(pct_foa_repeated_buyer * 100) : ""
+    pct_foa_repeated_buyer_ly = pct_foa_repeated_buyer_ly ? Math.round(pct_foa_repeated_buyer_ly * 100) : ""
+    var num_foa_repeated_buyers_growth = num_foa_repeated_buyers && num_foa_repeated_buyers_ly && num_foa_repeated_buyers_ly !== 0 ? Math.round((num_foa_repeated_buyers / num_foa_repeated_buyers_ly) - 1) : ""
+    var pct_foa_repeated_buyer_growth = pct_foa_repeated_buyer && pct_foa_repeated_buyer_ly ? Math.round(pct_foa_repeated_buyer - pct_foa_repeated_buyer_ly) : ""
+    return {
+      num_foa_repeated_buyers,
+      num_foa_repeated_buyers_ly,
+      pct_foa_repeated_buyer,
+      pct_foa_repeated_buyer_ly,
+      num_foa_repeated_buyers_growth,
+      pct_foa_repeated_buyer_growth,
+      maxMonth:MONTHS_MAP[maxMonth],
+    }
+  }
+
+  @computed get socialRefNew() {//第四屏第五图
+    const jsArr = toJS(this.socialRefDataNew) || 0
+    if (!jsArr.length) {
+      return false
+    }
+    let dataState = jsArr
+    let maxYear, maxMonth, maxMonthStr
+
+    const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'
+    if (dataState.length) {
+      maxYear = this.isAllDatePicker ? this.isAllDatePicker.slice(0, 4) : dataState[0][`max_${YEAR_TYPE}`]
+      maxMonthStr = this.isAllDatePicker ? this.isAllDatePicker : dataState[0].max_n_month
+      maxMonth = parseInt(maxMonthStr.slice(4, 6))
+    }
+    dataState = _.filter(dataState, (o) => {//按月份进行数据展示
+      return o.n_month == maxMonthStr
+    })
+
+    if (YEAR_TYPE == "calendar_yr") {
+      var num_foa_w_success_referral = dataState && dataState[0] && dataState[0].num_foa_w_success_referral_cy
+      var num_foa_w_success_referral_ly = dataState && dataState[0] && dataState[0].num_foa_w_success_referral_cy_ly
+      var num_new_foa_referred_thru = dataState && dataState[0] && dataState[0].num_new_foa_referred_thru_cy
+      var num_new_foa_referred_thru_ly = dataState && dataState[0] && dataState[0].num_new_foa_referred_thru_cy_ly
+    } else {
+      var num_foa_w_success_referral = dataState && dataState[0] && dataState[0].num_foa_w_success_referral_pf
+      var num_foa_w_success_referral_ly = dataState && dataState[0] && dataState[0].num_foa_w_success_referral_pf_ly
+      var num_new_foa_referred_thru = dataState && dataState[0] && dataState[0].num_new_foa_referred_thru_pf
+      var num_new_foa_referred_thru_ly = dataState && dataState[0] && dataState[0].num_new_foa_referred_thru_pf_ly
+    }
+    num_foa_w_success_referral = num_foa_w_success_referral ? Math.round(num_foa_w_success_referral / 1000) : ""
+    num_foa_w_success_referral_ly = num_foa_w_success_referral_ly ? Math.round(num_foa_w_success_referral_ly / 1000) : ""
+    num_new_foa_referred_thru = num_new_foa_referred_thru ? Math.round(num_new_foa_referred_thru / 1000) : ""
+    num_new_foa_referred_thru_ly = num_new_foa_referred_thru_ly ? Math.round(num_new_foa_referred_thru_ly / 1000) : ""
+    var num_foa_w_success_referral_growth = num_foa_w_success_referral && num_foa_w_success_referral_ly && num_foa_w_success_referral_ly !== 0 ? Math.round((num_foa_w_success_referral / num_foa_w_success_referral_ly) - 1) : ""
+    var num_new_foa_referred_thru_growth = num_new_foa_referred_thru && num_new_foa_referred_thru_ly && num_new_foa_referred_thru_ly !== 0 ? Math.round((num_new_foa_referred_thru / num_new_foa_referred_thru_ly) - 1) : ""
+    // var num_new_foa_referred_thru_growth = num_new_foa_referred_thru && num_new_foa_referred_thru_ly ? Math.round(num_new_foa_referred_thru - num_new_foa_referred_thru_ly) : ""
+    return {
+      num_foa_w_success_referral,
+      num_foa_w_success_referral_ly,
+      num_new_foa_referred_thru,
+      num_new_foa_referred_thru_ly,
+      num_foa_w_success_referral_growth,
+      num_new_foa_referred_thru_growth,
+      maxMonth:MONTHS_MAP[maxMonth],
+    }
+  }
+
+  @computed get socialConvNew() {//第四屏第六图
+    const jsArr = toJS(this.socialConvDataNew) || 0
+    if (!jsArr.length) {
+      return false
+    }
+    let dataState = jsArr
+    let maxYear, maxMonth, maxMonthStr
+
+    const YEAR_TYPE = this.isPerfYear ? 'perf_yr' : 'calendar_yr'
+    if (dataState.length) {
+      maxYear = this.isAllDatePicker ? this.isAllDatePicker.slice(0, 4) : dataState[0][`max_${YEAR_TYPE}`]
+      maxMonthStr = this.isAllDatePicker ? this.isAllDatePicker : dataState[0].max_n_month
+      maxMonth = parseInt(maxMonthStr.slice(4, 6))
+    }
+    dataState = _.filter(dataState, (o) => {//按月份进行数据展示
+      return o.n_month == maxMonthStr
+    })
+    if (YEAR_TYPE == "calendar_yr") {
+      var total_foa_conversion = dataState && dataState[0] && dataState[0].total_foa_conversion_cy
+      var total_foa_conversion_ly = dataState && dataState[0] && dataState[0].total_foa_conversion_cy_ly
+      var pct_foa_conversion = dataState && dataState[0] && dataState[0].pct_foa_conversion_cy
+      var pct_foa_conversion_ly = dataState && dataState[0] && dataState[0].pct_foa_conversion_cy_ly
+    } else {
+      var total_foa_conversion = dataState && dataState[0] && dataState[0].total_foa_conversion_pf
+      var total_foa_conversion_ly = dataState && dataState[0] && dataState[0].total_foa_conversion_pf_ly
+      var pct_foa_conversion = dataState && dataState[0] && dataState[0].pct_foa_conversion_pf
+      var pct_foa_conversion_ly = dataState && dataState[0] && dataState[0].pct_foa_conversion_pf_ly
+    }
+    total_foa_conversion = total_foa_conversion ? Math.round(total_foa_conversion / 1000) : ""
+    total_foa_conversion_ly = total_foa_conversion_ly ? Math.round(total_foa_conversion_ly / 1000) : ""
+    pct_foa_conversion = pct_foa_conversion ? (pct_foa_conversion * 100).toFixed(1) : ""
+    pct_foa_conversion_ly = pct_foa_conversion_ly ? (pct_foa_conversion_ly * 100).toFixed(1) : ""
+    var total_foa_conversion_growth = total_foa_conversion && total_foa_conversion_ly && total_foa_conversion_ly !== 0 ? Math.round((total_foa_conversion / total_foa_conversion_ly) - 1) : ""
+    var pct_foa_conversion_growth = pct_foa_conversion && pct_foa_conversion_ly ? (pct_foa_conversion - pct_foa_conversion_ly).toFixed(1) : ""
+    return {
+      total_foa_conversion,
+      total_foa_conversion_ly,
+      pct_foa_conversion,
+      pct_foa_conversion_ly,
+      total_foa_conversion_growth,
+      pct_foa_conversion_growth,
+      maxMonth:MONTHS_MAP[maxMonth],
+    }
+  }
 }
 
 export default new ChartStoreSocial()

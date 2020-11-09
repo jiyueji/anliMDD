@@ -36,16 +36,17 @@ class ApiSerice {
         return { status, body };
     }
 
-    async remarksHandle(url, method = 'GET', token = false, params = null,parentid = null, id = null,n_month = null,remarks = null){
+    async remarksHandle(url, method = 'GET', token = false, params = null, parentid = null, id = null, n_month = null, remarks = null) {
         let payload = {
             method,
-            mode:"cors",
-            headers:this.buildHeaders(token),
+            mode: "cors",
+            headers: this.buildHeaders(token),
         }
         if (params) {
             payload.body = JSON.stringify(params);
         }
-        const res = remarks ? await fetch(`${this.api_url}${url}?parentid=${parentid}&id=${id}&n_month=${n_month}&remarks=${remarks}`) : await fetch(`${this.api_url}${url}?id=${id}&parentid=${parentid}&n_month=${n_month}`)
+        // const res = remarks ? await fetch(`${this.api_url}${url}?parentid=${parentid}&id=${id}&n_month=${n_month}&remarks=${remarks}`) : await fetch(`${this.api_url}${url}?id=${id}&parentid=${parentid}&n_month=${n_month}`)
+        const res = await fetch(`${this.api_url}${url}?parentid=${parentid}&id=${id}&n_month=${n_month}&remarks=${remarks}`)
         const status = res.status;
         const body = await res.json();
         return { status, body };
@@ -570,16 +571,47 @@ class ApiSerice {
         return res.body;
     }
 
-    async get_updateRemarks(params,parentid,id,n_month,remarks, token) {
-        const res = await this.remarksHandle(api.updateRemarks, 'GET', token, params,parentid,id,n_month,remarks);
+    async get_updateRemarks(params, parentid, id, n_month, remarks, token) {
+        const res = await this.remarksHandle(api.updateRemarks, 'GET', token, params, parentid, id, n_month, remarks);
         // this.handleCommonError(res);
-        console.log(res,"res")
+        console.log(res, "res")
         return res.body;
     }
 
-    async get_remarksMonth(params, parentid,id,n_month,token) {
-        const res = await this.remarksHandle(api.remarksMonth, 'GET', token, params,parentid,id,n_month);
+    async get_remarksMonth(params, parentid, id, n_month, token) {
+        const res = await this.remarksHandle(api.remarksMonth, 'GET', token, params, parentid, id, n_month);
         // this.handleCommonError(res);
+        return res.body;
+    }
+
+    //第四屏新加数据表格内容
+    async get_social_foaprod_data_new(params, token) {
+        const res = await this.apiCall(api.social_foa_prod_data_new, 'GET', token, params);
+        this.handleCommonError(res);
+        return res.body;
+    }
+
+    async get_social_pop_data_new(params, token) {
+        const res = await this.apiCall(api.social_pop_data_new, 'GET', token, params);
+        this.handleCommonError(res);
+        return res.body;
+    }
+
+    async get_social_rep_buy_data_new(params, token) {
+        const res = await this.apiCall(api.social_rep_buy_data_new, 'GET', token, params);
+        this.handleCommonError(res);
+        return res.body;
+    }
+
+    async get_social_ref_data_new(params, token) {
+        const res = await this.apiCall(api.social_ref_data_new, 'GET', token, params);
+        this.handleCommonError(res);
+        return res.body;
+    }
+
+    async get_social_conv_data_new(params, token) {
+        const res = await this.apiCall(api.social_conv_data_new, 'GET', token, params);
+        this.handleCommonError(res);
         return res.body;
     }
 }

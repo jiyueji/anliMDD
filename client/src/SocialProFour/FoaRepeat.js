@@ -10,17 +10,37 @@ export default class FoaRepeat extends Component {
             repeatBuyerCountData: [],
             repeatBuyerData: [],
             monthShowAbo: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            modifyDateModify:""
+            modifyDateModify: "",
+            dataTable:{},
         }
     }
     render() {
-        var {modifyDateModify} = this.state
+        var { modifyDateModify,dataTable } = this.state
         return (
             <Fragment>
                 <div className="modifyAllTitle">
                     <TitleModify titleName={'FOA Repeat Buyer'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub4"} keys={"FOA_Repeat_Buyer"} modifyDate={modifyDateModify} />
                 </div>
                 {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Repeat Buyer</div> */}
+                <table width="30%" border="0" border-collapse="collapse" cellSpacing="0" cellPadding="0" className="FourTopTable">
+                    <tbody>
+                        <tr style={{ fontWeight: '600' }}>
+                            <td>YTD {dataTable.maxMonth}</td>
+                            <td>SPLY</td>
+                            <td>Growth</td>
+                        </tr>
+                        <tr>
+                            <td>{dataTable.num_foa_repeated_buyers || ""}{dataTable.num_foa_repeated_buyers ? "k" : ""}</td>
+                            <td>{dataTable.num_foa_repeated_buyers_ly || ""}{dataTable.num_foa_repeated_buyers_ly ? "k" : ""}</td>
+                            <td style={{ color: dataTable.num_foa_repeated_buyers_growth && dataTable.num_foa_repeated_buyers_growth > 0 ? "#16b6aa" : "#ff0000" }}>{dataTable.num_foa_repeated_buyers_growth ? dataTable.num_foa_repeated_buyers_growth > 0 ? "+" : "" : ""}{dataTable.num_foa_repeated_buyers_growth || ""}{dataTable.num_foa_repeated_buyers_growth ? "%" : ""}</td>
+                        </tr>
+                        <tr>
+                            <td>{dataTable.pct_foa_repeated_buyer || ""}{dataTable.pct_foa_repeated_buyer ? "%" : ""}</td>
+                            <td>{dataTable.pct_foa_repeated_buyer_ly || ""}{dataTable.pct_foa_repeated_buyer_ly ? "%" : ""}</td>
+                            <td style={{ color: dataTable.pct_foa_repeated_buyer_growth && dataTable.pct_foa_repeated_buyer_growth > 0 ? "#16b6aa" : "#ff0000" }}>{dataTable.pct_foa_repeated_buyer_growth ? dataTable.pct_foa_repeated_buyer_growth > 0 ? "+" : "" : ""}{dataTable.pct_foa_repeated_buyer_growth || ""}{dataTable.pct_foa_repeated_buyer_growth ? "pt" : ""}</td>
+                        </tr>
+                    </tbody>
+                </table>
                 <div className="allContent">
                     <div id="foaRepeatEcharts" className="allContentEcharts"></div>
                 </div>
@@ -46,6 +66,7 @@ export default class FoaRepeat extends Component {
     }
     upDateShowDataFoaRepeat() {
         var data = this.props.data || {}
+        var dataTable = this.props.dataTable || {}
         // console.log(data, "show")
         var modifyDateModify = data.maxMonthStr || ""
         var { num_foa_data, pct_foa_data } = data
@@ -70,7 +91,7 @@ export default class FoaRepeat extends Component {
             }
         }
         this.setState({
-            repeatBuyerCountData, repeatBuyerData,modifyDateModify
+            repeatBuyerCountData, repeatBuyerData, modifyDateModify,dataTable
         }, () => {
             this.foaRepeatEcharts()
         })
@@ -86,7 +107,7 @@ export default class FoaRepeat extends Component {
         });
         foaRepeatEcharts.setOption({
             grid: {
-                top: '10%',
+                top: '28%',
                 left: '1%',
                 right: '2%',
                 bottom: '15%',
@@ -181,8 +202,11 @@ export default class FoaRepeat extends Component {
             color: ["#2acdae"],
             legend: {
                 type: "plain",
-                left: 'center',
-                bottom: 16,
+                orient: 'vertical',//纵向布局
+                left: '20%',
+                top: '0',
+                // left: 'center',
+                // bottom: 16,
                 // icon: 'rect',
                 itemWidth: 10,
                 itemHeight: 10,

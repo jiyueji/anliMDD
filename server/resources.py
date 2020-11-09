@@ -733,3 +733,34 @@ class UpdateRemarks(Resource):
             queryStr4 = "insert into remarks (id,parentid,n_month,remarks) values ('" +id+"','"+parentid+"','"+n_month+"','"+remarks+"')"
             print(queryStr4)
             remarksUpdate(queryStr4)
+
+# 第四屏的新表格提示内容
+class SocialFoaProdNew(Resource):
+    def get(self):
+
+        queryStr = '''select * from QA_TEST.query_foa_29_foa_prod'''
+        return performQuery(queryStr)
+
+class SocialPopulationNew(Resource):
+    def get(self):
+
+        queryStr = '''select * from QA_TEST.query_foa_30_foa_new_pop_sales'''
+        return performQuery(queryStr)
+
+class SocialRepBuyerNew(Resource):
+    def get(self):
+
+        queryStr = '''select * from QA_TEST.query_foa_10_foa_repeated_buyer'''
+        return performQuery(queryStr)
+
+class SocialReferralNew(Resource):
+    def get(self):
+
+        queryStr = '''select * from QA_TEST.query_foa_32_foa_refer'''
+        return performQuery(queryStr)
+
+class SocialConvNew(Resource):
+    def get(self):
+
+        queryStr = '''select * from QA_TEST.query_foa_31_foa_conversion'''
+        return performQuery(queryStr)

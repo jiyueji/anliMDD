@@ -128,5 +128,12 @@ api.add_resource(resources.GrowthTableByMonth, '/growthTableByMonth')
 api.add_resource(resources.AboRenewalRateByMonth, '/aboRenewalRateByMonth')
 api.add_resource(resources.UpdateRemarks, '/updateRemarks')
 api.add_resource(resources.RemarksMonth, '/remarksMonth')
+
+# //第四屏新加数据表格内容
+api.add_resource(resources.SocialFoaProdNew, '/social_foa_prod_data_new')
+api.add_resource(resources.SocialPopulationNew, '/social_pop_data_new')
+api.add_resource(resources.SocialRepBuyerNew, '/social_rep_buy_data_new')
+api.add_resource(resources.SocialReferralNew, '/social_ref_data_new')
+api.add_resource(resources.SocialConvNew, '/social_conv_data_new')
 if __name__ == '__main__':
       app.run(host='0.0.0.0', port=80)

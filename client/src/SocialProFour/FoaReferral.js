@@ -10,17 +10,37 @@ export default class FoaReferral extends Component {
             ofNewFoaData: [],
             ofWhoFoaData: [],
             monthShowAbo: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            modifyDateModify:""
+            modifyDateModify: "",
+            dataTable: {},
         }
     }
     render() {
-        var {modifyDateModify} = this.state
+        var { modifyDateModify, dataTable } = this.state
         return (
             <Fragment>
                 <div className="modifyAllTitleFour">
                     <TitleModify titleName={''} titlePerfYearFlag={false} titlePerfYear={false} id={"sub4"} keys={"Referral"} modifyDate={modifyDateModify} />
                 </div>
                 {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>Foa Repeat Buyer</div> */}
+                <table width="30%" border="0" border-collapse="collapse" cellSpacing="0" cellPadding="0" className="FourTopTable">
+                    <tbody>
+                        <tr style={{ fontWeight: '600' }}>
+                            <td>YTD {dataTable.maxMonth}</td>
+                            <td>SPLY</td>
+                            <td>Growth</td>
+                        </tr>
+                        <tr>
+                            <td>{dataTable.num_foa_w_success_referral || ""}{dataTable.num_foa_w_success_referral ? "m" : ""}</td>
+                            <td>{dataTable.num_foa_w_success_referral_ly || ""}{dataTable.num_foa_w_success_referral_ly ? "m" : ""}</td>
+                            <td style={{ color: dataTable.num_foa_w_success_referral_growth && dataTable.num_foa_w_success_referral_growth > 0 ? "#16b6aa" : "#ff0000" }}>{dataTable.num_foa_w_success_referral_growth ? dataTable.num_foa_w_success_referral_growth > 0 ? "+" : "" : ""}{dataTable.num_foa_w_success_referral_growth || ""}{dataTable.num_foa_w_success_referral_growth ? "%" : ""}</td>
+                        </tr>
+                        <tr>
+                            <td>{dataTable.num_new_foa_referred_thru || ""}{dataTable.num_new_foa_referred_thru ? "%" : ""}</td>
+                            <td>{dataTable.num_new_foa_referred_thru_ly || ""}{dataTable.num_new_foa_referred_thru_ly ? "%" : ""}</td>
+                            <td style={{ color: dataTable.num_new_foa_referred_thru_growth && dataTable.num_new_foa_referred_thru_growth > 0 ? "#16b6aa" : "#ff0000" }}>{dataTable.num_new_foa_referred_thru_growth ? dataTable.num_new_foa_referred_thru_growth > 0 ? "+" : "" : ""}{dataTable.num_new_foa_referred_thru_growth || ""}{dataTable.num_new_foa_referred_thru_growth ? "%" : ""}</td>
+                        </tr>
+                    </tbody>
+                </table>
                 <div style={{ width: "100%", height: "420px", display: 'flex' }}>
                     <div id="foaReferralEcharts" style={{ width: "100%", height: "420px" }}></div>
                 </div>
@@ -46,6 +66,7 @@ export default class FoaReferral extends Component {
     }
     upDateShowDataFoaReferral() {
         var data = this.props.data || {}
+        var dataTable = this.props.dataTable || {}
         //         foa_ref_link_data: (3) [{…}, {…}, {…}]
         // foa_suc_ref_data: (3) [{…}, {…}, {…}]
         var modifyDateModify = data.maxMonthStr || ""
@@ -71,7 +92,7 @@ export default class FoaReferral extends Component {
             }
         }
         this.setState({
-            ofNewFoaData, ofWhoFoaData,modifyDateModify
+            ofNewFoaData, ofWhoFoaData, modifyDateModify, dataTable
         }, () => {
             this.foaReferralEcharts()
         })
@@ -87,7 +108,7 @@ export default class FoaReferral extends Component {
         });
         foaReferralEcharts.setOption({
             grid: {
-                top: '18%',
+                top: '36%',//18
                 left: '1%',
                 right: '2%',
                 bottom: '15%',
@@ -151,8 +172,11 @@ export default class FoaReferral extends Component {
             // color:["#2acdae"],
             legend: {
                 type: "plain",
-                left: 'center',
-                bottom: 16,
+                orient: 'vertical',//纵向布局
+                left: '6%',
+                top: '14%',
+                // left: 'center',
+                // bottom: 16,
                 // icon: 'rect',
                 itemWidth: 10,
                 itemHeight: 10,

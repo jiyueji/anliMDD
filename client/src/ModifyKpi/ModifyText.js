@@ -139,6 +139,8 @@ export default class ModifyText extends Component {
     // }
     onClickHandle(e) {//点击按钮时发生
         var { id, parentid, n_month, editorContent } = this.state
+        var reg = /\<p\>\<br\>\<\/p\>/g;
+        editorContent = editorContent.replace(reg, '');
         //字符串转base64
         var editorContentEncode = encodeURI(editorContent);
         // 对编码的字符串转化base64

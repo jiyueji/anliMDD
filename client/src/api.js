@@ -83,6 +83,11 @@ const api = {
     aboRenewalRateByMonth:'/aboRenewalRateByMonth',//三屏二图
     updateRemarks:'/updateRemarks',//更新备注
     remarksMonth:'/remarksMonth',//读取备注
+    social_foa_prod_data_new:'/social_foa_prod_data_new',//第四屏新加数据表格内容
+    social_pop_data_new:'/social_pop_data_new',
+    social_rep_buy_data_new:'/social_rep_buy_data_new',
+    social_ref_data_new:'/social_ref_data_new',
+    social_conv_data_new:'/social_conv_data_new',
 }
 
 export default api

@@ -26,14 +26,22 @@ class TitleModify extends Component {
         var {id, keys,modifyDate} = nextProps
         // console.log(id, keys,modifyDate,"modifyDate")
         var dataTextF = await ApiService.get_remarksMonth("", id, keys, modifyDate)
-        if(dataTextF && dataTextF.length > 5){
-            dataTextF = dataTextF ? JSON.parse(dataTextF) : []
-            var remarksTextShow = dataTextF[0] && dataTextF[0].remarks
-            var remarksTextFlag = remarksTextShow ? true : false
-            // var remarksTextFlag = true
-        }else{
-            var remarksTextFlag = false
-        }
+        if(dataTextF && dataTextF.length > 5){
+            dataTextF = dataTextF ? JSON.parse(dataTextF) : []
+            var remarksTextShow = dataTextF[0] && dataTextF[0].remarks
+            // if (remarksTextShow) {
+            //     // 对base64转编码
+            //     var remarksTextShowDecode = atob(remarksTextShow);
+            //     // 编码转字符串
+            //     var remarksTextShowText = decodeURI(remarksTextShowDecode);
+            //   }else{
+            //     var remarksTextShowText = ""
+            //   }
+            // console.log(remarksTextShowText,"remarksTextShowText")
+            var remarksTextFlag = remarksTextShow ? true : false
+        }else{
+            var remarksTextFlag = false
+        }
         // console.log(dataTextF,remarksTextFlag,"dataTextF")
         this.setState({
             remarksTextFlag,

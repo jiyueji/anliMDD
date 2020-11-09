@@ -1486,3 +1486,17 @@ label.bot-chart-com-sm {
   #remarksIcon{
     -webkit-animation: twinkling 1s infinite ease-in-out;
   }
+  .FourTopTable{ /*第四屏每一个图上的表格*/
+    text-align: center;
+    font-size: 12px;
+    word-break: break-all;
+    position: absolute;
+    left: 42%;
+    top: 8%;
+  }
+  .FourTopTable tr{
+    height:21px;
+  }
+  .FourTopTable td{
+      padding: 0;
+  }
