@@ -1,1 +1,27 @@
 [0427/165457.116:ERROR:settings.cc(320)] Settings magic is not 1129342067
+[0910/014626.853:ERROR:process_reader_win.cc(123)] NtOpenThread: {无法访问} 过程已请求访问一对象，但未给访问权限。 (0xc0000022)
+[0910/014626.909:ERROR:process_reader_win.cc(123)] NtOpenThread: {无法访问} 过程已请求访问一对象，但未给访问权限。 (0xc0000022)
+[0910/014627.535:ERROR:exception_snapshot_win.cc(99)] thread ID 39912 not found in process
+[0910/014626.847:ERROR:process_reader_win.cc(123)] NtOpenThread: {无法访问} 过程已请求访问一对象，但未给访问权限。 (0xc0000022)
+[0910/014627.535:ERROR:exception_snapshot_win.cc(99)] thread ID 39624 not found in process
+[0910/014627.535:ERROR:exception_snapshot_win.cc(99)] thread ID 36604 not found in process
+[0910/014626.905:ERROR:process_reader_win.cc(123)] NtOpenThread: {无法访问} 过程已请求访问一对象，但未给访问权限。 (0xc0000022)
+[0910/014626.906:ERROR:process_reader_win.cc(123)] NtOpenThread: {无法访问} 过程已请求访问一对象，但未给访问权限。 (0xc0000022)
+[0910/014626.902:ERROR:process_reader_win.cc(123)] NtOpenThread: {无法访问} 过程已请求访问一对象，但未给访问权限。 (0xc0000022)
+[0910/014627.535:ERROR:exception_snapshot_win.cc(99)] thread ID 38744 not found in process
+[0910/014627.535:ERROR:exception_snapshot_win.cc(99)] thread ID 39336 not found in process
+[0910/014627.535:ERROR:exception_snapshot_win.cc(99)] thread ID 39536 not found in process
+[0910/014626.900:ERROR:process_reader_win.cc(123)] NtOpenThread: {无法访问} 过程已请求访问一对象，但未给访问权限。 (0xc0000022)
+[0910/014626.902:ERROR:process_reader_win.cc(123)] NtOpenThread: {无法访问} 过程已请求访问一对象，但未给访问权限。 (0xc0000022)
+[0910/014627.535:ERROR:exception_snapshot_win.cc(99)] thread ID 25980 not found in process
+[0910/014627.535:ERROR:exception_snapshot_win.cc(99)] thread ID 24456 not found in process
+[0910/014627.504:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: 已尝试访问正在退出的过程。 (0xc000010a)
+[0910/014627.535:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: 已尝试访问正在退出的过程。 (0xc000010a)
+[0910/014627.519:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: 已尝试访问正在退出的过程。 (0xc000010a)
+[0910/014627.535:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: 已尝试访问正在退出的过程。 (0xc000010a)
+[0910/014627.535:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: 已尝试访问正在退出的过程。 (0xc000010a)
+[0910/014627.519:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: 已尝试访问正在退出的过程。 (0xc000010a)
+[0910/014627.535:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: 已尝试访问正在退出的过程。 (0xc000010a)
+[1104/103327.004:ERROR:directory_reader_win.cc(43)] FindFirstFile: 系统找不到指定的路径。 (0x3)
+[1105/103013.406:ERROR:directory_reader_win.cc(43)] FindFirstFile: 系统找不到指定的路径。 (0x3)
+[1109/103928.905:ERROR:directory_reader_win.cc(43)] FindFirstFile: 系统找不到指定的路径。 (0x3)
