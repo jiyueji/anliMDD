@@ -33,7 +33,7 @@ export default class EchartsFCWaterfall extends Component {
         return (
             <Fragment>
                 {/* <div className="fcWaterFallTitle">YTD Sales by FC <span>(by performance year)</span></div> */}
-                <TitleModify titleName={'YTD Sales by FC'} titlePerfYearFlag={true} titlePerfYear={false} id={"sub1"} keys={"YTD_Salse_by_FC"} modifyDate={modifyDateModify}/>
+                <TitleModify titleName={'YTD Sales by FC'} titlePerfYearFlag={true} titlePerfYear={true} id={"sub1"} keys={"YTD_Salse_by_FC"} modifyDate={modifyDateModify}/>
                 <div style={{ position: "absolute", top: 15, right: 60, zIndex: 1, color: "#666", fontSize: 12 }}>As of {maxMonthStr}</div>
                 {/* <div style={{ background: "yellow", position: "absolute", top: 5, right: 100, zIndex: 1 }} onClick={this.handleChange2.bind(this)}>还原</div> */}
                 <div id="main"
