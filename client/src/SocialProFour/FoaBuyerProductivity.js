@@ -33,19 +33,19 @@ export default class FoaBuyerProductivity extends Component {
                             <td>Growth</td>
                         </tr>
                         <tr>
-                            <td>{dataTable.avg_bv_per_person || ""}{dataTable.avg_bv_per_person ? "k" : ""}</td>
-                            <td>{dataTable.avg_bv_per_person_ly || ""}{dataTable.avg_bv_per_person_ly ? "k" : ""}</td>
-                            <td style={{ color: dataTable.avg_bv_per_person_growth && dataTable.avg_bv_per_person_growth > 0 ? "#16b6aa" : "#ff0000" }}>{dataTable.avg_bv_per_person_growth ? dataTable.avg_bv_per_person_growth > 0 ? "+" : "" : ""}{dataTable.avg_bv_per_person_growth || ""}{dataTable.avg_bv_per_person_growth ? "%" : ""}</td>
-                        </tr>
-                        <tr>
                             <td>{dataTable.num_foa_with_bv || ""}{dataTable.num_foa_with_bv ? "k" : ""}</td>
                             <td>{dataTable.num_foa_with_bv_ly || ""}{dataTable.num_foa_with_bv_ly ? "k" : ""}</td>
                             <td style={{ color: dataTable.num_foa_with_bv_growth && dataTable.num_foa_with_bv_growth > 0 ? "#16b6aa" : "#ff0000" }}>{dataTable.num_foa_with_bv_growth ? dataTable.num_foa_with_bv_growth > 0 ? "+" : "" : ""}{dataTable.num_foa_with_bv_growth || ""}{dataTable.num_foa_with_bv_growth ? "%" : ""}</td>
                         </tr>
                         <tr>
-                            <td>{dataTable.num_new_foa || ""}{dataTable.num_new_foa ? "%" : ""}</td>
-                            <td>{dataTable.num_new_foa_ly || ""}{dataTable.num_new_foa_ly ? "%" : ""}</td>
-                            <td style={{ color: dataTable.num_new_foa_growth && dataTable.num_new_foa_growth > 0 ? "#16b6aa" : "#ff0000" }}>{dataTable.num_new_foa_growth ? dataTable.num_new_foa_growth > 0 ? "+" : "" : ""}{dataTable.num_new_foa_growth || ""}{dataTable.num_new_foa_growth ? "pt" : ""}</td>
+                            <td>{dataTable.num_new_foa || ""}{dataTable.num_new_foa ? "k" : ""}</td>
+                            <td>{dataTable.num_new_foa_ly || ""}{dataTable.num_new_foa_ly ? "k" : ""}</td>
+                            <td style={{ color: dataTable.num_new_foa_growth && dataTable.num_new_foa_growth > 0 ? "#16b6aa" : "#ff0000" }}>{dataTable.num_new_foa_growth ? dataTable.num_new_foa_growth > 0 ? "+" : "" : ""}{dataTable.num_new_foa_growth || ""}{dataTable.num_new_foa_growth ? "%" : ""}</td>
+                        </tr>
+                        <tr>
+                            <td>{dataTable.avg_bv_per_person || ""}{dataTable.avg_bv_per_person ? "" : ""}</td>
+                            <td>{dataTable.avg_bv_per_person_ly || ""}{dataTable.avg_bv_per_person_ly ? "" : ""}</td>
+                            <td style={{ color: dataTable.avg_bv_per_person_growth && dataTable.avg_bv_per_person_growth > 0 ? "#16b6aa" : "#ff0000" }}>{dataTable.avg_bv_per_person_growth ? dataTable.avg_bv_per_person_growth > 0 ? "+" : "" : ""}{dataTable.avg_bv_per_person_growth || ""}{dataTable.avg_bv_per_person_growth ? "%" : ""}</td>
                         </tr>
                     </tbody>
                 </table>

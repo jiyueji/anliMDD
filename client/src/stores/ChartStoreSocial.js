@@ -1853,17 +1853,21 @@ class ChartStoreSocial {
       var num_new_foa = dataState2 && dataState2[0] && dataState2[0].num_new_foa_pf
       var num_new_foa_ly = dataState2 && dataState2[0] && dataState2[0].num_new_foa_pf_ly
     }
-    avg_bv_per_person = avg_bv_per_person ? Math.round(avg_bv_per_person) : ""
-    avg_bv_per_person_ly = avg_bv_per_person_ly ? Math.round(avg_bv_per_person_ly) : ""
+
+
+    var num_foa_with_bv_growth = num_foa_with_bv && num_foa_with_bv_ly && num_foa_with_bv_ly !== 0 ? Math.round(((num_foa_with_bv / num_foa_with_bv_ly) - 1) * 100) : ""
+    // var num_new_foa_growth = num_new_foa && num_new_foa_ly && num_new_foa_ly !== 0 ? Math.round((num_new_foa / num_new_foa_ly) - 1) : ""
+    var num_new_foa_growth = num_new_foa && num_new_foa_ly && num_new_foa_ly !== 0 ? Math.round(((num_new_foa / num_new_foa_ly) - 1) * 100) : ""
+    var avg_bv_per_person_growth = avg_bv_per_person && avg_bv_per_person_ly && avg_bv_per_person_ly !== 0 ? Math.round(((avg_bv_per_person / avg_bv_per_person_ly) - 1) * 100) : ""
+    // var avg_bv_per_person_growth = avg_bv_per_person && avg_bv_per_person_ly ? (avg_bv_per_person - avg_bv_per_person_ly).toFixed(1) : ""
+
     num_foa_with_bv = num_foa_with_bv ? Math.round(num_foa_with_bv / 1000) : ""
     num_foa_with_bv_ly = num_foa_with_bv_ly ? Math.round(num_foa_with_bv_ly / 1000) : ""
     num_new_foa = num_new_foa ? Math.round(num_new_foa / 1000) : ""
     num_new_foa_ly = num_new_foa_ly ? Math.round(num_new_foa_ly / 1000) : ""
-    
-    var avg_bv_per_person_growth = avg_bv_per_person && avg_bv_per_person_ly && avg_bv_per_person_ly !== 0 ? Math.round((avg_bv_per_person / avg_bv_per_person_ly) - 1) : ""
-    var num_foa_with_bv_growth = num_foa_with_bv && num_foa_with_bv_ly && num_foa_with_bv_ly !== 0 ? Math.round((num_foa_with_bv / num_foa_with_bv_ly) - 1) : ""
-    // var num_new_foa_growth = num_new_foa && num_new_foa_ly && num_new_foa_ly !== 0 ? Math.round((num_new_foa / num_new_foa_ly) - 1) : ""
-    var num_new_foa_growth = num_new_foa && num_new_foa_ly ? Math.round(num_new_foa - num_new_foa_ly) : ""
+    avg_bv_per_person = avg_bv_per_person ? Math.round(avg_bv_per_person) : ""
+    avg_bv_per_person_ly = avg_bv_per_person_ly ? Math.round(avg_bv_per_person_ly) : ""
+
     return {
       avg_bv_per_person,
       avg_bv_per_person_ly,
@@ -1906,12 +1910,12 @@ class ChartStoreSocial {
       var total_foa_sales_pct = dataState && dataState[0] && dataState[0].total_foa_sales_pct_pf
       var total_foa_sales_pct_ly = dataState && dataState[0] && dataState[0].total_foa_sales_pct_pf_ly
     }
+    var total_foa_sales_growth = total_foa_sales && total_foa_sales_ly && total_foa_sales_ly !== 0 ? Math.round(((total_foa_sales / total_foa_sales_ly) - 1) * 100) : ""
+    var total_foa_sales_pct_growth = total_foa_sales_pct && total_foa_sales_pct_ly ? ((total_foa_sales_pct - total_foa_sales_pct_ly) * 100).toFixed(1) : ""
     total_foa_sales = total_foa_sales ? Math.round(total_foa_sales / 1000000) : ""
     total_foa_sales_ly = total_foa_sales_ly ? Math.round(total_foa_sales_ly / 1000000) : ""
     total_foa_sales_pct = total_foa_sales_pct ? Math.round(total_foa_sales_pct * 100) : ""
     total_foa_sales_pct_ly = total_foa_sales_pct_ly ? Math.round(total_foa_sales_pct_ly * 100) : ""
-    var total_foa_sales_growth = total_foa_sales && total_foa_sales_ly && total_foa_sales_ly !== 0 ? Math.round((total_foa_sales / total_foa_sales_ly) - 1) : ""
-    var total_foa_sales_pct_growth = total_foa_sales_pct && total_foa_sales_pct_ly ? Math.round(total_foa_sales_pct - total_foa_sales_pct_ly) : ""
     return {
       total_foa_sales,
       total_foa_sales_ly,
@@ -1951,12 +1955,15 @@ class ChartStoreSocial {
       var pct_foa_repeated_buyer = dataState && dataState[0] && dataState[0].pct_foa_repeated_buyer_pf
       var pct_foa_repeated_buyer_ly = dataState && dataState[0] && dataState[0].pct_foa_repeated_buyer_pf_ly
     }
+
+    var num_foa_repeated_buyers_growth = num_foa_repeated_buyers && num_foa_repeated_buyers_ly && num_foa_repeated_buyers_ly !== 0 ? Math.round(((num_foa_repeated_buyers / num_foa_repeated_buyers_ly) - 1) * 100) : ""
+    var pct_foa_repeated_buyer_growth = pct_foa_repeated_buyer && pct_foa_repeated_buyer_ly ? ((pct_foa_repeated_buyer - pct_foa_repeated_buyer_ly) * 100).toFixed(1) : ""
+
     num_foa_repeated_buyers = num_foa_repeated_buyers ? Math.round(num_foa_repeated_buyers / 1000) : ""
     num_foa_repeated_buyers_ly = num_foa_repeated_buyers_ly ? Math.round(num_foa_repeated_buyers_ly / 1000) : ""
     pct_foa_repeated_buyer = pct_foa_repeated_buyer ? Math.round(pct_foa_repeated_buyer * 100) : ""
     pct_foa_repeated_buyer_ly = pct_foa_repeated_buyer_ly ? Math.round(pct_foa_repeated_buyer_ly * 100) : ""
-    var num_foa_repeated_buyers_growth = num_foa_repeated_buyers && num_foa_repeated_buyers_ly && num_foa_repeated_buyers_ly !== 0 ? Math.round((num_foa_repeated_buyers / num_foa_repeated_buyers_ly) - 1) : ""
-    var pct_foa_repeated_buyer_growth = pct_foa_repeated_buyer && pct_foa_repeated_buyer_ly ? Math.round(pct_foa_repeated_buyer - pct_foa_repeated_buyer_ly) : ""
+
     return {
       num_foa_repeated_buyers,
       num_foa_repeated_buyers_ly,
@@ -1997,12 +2004,15 @@ class ChartStoreSocial {
       var num_new_foa_referred_thru = dataState && dataState[0] && dataState[0].num_new_foa_referred_thru_pf
       var num_new_foa_referred_thru_ly = dataState && dataState[0] && dataState[0].num_new_foa_referred_thru_pf_ly
     }
+
+    var num_foa_w_success_referral_growth = num_foa_w_success_referral && num_foa_w_success_referral_ly && num_foa_w_success_referral_ly !== 0 ? Math.round(((num_foa_w_success_referral / num_foa_w_success_referral_ly) - 1) * 100) : ""
+    var num_new_foa_referred_thru_growth = num_new_foa_referred_thru && num_new_foa_referred_thru_ly && num_new_foa_referred_thru_ly !== 0 ? Math.round(((num_new_foa_referred_thru / num_new_foa_referred_thru_ly) - 1) * 100) : ""
+
     num_foa_w_success_referral = num_foa_w_success_referral ? Math.round(num_foa_w_success_referral / 1000) : ""
     num_foa_w_success_referral_ly = num_foa_w_success_referral_ly ? Math.round(num_foa_w_success_referral_ly / 1000) : ""
     num_new_foa_referred_thru = num_new_foa_referred_thru ? Math.round(num_new_foa_referred_thru / 1000) : ""
     num_new_foa_referred_thru_ly = num_new_foa_referred_thru_ly ? Math.round(num_new_foa_referred_thru_ly / 1000) : ""
-    var num_foa_w_success_referral_growth = num_foa_w_success_referral && num_foa_w_success_referral_ly && num_foa_w_success_referral_ly !== 0 ? Math.round((num_foa_w_success_referral / num_foa_w_success_referral_ly) - 1) : ""
-    var num_new_foa_referred_thru_growth = num_new_foa_referred_thru && num_new_foa_referred_thru_ly && num_new_foa_referred_thru_ly !== 0 ? Math.round((num_new_foa_referred_thru / num_new_foa_referred_thru_ly) - 1) : ""
+
     // var num_new_foa_referred_thru_growth = num_new_foa_referred_thru && num_new_foa_referred_thru_ly ? Math.round(num_new_foa_referred_thru - num_new_foa_referred_thru_ly) : ""
     return {
       num_foa_w_success_referral,
@@ -2043,12 +2053,14 @@ class ChartStoreSocial {
       var pct_foa_conversion = dataState && dataState[0] && dataState[0].pct_foa_conversion_pf
       var pct_foa_conversion_ly = dataState && dataState[0] && dataState[0].pct_foa_conversion_pf_ly
     }
+    var total_foa_conversion_growth = total_foa_conversion && total_foa_conversion_ly && total_foa_conversion_ly !== 0 ? Math.round(((total_foa_conversion / total_foa_conversion_ly) - 1) * 100) : ""
+    var pct_foa_conversion_growth = pct_foa_conversion && pct_foa_conversion_ly ? ((pct_foa_conversion - pct_foa_conversion_ly) * 100).toFixed(1) : ""
+
     total_foa_conversion = total_foa_conversion ? Math.round(total_foa_conversion / 1000) : ""
     total_foa_conversion_ly = total_foa_conversion_ly ? Math.round(total_foa_conversion_ly / 1000) : ""
     pct_foa_conversion = pct_foa_conversion ? (pct_foa_conversion * 100).toFixed(1) : ""
     pct_foa_conversion_ly = pct_foa_conversion_ly ? (pct_foa_conversion_ly * 100).toFixed(1) : ""
-    var total_foa_conversion_growth = total_foa_conversion && total_foa_conversion_ly && total_foa_conversion_ly !== 0 ? Math.round((total_foa_conversion / total_foa_conversion_ly) - 1) : ""
-    var pct_foa_conversion_growth = pct_foa_conversion && pct_foa_conversion_ly ? (pct_foa_conversion - pct_foa_conversion_ly).toFixed(1) : ""
+
     return {
       total_foa_conversion,
       total_foa_conversion_ly,

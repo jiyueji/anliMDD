@@ -30,14 +30,14 @@ export default class FoaReferral extends Component {
                             <td>Growth</td>
                         </tr>
                         <tr>
-                            <td>{dataTable.num_foa_w_success_referral || ""}{dataTable.num_foa_w_success_referral ? "m" : ""}</td>
-                            <td>{dataTable.num_foa_w_success_referral_ly || ""}{dataTable.num_foa_w_success_referral_ly ? "m" : ""}</td>
-                            <td style={{ color: dataTable.num_foa_w_success_referral_growth && dataTable.num_foa_w_success_referral_growth > 0 ? "#16b6aa" : "#ff0000" }}>{dataTable.num_foa_w_success_referral_growth ? dataTable.num_foa_w_success_referral_growth > 0 ? "+" : "" : ""}{dataTable.num_foa_w_success_referral_growth || ""}{dataTable.num_foa_w_success_referral_growth ? "%" : ""}</td>
+                            <td>{dataTable.num_new_foa_referred_thru || ""}{dataTable.num_new_foa_referred_thru ? "k" : ""}</td>
+                            <td>{dataTable.num_new_foa_referred_thru_ly || ""}{dataTable.num_new_foa_referred_thru_ly ? "k" : ""}</td>
+                            <td style={{ color: dataTable.num_new_foa_referred_thru_growth && dataTable.num_new_foa_referred_thru_growth > 0 ? "#16b6aa" : "#ff0000" }}>{dataTable.num_new_foa_referred_thru_growth ? dataTable.num_new_foa_referred_thru_growth > 0 ? "+" : "" : ""}{dataTable.num_new_foa_referred_thru_growth || ""}{dataTable.num_new_foa_referred_thru_growth ? "%" : ""}</td>
                         </tr>
                         <tr>
-                            <td>{dataTable.num_new_foa_referred_thru || ""}{dataTable.num_new_foa_referred_thru ? "%" : ""}</td>
-                            <td>{dataTable.num_new_foa_referred_thru_ly || ""}{dataTable.num_new_foa_referred_thru_ly ? "%" : ""}</td>
-                            <td style={{ color: dataTable.num_new_foa_referred_thru_growth && dataTable.num_new_foa_referred_thru_growth > 0 ? "#16b6aa" : "#ff0000" }}>{dataTable.num_new_foa_referred_thru_growth ? dataTable.num_new_foa_referred_thru_growth > 0 ? "+" : "" : ""}{dataTable.num_new_foa_referred_thru_growth || ""}{dataTable.num_new_foa_referred_thru_growth ? "%" : ""}</td>
+                            <td>{dataTable.num_foa_w_success_referral || ""}{dataTable.num_foa_w_success_referral ? "k" : ""}</td>
+                            <td>{dataTable.num_foa_w_success_referral_ly || ""}{dataTable.num_foa_w_success_referral_ly ? "k" : ""}</td>
+                            <td style={{ color: dataTable.num_foa_w_success_referral_growth && dataTable.num_foa_w_success_referral_growth > 0 ? "#16b6aa" : "#ff0000" }}>{dataTable.num_foa_w_success_referral_growth ? dataTable.num_foa_w_success_referral_growth > 0 ? "+" : "" : ""}{dataTable.num_foa_w_success_referral_growth || ""}{dataTable.num_foa_w_success_referral_growth ? "%" : ""}</td>
                         </tr>
                     </tbody>
                 </table>

@@ -30,8 +30,8 @@ export default class FoaConvertedToAbo extends Component {
                             <td>Growth</td>
                         </tr>
                         <tr>
-                            <td>{dataTable.total_foa_conversion || ""}{dataTable.total_foa_conversion ? "m" : ""}</td>
-                            <td>{dataTable.total_foa_conversion_ly || ""}{dataTable.total_foa_conversion_ly ? "m" : ""}</td>
+                            <td>{dataTable.total_foa_conversion || ""}{dataTable.total_foa_conversion ? "k" : ""}</td>
+                            <td>{dataTable.total_foa_conversion_ly || ""}{dataTable.total_foa_conversion_ly ? "k" : ""}</td>
                             <td style={{ color: dataTable.total_foa_conversion_growth && dataTable.total_foa_conversion_growth > 0 ? "#16b6aa" : "#ff0000" }}>{dataTable.total_foa_conversion_growth ? dataTable.total_foa_conversion_growth > 0 ? "+" : "" : ""}{dataTable.total_foa_conversion_growth || ""}{dataTable.total_foa_conversion_growth ? "%" : ""}</td>
                         </tr>
                         <tr>

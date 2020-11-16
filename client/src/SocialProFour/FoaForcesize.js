@@ -27,7 +27,7 @@ export default class FoaForcesize extends Component {
                     <TitleModify titleName={'FOA Forcesize'} titlePerfYearFlag={false} titlePerfYear={false} id={"sub4"} keys={"FOA_Forcesize"} modifyDate={modifyDateModify} />
                 </div>
                 {/* <div style={{ position: "absolute", left: ' 2%', top: '4%', fontSize: '14px', fontWeight: '600' }}>FOA Forcesize</div> */}
-                <div style={{ fontSize: "13px", position: "absolute", left: '32%', top: "13%", fontWeight:"600"}}>Forcesize</div>
+                <div style={{ fontSize: "13px", position: "absolute", left: '32%', top: "13.5%", fontWeight:"600"}}>Forcesize</div>
                 <table width="30%" border="0" border-collapse="collapse" cellSpacing="0" cellPadding="0" className="FourTopTable">
                 <tbody>
                     <tr style={{ fontWeight: '600' }}>
@@ -88,7 +88,7 @@ export default class FoaForcesize extends Component {
         }
         var forcesize_cp_month = num_existing_foa && num_existing_foa.length >= 0 ? monthShowAbo[num_existing_foa.length] : ""
         var forcesize_cp = numExistingFoaData && numExistingFoaData.length > 0 ? numExistingFoaData[numExistingFoaData.length-1] : ""
-        var forcesize_cp_growth = forcesize_cp && forcesize_cp_ly && forcesize_cp_ly !== 0 ? Math.round((forcesize_cp / forcesize_cp_ly) - 1) : ""
+        var forcesize_cp_growth = forcesize_cp && forcesize_cp_ly && forcesize_cp_ly !== 0 ? Math.round(((forcesize_cp / forcesize_cp_ly) - 1) * 100) : ""
         this.setState({
             numExistingFoaData,modifyDateModify,forcesize_cp,forcesize_cp_ly,forcesize_cp_growth,forcesize_cp_month,maxMonthShow
         }, () => {
