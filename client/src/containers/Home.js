@@ -60,10 +60,12 @@ export default withOktaAuth(class Home extends Component {
         }
 
         async login() {
+            console.log("login yes")
             this.props.authService.login('/');
         }
 
         async logout() {
+            console.log("login fail")
             this.props.authService.logout('/');
         }
 

@@ -6,6 +6,8 @@ const routes = {
     users: '/users',
     topics: '/todos/:userId',
     topic_edit: '/todo/:id/edit',
+    modify:"/modify",
+    
 }
 
 export default routes;
