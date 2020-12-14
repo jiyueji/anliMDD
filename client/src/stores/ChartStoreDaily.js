@@ -584,7 +584,7 @@ class ChartStoreDaily {
     }
   }
   async getFiveOneTwoDate(oldDateShow){
-    var dataGet = await ApiService.get_dailySalesTableByMonth("", oldDateShow)
+    var dataGet = oldDateShow ? await ApiService.get_dailySalesTableByMonth("", oldDateShow) : null
     var jsArr = dataGet ? JSON.parse(dataGet) : []
     return jsArr
   }

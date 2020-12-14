@@ -13,6 +13,13 @@ HOST = "bcg-redshift-beijing-2.c1x8rz4gupte.cn-north-1.redshift.amazonaws.com.cn
 PORT = "5439"
 SCHEMA = "public"
 
+# DATABASE = "dashboard"
+# USER = "master"
+# PASSWORD = "AmwayShift36"
+# HOST = "dashboardredshiftpd.cbc6gje7z1p9.cn-northwest-1.redshift.amazonaws.com.cn"
+# PORT = "5439"
+# SCHEMA = "public"
+
 
 parser = reqparse.RequestParser()
 parser.add_argument('username', help = 'This field cannot be blank', required = True)
@@ -34,6 +41,9 @@ parser5 = reqparse.RequestParser()
 parser5.add_argument('id', help = 'This field cannot be blank', required = True)
 parser5.add_argument('parentid', help = 'This field cannot be blank', required = True)
 parser5.add_argument('n_month', help = 'This field cannot be blank', required = True)
+
+parser6 = reqparse.RequestParser()
+parser6.add_argument('user', help = 'This field cannot be blank', required = True)
 
 def performQuery(queryStr):
   try:
@@ -763,4 +773,12 @@ class SocialConvNew(Resource):
     def get(self):
 
         queryStr = '''select * from QA_TEST.query_foa_31_foa_conversion'''
+        return performQuery(queryStr)
+
+class QueryUser(Resource):
+    def get(self):
+
+        data = parser6.parse_args()
+        id = data['user']
+        queryStr = "select * from MDD_USER where account='" +id+ "'"
         return performQuery(queryStr)

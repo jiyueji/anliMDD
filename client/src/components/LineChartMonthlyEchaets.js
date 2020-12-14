@@ -96,7 +96,7 @@ export default class LineChartMonthlyEchaets extends Component {
         } else {
             monthShow = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         }
-        thisYearLength = data.actual_sales_data.length || 12
+        thisYearLength = data.actual_sales_data && data.actual_sales_data.length || 12
         this.setState({
             monthShow, allData, thisYearLength
         }, () => {
@@ -160,7 +160,7 @@ export default class LineChartMonthlyEchaets extends Component {
         // var yearShow = new Date().getFullYear() //今年
         var yearShow = allData.maxYear //今年
         var lastYearShow = (yearShow - 1).toString()   //去年
-        yearShow = yearShow.toString()//转换成字符串可以显示在图例里，数字不可以
+        yearShow = yearShow && yearShow.toString()//转换成字符串可以显示在图例里，数字不可以
         var nameFroecast = yearShow + ' Target'
         dataShowForClick ? "" : thisYear[0] ? thisYear.length = thisYearLength : ""
         this.setState({

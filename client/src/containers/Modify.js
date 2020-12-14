@@ -41,8 +41,8 @@ class Modify extends Component {
 
     // 展示时间    //显示到月份"202007"
     var date = new Date();
-    var modifyDateGetMonth = (date.getMonth()) < 10 ? "0" + (date.getMonth()) : (date.getMonth()) == 0 ? "12" : toString((date.getMonth()))
-    var showMonth = date.getFullYear() + modifyDateGetMonth
+    var modifyDateGetMonth = date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth() == 0 ? "12" : date.getMonth()
+    var showMonth = (date.getFullYear() + "/" + modifyDateGetMonth).replace(/\//g,'')
     // 展示时间    //显示到昨天的日期"20200826"
     date.setTime(date.getTime()-24*60*60*1000);
     var showYear = date.getFullYear() + "/" + (date.getMonth()+1) + "/" + date.getDate()
@@ -138,8 +138,8 @@ class Modify extends Component {
   componentDidMount() {
     //前四
     var date = new Date();
-    var modifyDateGetMonth = (date.getMonth()) < 10 ? "0" + (date.getMonth()) : (date.getMonth()) == 0 ? "12" : toString((date.getMonth()))
-    var modifyDate = date.getFullYear() + modifyDateGetMonth
+    var modifyDateGetMonth = date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth() == 0 ? "12" : date.getMonth()
+    var modifyDate = (date.getFullYear() + "/" + modifyDateGetMonth).replace(/\//g,'')
     //第五
     date.setTime(date.getTime()-24*60*60*1000);
     var modifyDateGetMonthFive = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1

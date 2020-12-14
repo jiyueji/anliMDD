@@ -32,44 +32,109 @@ import { DatePicker } from 'antd';
 import moment from 'moment';
 import "antd/dist/antd.css";
 import { withOktaAuth } from '@okta/okta-react';
+import ApiService from '../services/ApiService'
 
 /**
  * Home page extra component
  */
-@inject('authStore', 'chartStore', 'chartStoreAbo', 'chartStoreGrowth', 'chartStoreDaily', 'chartStoreSocial') @observer
-export default withOktaAuth(class Home extends Component {
 
+
+@inject('authStore', 'chartStore', 'chartStoreAbo', 'chartStoreGrowth', 'chartStoreDaily', 'chartStoreSocial') @observer
+    export default withOktaAuth(class Home extends Component {
+
+        _isMounted = false;
         @observable selectedTab = 'Sales Performance'
         @observable isPerfYear = true
         @observable isFiveDatePicker = ""
         // @observable isMonthDatePicker = ""
         @observable isAllDatePicker = ""
 
+
         constructor(props) {
             super(props)
             this.login = this.login.bind(this);
             this.logout = this.logout.bind(this);
+            this.checkUser = this.checkUser.bind(this);
             this.state = {
                 thisWindowWidth: false,
                 thisPageTitle: "Update on 9th of each month",
                 nowDateMonth: "",
                 nowDateDay: "",
-                nowDateYear:"",
+                nowDateYear: "",
+                userOkta: null,
+                userFlag:false,
+                logining:false,
             }
             //        this.onClickEditDashboard = this.onClickEditDashboard.bind(this)
         }
+        async checkUser() {
+            if (this.props.authState.isAuthenticated && !this.state.userFlag) {
+                console.log("checkUser")
+              const userInfo = await this.props.oktaAuth.token.getUserInfo();
+              var userOkta = userInfo && userInfo.name
+              console.log(this.props,userInfo,"userInfo")
+              const dataUser = await ApiService.get_query_user(userOkta)
+              var UserShow = dataUser && dataUser.length > 5 ? JSON.parse(dataUser) : null
+              if (this._isMounted && userOkta && UserShow) {
+                this.setState({ userFlag:true});
+              }
+            }
+          }
 
         async login() {
-            console.log("login yes")
-            this.props.authService.login('/');
+            this.props.oktaAuth.signInWithRedirect("/");
+            // console.log(this.props.authState,"this.props.authState(2)")
+            // const accessToken = this.props.authState.accessToken;
+            // const response = await fetch("https://idashboard.intranet.local", {
+            //     headers: {
+            //       Authorization: `Bearer ${accessToken}`,
+            //     },
+            //   });
+            // this.props.oktaAuth.token.getWithoutPrompt({
+            //     responseType: 'id_token', // or array of types
+            //     sessionToken: 'testSessionToken' // optional if the user has an existing Okta session
+            //   })
+            //   .then(function(res) {
+            //     var tokens = res.tokens;
+
+            //     // Do something with tokens, such as
+            //     this.props.oktaAuth.tokenManager.setTokens(tokens);
+            //   })
+            //   .catch(function(err) {
+            //     // handle OAuthError or AuthSdkError (AuthSdkError will be thrown if app is in OAuthCallback state)
+            //   });
         }
 
         async logout() {
-            console.log("login fail")
-            this.props.authService.logout('/');
+            // console.log(this.props.authState,"this.props.authState(3)")
+            this.props.oktaAuth.signOut('/');
         }
 
-        componentDidMount() {
+        //   async componentDidMount() {
+        //     this._isMounted = true;
+        //     this.checkUser();
+        //   }
+
+          async componentDidUpdate() {
+            this._isMounted = true;
+            this.checkUser();
+          }
+
+          componentWillUnmount() {
+            this._isMounted = false;
+          }
+        // async login() {
+        //     this.props.authService.login('/');
+        // }
+
+        // async logout() {
+        //     this.props.authService.logout('/');
+        // }
+
+        async componentDidMount() {
+            console.log(this.props.authState,"this.props.authState")
+            this._isMounted = true;
+            this.checkUser();
             // 实现吸顶
             window.addEventListener("scroll", () => {
                 var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -88,7 +153,7 @@ export default withOktaAuth(class Home extends Component {
                 if (scrollTop > offsetTop && document.getElementById('topTatilShow')) {
                     document.getElementById('topTatilShow').style.position = "fixed";
                     document.getElementById('topTatilShow').style.top = "44px";
-                } else if(document.getElementById('topTatilShow')) {
+                } else if (document.getElementById('topTatilShow')) {
                     document.getElementById('topTatilShow').style.position = "absolute";
                     document.getElementById('topTatilShow').style.top = "110px";
                 }
@@ -243,7 +308,7 @@ export default withOktaAuth(class Home extends Component {
                     nowDateYear,
                 })
             } else {
-                var { nowDateMonth, nowDateDay,nowDateYear } = this.state
+                var { nowDateMonth, nowDateDay, nowDateYear } = this.state
             }
             //dateString是目前选择的年加月
             var antdChangeDateMonth = dateString.slice(5, 7)//目前选择的月
@@ -258,11 +323,11 @@ export default withOktaAuth(class Home extends Component {
         }
         //限制日期选择
         disabledDate = (current) => {
-            if(this.selectedTab === "AGP KPI"){//第二屏
+            if (this.selectedTab === "AGP KPI") {//第二屏
                 return current < moment(new Date('2015/01')) || current > moment().endOf('day')
-            }else if(this.selectedTab === "Customer Dynamics"){//第四屏
+            } else if (this.selectedTab === "Customer Dynamics") {//第四屏
                 return current < moment(new Date('2018/09')) || current > moment().endOf('day')
-            }else if(this.selectedTab === "Daily Report"){//第五屏
+            } else if (this.selectedTab === "Daily Report") {//第五屏
                 return current < moment(new Date('2018/01')) || current > moment().endOf('day')
             }
             return current < moment(new Date('2015/09')) || current > moment().endOf('day')
@@ -356,10 +421,10 @@ export default withOktaAuth(class Home extends Component {
             //         </section>
             //     </div>
             // }
-            var { thisWindowWidth, thisPageTitle } = this.state
+            var { thisWindowWidth, thisPageTitle,userFlag } = this.state
             // if (this.props.authState.isPending) return <div>Loading...</div>;
-            return this.props.authState.isAuthenticated ?
-            <div className="dashboard-wrap">
+            return this.props.authState.isAuthenticated ? userFlag ?
+                <div className="dashboard-wrap">
                     {authStore.isAuthenticated &&
                         <React.Fragment>
                             <div className="container-fluid">
@@ -447,7 +512,7 @@ export default withOktaAuth(class Home extends Component {
                             </div>
                         </React.Fragment>
                     }
-                </div> :
+                </div> : <div>登录失败</div> :
                 <button onClick={this.login}>Login</button>;
         }
     })

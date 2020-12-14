@@ -135,5 +135,6 @@ api.add_resource(resources.SocialPopulationNew, '/social_pop_data_new')
 api.add_resource(resources.SocialRepBuyerNew, '/social_rep_buy_data_new')
 api.add_resource(resources.SocialReferralNew, '/social_ref_data_new')
 api.add_resource(resources.SocialConvNew, '/social_conv_data_new')
+api.add_resource(resources.QueryUser, '/query_user')
 if __name__ == '__main__':
       app.run(host='0.0.0.0', port=80)

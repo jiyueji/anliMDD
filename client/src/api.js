@@ -88,6 +88,7 @@ const api = {
     social_rep_buy_data_new:'/social_rep_buy_data_new',
     social_ref_data_new:'/social_ref_data_new',
     social_conv_data_new:'/social_conv_data_new',
+    query_user:"/query_user",//匹配用户名
 }
 
 export default api

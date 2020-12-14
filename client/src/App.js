@@ -21,6 +21,7 @@ class App extends Component {
     // }
 
     async componentDidMount() {
+        console.log(this.props,"this.props")
         await this.props.authStore.login({
             username: 'user',
             password: 'password'

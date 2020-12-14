@@ -57,7 +57,7 @@ export default class AboDyBarStack extends Component {
         var renewalRateData = []
         var renewalRatePredictionData = []
         for (var i = 0; i < monthShowAboLine.length; i++) {
-            if (data.renewal_rate_data[0] && data.renewal_rate_data[0].x == monthShowAboLine[i]) {
+            if (data.renewal_rate_data && data.renewal_rate_data[0] && data.renewal_rate_data[0].x == monthShowAboLine[i]) {
                 data.renewal_rate_data.map((item, index) => {
                     renewalRateData.push((item.y * 100).toFixed(1))
                 })
@@ -69,7 +69,7 @@ export default class AboDyBarStack extends Component {
         // data.renewal_rate_data.map((item, index) => {
         //     renewalRateData.push((item.y * 100).toFixed(1))
         // })
-        data.renewal_rate_prediction_data.map((item, index) => {
+        data.renewal_rate_prediction_data && data.renewal_rate_prediction_data.map((item, index) => {
             renewalRatePredictionData.push((item.y * 100).toFixed(1))
         })
         for (var i = 0; renewalRatePredictionData.length < 12; i++) {

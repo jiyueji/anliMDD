@@ -13,6 +13,7 @@ class ApiSerice {
         // this.api_url = "http://52.82.15.213:5000";//新配置环境QA
         // this.api_url = 'http://52.83.75.191:5000';//老版本保存
         // this.api_url = 'http://10.123.7.21:5000';//老版本保存
+        // this.api_url = "https://idashboard.intranet.local:5000";
     } 
 
     /**
@@ -32,6 +33,21 @@ class ApiSerice {
             payload.body = JSON.stringify(params);
         }
         const res = send ? await fetch(`${this.api_url}${url}?month=${send}`) : await fetch(`${this.api_url}${url}`, payload)
+        const status = res.status;
+        const body = await res.json();
+        return { status, body };
+    }
+
+    async apiCallUser(url, method = 'GET', token = false,send = null, params = null) {
+        let payload = {
+            method,
+            mode: 'cors',
+            headers: this.buildHeaders(token),
+        }
+        if (params) {
+            payload.body = JSON.stringify(params);
+        }
+        const res = send ? await fetch(`${this.api_url}${url}?user=${send}`) : await fetch(`${this.api_url}${url}`, payload)
         const status = res.status;
         const body = await res.json();
         return { status, body };
@@ -612,6 +628,11 @@ class ApiSerice {
 
     async get_social_conv_data_new(params, token) {
         const res = await this.apiCall(api.social_conv_data_new, 'GET', token, params);
+        this.handleCommonError(res);
+        return res.body;
+    }
+    async get_query_user(params, token) {
+        const res = await this.apiCallUser(api.query_user, 'GET', token, params);
         this.handleCommonError(res);
         return res.body;
     }

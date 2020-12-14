@@ -164,8 +164,7 @@ export default class PicFourChange extends Component {
         var oldDateShow = data.oldDateShow || ""
         var oldDateShow2 = data2.oldDateShow2 || ""
         var oldDateNew = oldDateShow && oldDateShow2 ? oldDateShow <= oldDateShow2 ? oldDateShow : oldDateShow2 : ""
-        
-        var dataGet = await ApiService.get_dailySalesTableByMonth("", oldDateNew)
+        var dataGet = oldDateNew ? await ApiService.get_dailySalesTableByMonth("", oldDateNew) : null
         dataGet = dataGet ? JSON.parse(dataGet) : []
         if (!dataGet.length) {
             return false

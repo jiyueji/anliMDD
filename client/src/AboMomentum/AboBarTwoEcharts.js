@@ -73,35 +73,35 @@ export default class AboBarTwoEcharts extends Component {
         this.upDateShowData(data, datas)
     }
     upDateShowData(data, datas) {
-        data.prevYear.sort(function (a, b) {
+        data.prevYear && data.prevYear.sort(function (a, b) {
             var order = ["DD", "GP", "SP"];
             return order.indexOf(a.x) - order.indexOf(b.x);
         });
-        data.curYear.sort(function (a, b) {
+        data.curYear && data.curYear.sort(function (a, b) {
             var order = ["DD", "GP", "SP"];
             return order.indexOf(a.x) - order.indexOf(b.x);
         });
-        data.prevYearMed.sort(function (a, b) {
+        data.prevYearMed && data.prevYearMed.sort(function (a, b) {
             var order = ["DD", "GP", "SP"];
             return order.indexOf(a.x) - order.indexOf(b.x);
         });
-        data.curYearMed.sort(function (a, b) {
+        data.curYearMed && data.curYearMed.sort(function (a, b) {
             var order = ["DD", "GP", "SP"];
             return order.indexOf(a.x) - order.indexOf(b.x);
         });
-        datas.avgNoPinPb.sort(function (a, b) {
+        datas.avgNoPinPb && datas.avgNoPinPb.sort(function (a, b) {
             var order = ["Bonus Level=15% ABO", "new_abo", "existing abo"];
             return order.indexOf(a.x) - order.indexOf(b.x);
         });
-        datas.avgNoPinPbLy.sort(function (a, b) {
+        datas.avgNoPinPbLy && datas.avgNoPinPbLy.sort(function (a, b) {
             var order = ["Bonus Level=15% ABO", "new_abo", "existing abo"];
             return order.indexOf(a.x) - order.indexOf(b.x);
         });
-        datas.noPinMedian.sort(function (a, b) {
+        datas.noPinMedian && datas.noPinMedian.sort(function (a, b) {
             var order = ["Bonus Level=15% ABO", "new_abo", "existing abo"];
             return order.indexOf(a.x) - order.indexOf(b.x);
         });
-        datas.noPinMedianLy.sort(function (a, b) {
+        datas.noPinMedianLy && datas.noPinMedianLy.sort(function (a, b) {
             var order = ["Bonus Level=15% ABO", "new_abo", "existing abo"];
             return order.indexOf(a.x) - order.indexOf(b.x);
         });
