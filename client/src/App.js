@@ -12,6 +12,7 @@ import './styles/table.css'
 import { Router, Switch, Route } from 'react-router'
 import Modify from './containers/Modify'
 import HeaderLoad from './containers/HeaderLoad'
+import { withOktaAuth } from '@okta/okta-react';
 
 @inject('authStore') @observer
 class App extends Component {
@@ -21,7 +22,7 @@ class App extends Component {
     // }
 
     async componentDidMount() {
-        console.log(this.props,"this.props")
+        // console.log(this.props,"this.props")
         await this.props.authStore.login({
             username: 'user',
             password: 'password'

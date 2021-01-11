@@ -1500,3 +1500,20 @@ label.bot-chart-com-sm {
   .FourTopTable td{
       padding: 0;
   }
+  .logoutCss{
+    position: absolute;
+    top: 3%;
+    right: 2%;
+    border: 0;
+    border-radius: 50%;
+  }
+  .loginButton{
+    margin: 80px 0 0 45%;
+    width: 10%;
+    height: 60px;
+    border: 0;
+    background: #213172;
+    color: white;
+    border-radius: 10%;
+    font-size: 20px;
+  }

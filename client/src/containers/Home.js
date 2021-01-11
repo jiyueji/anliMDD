@@ -43,6 +43,7 @@ import ApiService from '../services/ApiService'
     export default withOktaAuth(class Home extends Component {
 
         _isMounted = false;
+        oktaSignInWithRedirect = false;
         @observable selectedTab = 'Sales Performance'
         @observable isPerfYear = true
         @observable isFiveDatePicker = ""
@@ -63,16 +64,15 @@ import ApiService from '../services/ApiService'
                 nowDateYear: "",
                 userOkta: null,
                 userFlag:false,
-                logining:false,
             }
             //        this.onClickEditDashboard = this.onClickEditDashboard.bind(this)
         }
         async checkUser() {
             if (this.props.authState.isAuthenticated && !this.state.userFlag) {
-                console.log("checkUser")
+                // console.log("checkUser")
               const userInfo = await this.props.oktaAuth.token.getUserInfo();
               var userOkta = userInfo && userInfo.name
-              console.log(this.props,userInfo,"userInfo")
+            //   console.log(this.props,userInfo,"userInfo")
               const dataUser = await ApiService.get_query_user(userOkta)
               var UserShow = dataUser && dataUser.length > 5 ? JSON.parse(dataUser) : null
               if (this._isMounted && userOkta && UserShow) {
@@ -83,37 +83,15 @@ import ApiService from '../services/ApiService'
 
         async login() {
             this.props.oktaAuth.signInWithRedirect("/");
-            // console.log(this.props.authState,"this.props.authState(2)")
-            // const accessToken = this.props.authState.accessToken;
-            // const response = await fetch("https://idashboard.intranet.local", {
-            //     headers: {
-            //       Authorization: `Bearer ${accessToken}`,
-            //     },
-            //   });
-            // this.props.oktaAuth.token.getWithoutPrompt({
-            //     responseType: 'id_token', // or array of types
-            //     sessionToken: 'testSessionToken' // optional if the user has an existing Okta session
-            //   })
-            //   .then(function(res) {
-            //     var tokens = res.tokens;
-
-            //     // Do something with tokens, such as
-            //     this.props.oktaAuth.tokenManager.setTokens(tokens);
-            //   })
-            //   .catch(function(err) {
-            //     // handle OAuthError or AuthSdkError (AuthSdkError will be thrown if app is in OAuthCallback state)
-            //   });
         }
 
         async logout() {
-            // console.log(this.props.authState,"this.props.authState(3)")
-            this.props.oktaAuth.signOut('/');
+            console.log(this.props,"this.props")
+            // this.props.authStore.logout()
+            this.props.oktaAuth.signOut({
+                revokeAccessToken: false,
+            });
         }
-
-        //   async componentDidMount() {
-        //     this._isMounted = true;
-        //     this.checkUser();
-        //   }
 
           async componentDidUpdate() {
             this._isMounted = true;
@@ -132,7 +110,10 @@ import ApiService from '../services/ApiService'
         // }
 
         async componentDidMount() {
-            console.log(this.props.authState,"this.props.authState")
+            console.log(this.props,"this.props")
+            if(!this.props.authStore.isAuthenticated){
+                this.login()
+            }
             this._isMounted = true;
             this.checkUser();
             // 实现吸顶
@@ -221,15 +202,6 @@ import ApiService from '../services/ApiService'
 
             this.props.chartStoreDaily.fetchGetQueryQueryDailySalesLine2ByMonth("", '20')//第五屏折线图的所有数据
             this.props.chartStoreDaily.fetchGetQueryDailySalEventsByMonth("", '20')//提示框
-
-            // var time = (new Date).getTime() - 24 * 60 * 60 * 1000;
-            // var yesterday = new Date(time);
-            // var month = yesterday.getMonth();
-            // var day = yesterday.getDate();
-            // yesterday = yesterday.getFullYear() + (yesterday.getMonth() > 9 ? (yesterday.getMonth() + 1) : "0" + (yesterday.getMonth() + 1)) + (yesterday.getDate() > 9 ? (yesterday.getDate()) : "0" + (yesterday.getDate()));
-            // this.props.chartStoreDaily.fetchGetQueryDailySalesTableByMonth("", yesterday)//前两个图的
-            // this.props.chartStoreDaily.fetchGetQueryDailyRecTableByMonth("",'20')//后两个图的
-            // this.props.chartStoreDaily.fetchGetQueryDailyCommentsByMonth("",'20')//下面的文本框
 
             this.props.chartStoreSocial.fetchSocialRepBuyData()
             this.props.chartStoreSocial.fetchSocialFoaProdData()
@@ -341,58 +313,7 @@ import ApiService from '../services/ApiService'
             this.props.chartStoreGrowth.isAllDatePicker = this.isAllDatePicker//第二
             this.props.chartStore.isAllDatePicker = this.isAllDatePicker//第一
         }
-        // onClickEditDashboard() {
-        //     this.dashboardRef.onClickEditDashboard()
-        // }
 
-        //每一页的标题
-        //     <div className="page-title">
-        //     <div className="container-fluid">
-        //         <div className="row align-items-center headerTitle">
-        //             <div className="col-md-4">
-        //                 <h2 className="main-subtitle">Overview</h2>
-        //                 <h1 className="main-title">{this.selectedTab}</h1>
-        //             </div>
-
-        //             {/* <div className="col-md-5">
-        //         <div className='custom-control custom-switch perf-switch-wrap'>
-        //             <label className='perf-lbl' htmlFor='perfYearSwitcher'>
-        //             See as Performance Year
-        //             </label>
-        //             <input
-        //             type='checkbox'
-        //             className='custom-control-input'
-        //             id='perfYearSwitcher'
-        //             checked={this.isPerfYear}
-        //             onChange={this.handleSwitchChange()}
-        //             readOnly
-        //             />
-        //             <label className='custom-control-label' htmlFor='perfYearSwitcher'>
-        //             Calendar Year
-        //             </label>
-        //         </div>
-        //     </div> */}
-
-        //             <div className="col-md-3">
-        //                 <div className="page-title-btn-wrap">
-
-
-
-        //                     {/* <a href="javascript:void(0)" className="btn btn-outline-grey btn-rounded btn-sm">
-        //                 Rolling 12 months <i className="far fa-calendar text-blue ml-2"></i>
-        //             </a> */}
-        //                     {/* <a href="javascript:void(0)" className="btn btn-outline-blue btn-rounded btn-sm">
-        //                 <i className="fas fa-filter"></i> Filters <span className="btn-label ml-2">2</span>
-        //             </a> */}
-        //                     {/* <a href="javascript:void(0)" className="btn btn-outline-green btn-rounded btn-sm"
-        //             onClick={this.onClickEditDashboard}>
-        //                 <i className="far fa-edit"></i> Customize Dashboard
-        //             </a> */}
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     </div>
-        // </div>
         render() {
             const authStore = this.props.authStore
             const fivePageDateUp = this.props.chartStoreDaily.queryDailySalesLineHandle.pageUpShowDate//第五屏的时间显示
@@ -401,54 +322,18 @@ import ApiService from '../services/ApiService'
             const dateFormatFive = this.props.chartStoreDaily.queryDailySalesLineHandle.dateChangeOld;
             const dateFormatAll = this.props.chartStore.donutTotalSalesLastMonth.dateChangeData;
             const { MonthPicker } = DatePicker;
-            // console.log(dateFormatFive,dateFormatAll,"dateFormatAll")
-            // console.log('AUTH STORE IN RENDER', authStore, authStore.isAuthenticated)
 
-            // TODO: temporary add auto login
-            // const isAutoAuth = true
-            // if (authStore.currentUser) {
-            //     // redirect to users list
-            //     return <Redirect to={routes.users} />
-            // }
-
-
-            // if (!authStore.currentUser) {
-            //     // redirect to users list
-            //     return <div className="ut__home">
-            //         <section className="ut__btn-group">
-            //             <Link className="ut__button" to={routes.login}>Sign in</Link>
-            //             <Link className="ut__button" to={routes.sign_up}>Sign up!</Link>
-            //         </section>
-            //     </div>
-            // }
             var { thisWindowWidth, thisPageTitle,userFlag } = this.state
-            // if (this.props.authState.isPending) return <div>Loading...</div>;
+            // console.log(this.props.authState,"this.props.authStat")
+            if (this.props.authState.isPending || (this.props.authState.isAuthenticated && !userFlag)) return <div>Loading...</div>;
             return this.props.authState.isAuthenticated ? userFlag ?
                 <div className="dashboard-wrap">
+                    <button onClick={this.logout} className="logoutCss">logout</button>
                     {authStore.isAuthenticated &&
                         <React.Fragment>
                             <div className="container-fluid">
-                                {/* <div className="col-md-5" style={{ position: 'fixed', left: '88%', zIndex: '11' }}>
-                    <div className='custom-control custom-switch perf-switch-wrap'>
-                        <label className='perf-lbl' htmlFor='perfYearSwitcher'>
-                            PF
-                                                </label>
-                        <input
-                            type='checkbox'
-                            className='custom-control-input'
-                            id='perfYearSwitcher'
-                            checked={this.isPerfYear}
-                            onChange={this.handleSwitchChange()}
-                            readOnly
-                        />
-                        <label className='custom-control-label' htmlFor='perfYearSwitcher'>
-                            CY
-                                                </label>
-                    </div>
-                </div> */}
                                 <div className="page-title bigTatie" id="topTatilShow">
                                     <h1 className="main-title" style={{ lineHeight: "inherit" }}>{this.selectedTab} <span style={{ fontSize: "12px", color: "#417bff" }}>({thisPageTitle})</span></h1>
-                                    {/* <button onClick={this.logout}>Logout</button> */}
                                     {
                                         this.selectedTab === "AGP KPI" ? "" : this.selectedTab === "Daily Report" ? <div style={{ marginRight: "11%", lineHeight: "30px" }}>{dateFormatFive}</div> : <div className='custom-control custom-switch perf-switch-wrap' style={{ marginRight: "11%" }}>
                                             <label className='perf-lbl' htmlFor='perfYearSwitcher'>
@@ -473,20 +358,7 @@ import ApiService from '../services/ApiService'
                                 </div>
                                 <div className="main-navigation">
                                     <Tabs activeKey={this.selectedTab} onSelect={k => this.selectedTab = k} onClick={this.handleClickToUp.bind(this)}>
-                                        {/* <Tab eventKey="Home" title={<div><i className="fas fa-home"></i>Home</div>}>
-                    <HomeContainer />
-                </Tab> */}
                                         <Tab eventKey="Sales Performance" title={<div><i className="fas fa-dollar-sign"></i>Sales Performance</div>}>
-                                            {/* <div className="page-title bigTatie" id="topTatilShow">
-                                <div className="container-fluid">
-                                    <div className="row align-items-center headerTitle">
-                                        <div className="col-md-4">
-                                            <h2 className="main-subtitle">Overview</h2>
-                                            <h1 className="main-title">{this.selectedTab}</h1>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> */}
                                             <SalesPerformanceContainer thisWindowWidth={thisWindowWidth} />
                                         </Tab>
                                         <Tab eventKey="AGP KPI" title={<div><i className="fas fa-chart-bar"></i>AGP KPI</div>}>
@@ -495,52 +367,18 @@ import ApiService from '../services/ApiService'
                                         <Tab eventKey="ABO Momentum & Goal Tracking" title={<div><i className="fas fa-dollar-sign"></i>ABO Momentum & Goal Tracking</div>}>
                                             <AboDynamicsContainer />
                                         </Tab>
-                                        {/* <Tab eventKey="ABO Leader Dynamics" title={<div><i className="fas fa-home"></i>ABO Leader Dynamics</div>}>
-                    <AboLeaderContainer/>
-                </Tab> */}
                                         <Tab eventKey="Customer Dynamics" title={<div><i className="fas fa-home"></i>Customer Dynamics</div>}>
                                             <SocialPromContainer />
                                         </Tab>
                                         <Tab eventKey="Daily Report" title={<div><i className="fas fa-home"></i>Daily Report</div>}>
                                             <DailyReportContainer />
-                                            {/* <CardsLayout onRef={ref => (this.dashboardRef = ref)}/> */}
                                         </Tab>
-                                        {/* <Tab style={{}} className="aaaa"  title={<div onClick={this.handleDataUpdate.bind(this)}><i className="fa fa-retweet" aria-hidden="true"></i></div>}>
-                        </Tab> */}
                                     </Tabs>
                                 </div>
                             </div>
                         </React.Fragment>
                     }
-                </div> : <div>登录失败</div> :
-                <button onClick={this.login}>Login</button>;
+                </div> : <div>Contact us with any questions by dialing 8333 or sending email to servicedesk.china@Amway.com.</div> : <button onClick={this.login} className="loginButton">Login</button>;
         }
     })
 
-// export default Home
-
-// import React, { Component } from 'react';
-// import { withOktaAuth } from '@okta/okta-react';
-
-// export default withOktaAuth(class Home extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.login = this.login.bind(this);
-//     this.logout = this.logout.bind(this);
-//   }
-
-//   async login() {
-//     this.props.authService.login('/');
-//   }
-
-//   async logout() {
-//     this.props.authService.logout('/');
-//   }
-
-//   render() {
-//     if (this.props.authState.isPending) return <div>Loading...</div>;
-//     return this.props.authState.isAuthenticated ?
-//       <button onClick={this.logout}>Logout</button> :
-//       <button onClick={this.login}>Login</button>;
-//   }
-// });
