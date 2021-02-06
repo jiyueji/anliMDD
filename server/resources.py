@@ -6,19 +6,19 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 import json
 
-DATABASE = "dashboard"
-USER = "master"
-PASSWORD = "Eiunasfjn314"
-HOST = "bcg-redshift-beijing-2.c1x8rz4gupte.cn-north-1.redshift.amazonaws.com.cn"
-PORT = "5439"
-SCHEMA = "public"
-
 # DATABASE = "dashboard"
 # USER = "master"
-# PASSWORD = "AmwayShift36"
-# HOST = "dashboardredshiftpd.cbc6gje7z1p9.cn-northwest-1.redshift.amazonaws.com.cn"
+# PASSWORD = "Eiunasfjn314"
+# HOST = "bcg-redshift-beijing-2.c1x8rz4gupte.cn-north-1.redshift.amazonaws.com.cn"
 # PORT = "5439"
 # SCHEMA = "public"
+
+DATABASE = "dashboard"
+USER = "master"
+PASSWORD = "AmwayShift36"
+HOST = "dashboardredshiftpd.cbc6gje7z1p9.cn-northwest-1.redshift.amazonaws.com.cn"
+PORT = "5439"
+SCHEMA = "public"
 
 
 parser = reqparse.RequestParser()
@@ -724,7 +724,7 @@ class RemarksMonth(Resource):
 
 #更新备注
 class UpdateRemarks(Resource):
-    def get(self):
+    def post(self):
         data = parser4.parse_args()
         id = data['id']
         parentid = data['parentid']

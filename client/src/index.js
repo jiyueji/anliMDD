@@ -72,10 +72,10 @@ ReactDOM.render(
                 <Security oktaAuth={oktaAuth} onAuthRequired={customAuthHandler}>
                     <Switch>
                         <Route path='/' exact component={Home} />
-                        <SecureRoute path='/modify' exact component={Modify} />
+                        <Route path='/modify' exact component={Modify} />
                         <Route path='/implicit/callback' component={LoginCallback} />
                         <SecureRoute path='/protected' component={Protected} />
-                        <Redirect to="/" />
+                        <Redirect path='*' to="/" />
                     </Switch>
                 </Security>
             </Router>

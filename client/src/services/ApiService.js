@@ -68,6 +68,28 @@ class ApiSerice {
         const body = await res.json();
         return { status, body };
     }
+    //更改备注框post请求
+    async remarksHandlePost(url, method = 'GET', token = false, params = null, parentid = null, id = null, n_month = null, remarks = null) {
+        let payload = {
+            method,
+            mode: "cors",
+            headers: this.buildHeaders(token),
+        }
+        if (parentid) {
+            var bodyPar = {
+                parentid:parentid,
+                id:id,
+                n_month:n_month,
+                remarks:remarks
+            }
+            payload.body = JSON.stringify(bodyPar);
+        }
+        // const res = await fetch(`${this.api_url}${url}?parentid=${parentid}&id=${id}&n_month=${n_month}&remarks=${remarks}`)
+        const res = await fetch(`${this.api_url}${url}`, payload)
+        const status = res.status;
+        const body = await res.json();
+        return { status, body };
+    }
 
     /**
      * Build  http headers object
@@ -589,10 +611,15 @@ class ApiSerice {
         return res.body;
     }
 
+    // async get_updateRemarks(params, parentid, id, n_month, remarks, token) {
+    //     const res = await this.remarksHandle(api.updateRemarks, 'GET', token, params, parentid, id, n_month, remarks);
+    //     // this.handleCommonError(res);
+    //     return res.body;
+    // }
+
     async get_updateRemarks(params, parentid, id, n_month, remarks, token) {
-        const res = await this.remarksHandle(api.updateRemarks, 'GET', token, params, parentid, id, n_month, remarks);
+        const res = await this.remarksHandlePost(api.updateRemarks, 'POST', token, params, parentid, id, n_month, remarks);
         // this.handleCommonError(res);
-        console.log(res, "res")
         return res.body;
     }
 
