@@ -688,6 +688,9 @@ class ChartStoreGrowth {
     var dataState = _.filter(jsArr, (o) => {
       return o.calendar_yr == maxTargCalYear
     })
+    // console.log(maxTargCalYear,"maxTargCalYear")
+    // console.log(maxMonthStr,"maxMonthStr")
+    // console.log(dataState,"dataState111")
     // let maxMonthStr = jsArr[0].max_month
     if (this.isAllDatePicker) {//时间选择判断当前年份
       var maxYear = this.isAllDatePicker.slice(0, 4)
@@ -721,7 +724,7 @@ class ChartStoreGrowth {
     dataState = _.filter(dataState, (o) => {
       return o.n_month == maxMonthStr
     })
-    // console.log(dataState,"dataState")
+    // console.log(dataState,"dataState222")
     var dataState = _.map(dataState, (o) => {
       o.rank = SEG_ORDER_MAP[o.segment_desc]
       if (SUBTITLES.indexOf(o.segment_desc) !== -1) {
@@ -740,7 +743,7 @@ class ChartStoreGrowth {
     dataState = _.sortBy(dataState, 'rank')
     // console.log(dataState,"dataStatedataState")
 
-    const minTargetSalPct = maxTargCalYear >= 2020 ? dataState[0]['min_target_sales_pct'] ? dataState[0]['min_target_sales_pct'] : null : null,
+    const minTargetSalPct = maxTargCalYear >= 2020 && dataState && dataState[0] ? dataState[0]['min_target_sales_pct'] ? dataState[0]['min_target_sales_pct'] : null : null,
       maxTargetSalPct = dataState[0] && dataState[0]['max_target_sales_pct'],
       monthAvg1 = dataState[0] && dataState[0]['pct_actual_sales'],
       monthAvg2 = dataState[1] && dataState[1]['pct_actual_sales'],

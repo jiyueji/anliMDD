@@ -468,10 +468,11 @@ class ChartStoreAbo {
     if (!jsArr.length) {
       return false
     }
-
+    // console.log(jsArr,"jsArr")
     var DatePicker = 0
     if (this.isAllDatePicker && this.isAllDatePicker.slice(4, 6) < 9) {//时间判断改变数据
       var maxPfYtd = this.isAllDatePicker.slice(2, 4)
+      var DatePicker = this.isAllDatePicker.slice(4, 6)
     } else if (this.isAllDatePicker && this.isAllDatePicker.slice(4, 6) >= 9) {
       var maxPfYtd = Number(this.isAllDatePicker.slice(2, 4)) + 1
       var DatePicker = this.isAllDatePicker.slice(4, 6)
@@ -479,18 +480,34 @@ class ChartStoreAbo {
       var maxPfYtd = jsArr.length && jsArr[jsArr.length - 1]['data_desc'].slice(2, 4)
       var DatePicker = jsArr.length && jsArr[jsArr.length - 1]['clnd_month'].slice(4, 6)
     }
-    var dataState = []
+    var dataStateShowData = []
     jsArr.map((item, index) => {
       if (item.data_desc.slice(2, 4) == maxPfYtd) {
-        dataState.push(item)
+        dataStateShowData.push(item)
       }
     })
+    var dataState = []
     if (this.isAllDatePicker) {//按月份进行数据展示
-      dataState = _.filter(dataState, (o) => {
-        return o.clnd_month <= this.isAllDatePicker
+      dataStateShowData = _.filter(dataStateShowData, (o) => {
+        if(o.clnd_month <= this.isAllDatePicker && o.clnd_month.slice(4, 6) <= DatePicker){
+          if(!o.data_period.slice(4,6) || o.data_period.slice(4,6) <= DatePicker){
+            dataState.push(o)
+          }
+        }
+        // return o.clnd_month <= this.isAllDatePicker && o.clnd_month.slice(4, 6) <= DatePicker || !o.data_period.slice(4,6) || o.data_period.slice(4,6) <= DatePicker
+        // return o.clnd_month <= this.isAllDatePicker && o.clnd_month.slice(4, 6) <= DatePicker && !o.data_period.slice(4, 6)
+      })
+    }else{
+      dataStateShowData = _.filter(dataStateShowData, (o) => {
+        if(o.clnd_month.slice(4, 6) <= DatePicker){
+          if(!o.data_period.slice(4,6) || o.data_period.slice(4,6) <= DatePicker){
+            dataState.push(o)
+          }
+        }
       })
     }
 
+    // console.log(dataStateShowData,"dataStateShowData")
 
 
     // let dataState = jsArr
@@ -536,7 +553,7 @@ class ChartStoreAbo {
     })
 
     let NOW_MAXDATE = dataState && dataState.length > 0 ? dataState[0].clnd_month : ""
-
+    // console.log(dataState,"dataState8888")
     dataState && dataState.length >= 0 ? dataState.map((o, index) => {
       var objData = {}
       if (o.clnd_month == NOW_MAXDATE) {
@@ -583,12 +600,13 @@ class ChartStoreAbo {
     }) : ""
     var maxYearStr = NOW_MAXDATE.toString()
     var maxYearStrPF = hlp.yearToPfPref2(maxYearStr)
+
     if (maxYearStr && maxYearStr.slice(4, 6) > 8) {
       var maxYear = maxYearStr.slice(0,4)
       maxYear = Number(maxYear) + 1
       var maxYearStrPF = hlp.yearToPfPref2(maxYear)
     }
-
+    // console.log(maxYearStrPF,maxYearStr,"maxYearStr")
     return {
       YTD_DATA: YTD_DATA,
       CSI_AMT: CSI_AMT,

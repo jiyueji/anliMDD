@@ -101,8 +101,10 @@ export default class AboBarLineEcharts extends Component {
         this.upDateShowData(data)
     }
     upDateShowData(data) {
+        // console.log(data,"data")
         var { YTD_DATA, CSI_AMT, CSI_COUNT, QUALIF_CSI_SR, TOTAL_ORDER_BV, FOA_ORDER_BV_1B, VCS_AMT, NOW_MAXDATE, NOW_MAXDATEPF, DatePicker } = data
         var showXShow = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug',]
+        // console.log(DatePicker,"DatePicker")
         if (DatePicker < 9) {
             showXShow = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug',]
         }
@@ -720,7 +722,7 @@ export default class AboBarLineEcharts extends Component {
     }
     aboBvMixEchartsHandle1() {
         var aboBvMixEchartsWidth = document.getElementById('aboBvMixEcharts')
-        aboBvMixEchartsWidth.style.width = (window.innerWidth * 0.48) + "px"
+        aboBvMixEchartsWidth ? aboBvMixEchartsWidth.style.width = (window.innerWidth * 0.48) + "px" : ""
 
         var aboBvMixEcharts = echarts.init(document.getElementById('aboBvMixEcharts'));
         window.addEventListener('resize', function () {
