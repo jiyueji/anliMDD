@@ -14,7 +14,7 @@ export default class PicFourChange extends Component {
         super();
         this.state = {
             allEvents: "Net Sales",//下面的可以变化的标题
-            allEventsArr: ["Net Sales", "Order BV Sales", "Recruitment", "Buyer Counts"],
+            allEventsArr: ["Net Sales", "Order Sales", "Recruitment", "Buyer Counts"],
             idxIndexShow: 0,
             activityFlag: true,//如果是第一个图就显示提示框的开关
 
@@ -67,7 +67,7 @@ export default class PicFourChange extends Component {
                     </div>
                     <div className="yellowPic" style={{ width: '24%', height: "140px", position: 'relative' }} onClick={this.picChangeDateHandle.bind(this, 1)}>
                         <img src={handPics} style={{ height: "30px", width: "30px", position: "absolute", right: "10%", top: "6%" }} />
-                        <div style={{ marginTop: "16px", fontWeight: "600", fontSize: "14px", color: "#ffffff", marginLeft: '9%' }}>Order BV Sales(MTD)</div>
+                        <div style={{ marginTop: "16px", fontWeight: "600", fontSize: "14px", color: "#ffffff", marginLeft: '9%' }}>Order Sales(MTD)</div>
                         {/* <div style={{ marginTop: "22px", fontSize: "12px", color: "#ffffff", marginLeft: '9%' }}>Month to date</div> */}
                         <h3 style={{ marginTop: "55px", fontSize: "28px", color: "#ffffff", marginLeft: '9%' }}>${bvData.monthData || 0}m</h3>
                         <div style={{ position: 'absolute', left: "66%", top: "72px", fontWeight: "600", fontSize: "12px", color: "#ffffff" }}>vs SPLM:{(bvData.lmData >= 0 ? "+" + bvData.lmData : bvData.lmData) || 0}%</div>

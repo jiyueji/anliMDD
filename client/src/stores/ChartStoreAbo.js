@@ -479,18 +479,44 @@ class ChartStoreAbo {
       var maxPfYtd = jsArr.length && jsArr[jsArr.length - 1]['data_desc'].slice(2, 4)
       var DatePicker = jsArr.length && jsArr[jsArr.length - 1]['clnd_month'].slice(4, 6)
     }
-    var dataState = []
+    //之前的旧版
+    // var dataState = []
+    // jsArr.map((item, index) => {
+    //   if (item.data_desc.slice(2, 4) == maxPfYtd) {
+    //     dataState.push(item)
+    //   }
+    // })
+    // if (this.isAllDatePicker) {//按月份进行数据展示
+    //   dataState = _.filter(dataState, (o) => {
+    //     return o.clnd_month <= this.isAllDatePicker
+    //   })
+    // }
+    var dataStateShowData = []
     jsArr.map((item, index) => {
       if (item.data_desc.slice(2, 4) == maxPfYtd) {
-        dataState.push(item)
+        dataStateShowData.push(item)
       }
     })
+    var dataState = []
     if (this.isAllDatePicker) {//按月份进行数据展示
-      dataState = _.filter(dataState, (o) => {
-        return o.clnd_month <= this.isAllDatePicker
+      dataStateShowData = _.filter(dataStateShowData, (o) => {
+        if(o.clnd_month <= this.isAllDatePicker && o.clnd_month.slice(4, 6) <= DatePicker){
+          if(!o.data_period.slice(4,6) || o.data_period.slice(4,6) <= DatePicker){
+            dataState.push(o)
+          }
+        }
+        // return o.clnd_month <= this.isAllDatePicker && o.clnd_month.slice(4, 6) <= DatePicker || !o.data_period.slice(4,6) || o.data_period.slice(4,6) <= DatePicker
+        // return o.clnd_month <= this.isAllDatePicker && o.clnd_month.slice(4, 6) <= DatePicker && !o.data_period.slice(4, 6)
+      })
+    }else{
+      dataStateShowData = _.filter(dataStateShowData, (o) => {
+        if(o.clnd_month.slice(4, 6) <= DatePicker){
+          if(!o.data_period.slice(4,6) || o.data_period.slice(4,6) <= DatePicker){
+            dataState.push(o)
+          }
+        }
       })
     }
-
 
 
     // let dataState = jsArr

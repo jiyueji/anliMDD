@@ -673,7 +673,7 @@ class ChartStoreGrowth {
   @computed get growthTable() {
     const jsArr2 = toJS(this.growthTableData) || []
     const jsArr = toJS(this.growthTableDataByMonth) || []
-    // console.log(jsArr2,jsArr,"jsArr")
+    console.log(jsArr2,jsArr,"jsArr")
     if (!jsArr.length) {
       return false
     }
@@ -740,7 +740,7 @@ class ChartStoreGrowth {
     dataState = _.sortBy(dataState, 'rank')
     // console.log(dataState,"dataStatedataState")
 
-    const minTargetSalPct = maxTargCalYear >= 2020 ? dataState[0]['min_target_sales_pct'] ? dataState[0]['min_target_sales_pct'] : null : null,
+    const minTargetSalPct = maxTargCalYear >= 2020 ? dataState[0] ? dataState[0]['min_target_sales_pct'] ? dataState[0]['min_target_sales_pct'] : null : null : null,
       maxTargetSalPct = dataState[0] && dataState[0]['max_target_sales_pct'],
       monthAvg1 = dataState[0] && dataState[0]['pct_actual_sales'],
       monthAvg2 = dataState[1] && dataState[1]['pct_actual_sales'],
