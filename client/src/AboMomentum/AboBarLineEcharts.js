@@ -166,8 +166,16 @@ export default class AboBarLineEcharts extends Component {
         this.setState({
             csi_per_earner_blueData, csi_earner_redData, vcs_sales_bv_data, foa_sales_bv_data, total_sales_bv_data, object_ytd_data, vcs_sales_bv_ShowNow, foa_sales_bv_ShowNow, NOW_MAXDATEPF, showXShow,modifyDateModify
         }, () => {
-            this.aboBvMixEchartsHandle1()
-            this.aboBvMixEchartsHandle2()
+            var { clickShow } = this.state
+            if (clickShow) {
+                this.aboBvMixEchartsHandle1()
+                this.aboBvMixEchartsHandle2()
+            } else {
+                this.aboBarLineEchartsHandle()
+                this.aboBarLineEchartsHandle2()
+            }
+            // this.aboBvMixEchartsHandle1()
+            // this.aboBvMixEchartsHandle2()
         })
     }
     aboBarLineEchartsHandle() {

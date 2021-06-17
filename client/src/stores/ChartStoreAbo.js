@@ -492,6 +492,7 @@ class ChartStoreAbo {
     //   })
     // }
     var dataStateShowData = []
+    // console.log(jsArr,"jsArr")
     jsArr.map((item, index) => {
       if (item.data_desc.slice(2, 4) == maxPfYtd) {
         dataStateShowData.push(item)

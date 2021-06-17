@@ -519,7 +519,7 @@ export default class PicFourChange extends Component {
         //     allEvents = e.target.childNodes[1].innerHTML
         // }
         var idxIndexShow = idx
-        if (changeNameArrShow[idx].name) {
+        if (changeNameArrShow[idx] && changeNameArrShow[idx].name) {
             changeName = changeNameArrShow[idx].name
         } else {
             changeName = []

@@ -31,8 +31,11 @@ export default class GrowthTable extends Component {
                         </div>
                         <div style={{ color: "#5b9ae9", fontWeight: '700' }}>
                             <p style={{ margin: 0, marginBottom: "4px" }}>Registered Customers & Customer Equivalents Sales Share</p>
-                            {
+                            {/* {
                                 allData.minTargetSalPct ? <p style={{ margin: 0, marginBottom: "4px" }}>{maxTargCalYear} Target Range:  {Math.round(allData.minTargetSalPct * 100)}% - {Math.round(allData.maxTargetSalPct * 100)}%</p> : ""
+                            } */}
+                            {
+                                allData.minTargetSalPct ? <p style={{ margin: 0, marginBottom: "4px" }}>{maxTargCalYear} Target {allData.minTargetSalPct == allData.maxTargetSalPct ? "" : "Range"}:  {Math.round(allData.minTargetSalPct * 100)}%{allData.minTargetSalPct == allData.maxTargetSalPct ? "" : " - " + Math.round(allData.maxTargetSalPct * 100) + "%"}</p> : ""
                             }
                             <p style={{ margin: 0, marginBottom: "4px" }}>{maxYear} YTD Actual:  {Math.round(allData.monthAvg2Rows * 100)}%</p>
                         </div>
@@ -134,6 +137,7 @@ export default class GrowthTable extends Component {
         this.dateUpdateHandle(data)
     }
     dateUpdateHandle(allData){
+        // console.log(allData,"allData")
         const data = allData.tableData || []
         var modifyDateModify = allData.maxMonth
         const maxMonthStr = String(hlp.yearMonthToStr(allData.maxMonth))

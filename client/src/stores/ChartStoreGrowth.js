@@ -673,7 +673,7 @@ class ChartStoreGrowth {
   @computed get growthTable() {
     const jsArr2 = toJS(this.growthTableData) || []
     const jsArr = toJS(this.growthTableDataByMonth) || []
-    console.log(jsArr2,jsArr,"jsArr")
+    // console.log(jsArr2,jsArr,"jsArr")
     if (!jsArr.length) {
       return false
     }
