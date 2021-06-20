@@ -1,10 +1,15 @@
+import uuid
+import platform
+
 from flask_restful import Resource, reqparse
-from models import UserModel, RevokedTokenModel
+from flask import request, abort, make_response
+from models import UserModel, RevokedTokenModel, ImagesModel
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import json
+import os
 
 # DATABASE = "dashboard"
 # USER = "master"
@@ -20,6 +25,10 @@ HOST = "dashboardredshiftpd.cbc6gje7z1p9.cn-northwest-1.redshift.amazonaws.com.c
 PORT = "5439"
 SCHEMA = "public"
 
+
+"""upload images setting"""
+BASE_DIR = os.path.abspath(os.path.join(os.getcwd(), "./"))
+UPLOAD_IMAGE_FOLDER = os.path.join(BASE_DIR, 'images')
 
 parser = reqparse.RequestParser()
 parser.add_argument('username', help = 'This field cannot be blank', required = True)
@@ -90,6 +99,11 @@ def remarksUpdate(queryStr):
       cur.close()
       con.close()
       print("PostgreSQL connection is closed")
+
+
+def mk_images_folder():
+    if not os.path.exists(UPLOAD_IMAGE_FOLDER):
+        os.mkdir(UPLOAD_IMAGE_FOLDER)
 
 
 class UserRegistration(Resource):
@@ -782,3 +796,48 @@ class QueryUser(Resource):
         id = data['user']
         queryStr = "select * from MDD_USER where account='" +id+ "'"
         return performQuery(queryStr)
+
+
+# 图片上传功能
+class Image(Resource):
+    def get(self):
+        data = parser2.parse_args()
+
+        user_name = data['username']
+        images = ImagesModel.find_images(user_name)
+        return {'message': 'success', 'images': [{'imagePath': f'/show/{image.image_path}'} for image in images]}
+
+    def post(self):
+        data = parser2.parse_args()
+
+        user_name = data['username']
+        image = request.files.get('image')
+
+        if not UserModel.find_by_username(user_name):
+            return {'message': f'User {user_name} doesn\'t exist'}
+        if not image:
+            return {'message': 'file not be None'}
+
+        image_name = f'{uuid.uuid1()}_{image.filename}'
+        image.save(os.path.join(UPLOAD_IMAGE_FOLDER, image_name))
+        try:
+            ImagesModel.save(username=user_name, image_path=image_name)
+        except Exception as e:
+            print(f'upload image fail, error: {e}')
+            return {'message': 'upload image fail'}
+
+        return {'message': 'success', 'imagePath': f'/show/{image_name}'}
+
+
+class ShowImage(Resource):
+
+    def get(self, image_name):
+        image_path = os.path.join(UPLOAD_IMAGE_FOLDER, image_name)
+        if not os.path.exists(image_path):
+            abort(404)
+
+        with open(image_path, 'rb') as fb:
+            response = make_response(fb.read())
+            response.headers['Content-Type'] = 'image/png'
+
+        return response

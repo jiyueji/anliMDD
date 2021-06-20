@@ -18,7 +18,8 @@ db = SQLAlchemy(app)
 
 @app.before_first_request
 def create_tables():
-    db.create_all()
+    from models import db as database
+    database.create_all()
 
 app.config['JWT_SECRET_KEY'] = 'jwt-secret-string'
 jwt = JWTManager(app)
@@ -32,6 +33,10 @@ def check_if_token_in_blacklist(decrypted_token):
     return models.RevokedTokenModel.is_jti_blacklisted(jti)
 
 import views, models, resources
+
+
+"""生成upload images folder"""
+resources.mk_images_folder()
 
 api.add_resource(resources.UserRegistration, '/registration')
 api.add_resource(resources.UserDeleteByUsername, '/delete_by_username')
@@ -136,5 +141,11 @@ api.add_resource(resources.SocialRepBuyerNew, '/social_rep_buy_data_new')
 api.add_resource(resources.SocialReferralNew, '/social_ref_data_new')
 api.add_resource(resources.SocialConvNew, '/social_conv_data_new')
 api.add_resource(resources.QueryUser, '/query_user')
+
+#  用户上传图片
+api.add_resource(resources.Image, '/image')
+api.add_resource(resources.ShowImage, '/show/<string:image_name>')
+
+
 if __name__ == '__main__':
       app.run(host='0.0.0.0', port=80)
