@@ -71,11 +71,14 @@ class RevokedTokenModel(db.Model):
 
 
 class ImagesModel(db.Model):
-    __table_name__ = 'image'
+    __tablename__ = 'image'
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120), nullable=False)
     image_path = db.Column(db.String(255), unique=True, nullable=False)
+    year_type = db.Column(db.String(64), nullable=True)
+    month = db.Column(db.String(64), nullable=True)
+    identifier = db.Column(db.String(64))
     create_at = db.Column(db.DateTime, default=datetime.datetime.now)
 
     @classmethod
@@ -83,8 +86,8 @@ class ImagesModel(db.Model):
         image = cls(**kwargs)
         db.session.add(image)
         db.session.commit()
-        return cls
+        return image
 
     @classmethod
-    def find_images(cls, user_name):
-        return cls.query.filter_by(username=user_name).all()
+    def find_images(cls, **kwargs):
+        return cls.query.filter_by(**kwargs).all()

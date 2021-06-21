@@ -54,6 +54,27 @@ parser5.add_argument('n_month', help = 'This field cannot be blank', required = 
 parser6 = reqparse.RequestParser()
 parser6.add_argument('user', help = 'This field cannot be blank', required = True)
 
+parser7 = reqparse.RequestParser()
+parser7.add_argument('username', help='This field cannot be blank', required=True)
+parser7.add_argument(
+    'year_type',
+    help='This field must be in (performanceYear, calendarYear)',
+    required=True,
+    choices=('performanceYear', 'calendarYear')
+)
+parser7.add_argument('month', help='This field cannot be blank', required=True)
+parser7.add_argument('identifier')
+
+parser8 = reqparse.RequestParser()
+parser8.add_argument('username', help='This field cannot be blank', required=True)
+parser8.add_argument(
+    'year_type',
+    help='This field must be in (performanceYear, calendarYear)',
+    choices=('performanceYear', 'calendarYear')
+)
+parser8.add_argument('month', help='This field cannot be blank')
+
+
 def performQuery(queryStr):
   try:
     con=psycopg2.connect(dbname= DATABASE, host=HOST, port= PORT, user= USER, password= PASSWORD)
@@ -801,28 +822,42 @@ class QueryUser(Resource):
 # 图片上传功能
 class Image(Resource):
     def get(self):
-        data = parser2.parse_args()
+        data = parser8.parse_args()
+        filter_dict = {
+            'username': data['username']
+        }
+        if data['year_type']:
+            filter_dict['year_type'] = data['year_type']
+        if data['month']:
+            filter_dict['month'] = data['month']
 
-        user_name = data['username']
-        images = ImagesModel.find_images(user_name)
-        return {'message': 'success', 'images': [{'imagePath': f'/show/{image.image_path}'} for image in images]}
+        images = ImagesModel.find_images(**filter_dict)
+        images = [
+            {
+                'imagePath': f'/show/{image.image_path}',
+                'year_type': image.year_type,
+                'month': image.month,
+                'identifier': image.identifier
+            } for image in images
+        ]
+        return {'message': 'success', 'images': images}
 
     def post(self):
-        data = parser2.parse_args()
-
-        user_name = data['username']
+        data = parser7.parse_args()
         image = request.files.get('image')
 
-        if not UserModel.find_by_username(user_name):
-            return {'message': f'User {user_name} doesn\'t exist'}
+        if not UserModel.find_by_username(data['username']):
+            return {'message': f'User {data["username"]} doesn\'t exist'}
         if not image:
             return {'message': 'file not be None'}
 
         image_name = f'{uuid.uuid1()}_{image.filename}'
-        image.save(os.path.join(UPLOAD_IMAGE_FOLDER, image_name))
+        image_path = os.path.join(UPLOAD_IMAGE_FOLDER, image_name)
+        image.save(image_path)
         try:
-            ImagesModel.save(username=user_name, image_path=image_name)
+            ImagesModel.save(image_path=image_name, **data)
         except Exception as e:
+            os.remove(image_path)
             print(f'upload image fail, error: {e}')
             return {'message': 'upload image fail'}
 
