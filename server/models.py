@@ -1,5 +1,8 @@
+import datetime
+
 from run import db
 from passlib.hash import pbkdf2_sha256 as sha256
+
 
 class UserModel(db.Model):
     __tablename__ = 'users'
@@ -51,6 +54,7 @@ class UserModel(db.Model):
     def verify_hash(password, hash):
         return sha256.verify(password, hash)
 
+
 class RevokedTokenModel(db.Model):
     __tablename__ = 'revoked_tokens'
     id = db.Column(db.Integer, primary_key = True)
@@ -64,3 +68,26 @@ class RevokedTokenModel(db.Model):
     def is_jti_blacklisted(cls, jti):
         query = cls.query.filter_by(jti = jti).first()
         return bool(query)
+
+
+class ImagesModel(db.Model):
+    __tablename__ = 'image'
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(120), nullable=False)
+    image_path = db.Column(db.String(255), unique=True, nullable=False)
+    year_type = db.Column(db.String(64), nullable=True)
+    month = db.Column(db.String(64), nullable=True)
+    identifier = db.Column(db.String(64))
+    create_at = db.Column(db.DateTime, default=datetime.datetime.now)
+
+    @classmethod
+    def save(cls, **kwargs):
+        image = cls(**kwargs)
+        db.session.add(image)
+        db.session.commit()
+        return image
+
+    @classmethod
+    def find_images(cls, **kwargs):
+        return cls.query.filter_by(**kwargs).all()

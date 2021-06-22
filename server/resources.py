@@ -1,10 +1,15 @@
+import uuid
+import platform
+
 from flask_restful import Resource, reqparse
-from models import UserModel, RevokedTokenModel
+from flask import request, abort, make_response
+from models import UserModel, RevokedTokenModel, ImagesModel
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import json
+import os
 
 # DATABASE = "dashboard"
 # USER = "master"
@@ -20,6 +25,10 @@ HOST = "dashboardredshiftpd.cbc6gje7z1p9.cn-northwest-1.redshift.amazonaws.com.c
 PORT = "5439"
 SCHEMA = "public"
 
+
+"""upload images setting"""
+BASE_DIR = os.path.abspath(os.path.join(os.getcwd(), "./"))
+UPLOAD_IMAGE_FOLDER = os.path.join(BASE_DIR, 'images')
 
 parser = reqparse.RequestParser()
 parser.add_argument('username', help = 'This field cannot be blank', required = True)
@@ -44,6 +53,27 @@ parser5.add_argument('n_month', help = 'This field cannot be blank', required = 
 
 parser6 = reqparse.RequestParser()
 parser6.add_argument('user', help = 'This field cannot be blank', required = True)
+
+parser7 = reqparse.RequestParser()
+parser7.add_argument('username', help='This field cannot be blank', required=True)
+parser7.add_argument(
+    'year_type',
+    help='This field must be in (performanceYear, calendarYear)',
+    required=True,
+    choices=('performanceYear', 'calendarYear')
+)
+parser7.add_argument('month', help='This field cannot be blank', required=True)
+parser7.add_argument('identifier')
+
+parser8 = reqparse.RequestParser()
+parser8.add_argument('username', help='This field cannot be blank', required=True)
+parser8.add_argument(
+    'year_type',
+    help='This field must be in (performanceYear, calendarYear)',
+    choices=('performanceYear', 'calendarYear')
+)
+parser8.add_argument('month', help='This field cannot be blank')
+
 
 def performQuery(queryStr):
   try:
@@ -90,6 +120,11 @@ def remarksUpdate(queryStr):
       cur.close()
       con.close()
       print("PostgreSQL connection is closed")
+
+
+def mk_images_folder():
+    if not os.path.exists(UPLOAD_IMAGE_FOLDER):
+        os.mkdir(UPLOAD_IMAGE_FOLDER)
 
 
 class UserRegistration(Resource):
@@ -782,3 +817,62 @@ class QueryUser(Resource):
         id = data['user']
         queryStr = "select * from MDD_USER where account='" +id+ "'"
         return performQuery(queryStr)
+
+
+# 图片上传功能
+class Image(Resource):
+    def get(self):
+        data = parser8.parse_args()
+        filter_dict = {
+            'username': data['username']
+        }
+        if data['year_type']:
+            filter_dict['year_type'] = data['year_type']
+        if data['month']:
+            filter_dict['month'] = data['month']
+
+        images = ImagesModel.find_images(**filter_dict)
+        images = [
+            {
+                'imagePath': f'/show/{image.image_path}',
+                'year_type': image.year_type,
+                'month': image.month,
+                'identifier': image.identifier
+            } for image in images
+        ]
+        return {'message': 'success', 'images': images}
+
+    def post(self):
+        data = parser7.parse_args()
+        image = request.files.get('image')
+
+        if not UserModel.find_by_username(data['username']):
+            return {'message': f'User {data["username"]} doesn\'t exist'}
+        if not image:
+            return {'message': 'file not be None'}
+
+        image_name = f'{uuid.uuid1()}_{image.filename}'
+        image_path = os.path.join(UPLOAD_IMAGE_FOLDER, image_name)
+        image.save(image_path)
+        try:
+            ImagesModel.save(image_path=image_name, **data)
+        except Exception as e:
+            os.remove(image_path)
+            print(f'upload image fail, error: {e}')
+            return {'message': 'upload image fail'}
+
+        return {'message': 'success', 'imagePath': f'/show/{image_name}'}
+
+
+class ShowImage(Resource):
+
+    def get(self, image_name):
+        image_path = os.path.join(UPLOAD_IMAGE_FOLDER, image_name)
+        if not os.path.exists(image_path):
+            abort(404)
+
+        with open(image_path, 'rb') as fb:
+            response = make_response(fb.read())
+            response.headers['Content-Type'] = 'image/png'
+
+        return response
