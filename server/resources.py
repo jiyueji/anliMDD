@@ -55,7 +55,7 @@ parser6 = reqparse.RequestParser()
 parser6.add_argument('user', help = 'This field cannot be blank', required = True)
 
 parser7 = reqparse.RequestParser()
-parser7.add_argument('username', help='This field cannot be blank', required=True)
+# parser7.add_argument('username', help='This field cannot be blank', required=True)
 parser7.add_argument(
     'year_type',
     help='This field must be in (performanceYear, calendarYear)',
@@ -66,7 +66,7 @@ parser7.add_argument('month', help='This field cannot be blank', required=True)
 parser7.add_argument('identifier')
 
 parser8 = reqparse.RequestParser()
-parser8.add_argument('username', help='This field cannot be blank', required=True)
+# parser8.add_argument('username', help='This field cannot be blank', required=True)
 parser8.add_argument(
     'year_type',
     help='This field must be in (performanceYear, calendarYear)',
@@ -823,9 +823,7 @@ class QueryUser(Resource):
 class Image(Resource):
     def get(self):
         data = parser8.parse_args()
-        filter_dict = {
-            'username': data['username']
-        }
+        filter_dict = {}
         if data['year_type']:
             filter_dict['year_type'] = data['year_type']
         if data['month']:
@@ -846,8 +844,8 @@ class Image(Resource):
         data = parser7.parse_args()
         image = request.files.get('image')
 
-        if not UserModel.find_by_username(data['username']):
-            return {'message': f'User {data["username"]} doesn\'t exist'}
+        # if not UserModel.find_by_username(data['username']):
+        #     return {'message': f'User {data["username"]} doesn\'t exist'}
         if not image:
             return {'message': 'file not be None'}
 

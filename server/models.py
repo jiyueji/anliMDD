@@ -74,7 +74,7 @@ class ImagesModel(db.Model):
     __tablename__ = 'image'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(120), nullable=False)
+    username = db.Column(db.String(120))
     image_path = db.Column(db.String(255), unique=True, nullable=False)
     year_type = db.Column(db.String(64), nullable=True)
     month = db.Column(db.String(64), nullable=True)
