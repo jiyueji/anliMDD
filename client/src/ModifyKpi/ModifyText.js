@@ -96,14 +96,25 @@ export default class ModifyText extends Component {
             'justify',  // 对齐方式
             // 'quote',  // 引用
             // 'emoticon',  // 表情
-            // 'image',  // 插入图片
+            'image',  // 插入图片
             'table',  // 表格
             // 'video',  // 插入视频
             // 'code',  // 插入代码
             'undo',  // 撤销
             'redo'  // 重复
         ]
-        editor.customConfig.uploadImgShowBase64 = true
+        // 将图片大小限制为 10M
+        editor.customConfig.uploadImgMaxSize = 15 * 1024 * 1024
+        // editor.customConfig.uploadFileName = 'file';
+        // editor.customConfig.showLinkImg = false;//隐藏插入网络图片的功能
+        // // 配置 server 接口地址
+        // editor.customConfig.uploadImgServer = '/upload-img'
+        // // 自定义上传参数
+        // editor.customConfig.uploadImgParams = {
+        //     token: '222',
+        //     x: 100
+        // }
+        // editor.customConfig.uploadImgShowBase64 = true//可使用 base64 格式保存图片。
         editor.create()
         this.editor = editor
     }
@@ -121,6 +132,7 @@ export default class ModifyText extends Component {
             // 编码转字符串
             var remarksStr = decodeURI(remarksDecode);
         }
+        // console.log(remarksStr,"remarksStr")
         this.editor.txt.html(remarksStr)//html 初始化内容remarks,
         this.setState({
             // editorContent:remarks,
@@ -140,13 +152,15 @@ export default class ModifyText extends Component {
     onClickHandle(e) {//点击按钮时发生
         var { id, parentid, n_month, editorContent } = this.state
         var reg = /\<p\>\<br\>\<\/p\>/g;
+        console.log(editorContent, "editorContent")
         editorContent = editorContent.replace(reg, '');
+        // console.log(editorContent,"reg")
         //字符串转base64
         var editorContentEncode = encodeURI(editorContent);
         // 对编码的字符串转化base64
         var editorContentBase64 = btoa(editorContentEncode);
         // console.log(editorContentBase64, "editorContentBase64")
-        this.props.updateHandle(id, parentid, n_month, editorContentBase64)
+        // this.props.updateHandle(id, parentid, n_month, editorContentBase64)
     }
 }
 
